@@ -1,4 +1,5 @@
-import { Calendar, MapPin, Clock } from 'lucide-react';
+import { useState, useRef } from "react";
+import { Calendar, MapPin, Clock, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Event {
   date: string;
@@ -18,7 +19,7 @@ const events: Event[] = [
     title: 'Laser Technology Expo 2025',
     location: 'New Delhi Convention Center',
     time: '9:00 AM - 6:00 PM',
-    color: 'from-red-500 to-red-600'
+    color: 'from-red-400 to-red-500'
   },
   {
     date: '22',
@@ -27,7 +28,7 @@ const events: Event[] = [
     title: 'Manufacturing Innovation Summit',
     location: 'Mumbai International Trade Center',
     time: '10:00 AM - 5:00 PM',
-    color: 'from-purple-500 to-purple-600'
+    color: 'from-purple-400 to-purple-500'
   },
   {
     date: '05',
@@ -36,7 +37,7 @@ const events: Event[] = [
     title: 'Industrial Automation Workshop',
     location: 'Bangalore Tech Park',
     time: '2:00 PM - 7:00 PM',
-    color: 'from-blue-500 to-blue-600'
+    color: 'from-blue-400 to-blue-500'
   },
   {
     date: '18',
@@ -45,15 +46,26 @@ const events: Event[] = [
     title: 'Smart Factory Solutions Demo',
     location: 'Pune Industrial Hub',
     time: '11:00 AM - 4:00 PM',
-    color: 'from-green-500 to-green-600'
+    color: 'from-green-400 to-green-500'
   }
 ];
 
 export default function CalendarSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollPos, setScrollPos] = useState(0);
+  console.log(scrollPos);
+  const scrollBy = (offset: number) => {
+    if (containerRef.current) {
+      containerRef.current.scrollBy({ left: offset, behavior: "smooth" });
+      setScrollPos(containerRef.current.scrollLeft + offset);
+    }
+  };
+
   return (
-    <section className="py-16 lg:py-24 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 lg:mb-16">
+    <section className="py-16 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Heading */}
+        <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-red-100 text-red-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
             <Calendar className="w-4 h-4" />
             Upcoming Events
@@ -66,43 +78,61 @@ export default function CalendarSection() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {events.map((event, index) => (
-            <div
-              key={index}
-              className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-gray-200 transform hover:-translate-y-2"
-            >
-              <div className={`bg-gradient-to-br ${event.color} p-6 text-white relative overflow-hidden`}>
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16" />
-                <div className="relative">
-                  <div className="text-5xl font-bold mb-1">{event.date}</div>
-                  <div className="text-sm font-semibold opacity-90">{event.day}</div>
-                  <div className="text-xs opacity-75 uppercase tracking-wider">{event.month}</div>
+        {/* Events Carousel */}
+        <div className="relative">
+          {/* Arrows for desktop */}
+          <button
+            onClick={() => scrollBy(-320)}
+            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg rounded-full p-2 z-10 hover:bg-gray-100 transition"
+          >
+            <ChevronLeft className="w-5 h-5 text-gray-700" />
+          </button>
+          <button
+            onClick={() => scrollBy(320)}
+            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg rounded-full p-2 z-10 hover:bg-gray-100 transition"
+          >
+            <ChevronRight className="w-5 h-5 text-gray-700" />
+          </button>
+
+          {/* Scrollable container */}
+          <div
+            ref={containerRef}
+            className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory"
+          >
+            {events.map((event, idx) => (
+              <div
+                key={idx}
+                className={`min-w-[280px] sm:min-w-[320px] md:min-w-[360px] lg:min-w-[300px] snap-start group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100`}
+              >
+                <div className={`bg-gradient-to-br ${event.color} p-6 text-white relative overflow-hidden`}>
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12" />
+                  <div className="relative text-center">
+                    <div className="text-5xl font-bold mb-1">{event.date}</div>
+                    <div className="text-sm font-semibold opacity-90">{event.day}</div>
+                    <div className="text-xs opacity-75 uppercase tracking-wider">{event.month}</div>
+                  </div>
+                </div>
+                <div className="p-6 space-y-4">
+                  <h3 className="text-xl font-bold text-gray-900 leading-tight group-hover:text-red-600 transition-colors">
+                    {event.title}
+                  </h3>
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <div className="flex items-start gap-2">
+                      <MapPin className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                      <span>{event.location}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                      <span>{event.time}</span>
+                    </div>
+                  </div>
+                  <button className="w-full bg-red-50 hover:bg-red-600 text-red-600 hover:text-white font-semibold py-3 rounded-lg transition-all duration-300 text-sm">
+                    Learn More
+                  </button>
                 </div>
               </div>
-
-              <div className="p-6 space-y-4">
-                <h3 className="text-xl font-bold text-gray-900 leading-tight group-hover:text-red-600 transition-colors">
-                  {event.title}
-                </h3>
-
-                <div className="space-y-2 text-sm text-gray-600">
-                  <div className="flex items-start gap-2">
-                    <MapPin className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <span>{event.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                    <span>{event.time}</span>
-                  </div>
-                </div>
-
-                <button className="w-full bg-gray-100 hover:bg-red-600 text-gray-700 hover:text-white font-semibold py-3 rounded-lg transition-all duration-300 text-sm">
-                  Learn More
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

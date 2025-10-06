@@ -58,20 +58,7 @@ export default function VideoSection() {
                 </button>
               </div>
 
-              <div className="mt-8 grid sm:grid-cols-3 gap-6 text-center">
-                <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                  <div className="text-3xl font-bold text-red-600 mb-2">4K</div>
-                  <div className="text-gray-600 text-sm">Ultra HD Quality</div>
-                </div>
-                <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                  <div className="text-3xl font-bold text-red-600 mb-2">5:00</div>
-                  <div className="text-gray-600 text-sm">Duration</div>
-                </div>
-                <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                  <div className="text-3xl font-bold text-red-600 mb-2">Live</div>
-                  <div className="text-gray-600 text-sm">Actual Footage</div>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>

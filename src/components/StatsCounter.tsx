@@ -14,26 +14,32 @@ const stats: Stat[] = [
     value: 5500,
     suffix: '+',
     label: 'Machines Installed',
-    icon: <TrendingUp className="w-8 h-8" />,
-    color: 'from-red-500 to-red-600'
+    icon: <TrendingUp className="w-7 h-7" />,
+    color: 'from-blue-500 to-blue-700',
   },
   {
     value: 7200,
     suffix: '+',
     label: 'Customers Served',
-    icon: <Users className="w-8 h-8" />,
-    color: 'from-purple-500 to-purple-600'
+    icon: <Users className="w-7 h-7" />,
+    color: 'from-indigo-500 to-indigo-700',
   },
   {
     value: 15,
     suffix: '+',
     label: 'Years of Expertise',
-    icon: <Award className="w-8 h-8" />,
-    color: 'from-blue-500 to-blue-600'
-  }
+    icon: <Award className="w-7 h-7" />,
+    color: 'from-violet-500 to-violet-700',
+  },
 ];
 
-function CountUp({ end, duration = 2000, suffix = '' }: { end: number; duration?: number; suffix?: string }) {
+interface CountUpProps {
+  end: number;
+  duration?: number;
+  suffix?: string;
+}
+
+function CountUp({ end, duration = 2000, suffix = '' }: CountUpProps) {
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -45,13 +51,10 @@ function CountUp({ end, duration = 2000, suffix = '' }: { end: number; duration?
           setHasAnimated(true);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.4 }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
+    if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, [hasAnimated]);
 
@@ -65,85 +68,78 @@ function CountUp({ end, duration = 2000, suffix = '' }: { end: number; duration?
       if (!startTime) startTime = timestamp;
       const progress = timestamp - startTime;
       const percentage = Math.min(progress / duration, 1);
-
-      const easeOutQuart = 1 - Math.pow(1 - percentage, 4);
-      setCount(Math.floor(easeOutQuart * end));
-
+      const easeOut = 1 - Math.pow(1 - percentage, 4);
+      setCount(Math.floor(easeOut * end));
       if (percentage < 1) {
         animationFrame = requestAnimationFrame(animate);
       }
     };
 
     animationFrame = requestAnimationFrame(animate);
-
     return () => cancelAnimationFrame(animationFrame);
   }, [end, duration, hasAnimated]);
 
   return (
-    <div ref={ref} className="text-5xl sm:text-6xl font-bold">
-      {count.toLocaleString()}{suffix}
+    <div ref={ref} className="text-4xl font-semibold tracking-tight text-gray-900">
+      {count.toLocaleString()}
+      {suffix}
     </div>
   );
 }
 
 export default function StatsCounter() {
   return (
-    <section className="py-16 lg:py-24 bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white relative overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-red-500 rounded-full filter blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl" />
-      </div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Our Proven Track Record
+    <section className="py-20 bg-gradient-to-b from-white to-gray-50/50">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Our Track Record
           </h2>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            With thousands of successful installations worldwide, we continue to power industries with precision laser solutions.
+          <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
+            Delivering precision laser solutions to industries worldwide
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-12 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="group relative"
+              className="group bg-white rounded-2xl p-10 shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center text-center relative"
               style={{
-                animation: `fadeInUp 0.6s ease-out ${index * 0.2}s both`
+                animation: `fadeIn 0.6s ease-out ${index * 0.1}s both`,
               }}
             >
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-white/20 transition-all duration-300 hover:transform hover:scale-105 hover:bg-white/10">
-                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${stat.color} mb-6`}>
-                  {stat.icon}
-                </div>
-
-                <div className="mb-3 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                  <CountUp end={stat.value} suffix={stat.suffix} />
-                </div>
-
-                <div className="text-gray-300 text-lg font-semibold">
-                  {stat.label}
-                </div>
-
-                <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${stat.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 rounded-b-2xl`} />
+              <div
+                className={`flex items-center justify-center w-16 h-16 mb-6 rounded-2xl bg-gradient-to-br ${stat.color} text-white shadow-md group-hover:scale-105 transition-transform duration-300`}
+              >
+                {stat.icon}
               </div>
+
+              <CountUp end={stat.value} suffix={stat.suffix} />
+
+              <div className="text-gray-600 mt-2 text-base font-medium">
+                {stat.label}
+              </div>
+
+              <div
+                className={`absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r ${stat.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-b-2xl`}
+              />
             </div>
           ))}
         </div>
 
         <div className="mt-16 text-center">
-          <p className="text-gray-400 text-sm max-w-2xl mx-auto">
-            Trusted by leading manufacturers across automotive, aerospace, electronics, and more. Our commitment to innovation and quality has made us a global leader in laser technology.
+          <p className="text-gray-500 text-sm max-w-3xl mx-auto">
+            Trusted by leading manufacturers across automotive, aerospace, electronics, and more.
           </p>
         </div>
       </div>
 
       <style>{`
-        @keyframes fadeInUp {
+        @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(20px);
           }
           to {
             opacity: 1;

@@ -1,60 +1,76 @@
-import { ArrowRight } from 'lucide-react';
+import React from "react";
 
-export default function Hero() {
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(https://images.pexels.com/photos/1305753/pexels-photo-1305753.jpeg?auto=compress&cs=tinysrgb&w=1920)',
-        }}
+const HeroBanner: React.FC = () => (
+  <section className="relative min-h-screen flex flex-col justify-center overflow-visible bg-black mt-[81px]">
+    {/* Banner Background & Overlay */}
+    <div className="absolute inset-0 z-0">
+      <img
+        src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070"
+        alt="Manufacturing facility"
+        className="w-full h-full object-cover"
+        loading="lazy"
       />
+      <div className="absolute inset-0 bg-red-600/30 mix-blend-multiply" />
+      <div className="absolute inset-0 bg-hero-gradient mix-blend-multiply" />
+    </div>
 
-      <div
-        className="absolute inset-0 bg-gradient-to-r from-red-600/50 to-purple-900/50"
-        style={{
-          background: 'linear-gradient(90deg, rgba(243, 21, 36, 0.5) 0%, rgba(6, 3, 44, 0.5) 100%)'
-        }}
-      />
+    {/* Centered Banner Content */}
+    <div className="relative z-10 container mx-auto px-4 pt-24 pb-48 flex flex-col items-center text-center space-y-8">
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold font-heading text-white leading-tight">
+        Sharper. Faster. Smarter Manufacturing.
+      </h1>
+      <p className="text-xl md:text-2xl lg:text-3xl text-white max-w-3xl mx-auto font-light">
+        Boost productivity and precision with our state-of-the-art laser machines 
+        and automation solutions designed for your success.
+      </p>
+      <button
+        type="button"
+        className="bg-white text-secondary hover:bg-white/90 px-12 py-6 text-lg font-semibold rounded-md transition-all duration-300 mt-2 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary"
+      >
+        Explore Products
+      </button>
+    </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-white"
-           style={{clipPath: 'polygon(0 40%, 100% 0%, 100% 100%, 0% 100%)'}}>
-      </div>
-
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
-              style={{
-                textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-                WebkitTextStroke: '1px rgba(0,0,0,0.1)'
-              }}>
-            Sharper. Faster. Smarter Manufacturing.
-          </h1>
-
-          <h4 className="text-lg sm:text-xl md:text-2xl text-white mb-10 max-w-4xl mx-auto leading-relaxed">
-            Boost productivity and precision with our state-of-the-art laser machines and automation solutions designed for your success.
-          </h4>
-
-          <div className="mb-16">
-            <button className="group bg-white hover:bg-yellow-50 text-black font-semibold px-8 sm:px-12 py-4 sm:py-5 rounded-lg text-base sm:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg inline-flex items-center gap-2">
-              Explore Products
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
-
-          <div className="max-w-4xl mx-auto mt-12 rounded-2xl overflow-hidden shadow-2xl">
-            <div className="relative" style={{ paddingBottom: '56.25%' }}>
-              <iframe
-                className="absolute top-0 left-0 w-full h-full"
-                src="https://www.youtube.com/embed/KR5fWm6JBds"
-                title="Manufacturing Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </div>
+    {/* Enhanced Taller Video Section */}
+    <div className="relative z-20 flex justify-center -mb-44 md:-mb-64 lg:-mb-64">
+      <div className="w-full max-w-6xl px-4">
+        <div className="rounded-2xl overflow-hidden shadow-2xl  bg-gradient-to-br from-black via-gray-900 to-gray-800"
+            style={{
+              height: '620px',
+              boxShadow:
+                "0 16px 48px rgba(0,0,0,0.65)",
+            }}>
+          <iframe
+            title="Laser Technologies Introduction"
+            className="w-full h-full"
+            src="https://www.youtube.com/embed/KR5fWm6JBds"
+            frameBorder={0}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            loading="lazy"
+            style={{
+              borderRadius: '18px',
+            }}
+          />
         </div>
       </div>
-    </section>
-  );
-}
+    </div>
+
+    {/* Bottom Shape Divider */}
+    <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none">
+      <svg
+        className="w-full h-24 md:h-32"
+        viewBox="0 0 100 10"
+        preserveAspectRatio="none"
+        fill="white"
+      >
+        <polygon points="0 10, 100 10, 100 0, 0 0" />
+      </svg>
+    </div>
+
+    {/* Extra padding for video overflow */}
+    <div className="pb-44 md:pb-56 lg:pb-64" />
+  </section>
+);
+
+export default HeroBanner;
