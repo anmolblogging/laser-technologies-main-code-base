@@ -1,11 +1,12 @@
 import React from "react";
+import Banner from "../assets/banner.png";
 
 const HeroBanner: React.FC = () => (
   <section className="relative min-h-screen flex flex-col justify-center overflow-visible bg-black mt-[81px]">
     {/* Banner Background & Overlay */}
     <div className="absolute inset-0 z-0">
       <img
-        src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070"
+        src={Banner}
         alt="Manufacturing facility"
         className="w-full h-full object-cover"
         loading="lazy"

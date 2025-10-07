@@ -70,7 +70,7 @@ export default function CalendarSection() {
             <Calendar className="w-4 h-4" />
             Upcoming Events
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 mb-4">
             Mark Your Calendar
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">

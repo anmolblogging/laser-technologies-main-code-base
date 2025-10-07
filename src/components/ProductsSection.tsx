@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import { Grid, Image, ChevronDown, Sparkles, ShoppingBag, ArrowRight } from "lucide-react";
 import  {CATEGORIES}  from "../Data"; 
+// import { Link } from "react-router-dom";
 
 
 export default function Product(): JSX.Element {
@@ -18,6 +20,7 @@ export default function Product(): JSX.Element {
     () => category.products.filter((p) => p.subcategory === sub),
     [category, sub]
   );
+  const navigate = useNavigate()
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-zinc-900 py-12 lg:py-20" >
@@ -30,10 +33,10 @@ export default function Product(): JSX.Element {
             <span className="text-sm font-medium text-red-400">Premium Collection</span>
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-3 tracking-tight">
-            Explore Our Collection
+            Industrial Equipment Catalog
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto" >
-            Discover premium products crafted with excellence
+            Explore our complete range of laser cutting, welding, marking, and automation systems designed for diverse industries.
           </p>
         </div>
 
@@ -129,20 +132,20 @@ export default function Product(): JSX.Element {
                 <button
                   key={s}
                   onClick={() => setSub(s)}
-                  className={`group w-full text-left px-4 py-3.5 rounded-lg font-medium transition-all duration-200 flex items-center justify-between ${
+                  className={`group w-full text-left px-4 py-3.5 rounded-lg font-light transition-all duration-200 flex items-center justify-between ${
                     s === sub 
                       ? "bg-gradient-to-r from-red-900 to-red-950 text-white shadow-lg" 
                       : "text-gray-400 hover:text-white hover:bg-zinc-800/50"
                   }`}
                 >
                   <span>{s}</span>
-                  <ArrowRight className={`w-4 h-4 transition-transform ${s === sub ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
+                  <ArrowRight className={`w-10 h-10 transition-transform ${s === sub ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
                 </button>
               ))}
             </nav>
           </aside>
 
-          {/* PRODUCTS - Wider */}
+          {/* PRODUCTS */}
           <main className="lg:col-span-4">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {products.length === 0 && (
@@ -166,7 +169,7 @@ export default function Product(): JSX.Element {
                       <img
                         src={p.image}
                         alt={p.name}
-                        className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+                        className="object-contain w-full h-full transition-transform duration-700 group-hover:scale-105 bg-white"
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full text-gray-700">
@@ -180,7 +183,10 @@ export default function Product(): JSX.Element {
                       {p.name}
                     </h3>
                     <p className="text-sm text-gray-400 mb-5 leading-relaxed">{p.description}</p>
-                    <button className="w-full px-6 py-3.5 rounded-lg bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 hover:border-red-800 flex items-center justify-center gap-2 group/btn">
+                    <button
+                      onClick={() => navigate(`/product/${p.id}`)}
+                      className="w-full px-6 py-3.5 rounded-lg bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 hover:border-red-800 flex items-center justify-center gap-2 group/btn"
+                    >
                       <span>View Details</span>
                       <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
                     </button>
@@ -226,7 +232,10 @@ export default function Product(): JSX.Element {
               <div className="p-5">
                 <h3 className="text-lg font-bold text-white mb-2">{p.name}</h3>
                 <p className="text-sm text-gray-400 mb-4">{p.description}</p>
-                <button className="w-full px-5 py-3 rounded-lg bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 flex items-center justify-center gap-2">
+                <button
+                  onClick={() => navigate(`/product/${p.id}`)}
+                  className="w-full px-5 py-3 rounded-lg bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 flex items-center justify-center gap-2"
+                >
                   <span>View Details</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
