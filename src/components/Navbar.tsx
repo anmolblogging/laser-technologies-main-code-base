@@ -5,14 +5,14 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { name: "Home", href: "#" },
+    { name: "Home", href: "/" },
     { name: "About", href: "#about" },
     { name: "Service", href: "#service" },
     { name: "Products", href: "#products" },
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/50 backdrop-blur-sm border-b border-border ">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b border-border ">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
@@ -37,14 +37,14 @@ const Header = () => {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* <div className="hidden md:flex items-center space-x-4">
             <button className="font-medium bg-transparent hover:bg-muted rounded-md px-4 py-2 transition-colors duration-200">
               Purchase
             </button>
             <button className="bg-transparent hover:bg-muted rounded-md px-2 py-2 transition-colors duration-200">
               <ShoppingCart className="h-5 w-5" />
             </button>
-          </div>
+          </div> */}
 
           {/* Mobile Menu Button */}
           <button
@@ -69,14 +69,14 @@ const Header = () => {
                 {item.name}
               </a>
             ))}
-            <div className="flex items-center space-x-2 px-4 pt-2">
+            {/* <div className="flex items-center space-x-2 px-4 pt-2">
               <button className="flex-1 bg-white border border-border rounded-md px-4 py-2 font-medium transition-colors hover:bg-muted">
                 Purchase
               </button>
               <button className="border border-border bg-white rounded-md px-2 py-2 transition-colors hover:bg-muted">
                 <ShoppingCart className="h-5 w-5" />
               </button>
-            </div>
+            </div> */}
           </nav>
         )}
       </div>

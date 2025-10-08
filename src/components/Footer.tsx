@@ -1,255 +1,261 @@
-import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram, Youtube, Send, Award, Users, Zap, Globe, Shield } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Twitter, Github, ArrowRight, ExternalLink } from 'lucide-react';
+import { memo, useState, ChangeEvent } from 'react';
 
+// Types
+interface FooterLinkProps {
+  href: string;
+  children: React.ReactNode;
+  external?: boolean;
+}
+
+interface SocialIconProps {
+  Icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  href: string;
+  label: string;
+}
+
+interface NavigationItem {
+  name: string;
+  href: string;
+}
+
+interface NavigationSection {
+  company: NavigationItem[];
+  solutions: NavigationItem[];
+  resources: NavigationItem[];
+  legal: NavigationItem[];
+}
+
+interface SocialLink {
+  Icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  href: string;
+  label: string;
+}
+
+// Memoized link component for performance
+const FooterLink = memo<FooterLinkProps>(({ href, children, external = false }) => (
+  <a
+    href={href}
+    className="group flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors duration-200"
+    {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+  >
+    <span>{children}</span>
+    {external && <ExternalLink className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />}
+  </a>
+));
+
+FooterLink.displayName = 'FooterLink';
+
+// Memoized social icon component
+const SocialIcon = memo<SocialIconProps>(({ Icon, href, label }) => (
+  <a
+    href={href}
+    aria-label={label}
+    className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800/50 hover:bg-red-600 text-gray-400 hover:text-white transition-all duration-200 hover:scale-105"
+  >
+    <Icon className="h-4 w-4" strokeWidth={2} />
+  </a>
+));
+
+SocialIcon.displayName = 'SocialIcon';
+
+// Main footer component
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState<string>('');
+  const year: number = new Date().getFullYear();
+
+  const navigation: NavigationSection = {
+    company: [
+      { name: 'About', href: '#' },
+      { name: 'Careers', href: '#' },
+      { name: 'Press', href: '#' },
+      { name: 'Blog', href: '#' },
+    ],
+    solutions: [
+      { name: 'Laser Cutting', href: '#' },
+      { name: 'Engraving', href: '#' },
+      { name: 'Welding', href: '#' },
+      { name: 'Marking', href: '#' },
+    ],
+    resources: [
+      { name: 'Documentation', href: '#' },
+      { name: 'Support', href: '#' },
+      { name: 'API Reference', href: '#' },
+      { name: 'Training', href: '#' },
+    ],
+    legal: [
+      { name: 'Privacy', href: '#' },
+      { name: 'Terms', href: '#' },
+      { name: 'Cookies', href: '#' },
+      { name: 'Licenses', href: '#' },
+    ],
+  };
+
+  const socialLinks: SocialLink[] = [
+    { Icon: Twitter, href: '#', label: 'Twitter' },
+    { Icon: Linkedin, href: '#', label: 'LinkedIn' },
+    { Icon: Github, href: '#', label: 'GitHub' },
+  ];
+
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubscribe = (): void => {
+    if (email && email.includes('@')) {
+      alert('Thank you for subscribing!');
+      setEmail('');
+    } else if (email) {
+      alert('Please enter a valid email address');
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === 'Enter') {
+      handleSubscribe();
+    }
+  };
 
   return (
-    <footer className="bg-black text-gray-300">
-      {/* Decorative Top Border */}
-      <div className="h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent"></div>
-      
-      {/* Newsletter Section */}
-      <div className="bg-gradient-to-r from-red-950/20 via-red-900/10 to-red-950/20 border-b border-red-900/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-center md:text-left">
-              <h3 className="text-2xl font-bold text-white mb-2">Stay Updated with Latest Innovations</h3>
-              <p className="text-gray-400">Subscribe to our newsletter for cutting-edge laser technology insights and exclusive offers</p>
+    <footer className="bg-gradient-to-b from-gray-950 to-black border-t border-gray-900">
+      {/* Main Footer */}
+      <div className="max-w-7xl mx-auto px-6 py-12 lg:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 lg:gap-12">
+          
+          {/* Brand Section */}
+          <div className="col-span-2 space-y-6">
+            {/* Logo */}
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-red-700 rounded-lg flex items-center justify-center">
+                <div className="w-3 h-3 bg-white rounded-sm transform rotate-45" />
+              </div>
+              <span className="text-xl font-bold text-white">LaserTech</span>
             </div>
-            <div className="flex w-full md:w-auto gap-2">
-              <input 
-                type="email" 
-                placeholder="Enter your email" 
-                className="px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 w-full md:w-80 transition-all duration-300"
+
+            {/* Description */}
+            <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
+              Leading the future of laser technology with precision engineering and innovative solutions for industrial applications.
+            </p>
+
+            {/* Contact Info */}
+            <div className="space-y-3">
+              <a href="mailto:hello@lasertech.com" className="flex items-center gap-3 text-sm text-gray-400 hover:text-white transition-colors group">
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-800/50 group-hover:bg-red-600/10 transition-colors">
+                  <Mail className="h-4 w-4" />
+                </div>
+                <span>hello@lasertech.com</span>
+              </a>
+              
+              <a href="tel:+18005551234" className="flex items-center gap-3 text-sm text-gray-400 hover:text-white transition-colors group">
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-800/50 group-hover:bg-red-600/10 transition-colors">
+                  <Phone className="h-4 w-4" />
+                </div>
+                <span>+1 (800) 555-1234</span>
+              </a>
+              
+              <div className="flex items-start gap-3 text-sm text-gray-400">
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-800/50 mt-0.5">
+                  <MapPin className="h-4 w-4" />
+                </div>
+                <span className="leading-relaxed">
+                  Silicon Valley, CA<br />United States
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Company Links */}
+          <nav className="space-y-4">
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Company</h3>
+            <ul className="space-y-3">
+              {navigation.company.map((item: NavigationItem) => (
+                <li key={item.name}>
+                  <FooterLink href={item.href}>{item.name}</FooterLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Solutions Links */}
+          <nav className="space-y-4">
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Solutions</h3>
+            <ul className="space-y-3">
+              {navigation.solutions.map((item: NavigationItem) => (
+                <li key={item.name}>
+                  <FooterLink href={item.href}>{item.name}</FooterLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Resources Links */}
+          <nav className="space-y-4">
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Resources</h3>
+            <ul className="space-y-3">
+              {navigation.resources.map((item: NavigationItem) => (
+                <li key={item.name}>
+                  <FooterLink href={item.href}>{item.name}</FooterLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Legal Links */}
+          <nav className="space-y-4">
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Legal</h3>
+            <ul className="space-y-3">
+              {navigation.legal.map((item: NavigationItem) => (
+                <li key={item.name}>
+                  <FooterLink href={item.href}>{item.name}</FooterLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+
+        {/* Newsletter Section */}
+        <div className="mt-12 pt-8 border-t border-gray-900">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="max-w-md">
+              <h3 className="text-base font-semibold text-white mb-2">Stay Updated</h3>
+              <p className="text-sm text-gray-400">Get the latest updates on laser technology and industry insights.</p>
+            </div>
+            
+            <div className="flex gap-2 w-full md:w-auto">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={handleEmailChange}
+                onKeyPress={handleKeyPress}
+                className="flex-1 md:w-64 px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-colors"
               />
-              <button className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold flex items-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-red-600/50 whitespace-nowrap">
-                Subscribe <Send className="h-4 w-4" />
+              <button
+                onClick={handleSubscribe}
+                className="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors duration-200 flex items-center gap-2 whitespace-nowrap"
+              >
+                Subscribe
+                <ArrowRight className="h-4 w-4" />
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
-          
-          {/* Company Info - Larger Section */}
-          <div className="lg:col-span-4 space-y-6">
-            {/* Logo */}
-            <div className="flex items-center space-x-3 group cursor-pointer">
-              <div className="relative">
-                <div className="absolute inset-0 bg-red-600 blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
-                <div className="relative bg-gradient-to-br from-red-600 to-red-800 p-3 rounded-xl">
-                  <Zap className="h-8 w-8 text-white" strokeWidth={2.5} />
-                </div>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white tracking-tight">LASER<span className="text-red-600">TECH</span></h3>
-                <p className="text-xs text-gray-500 uppercase tracking-wider">Precision & Innovation</p>
-              </div>
-            </div>
-            
-            <p className="text-gray-400 leading-relaxed">
-              Pioneering the future of laser technology with state-of-the-art solutions for industrial manufacturing, medical applications, and research innovation. Trusted by over 5,000+ companies worldwide.
-            </p>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 pt-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-red-600">25+</div>
-                <div className="text-xs text-gray-500">Years</div>
-              </div>
-              <div className="text-center border-l border-r border-gray-800">
-                <div className="text-2xl font-bold text-red-600">5000+</div>
-                <div className="text-xs text-gray-500">Clients</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-red-600">50+</div>
-                <div className="text-xs text-gray-500">Countries</div>
-              </div>
-            </div>
-
-            {/* Certifications */}
-            <div className="flex items-center gap-3 pt-4">
-              <Shield className="h-5 w-5 text-red-600" />
-              <span className="text-sm text-gray-400">ISO 9001:2015 Certified</span>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div className="lg:col-span-2">
-            <h4 className="text-lg font-bold text-white mb-6 relative inline-block">
-              Company
-              <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-red-600"></span>
-            </h4>
-            <ul className="space-y-3">
-              {['About Us', 'Leadership Team', 'Careers', 'News & Media', 'Case Studies', 'Partners', 'Investors'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-sm text-gray-400 hover:text-red-600 hover:translate-x-1 inline-block transition-all duration-300">
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Products & Solutions */}
-          <div className="lg:col-span-2">
-            <h4 className="text-lg font-bold text-white mb-6 relative inline-block">
-              Solutions
-              <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-red-600"></span>
-            </h4>
-            <ul className="space-y-3">
-              {['Laser Cutting Systems', 'Laser Engraving', 'Laser Welding', 'Laser Marking', '3D Laser Scanning', 'Medical Lasers', 'R&D Solutions'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-sm text-gray-400 hover:text-red-600 hover:translate-x-1 inline-block transition-all duration-300">
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div className="lg:col-span-2">
-            <h4 className="text-lg font-bold text-white mb-6 relative inline-block">
-              Resources
-              <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-red-600"></span>
-            </h4>
-            <ul className="space-y-3">
-              {['Documentation', 'White Papers', 'Technical Support', 'Training Center', 'Webinars', 'FAQs', 'Downloads'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-sm text-gray-400 hover:text-red-600 hover:translate-x-1 inline-block transition-all duration-300">
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div className="lg:col-span-2">
-            <h4 className="text-lg font-bold text-white mb-6 relative inline-block">
-              Contact
-              <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-red-600"></span>
-            </h4>
-            <ul className="space-y-4">
-              <li>
-                <div className="flex items-start space-x-3 group">
-                  <div className="bg-red-600/10 p-2 rounded-lg group-hover:bg-red-600/20 transition-colors duration-300">
-                    <MapPin className="h-4 w-4 text-red-600 flex-shrink-0" />
-                  </div>
-                  <span className="text-sm text-gray-400">123 Innovation Drive, Silicon Valley, CA 94025, USA</span>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center space-x-3 group">
-                  <div className="bg-red-600/10 p-2 rounded-lg group-hover:bg-red-600/20 transition-colors duration-300">
-                    <Phone className="h-4 w-4 text-red-600 flex-shrink-0" />
-                  </div>
-                  <a href="tel:+18005551234" className="text-sm text-gray-400 hover:text-red-600 transition-colors duration-300">
-                    +1 (800) 555-1234
-                  </a>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center space-x-3 group">
-                  <div className="bg-red-600/10 p-2 rounded-lg group-hover:bg-red-600/20 transition-colors duration-300">
-                    <Mail className="h-4 w-4 text-red-600 flex-shrink-0" />
-                  </div>
-                  <a href="mailto:contact@lasertech.com" className="text-sm text-gray-400 hover:text-red-600 transition-colors duration-300">
-                    contact@lasertech.com
-                  </a>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center space-x-3 group">
-                  <div className="bg-red-600/10 p-2 rounded-lg group-hover:bg-red-600/20 transition-colors duration-300">
-                    <Globe className="h-4 w-4 text-red-600 flex-shrink-0" />
-                  </div>
-                  <a href="#" className="text-sm text-gray-400 hover:text-red-600 transition-colors duration-300">
-                    www.lasertech.com
-                  </a>
-                </div>
-              </li>
-            </ul>
-
-            {/* Business Hours */}
-            <div className="mt-6 p-4 bg-gradient-to-br from-red-950/20 to-transparent border border-red-900/20 rounded-lg">
-              <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">Business Hours</p>
-              <p className="text-sm text-gray-300">Mon - Fri: 9:00 AM - 6:00 PM</p>
-              <p className="text-sm text-gray-300">Sat: 10:00 AM - 4:00 PM</p>
-              <p className="text-sm text-red-600">24/7 Emergency Support</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Social Media & Features */}
-        <div className="mt-12 pt-8 border-t border-gray-900">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            {/* Features */}
-            <div className="flex flex-wrap justify-center gap-6">
-              <div className="flex items-center gap-2">
-                <Award className="h-5 w-5 text-red-600" />
-                <span className="text-sm text-gray-400">Industry Leader</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-red-600" />
-                <span className="text-sm text-gray-400">Expert Team</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Globe className="h-5 w-5 text-red-600" />
-                <span className="text-sm text-gray-400">Global Presence</span>
-              </div>
-            </div>
-
-            {/* Social Media */}
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-500 mr-2">Follow Us:</span>
-              {[
-                { Icon: Facebook, href: '#' },
-                { Icon: Twitter, href: '#' },
-                { Icon: Linkedin, href: '#' },
-                { Icon: Instagram, href: '#' },
-                { Icon: Youtube, href: '#' }
-              ].map(({ Icon, href }, index) => (
-                <a 
-                  key={index}
-                  href={href} 
-                  className="bg-gray-900 p-2.5 rounded-lg hover:bg-red-600 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-red-600/50 group"
-                >
-                  <Icon className="h-4 w-4 text-gray-400 group-hover:text-white transition-colors duration-300" />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Bottom Bar */}
-      <div className="border-t border-gray-900 bg-gradient-to-r from-black via-gray-950 to-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="border-t border-gray-900">
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            {/* Copyright */}
             <p className="text-sm text-gray-500">
-              © {currentYear} <span className="text-red-600 font-semibold">LaserTech</span>. All rights reserved. | Engineered with precision.
+              © {year} LaserTech. All rights reserved.
             </p>
-            <div className="flex flex-wrap justify-center gap-6 text-sm">
-              <a href="#" className="text-gray-500 hover:text-red-600 transition-colors duration-300">
-                Privacy Policy
-              </a>
-              <span className="text-gray-800">•</span>
-              <a href="#" className="text-gray-500 hover:text-red-600 transition-colors duration-300">
-                Terms of Service
-              </a>
-              <span className="text-gray-800">•</span>
-              <a href="#" className="text-gray-500 hover:text-red-600 transition-colors duration-300">
-                Cookie Policy
-              </a>
-              <span className="text-gray-800">•</span>
-              <a href="#" className="text-gray-500 hover:text-red-600 transition-colors duration-300">
-                Accessibility
-              </a>
+
+            {/* Social Links */}
+            <div className="flex items-center gap-3">
+              {socialLinks.map(({ Icon, href, label }: SocialLink) => (
+                <SocialIcon key={label} Icon={Icon} href={href} label={label} />
+              ))}
             </div>
           </div>
         </div>
