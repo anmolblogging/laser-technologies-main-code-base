@@ -11,6 +11,7 @@ import Testimonial from './components/Testimonial'
 import Blog from './components/Blog'
 import Producttemplate from './components/Producttemplate'
 import Footer from './components/Footer'
+import Gallery from './components/Gallery'
 
 function Home() {
   return (
@@ -25,6 +26,7 @@ function Home() {
       <VideoSection />
       <Blog />
       <Testimonial />
+      <Gallery />
       <Footer />
     </div>
   )
