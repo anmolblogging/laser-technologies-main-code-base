@@ -53,14 +53,14 @@ export default function NoticeSection() {
 
             <button
               onClick={() => setShowForm(true)}
-              className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold px-8 py-4 text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               Register Your Interest
             </button>
           </div>
 
           <div className="order-1 lg:order-2">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
+            <div className="relative  overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
               <img
                 src="https://images.pexels.com/photos/1550086/pexels-photo-1550086.jpeg?auto=compress&cs=tinysrgb&w=800"
                 alt="Laser Manufacturing"

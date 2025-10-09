@@ -102,7 +102,7 @@ export default function CalendarSection() {
             {events.map((event, idx) => (
               <div
                 key={idx}
-                className={`min-w-[280px] sm:min-w-[320px] md:min-w-[360px] lg:min-w-[300px] snap-start group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100`}
+                className={`min-w-[280px] sm:min-w-[320px] md:min-w-[360px] lg:min-w-[300px] snap-start group bg-white  shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100`}
               >
                 <div className={`bg-gradient-to-br ${event.color} p-6 text-white relative overflow-hidden`}>
                   <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12" />
@@ -126,7 +126,7 @@ export default function CalendarSection() {
                       <span>{event.time}</span>
                     </div>
                   </div>
-                  <button className="w-full bg-red-50 hover:bg-red-600 text-red-600 hover:text-white font-semibold py-3 rounded-lg transition-all duration-300 text-sm">
+                  <button className="w-full bg-red-50 hover:bg-red-600 text-red-600 hover:text-white font-semibold py-3 transition-all duration-300 text-sm">
                     Learn More
                   </button>
                 </div>

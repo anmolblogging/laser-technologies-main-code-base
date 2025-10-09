@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from 'react-router-dom'
-import { Grid, Image, ChevronDown, Sparkles, ShoppingBag, ArrowRight } from "lucide-react";
+import { Grid, Image, ChevronDown, Sparkles, ShoppingBag, ArrowRight , Phone} from "lucide-react";
 import  {CATEGORIES}  from "../Data"; 
 // import { Link } from "react-router-dom";
 
@@ -46,7 +46,7 @@ export default function Product(): JSX.Element {
             <button
               key={c.id}
               onClick={() => { setCategoryId(c.id); setSub(c.subs[0]); }}
-              className={`px-8 py-3.5 rounded-xl font-semibold transition-all duration-300 border ${
+              className={`px-8 py-3.5  font-semibold transition-all duration-300 border ${
                 c.id === categoryId 
                   ? "bg-gradient-to-r from-red-900 to-red-950 text-white border-red-800 shadow-lg shadow-red-950/50" 
                   : "bg-black/40 text-gray-300 hover:text-white hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
@@ -62,7 +62,7 @@ export default function Product(): JSX.Element {
           <div className="relative">
             <button
               onClick={() => setMobileCatOpen(!mobileCatOpen)}
-              className="w-full px-5 py-4 bg-black/40 border border-zinc-800 rounded-xl text-white font-semibold flex justify-between items-center hover:border-zinc-700 transition-all backdrop-blur-sm"
+              className="w-full px-5 py-4 bg-black/40 border border-zinc-800  text-white font-semibold flex justify-between items-center hover:border-zinc-700 transition-all backdrop-blur-sm"
             >
               <span className="flex items-center gap-2">
                 <Grid className="w-5 h-5 text-red-500" />
@@ -71,7 +71,7 @@ export default function Product(): JSX.Element {
               <ChevronDown className={`w-5 h-5 text-gray-400 transform transition-transform duration-200 ${mobileCatOpen ? "rotate-180" : "rotate-0"}`} />
             </button>
             {mobileCatOpen && (
-              <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl">
+              <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800  shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl">
                 {CATEGORIES.map((c) => (
                   <button
                     key={c.id}
@@ -92,13 +92,13 @@ export default function Product(): JSX.Element {
           <div className="relative">
             <button
               onClick={() => setMobileSubOpen(!mobileSubOpen)}
-              className="w-full px-5 py-4 bg-black/40 border border-zinc-800 rounded-xl text-white font-semibold flex justify-between items-center hover:border-zinc-700 transition-all backdrop-blur-sm"
+              className="w-full px-5 py-4 bg-black/40 border border-zinc-800 text-white font-semibold flex justify-between items-center hover:border-zinc-700 transition-all backdrop-blur-sm"
             >
               <span>{sub}</span>
               <ChevronDown className={`w-5 h-5 text-gray-400 transform transition-transform duration-200 ${mobileSubOpen ? "rotate-180" : "rotate-0"}`} />
             </button>
             {mobileSubOpen && (
-              <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl">
+              <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800  shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl">
                 {category.subs.map((s) => (
                   <button
                     key={s}
@@ -120,9 +120,9 @@ export default function Product(): JSX.Element {
         {/* DESKTOP LAYOUT */}
         <div className="hidden lg:grid grid-cols-5 gap-6">
           {/* SIDEBAR - Fixed Height with Scroll */}
-          <aside className="bg-gradient-to-b from-zinc-900 to-black rounded-2xl p-6 shadow-2xl border border-zinc-800 h-[600px] flex flex-col sticky top-6">
+          <aside className="bg-gradient-to-b from-zinc-900 to-black  p-6 shadow-2xl border border-zinc-800 h-[600px] flex flex-col sticky top-6">
             <h4 className="text-lg font-bold mb-6 text-white flex items-center gap-3 pb-4 border-b border-zinc-800">
-              <div className="p-2 bg-red-950/50 rounded-lg border border-red-900/30">
+              <div className="p-2 bg-red-950/50  border border-red-900/30">
                 <Grid className="w-5 h-5 text-red-500" />
               </div>
               <span>Sub Categories</span>
@@ -132,7 +132,7 @@ export default function Product(): JSX.Element {
                 <button
                   key={s}
                   onClick={() => setSub(s)}
-                  className={`group w-full text-left px-4 py-3.5 rounded-lg font-light transition-all duration-200 flex items-center justify-between ${
+                  className={`group w-full text-left px-4 py-3.5  font-semibold transition-all duration-200 flex items-center justify-between ${
                     s === sub 
                       ? "bg-gradient-to-r from-red-900 to-red-950 text-white shadow-lg" 
                       : "text-gray-400 hover:text-white hover:bg-zinc-800/50"
@@ -161,7 +161,7 @@ export default function Product(): JSX.Element {
               {products.map((p, index) => (
                 <div
                   key={p.id}
-                  className="group bg-gradient-to-b from-zinc-900 to-black rounded-2xl overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-500 hover:shadow-2xl hover:shadow-red-950/20"
+                  className="group bg-gradient-to-b from-zinc-900 to-black  overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-500 hover:shadow-2xl hover:shadow-red-950/20"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="relative h-80 bg-zinc-950 overflow-hidden">
@@ -182,14 +182,34 @@ export default function Product(): JSX.Element {
                     <h3 className="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">
                       {p.name}
                     </h3>
-                    <p className="text-sm text-gray-400 mb-5 leading-relaxed">{p.description}</p>
-                    <button
-                      onClick={() => navigate(`/product/${p.id}`)}
-                      className="w-full px-6 py-3.5 rounded-lg bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 hover:border-red-800 flex items-center justify-center gap-2 group/btn"
-                    >
-                      <span>View Details</span>
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                    </button>
+                    <p className="text-sm text-gray-400 mb-5 leading-relaxed line-clamp-2">{p.description}</p>
+                    <div className="flex w-full gap-3 mt-2">
+  {/* View Details Button */}
+  <button
+    onClick={() => navigate(`/product/${p.id}`)}
+    className="flex-1 px-6 py-3.5 bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold 
+    hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 
+    hover:border-red-800 flex items-center justify-center gap-2  shadow-sm 
+    hover:shadow-md group/btn"
+  >
+    <span>View</span>
+    <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+  </button>
+
+  {/* Enquire Button */}
+  <button
+    onClick={() => navigate('/contact')}
+    className="flex-1 px-6 py-3.5 bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold 
+    hover:from-gray-800 hover:to-gray-900 transition-all duration-300 border border-gray-900 
+    hover:border-gray-800 flex items-center justify-center gap-2  shadow-sm 
+    hover:shadow-md group/btn"
+  >
+    <Phone className="w-4 h-4 transition-transform group-hover/btn:scale-110" />
+    <span>Enquire</span>
+  </button>
+</div>
+
+
                   </div>
                 </div>
               ))}
@@ -202,7 +222,7 @@ export default function Product(): JSX.Element {
           {products.length === 0 && (
             <div className="col-span-full text-center py-20">
               <div className="inline-flex flex-col items-center gap-4">
-                <div className="p-6 bg-zinc-900 rounded-full border border-zinc-800">
+                <div className="p-6 bg-zinc-900  border border-zinc-800">
                   <ShoppingBag className="w-10 h-10 text-gray-600" />
                 </div>
                 <p className="text-gray-500 font-medium">No products found</p>
@@ -212,7 +232,7 @@ export default function Product(): JSX.Element {
           {products.map((p, index) => (
             <div
               key={p.id}
-              className="group bg-gradient-to-b from-zinc-900 to-black rounded-2xl overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-500"
+              className="group bg-gradient-to-b from-zinc-900 to-black  overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-500"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="relative h-56 bg-zinc-950 overflow-hidden">
@@ -234,7 +254,7 @@ export default function Product(): JSX.Element {
                 <p className="text-sm text-gray-400 mb-4">{p.description}</p>
                 <button
                   onClick={() => navigate(`/product/${p.id}`)}
-                  className="w-full px-5 py-3 rounded-lg bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 flex items-center justify-center gap-2"
+                  className="w-full px-5 py-3  bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 flex items-center justify-center gap-2"
                 >
                   <span>View Details</span>
                   <ArrowRight className="w-4 h-4" />

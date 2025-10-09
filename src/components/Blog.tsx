@@ -75,9 +75,9 @@ const Blog: React.FC = () => {
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 py-16 px-4 md:px-8 lg:px-16 transition-colors duration-500">
+    <section className="bg-gray-50  py-16 px-4 md:px-8 lg:px-16 transition-colors duration-500">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 dark:text-white mb-12">
+        <h2 className="text-4xl md:text-5xl font-bold text-center text-black e mb-12">
           Our Latest Insights
         </h2>
 
@@ -94,7 +94,7 @@ const Blog: React.FC = () => {
                 key={blog.id}
                 className={`flex-shrink-0 w-full md:w-1/3 px-4`}
               >
-                <div className="bg-white dark:bg-black rounded-xl shadow-lg overflow-hidden hover:scale-105 transform transition duration-300 h-full flex flex-col">
+                <div className="bg-white   shadow-lg  hover:scale-105 transform transition duration-300 h-full flex flex-col">
                   <img
                     src={blog.image}
                     alt={blog.title}
@@ -102,16 +102,13 @@ const Blog: React.FC = () => {
                     className="w-full h-56 object-cover"
                   />
                   <div className="p-6 flex-1 flex flex-col">
-                    <p className="text-sm text-gray-400 dark:text-gray-300">
-                      {blog.date}
-                    </p>
-                    <h3 className="text-2xl font-semibold text-gray-900 dark:text-white  mt-2">
+                    <h3 className="text-2xl font-semibold text-black  mt-2">
                       {blog.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mt-3 line-clamp-3 flex-1">
+                    <p className="text-black mt-3 line-clamp-3 flex-1">
                       {blog.description}
                     </p>
-                    <button className="mt-5 px-5 py-3 bg-white text-black font-semibold rounded-lg hover:bg-red-700 transition-colors duration-300">
+                    <button className="mt-5 px-5 py-3 bg-gradient-to-br from-red-900 to-red-700 text-white font-semibold hover:bg-red-700 transition-colors duration-300">
                       Read More
                     </button>
                   </div>

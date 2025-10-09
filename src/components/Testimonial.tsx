@@ -67,10 +67,10 @@ export default function TestimonialSlider() {
             {testimonialsData.map((testimonial, idx) => (
               <div
                 key={idx}
-                className="flex-shrink-0 w-full lg:flex lg:flex-row flex-col items-stretch gap-6 rounded-2xl overflow-hidden  bg-gray-100 p-6 lg:p-8 transform transition-transform hover:-translate-y-1"
+                className="flex-shrink-0 w-full lg:flex lg:flex-row flex-col items-stretch gap-6 overflow-hidden  bg-gray-100 p-6 lg:p-8 transform transition-transform hover:-translate-y-1"
               >
                 {/* Video */}
-                <div className="lg:flex-1 relative w-full h-64 lg:h-auto lg:min-h-[350px] bg-gray-100 rounded-2xl overflow-hidden">
+                <div className="lg:flex-1 relative w-full h-64 lg:h-auto lg:min-h-[350px] bg-gray-100  overflow-hidden">
                   <iframe
                     className="absolute inset-0 w-full h-full object-cover"
                     src={testimonial.videoUrl}
@@ -81,7 +81,7 @@ export default function TestimonialSlider() {
                 </div>
 
                 {/* Content */}
-                <div className="lg:flex-1 flex flex-col justify-center bg-white p-2 rounded-xl pl-6 md:mt-0 mt-10">
+                <div className="lg:flex-1 flex flex-col justify-center bg-white p-2  pl-6 md:mt-0 mt-10">
                   <h3 className="text-2xl font-bold text-gray-900 mb-4 relative after:block after:w-12 after:h-1 after:bg-red-600 after:rounded mt-2">
                     {testimonial.header}
                   </h3>

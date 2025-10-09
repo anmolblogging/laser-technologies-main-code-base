@@ -104,13 +104,13 @@ export default function StatsCounter() {
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="group bg-white rounded-2xl p-10 shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center text-center relative"
+              className="group bg-white p-10 shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center text-center relative"
               style={{
                 animation: `fadeIn 0.6s ease-out ${index * 0.1}s both`,
               }}
             >
               <div
-                className={`flex items-center justify-center w-16 h-16 mb-6 rounded-2xl bg-gradient-to-br ${stat.color} text-white shadow-md group-hover:scale-105 transition-transform duration-300`}
+                className={`flex items-center justify-center w-16 h-16 mb-6  bg-gradient-to-br ${stat.color} text-white shadow-md group-hover:scale-105 transition-transform duration-300`}
               >
                 {stat.icon}
               </div>
@@ -122,7 +122,7 @@ export default function StatsCounter() {
               </div>
 
               <div
-                className={`absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r ${stat.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-b-2xl`}
+                className={`absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r ${stat.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 `}
               />
             </div>
           ))}

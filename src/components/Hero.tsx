@@ -11,7 +11,7 @@ const HeroBanner: React.FC = () => (
         className="w-full h-full object-cover"
         loading="lazy"
       />
-      <div className="absolute inset-0 bg-red-600/30 mix-blend-multiply" />
+      <div className="absolute inset-0 bg-red-800/60 mix-blend-multiply" />
       <div className="absolute inset-0 bg-hero-gradient mix-blend-multiply" />
     </div>
 
@@ -26,16 +26,16 @@ const HeroBanner: React.FC = () => (
       </p>
       <button
         type="button"
-        className="bg-white text-secondary hover:bg-white/90 px-12 py-6 text-lg font-semibold rounded-md transition-all duration-300 mt-2 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary"
+        className="bg-white text-secondary hover:bg-white/90 px-12 py-6 text-lg font-semibold  transition-all duration-300 mt-2 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary"
       >
         Explore Products
       </button>
     </div>
 
-    {/* Enhanced Taller Video Section */}
+    {/*  Video Section */}
     <div className="relative z-20 flex justify-center -mb-44 md:-mb-64 lg:-mb-64">
       <div className="w-full max-w-6xl px-4">
-        <div className="rounded-2xl overflow-hidden shadow-2xl  bg-gradient-to-br from-black via-gray-900 to-gray-800"
+        <div className=" overflow-hidden shadow-2xl  bg-gradient-to-br from-black via-gray-900 to-gray-800"
             style={{
               height: '620px',
               boxShadow:
@@ -49,9 +49,9 @@ const HeroBanner: React.FC = () => (
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
             loading="lazy"
-            style={{
-              borderRadius: '18px',
-            }}
+            // style={{
+            //   borderRadius: '18px',
+            // }}
           />
         </div>
       </div>

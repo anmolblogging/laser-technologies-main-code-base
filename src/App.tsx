@@ -18,8 +18,8 @@ function Home() {
       <Navbar />
       <Hero />
       <NoticeSection />
-      <ProductsSection />
       <CalendarSection />
+      <ProductsSection />
       <IndustryCarousel />
       <StatsCounter />
       <VideoSection />

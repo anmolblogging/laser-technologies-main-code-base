@@ -92,7 +92,7 @@ export default function IndustryCarousel() {
             {getVisibleItems().map((industry, index) => (
               <div
                 key={`${currentIndex}-${index}`}
-                className="group relative h-80 rounded-2xl overflow-hidden cursor-pointer transform transition-all duration-500 hover:scale-105"
+                className="group relative h-80  overflow-hidden cursor-pointer transform transition-all duration-500 hover:scale-105"
                 style={{ animation: 'fadeIn 0.5s ease-in-out' }}
               >
                 <div
@@ -106,7 +106,7 @@ export default function IndustryCarousel() {
                     <h4 className="text-xl font-bold leading-tight">{industry.title}</h4>
                   </div>
                 </div>
-                <div className="absolute inset-0 border-2 border-transparent group-hover:border-red-500 rounded-2xl transition-all duration-500" />
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-red-500  transition-all duration-500" />
               </div>
             ))}
           </div>
