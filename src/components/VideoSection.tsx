@@ -2,7 +2,7 @@
 export default function VideoSection() {
   return (
     <section
-      className="py-20 bg-gradient-to-br from-gray-50 "
+      className="py-20 bg-gray-50 "
       aria-label="Video demonstration of precision laser technology"
     >
       {/* Header */}

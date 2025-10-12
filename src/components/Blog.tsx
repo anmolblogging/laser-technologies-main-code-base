@@ -1,5 +1,5 @@
 // blog.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface BlogPost {
   id: number;
@@ -59,8 +59,20 @@ const blogs: BlogPost[] = [
 
 const Blog: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [cardsPerFrame, setCardsPerFrame] = useState(
+    window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1
+  );
 
-  const cardsPerFrame = window.innerWidth >= 768 ? 3 : 1;
+  // Handle responsive card count
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setCardsPerFrame(3);
+      else if (window.innerWidth >= 768) setCardsPerFrame(2);
+      else setCardsPerFrame(1);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const prevSlide = () => {
     setCurrentIndex((prev) =>
@@ -75,58 +87,67 @@ const Blog: React.FC = () => {
   };
 
   return (
-    <section className="bg-gray-50  py-16 px-4 md:px-8 lg:px-16 transition-colors duration-500">
+    <section className="bg-gray-50 py-16 px-4 md:px-8 lg:px-16 transition-colors duration-500">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold text-center text-black e mb-12">
+        <h2 className="text-4xl md:text-5xl font-bold text-center text-black mb-12">
           Our Latest Insights
         </h2>
 
-        <div className="relative overflow-hidden">
-          {/* Carousel Slides */}
-          <div
-            className="flex transition-transform duration-500"
-            style={{
-              transform: `translateX(-${(100 / cardsPerFrame) * currentIndex}%)`,
-            }}
-          >
-            {blogs.map((blog) => (
-              <div
-                key={blog.id}
-                className={`flex-shrink-0 w-full md:w-1/3 px-4`}
-              >
-                <div className="bg-white   shadow-lg  hover:scale-105 transform transition duration-300 h-full flex flex-col">
-                  <img
-                    src={blog.image}
-                    alt={blog.title}
-                    loading="lazy"
-                    className="w-full h-56 object-cover"
-                  />
-                  <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-2xl font-semibold text-black  mt-2">
-                      {blog.title}
-                    </h3>
-                    <p className="text-black mt-3 line-clamp-3 flex-1">
-                      {blog.description}
-                    </p>
-                    <button className="mt-5 px-5 py-3 bg-gradient-to-br from-red-900 to-red-700 text-white font-semibold hover:bg-red-700 transition-colors duration-300">
-                      Read More
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Navigation Buttons */}
+        {/* Carousel container */}
+        <div className="flex items-center justify-center gap-4">
+          {/* Left Button */}
           <button
             onClick={prevSlide}
-            className="absolute top-1/2 left-2 -translate-y-1/2 bg-black/70 text-white p-3 rounded-full hover:bg-red-700 transition"
+            className="flex-shrink-0 bg-black/70 text-white p-3 rounded-full hover:bg-red-700 transition"
+            aria-label="Previous"
           >
             &#10094;
           </button>
+
+          {/* Slides wrapper */}
+          <div className="overflow-hidden w-full">
+            <div
+              className="flex transition-transform duration-500"
+              style={{
+                transform: `translateX(-${
+                  (100 / cardsPerFrame) * currentIndex
+                }%)`,
+              }}
+            >
+              {blogs.map((blog) => (
+                <div
+                  key={blog.id}
+                  className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-4"
+                >
+                  <div className="bg-white shadow-lg hover:scale-105 transform transition duration-300 h-full flex flex-col">
+                    <img
+                      src={blog.image}
+                      alt={blog.title}
+                      loading="lazy"
+                      className="w-full h-56 object-cover"
+                    />
+                    <div className="p-6 flex-1 flex flex-col">
+                      <h3 className="text-2xl font-semibold text-black mt-2">
+                        {blog.title}
+                      </h3>
+                      <p className="text-black mt-3 line-clamp-3 flex-1">
+                        {blog.description}
+                      </p>
+                      <button className="mt-5 px-5 py-3 bg-gradient-to-br from-red-900 to-red-700 text-white font-semibold hover:bg-red-700 transition-colors duration-300">
+                        Read More
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Button */}
           <button
             onClick={nextSlide}
-            className="absolute top-1/2 right-2 -translate-y-1/2 bg-black/70 text-white p-3 rounded-full hover:bg-red-700 transition"
+            className="flex-shrink-0 bg-black/70 text-white p-3 rounded-full hover:bg-red-700 transition"
+            aria-label="Next"
           >
             &#10095;
           </button>
