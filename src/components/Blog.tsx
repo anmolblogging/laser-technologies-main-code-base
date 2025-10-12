@@ -1,12 +1,12 @@
-// blog.tsx
 import React, { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface BlogPost {
   id: number;
   title: string;
   description: string;
   image: string;
-  date: string;
+
 }
 
 const blogs: BlogPost[] = [
@@ -17,7 +17,7 @@ const blogs: BlogPost[] = [
       "Learn modern React patterns, hooks, and best practices for building scalable apps.",
     image:
       "https://images.unsplash.com/photo-1759224005115-cc3c38202a9d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8",
-    date: "Oct 7, 2025",
+
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const blogs: BlogPost[] = [
       "Create stunning and responsive UIs quickly using TailwindCSS in React projects. Make your designs scalable and professional with best practices.",
     image:
       "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80",
-    date: "Oct 5, 2025",
+
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ const blogs: BlogPost[] = [
       "Write safer, scalable TypeScript code with advanced tips and best practices for modern web apps.",
     image:
       "https://images.unsplash.com/photo-1759520054142-c723a30f7716?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8",
-    date: "Oct 1, 2025",
+
   },
   {
     id: 4,
@@ -44,7 +44,7 @@ const blogs: BlogPost[] = [
       "Discover the latest features and improvements in Next.js for high-performance apps.",
     image:
       "https://images.unsplash.com/photo-1743764179699-d3038d1a93e7?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw3fHx8ZW58MHx8fHx8",
-    date: "Sep 28, 2025",
+
   },
   {
     id: 5,
@@ -53,17 +53,18 @@ const blogs: BlogPost[] = [
       "Enhance your UI designs with advanced TailwindCSS tricks and patterns for modern responsive design.",
     image:
       "https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=800&q=80",
-    date: "Sep 25, 2025",
+
   },
 ];
 
 const Blog: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerFrame, setCardsPerFrame] = useState(
-    window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1
+    typeof window !== 'undefined' 
+      ? window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1
+      : 3
   );
 
-  // Handle responsive card count
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) setCardsPerFrame(3);
@@ -86,72 +87,104 @@ const Blog: React.FC = () => {
     );
   };
 
-  return (
-    <section className="bg-gray-50 py-16 px-4 md:px-8 lg:px-16 transition-colors duration-500">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold text-center text-black mb-12">
-          Our Latest Insights
-        </h2>
+  const totalSlides = Math.ceil(blogs.length / cardsPerFrame);
+  const currentSlide = Math.floor(currentIndex / cardsPerFrame);
 
-        {/* Carousel container */}
-        <div className="flex items-center justify-center gap-4">
-          {/* Left Button */}
+  return (
+    <section className="bg-gray-50 py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12 lg:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+            Our Latest Insights
+          </h2>
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+            Stay updated with the latest trends, tips, and innovations in laser technology
+          </p>
+        </div>
+
+        {/* Carousel Wrapper */}
+        <div className="relative">
+          {/* Desktop Navigation - Outside */}
           <button
             onClick={prevSlide}
-            className="flex-shrink-0 bg-black/70 text-white p-3 rounded-full hover:bg-red-700 transition"
-            aria-label="Previous"
+            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 bg-white border-2 border-gray-200 text-gray-700 p-4 rounded-full hover:border-red-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 z-10 shadow-sm"
+            aria-label="Previous blogs"
           >
-            &#10094;
+            <ChevronLeft className="w-5 h-5" />
           </button>
 
-          {/* Slides wrapper */}
-          <div className="overflow-hidden w-full">
+          <button
+            onClick={nextSlide}
+            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 bg-white border-2 border-gray-200 text-gray-700 p-4 rounded-full hover:border-red-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 z-10 shadow-sm"
+            aria-label="Next blogs"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          {/* Slides Container */}
+          <div className="overflow-hidden">
             <div
-              className="flex transition-transform duration-500"
+              className="flex transition-transform duration-500 ease-in-out"
               style={{
-                transform: `translateX(-${
-                  (100 / cardsPerFrame) * currentIndex
-                }%)`,
+                transform: `translateX(-${(100 / cardsPerFrame) * currentIndex}%)`,
               }}
             >
               {blogs.map((blog) => (
                 <div
                   key={blog.id}
-                  className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-4"
+                  className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3 sm:px-4"
                 >
-                  <div className="bg-white shadow-lg hover:scale-105 transform transition duration-300 h-full flex flex-col">
-                    <img
-                      src={blog.image}
-                      alt={blog.title}
-                      loading="lazy"
-                      className="w-full h-56 object-cover"
-                    />
-                    <div className="p-6 flex-1 flex flex-col">
-                      <h3 className="text-2xl font-semibold text-black mt-2">
+                  <article className="bg-white border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col group overflow-hidden">
+                    {/* Image */}
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={blog.image}
+                        alt={blog.title}
+                        loading="lazy"
+                        className="w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-5 sm:p-6 flex-1 flex flex-col">
+                      <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 group-hover:text-red-600 transition-colors duration-200">
                         {blog.title}
                       </h3>
-                      <p className="text-black mt-3 line-clamp-3 flex-1">
+                      <p className="text-gray-600 text-sm sm:text-base leading-relaxed flex-1 line-clamp-3">
                         {blog.description}
                       </p>
-                      <button className="mt-5 px-5 py-3 bg-gradient-to-br from-red-900 to-red-700 text-white font-semibold hover:bg-red-700 transition-colors duration-300">
+                      <button className="mt-5 w-full py-3 bg-red-600 text-white font-medium hover:bg-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                         Read More
                       </button>
                     </div>
-                  </div>
+                  </article>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right Button */}
-          <button
-            onClick={nextSlide}
-            className="flex-shrink-0 bg-black/70 text-white p-3 rounded-full hover:bg-red-700 transition"
-            aria-label="Next"
-          >
-            &#10095;
-          </button>
+          {/* Mobile Navigation - Below content */}
+          <div className="flex lg:hidden justify-center gap-4 mt-8">
+            <button
+              onClick={prevSlide}
+              className="bg-white border-2 border-gray-200 text-gray-700 p-4 rounded-full hover:border-red-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 shadow-sm"
+              aria-label="Previous blogs"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="bg-white border-2 border-gray-200 text-gray-700 p-4 rounded-full hover:border-red-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 shadow-sm"
+              aria-label="Next blogs"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
+
+
       </div>
     </section>
   );

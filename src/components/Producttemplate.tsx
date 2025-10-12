@@ -192,8 +192,8 @@ function Producttemplate(): JSX.Element {
               letterSpacing: '0.06em',
             }}
           >
-            <div className="text-xs">Related Products</div>
-            <div className="text-xs opacity-60">•</div>
+            {/* <div className="text-xs">Related Products</div> */}
+            <div className="text-s ">{category?.name || ''}</div>
           </div>
 
           <div className="px-3 py-3">
@@ -221,7 +221,7 @@ function Producttemplate(): JSX.Element {
 
                     <div className="flex-1 min-w-0" style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}>
                       <div className="text-sm font-medium" style={{ lineHeight: '1.15', color: '#111827' }}>{prod.name}</div>
-                      <div className="text-xs text-gray-500 mt-0.5" style={{ lineHeight: '1.1' }}>{prod.subcategory || ''}</div>
+                      {/* <div className="text-xs text-gray-500 mt-0.5" style={{ lineHeight: '1.1' }}>{prod.subcategory || ''}</div> */}
                     </div>
 
                     <div className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity">

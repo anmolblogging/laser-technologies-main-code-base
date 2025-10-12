@@ -101,7 +101,7 @@ const Gallery: React.FC = () => {
 
         {/* Images Grid - 2x2 */}
         <section className="mb-20">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-8">Featured Projects</h2>
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {imagesData.map((img) => (
               <article

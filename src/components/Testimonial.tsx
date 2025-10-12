@@ -47,32 +47,40 @@ export default function TestimonialSlider() {
   const goToSlide = (index: number) => setCurrentIndex(index);
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 sm:py-20 lg:py-24 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
+          <h2 className="text-4xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             Our Clients Love Us
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-base sm:text-lg text-gray-600">
             Real stories from businesses transformed by our precision laser
             systems.
           </p>
         </div>
 
-        {/* Slider Wrapper with Arrows Outside */}
-        <div className="flex items-center justify-center gap-4">
-          {/* Left Arrow */}
+        {/* Slider Wrapper */}
+        <div className="relative max-w-7xl mx-auto">
+          {/* Desktop Arrows - Outside */}
           <button
             onClick={prevSlide}
-            className="flex-shrink-0 bg-black/70 text-white p-3 rounded-full hover:bg-red-700 transition"
-            aria-label="Previous"
+            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 rounded-full bg-white border-2 border-gray-200 text-gray-700 p-3 hover:border-red-600 hover:text-red-600 transition-all duration-200 z-10 shadow-sm"
+            aria-label="Previous testimonial"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
 
+          <button
+            onClick={nextSlide}
+            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 rounded-full bg-white border-2 border-gray-200 text-gray-700 p-3 hover:border-red-600 hover:text-red-600 transition-all duration-200 z-10 shadow-sm"
+            aria-label="Next testimonial"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
           {/* Slider Content */}
-          <div className="overflow-hidden w-full">
+          <div className="overflow-hidden">
             <div
               className="flex transition-transform duration-700 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -80,55 +88,75 @@ export default function TestimonialSlider() {
               {testimonialsData.map((testimonial, idx) => (
                 <div
                   key={idx}
-                  className="flex-shrink-0 w-full lg:flex lg:flex-row flex-col items-stretch gap-6 overflow-hidden p-6 lg:p-8 transform transition-transform hover:-translate-y-1"
+                  className="flex-shrink-0 w-full"
                 >
-                  {/* Video */}
-                  <div className="lg:flex-1 relative w-full h-64 lg:h-auto lg:min-h-[350px] bg-gray-100 overflow-hidden">
-                    <iframe
-                      className="absolute inset-0 w-full h-full object-cover"
-                      src={testimonial.videoUrl}
-                      title={testimonial.header}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
+                  <div className="  shadow-sm overflow-hidden">
+                    <div className="grid lg:grid-cols-2 gap-0">
+                      {/* Video Section */}
+                      <div className="relative w-full bg-gray-900 order-1 lg:order-1">
+                        <div className="relative pt-[56.25%] lg:pt-0 lg:h-full lg:min-h-[400px]">
+                          <iframe
+                            className="absolute inset-0 w-full h-full"
+                            src={testimonial.videoUrl}
+                            title={testimonial.header}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                      </div>
 
-                  {/* Content */}
-                  <div className="lg:flex-1 flex flex-col justify-center p-2 pl-6 md:mt-0 mt-10">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4 relative after:block after:w-12 after:h-1 after:bg-red-600 after:rounded mt-2">
-                      {testimonial.header}
-                    </h3>
-                    <p className="text-gray-700 leading-relaxed">
-                      {testimonial.description}
-                    </p>
+                      {/* Content Section */}
+                      <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-12 order-2 lg:order-2 ">
+                        <div className="space-y-6">
+                          <div>
+                            <div className="w-12 h-1 bg-red-600 mb-4"></div>
+                            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">
+                              {testimonial.header}
+                            </h3>
+                          </div>
+                          <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
+                            {testimonial.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right Arrow */}
-          <button
-            onClick={nextSlide}
-            className="flex-shrink-0 bg-black/70 text-white p-3 rounded-full hover:bg-red-700 transition"
-            aria-label="Next"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
+          {/* Mobile Arrows - Below content */}
+          <div className="flex lg:hidden justify-center gap-4 mt-6">
+            <button
+              onClick={prevSlide}
+              className="bg-white border-2 border-gray-200 rounded-full text-gray-700 p-3 hover:border-red-600 hover:text-red-600 transition-all duration-200 shadow-sm"
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="bg-white border-2 rounded-full border-gray-200 text-gray-700 p-3 hover:border-red-600 hover:text-red-600 transition-all duration-200 shadow-sm"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        {/* Dots */}
-        <div className="flex justify-center gap-3 mt-6">
+        {/* Dots Indicator */}
+        <div className="flex justify-center gap-2 mt-8">
           {testimonialsData.map((_, idx) => (
             <button
               key={idx}
               onClick={() => goToSlide(idx)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              className={`transition-all duration-300 ${
                 currentIndex === idx
-                  ? "bg-red-600 w-6"
-                  : "bg-gray-300 hover:bg-gray-400"
+                  ? "w-8 h-2 bg-red-600"
+                  : "w-2 h-2 bg-gray-300 hover:bg-gray-400"
               }`}
-              aria-label={`Go to slide ${idx + 1}`}
+              aria-label={`Go to testimonial ${idx + 1}`}
             />
           ))}
         </div>
