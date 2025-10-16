@@ -1,57 +1,50 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useMemo } from 'react'
 import { X, Play, ChevronLeft, ChevronRight } from 'lucide-react'
 
-
-
 type Video = { url: string; title: string }
-type ImageItem = { id: number; url: string; title: string; description: string }
+type ImageItem = { id: number; url: string; title: string; description: string; sourceUrl?: string }
 type ModalContent = { type: 'image' | 'video'; payload: ImageItem | Video }
 
-const videosData: Video[] = [
-  { url: 'https://youtu.be/_KN_kmVpKAw?si=DJHNr9n1UEKjBx6V', title: 'Laser Cutting Demo' },
-  { url: 'https://youtu.be/oW2yL_-I6kQ?si=jCoRkvxn_wEK6ZwA', title: 'Industrial Automation' },
-  { url: 'https://youtu.be/vciaokWg0D8?si=rDBnllOnv8cW4zDv', title: 'Precision Engineering' },
-  { url: 'https://youtu.be/05p11ZjnR_4?si=uByGWf-kYgkK4g_8', title: 'Manufacturing Process' },
-  { url: 'https://youtu.be/O8mvsVuaqoQ?si=qw-kLgFdZJPFXWFw', title: 'Quality Control' },
-  { url: 'https://youtu.be/-eGwzZuRjDQ?si=Wm33pCgZ0DJnnwIY', title: 'Advanced Technology' },
-]
 
-const imagesData: ImageItem[] = [
-  {
-    id: 1,
-    url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1600&h=1200&fit=crop&q=80',
-    title: 'Advanced Laser Cutting',
-    description: 'State-of-the-art laser cutting technology for precision manufacturing.',
-  },
-  {
-    id: 2,
-    url: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1600&h=1200&fit=crop&q=80',
-    title: 'Industrial Automation',
-    description: 'Automated laser systems designed for high-volume production environments.',
-  },
-  {
-    id: 3,
-    url: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1600&h=1200&fit=crop&q=80',
-    title: 'Precision Engineering',
-    description: 'Advanced engineering solutions utilizing cutting-edge laser technology.',
-  },
-  {
-    id: 4,
-    url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1600&h=1200&fit=crop&q=80',
-    title: 'Quality Assurance',
-    description: 'Rigorous quality control processes ensuring the highest standards.',
-  },
-]
+const sizeHeights = [180, 260, 340, 220, 300] // larger bento heights (px)
+const getHeightForId = (id: number) => sizeHeights[id % sizeHeights.length]
 
-const getYoutubeVideoId = (url: string): string | null => {
+function getYoutubeVideoId(url: string): string | null {
   const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/)
   if (shortMatch) return shortMatch[1]
   const longMatch = url.match(/v=([a-zA-Z0-9_-]{11})/)
   if (longMatch) return longMatch[1]
-  return null
+  const generic = url.match(/\/([a-zA-Z0-9_-]{11})(?:\?|$)/)
+  return generic ? generic[1] : null
 }
 
 const Gallery: React.FC = () => {
+  // memoized data -> avoids recreating arrays on each render
+  const imagesData = useMemo<ImageItem[]>(
+    () => [
+      { id: 1, url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop', title: 'Advanced Laser Cutting', description: 'State-of-the-art laser cutting — Unsplash', sourceUrl: 'https://unsplash.com/photos/1' },
+      { id: 2, url: 'https://images.pexels.com/photos/110844/pexels-photo-110844.jpeg?auto=compress&cs=tinysrgb&w=1600', title: 'Industrial Automation', description: 'Automated laser systems — Pexels', sourceUrl: 'https://www.pexels.com/photo/110844' },
+      { id: 3, url: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=1400&auto=format&fit=crop', title: 'Precision Engineering', description: 'High-precision engineering — Unsplash', sourceUrl: 'https://unsplash.com/photos/3' },
+      { id: 4, url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1800&auto=format&fit=crop', title: 'Quality Assurance', description: 'Quality control processes — Unsplash', sourceUrl: 'https://unsplash.com/photos/4' },
+      { id: 5, url: 'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?q=80&w=1200&auto=format&fit=crop', title: 'Material Testing', description: 'Rigorous material testing — Unsplash', sourceUrl: 'https://unsplash.com/photos/5' },
+      { id: 6, url: 'https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1600', title: 'Factory Floor', description: 'Modern factory floor — Pexels', sourceUrl: 'https://www.pexels.com/photo/2280547' },
+      { id: 7, url: 'https://images.unsplash.com/photo-1474511320723-4242c5b51e0e?q=80&w=1500&auto=format&fit=crop', title: 'R&D', description: 'Research & development — Unsplash', sourceUrl: 'https://unsplash.com/photos/7' },
+      { id: 8, url: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?q=80&w=1400&auto=format&fit=crop', title: 'Assembly Line', description: 'Automated assembly — Unsplash', sourceUrl: 'https://unsplash.com/photos/8' },
+      { id: 9, url: 'https://images.pexels.com/photos/3802508/pexels-photo-3802508.jpeg?auto=compress&cs=tinysrgb&w=1600', title: 'Prototype Work', description: 'Prototyping with lasers — Pexels', sourceUrl: 'https://www.pexels.com/photo/3802508' },
+      { id: 10, url: 'https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=1600&auto=format&fit=crop', title: 'Finishing Touches', description: 'Surface finishing — Unsplash', sourceUrl: 'https://unsplash.com/photos/10' },
+    ],
+    []
+  )
+
+  const videosData = useMemo<Video[]>(
+    () => [
+      { url: 'https://youtu.be/_KN_kmVpKAw', title: 'Laser Cutting Demo' },
+      { url: 'https://youtu.be/oW2yL_-I6kQ', title: 'Industrial Automation' },
+      { url: 'https://youtu.be/vciaokWg0D8', title: 'Precision Engineering' },
+    ],
+    []
+  )
+
   const [showModal, setShowModal] = useState(false)
   const [modalContent, setModalContent] = useState<ModalContent | null>(null)
   const [scrollPosition, setScrollPosition] = useState(0)
@@ -75,101 +68,137 @@ const Gallery: React.FC = () => {
   const scroll = (direction: 'left' | 'right') => {
     if (!carouselRef.current) return
     const scrollAmount = 320
-    const newPosition = direction === 'left' 
-      ? scrollPosition - scrollAmount 
-      : scrollPosition + scrollAmount
-    
+    const newPosition = direction === 'left'
+      ? Math.max(0, scrollPosition - scrollAmount)
+      : Math.min(carouselRef.current.scrollWidth - carouselRef.current.clientWidth, scrollPosition + scrollAmount)
+
     carouselRef.current.scrollTo({ left: newPosition, behavior: 'smooth' })
     setScrollPosition(newPosition)
   }
 
   const canScrollLeft = scrollPosition > 0
-  const canScrollRight = carouselRef.current 
-    ? scrollPosition < carouselRef.current.scrollWidth - carouselRef.current.clientWidth 
+  const canScrollRight = carouselRef.current
+    ? scrollPosition < carouselRef.current.scrollWidth - carouselRef.current.clientWidth - 1
     : false
 
   return (
-    <main className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <main className="min-h-screen bg-gray-50 text-gray-900 antialiased">
+      <div className="max-w-[1400px] mx-auto py-16 px-6">
         {/* Header */}
         <header className="mb-16 text-center">
-          <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 mb-4">Gallery</h1>
+          <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight mb-4" style={{ color: '#0f172a' }}>Gallery</h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Explore our portfolio of cutting-edge laser technology and manufacturing solutions
           </p>
         </header>
 
-        {/* Images Grid - 2x2 */}
+        {/* Bento / Masonry images - larger, minimal style */}
         <section className="mb-20">
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {imagesData.map((img) => (
-              <article
-                key={img.id}
-                className="relative bg-gray-100 overflow-hidden group cursor-pointer border border-gray-200 hover:border-gray-300 transition-colors"
-                onClick={() => openImage(img)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => e.key === 'Enter' && openImage(img)}
-                aria-label={`${img.title} — open`}
-              >
-                <div className="relative pt-[75%]">
-                  <img
-                    src={img.url}
-                    alt={img.title}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="text-lg font-semibold text-white mb-1">{img.title}</h3>
-                    <p className="text-sm text-white/90 line-clamp-2">{img.description}</p>
-                  </div>
-                </div>
-              </article>
-            ))}
+          <div className="mx-auto">
+            <div
+              className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6"
+              style={{ columnGap: 24 }}
+            >
+              {imagesData.map((img) => {
+                const h = getHeightForId(img.id)
+                return (
+                  <article
+                    key={img.id}
+                    className="break-inside-avoid mb-6 relative group cursor-pointer overflow-hidden"
+                    onClick={() => openImage(img)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && openImage(img)}
+                    aria-label={`${img.title} — open`}
+                    style={{ borderRadius: 12, background: '#fff' }}
+                  >
+                    <div className="relative" style={{ height: `${h}px` }}>
+                      {/* image: use object-fit cover and preserve GPU compositing */}
+                      <img
+                        src={img.url}
+                        alt={img.title}
+                        loading="lazy"
+                        decoding="async"
+                        fetchPriority={img.id <= 2 ? 'high' as const : 'low' as const}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-400 will-change-transform"
+                        style={{ transformOrigin: 'center center' }}
+                      />
+
+                      {/* subtle overlay to ensure text contrast */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent pointer-events-none" />
+
+                      {/* text on top layer */}
+                      <div className="absolute inset-x-0 bottom-0 p-5 z-10">
+                        <h3 className="text-white text-lg font-semibold leading-snug drop-shadow-sm">{img.title}</h3>
+                        <p className="text-white/90 text-sm mt-1 line-clamp-2">{img.description}</p>
+                      </div>
+
+                    </div>
+
+                    {/* small spacer for accessibility on narrow screens */}
+                    <div className="p-3 sm:hidden">
+                      <h3 className="text-sm font-medium text-gray-900">{img.title}</h3>
+                      <p className="text-xs text-gray-600 line-clamp-2">{img.description}</p>
+                    </div>
+                  </article>
+                )
+              })}
+            </div>
           </div>
         </section>
 
-        {/* Videos Carousel */}
+        {/* Videos Carousel - minimal, with Subscribe */}
         <section>
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900">Video Showcase</h2>
-            <div className="flex gap-2">
-              <button
-                onClick={() => scroll('left')}
-                disabled={!canScrollLeft}
-                className="p-2 border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                aria-label="Scroll left"
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+            <h2 className="text-2xl font-semibold text-gray-900">Follow us on Youtube</h2>
+
+            <div className="flex items-center gap-3">
+              <a
+                href="https://www.youtube.com/@LaserTechnologiesOfficial"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-black text-white border border-gray-200 text-sm font-medium hover:bg-gray-50 transition"
+                aria-label="Subscribe on YouTube"
               >
-                <ChevronLeft size={20} className="text-gray-700" />
-              </button>
-              <button
-                onClick={() => scroll('right')}
-                disabled={!canScrollRight}
-                className="p-2 border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                aria-label="Scroll right"
-              >
-                <ChevronRight size={20} className="text-gray-700" />
-              </button>
+                Subscribe
+              </a>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => scroll('left')}
+                  disabled={!canScrollLeft}
+                  className="p-2 border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 transition-colors"
+                  aria-label="Scroll left"
+                >
+                  <ChevronLeft size={18} className="text-gray-700" />
+                </button>
+                <button
+                  onClick={() => scroll('right')}
+                  disabled={!canScrollRight}
+                  className="p-2 border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 transition-colors"
+                  aria-label="Scroll right"
+                >
+                  <ChevronRight size={18} className="text-gray-700" />
+                </button>
+              </div>
             </div>
           </div>
 
-          <div 
+          <div
             ref={carouselRef}
             className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             onScroll={(e) => setScrollPosition(e.currentTarget.scrollLeft)}
           >
             {videosData.map((video) => {
-              const videoId = getYoutubeVideoId(video.url)
-              const thumb = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : ''
+              const id = getYoutubeVideoId(video.url)
+              const thumb = id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : ''
 
               return (
                 <button
                   key={video.url}
                   onClick={() => openVideo(video)}
-                  className="group flex-shrink-0 w-80 bg-white border border-gray-200 overflow-hidden hover:border-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="group flex-shrink-0 w-96 bg-white border border-gray-100 overflow-hidden hover:shadow-md transition-shadow"
                   aria-label={`Play ${video.title}`}
                 >
                   <div className="relative pt-[56.25%] bg-gray-100">
@@ -178,16 +207,19 @@ const Gallery: React.FC = () => {
                         src={thumb}
                         alt={video.title}
                         loading="lazy"
+                        decoding="async"
                         className="absolute inset-0 w-full h-full object-cover"
                       />
                     )}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                      <div className="w-14 h-14 bg-red-600 group-hover:bg-red-700 flex items-center justify-center transition-colors shadow-lg">
-                        <Play size={24} className="text-white ml-1" fill="white" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-14 h-14 bg-[rgba(107,15,15,0.9)] flex items-center justify-center rounded-full shadow-lg transition-transform group-hover:scale-105">
+                        <Play size={20} className="text-white" />
                       </div>
                     </div>
                   </div>
-
+                  <div className="p-4 text-left">
+                    <div className="text-sm font-semibold text-gray-900">{video.title}</div>
+                  </div>
                 </button>
               )
             })}
@@ -201,61 +233,47 @@ const Gallery: React.FC = () => {
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           onClick={() => setShowModal(false)}
         >
-          <div className="absolute inset-0 bg-black/80" />
-          <div
-            className="relative max-w-5xl w-full bg-white shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+          <div className="absolute inset-0 bg-black/70" />
+          <div className="relative max-w-6xl w-full bg-white shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between p-4 border-b border-gray-100">
               <h3 className="text-base font-semibold text-gray-900">
-                {modalContent.type === 'image'
-                  ? (modalContent.payload as ImageItem).title
-                  : (modalContent.payload as Video).title}
+                {modalContent.type === 'image' ? (modalContent.payload as ImageItem).title : (modalContent.payload as Video).title}
               </h3>
-              <button
-                ref={closeBtnRef}
-                onClick={() => setShowModal(false)}
-                aria-label="Close"
-                className="p-2 text-gray-500 hover:text-gray-900 transition-colors"
-              >
-                <X size={22} />
-              </button>
+              <div className="flex items-center gap-3">
+                
+                <button ref={closeBtnRef} onClick={() => setShowModal(false)} aria-label="Close" className="p-2 text-gray-500 hover:text-gray-900 transition-colors">
+                  <X size={22} />
+                </button>
+              </div>
             </div>
 
             <div className="p-6">
               {modalContent.type === 'image' ? (
                 <>
-                  <img
-                    src={(modalContent.payload as ImageItem).url}
-                    alt={(modalContent.payload as ImageItem).title}
-                    className="w-full h-auto max-h-[70vh] object-contain"
-                  />
+                  <img src={(modalContent.payload as ImageItem).url} alt={(modalContent.payload as ImageItem).title} className="w-full h-auto max-h-[75vh] object-contain" />
                   <div className="mt-6 text-gray-700">
-                    <p className="text-base leading-relaxed">
-                      {(modalContent.payload as ImageItem).description}
-                    </p>
+                    <p className="text-base leading-relaxed">{(modalContent.payload as ImageItem).description}</p>
                   </div>
                 </>
               ) : (
                 <div className="relative pt-[56.25%]">
-                  <iframe
-                    title={(modalContent.payload as Video).title}
-                    src={`https://www.youtube.com/embed/${
-                      getYoutubeVideoId((modalContent.payload as Video).url)
-                    }?autoplay=1`}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    className="absolute inset-0 w-full h-full"
-                    frameBorder="0"
-                    allowFullScreen
-                  />
+                  <iframe title={(modalContent.payload as Video).title} src={`https://www.youtube.com/embed/${getYoutubeVideoId((modalContent.payload as Video).url)}?autoplay=1`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" className="absolute inset-0 w-full h-full" frameBorder="0" allowFullScreen />
                 </div>
               )}
             </div>
           </div>
         </div>
       )}
+
+      <style>{`
+        /* small performance-friendly tweaks */
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        @media (prefers-reduced-motion: reduce) {
+          * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+        }
+      `}</style>
     </main>
   )
 }
 
-export default Gallery
+export default React.memo(Gallery)

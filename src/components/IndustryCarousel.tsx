@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Zap, FileText, Wrench, Monitor, Car, Building2, Radio, AlertTriangle, Clapperboard, FlaskConical, Factory, Ship } from 'lucide-react';
 
 interface IndustryCard {
@@ -27,7 +27,10 @@ export default function IndustryCarousel() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [itemsPerView, setItemsPerView] = useState(3);
 
-  // Handle responsive items per view
+  // Compute max index so we don't translate into empty space
+  const maxIndex = Math.max(0, industries.length - itemsPerView);
+
+  // Responsive items per view
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) setItemsPerView(1);
@@ -39,41 +42,39 @@ export default function IndustryCarousel() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Auto-slide effect
+  // Auto-slide (uses the clamped next behavior)
   useEffect(() => {
     if (!isAutoPlaying) return;
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % industries.length);
+      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
     }, 2000);
     return () => clearInterval(interval);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, maxIndex]);
+
+  const pauseAndResume = () => {
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 3000);
+  };
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % industries.length);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 8000);
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    pauseAndResume();
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + industries.length) % industries.length);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 8000);
+    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+    pauseAndResume();
   };
 
   const goToSlide = (index: number) => {
-    setCurrentIndex(index);
-    setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 8000);
+    // clamp index so we never translate into empty area
+    const clamped = Math.max(0, Math.min(index, maxIndex));
+    setCurrentIndex(clamped);
+    pauseAndResume();
   };
 
-  const getVisibleItems = () => {
-    const items = [];
-    for (let i = 0; i < itemsPerView; i++) {
-      const index = (currentIndex + i) % industries.length;
-      items.push(industries[index]);
-    }
-    return items;
-  };
+  // Precompute card width percentage for transform math
+  const cardWidthPercent = useMemo(() => 100 / itemsPerView, [itemsPerView]);
 
   return (
     <section className="py-16 lg:py-20 bg-gray-50 relative overflow-hidden">
@@ -87,104 +88,69 @@ export default function IndustryCarousel() {
           </p>
         </div>
 
-        {/* <div className="relative max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {getVisibleItems().map((industry, index) => (
-              <div
-                key={`${currentIndex}-${index}`}
-                className="group relative h-80  overflow-hidden cursor-pointer transform transition-all duration-500 hover:scale-105"
-                style={{ animation: 'fadeIn 0.5s ease-in-out' }}
-              >
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                  style={{ backgroundImage: `url(${industry.image})` }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30 group-hover:from-red-900/90 group-hover:via-red-800/50 transition-all duration-500" />
-                <div className="absolute inset-0 p-6 flex flex-col justify-end text-white transform transition-all duration-500">
-                  <div className="transform transition-all duration-500 group-hover:-translate-y-4">
-                    <div className="text-red-500 group-hover:text-white transition-colors duration-500 mb-4">{industry.icon}</div>
-                    <h4 className="text-xl font-bold leading-tight">{industry.title}</h4>
-                  </div>
-                </div>
-                <div className="absolute inset-0 border-2 border-transparent group-hover:border-red-500  transition-all duration-500" />
-              </div>
-            ))}
-          </div>
-
-          <button
-            onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-12 bg-black/10 hover:bg-red-600 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 border border-white/20"
-            aria-label="Previous"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-12 bg-black/10 hover:bg-red-600 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 border border-white/20"
-            aria-label="Next"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-        </div> */}
-
         <div className="relative max-w-7xl mx-auto">
-  <div className="flex items-center justify-center gap-4">
-    {/* Left Arrow */}
-    <button
-      onClick={prevSlide}
-      className="flex-shrink-0 bg-black/10 hover:bg-red-600 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 border border-white/20"
-      aria-label="Previous"
-    >
-      <ChevronLeft className="w-6 h-6" />
-    </button>
+          <div className="flex items-center justify-center gap-4">
+            {/* Left Arrow */}
+            <button
+              onClick={prevSlide}
+              className="flex-shrink-0 bg-black/10 hover:bg-red-600 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 border border-white/20"
+              aria-label="Previous"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
 
-    {/* Cards */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-      {getVisibleItems().map((industry, index) => (
-        <div
-          key={`${currentIndex}-${index}`}
-          className="group relative h-80 overflow-hidden cursor-pointer transform transition-all duration-500 hover:scale-105"
-          style={{ animation: 'fadeIn 0.5s ease-in-out' }}
-        >
-          <div
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-            style={{ backgroundImage: `url(${industry.image})` }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30 group-hover:from-red-900/90 group-hover:via-red-800/50 transition-all duration-500" />
-          <div className="absolute inset-0 p-6 flex flex-col justify-end text-white transform transition-all duration-500">
-            <div className="transform transition-all duration-500 group-hover:-translate-y-4">
-              <div className="text-red-500 group-hover:text-white transition-colors duration-500 mb-4">
-                {industry.icon}
+            {/* Track container */}
+            <div className="w-full overflow-hidden">
+              <div
+                className="flex gap-6 will-change-transform"
+                style={{
+                  transform: `translateX(-${currentIndex * cardWidthPercent}%)`,
+                  transition: 'transform 650ms cubic-bezier(0.2, 0.8, 0.2, 1)',
+                  // total width is industries.length * cardWidthPercent%, but flex items will handle widths
+                }}
+              >
+                {industries.map((industry, idx) => (
+                  <div
+                    key={idx}
+                    className="group relative h-80 overflow-hidden cursor-pointer transform transition-all duration-500 hover:scale-105"
+                    style={{ flex: `0 0 ${cardWidthPercent}%` }}
+                  >
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                      style={{ backgroundImage: `url(${industry.image})` }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30 group-hover:from-red-900/90 group-hover:via-red-800/50 transition-all duration-500" />
+                    <div className="absolute inset-0 p-6 flex flex-col justify-end text-white transform transition-all duration-500">
+                      <div className="transform transition-all duration-500 group-hover:-translate-y-4">
+                        <div className="text-red-500 group-hover:text-white transition-colors duration-500 mb-4">
+                          {industry.icon}
+                        </div>
+                        <h4 className="text-xl font-bold leading-tight">{industry.title}</h4>
+                      </div>
+                    </div>
+                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-red-500 transition-all duration-500" />
+                  </div>
+                ))}
               </div>
-              <h4 className="text-xl font-bold leading-tight">{industry.title}</h4>
             </div>
+
+            {/* Right Arrow */}
+            <button
+              onClick={nextSlide}
+              className="flex-shrink-0 bg-black/10 hover:bg-red-600 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 border border-white/20"
+              aria-label="Next"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
           </div>
-          <div className="absolute inset-0 border-2 border-transparent group-hover:border-red-500 transition-all duration-500" />
         </div>
-      ))}
-    </div>
-
-    {/* Right Arrow */}
-    <button
-      onClick={nextSlide}
-      className="flex-shrink-0 bg-black/10 hover:bg-red-600 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 border border-white/20"
-      aria-label="Next"
-    >
-      <ChevronRight className="w-6 h-6" />
-    </button>
-  </div>
-</div>
-
 
         <div className="flex justify-center gap-2 mt-8">
-          {industries.map((_, index) => (
+          {Array.from({ length: maxIndex + 1 }).map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                index === currentIndex ? 'w-8 bg-red-600' : 'w-2 bg-gray-600 hover:bg-gray-500'
-              }`}
+              className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex ? 'w-8 bg-red-600' : 'w-2 bg-gray-600 hover:bg-gray-500'}`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}

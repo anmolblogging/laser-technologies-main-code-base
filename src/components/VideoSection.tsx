@@ -4,16 +4,10 @@ import { ContainerScroll } from "../components/ui/container-scroll-animation";
 
 export default  function HeroScrollDemo() {
   return (
-    <div className="flex flex-col overflow-hidden bg-gray-50">
+    <div className="flex flex-col -my-40 overflow-hidden bg-gray-50">
       <ContainerScroll
         titleComponent={
           <>
-            <h1 className="text-4xl font-semibold text-black ">
-              Unleash the power of <br />
-              <span className="text-2xl md:text-[6rem] font-bold mt-1 leading-none">
-                Cutting Edge Laser Technologies
-              </span>
-            </h1>
           </>
         }
       >

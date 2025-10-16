@@ -83,13 +83,17 @@ export default function CalendarSection() {
           {/* Arrows for desktop */}
           <button
             onClick={() => scrollBy(-320)}
-            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg rounded-full p-2 z-10 hover:bg-gray-100 transition"
+            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg p-2 z-30 hover:bg-gray-100 transition"
+            aria-label="previous event"
+            style={{ marginLeft: '-28px' }} // nudge outside the container edge
           >
             <ChevronLeft className="w-5 h-5 text-gray-700" />
           </button>
           <button
             onClick={() => scrollBy(320)}
-            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg rounded-full p-2 z-10 hover:bg-gray-100 transition"
+            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg p-2 z-30 hover:bg-gray-100 transition"
+            aria-label="next event"
+            style={{ marginRight: '-28px' }} // nudge outside the container edge
           >
             <ChevronRight className="w-5 h-5 text-gray-700" />
           </button>
@@ -97,7 +101,8 @@ export default function CalendarSection() {
           {/* Scrollable container */}
           <div
             ref={containerRef}
-            className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory"
+            className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory lg:pl-14 lg:pr-14"
+            // added lg padding so cards start/end clear the arrow buttons on large screens
           >
             {events.map((event, idx) => (
               <div
@@ -105,7 +110,7 @@ export default function CalendarSection() {
                 className={`min-w-[280px] sm:min-w-[320px] md:min-w-[360px] lg:min-w-[300px] snap-start group bg-white  shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100`}
               >
                 <div className={`bg-gradient-to-br ${event.color} p-6 text-white relative overflow-hidden`}>
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12" />
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 -mr-12 -mt-12" />
                   <div className="relative text-center">
                     <div className="text-5xl font-bold mb-1">{event.date}</div>
                     <div className="text-sm font-semibold opacity-90">{event.day}</div>
