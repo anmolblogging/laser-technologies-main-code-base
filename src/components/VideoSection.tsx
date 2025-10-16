@@ -1,34 +1,38 @@
+"use client";
+// import React from "react";
+import { ContainerScroll } from "../components/ui/container-scroll-animation";
 
-export default function VideoSection() {
+export default  function HeroScrollDemo() {
   return (
-    <section
-      className="py-20 bg-gray-50 "
-      aria-label="Video demonstration of precision laser technology"
-    >
-      {/* Header */}
-      <div className="text-center mb-10 px-4">
-        <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-3">
-          Witness Precision in Action
-        </h2>
-        <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-          Explore how our advanced laser systems redefine manufacturing
-          efficiency, accuracy, and quality.
-        </p>
-      </div>
+    <div className="flex flex-col overflow-hidden">
+      <ContainerScroll
+        titleComponent={
+          <>
+            <h1 className="text-4xl font-semibold text-black ">
+              Unleash the power of <br />
+              <span className="text-2xl md:text-[6rem] font-bold mt-1 leading-none">
+                Cutting Edge Laser Technologies
+              </span>
+            </h1>
+          </>
+        }
+      >
+        
 
-      {/* Video Wrapper */}
-      <div className="flex justify-center">
-        <div className="relative w-[80vw] h-[80vh]  overflow-hidden shadow-2xl">
-          <iframe
-            className="absolute inset-0 w-full h-full"
-            src="https://www.youtube.com/embed/_KN_kmVpKAw?autoplay=0&mute=0&loop=0&rel=0&modestbranding=1"
-            title="Laser Cutting Precision Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            loading="lazy"
-            allowFullScreen
-          />
-        </div>
-      </div>
-    </section>
+         <div className="w-full max-w-[1200px] mx-auto">
+           <div className="relative" style={{ paddingTop: '56.25%' }}>
+             <iframe
+               src="https://www.youtube.com/embed/KR5fWm6JBds?si=hkbTwC-GrFP1lE8e"
+               title="YouTube video player"
+               className="absolute inset-0 w-full h-full"
+               frameBorder="0"
+               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+               allowFullScreen
+               loading="lazy"
+             />
+           </div>
+         </div>
+      </ContainerScroll>
+    </div>
   );
 }
