@@ -317,7 +317,7 @@ function Producttemplate(): JSX.Element {
         {/* Hero */}
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 mb-12 items-start">
           {/* Gallery (preview only) */}
-          <div className="space-y-4 bg-white">
+          <div className="space-y-4 bg-gray-50">
             <div className="relative bg-white overflow-hidden border aspect-[4/3] group cursor-pointer" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} onClick={() => { if (previewImages.length) { setModalSource('preview'); setModalIndex(previewIndex); setModalOpen(true) } }} style={{ borderColor: BRAND.border, borderRadius: 0 }}>
               {previewImages[previewIndex] ? (
                 <img src={previewImages[previewIndex]} alt={product.name} className="w-full h-full object-contain bg-white" />
@@ -335,6 +335,23 @@ function Producttemplate(): JSX.Element {
                   </button>
                 </>
               )}
+            </div>
+
+            {/* Thumbnail-only preview box (always shows the product thumbnail and is exclusive to gallery) */}
+            <div className="mt-3">
+              <div className="inline-block w-36 h-24 bg-white overflow-hidden border" style={{ borderColor: BRAND.border, borderRadius: 0 }}>
+                {product.thumbnail ? (
+                  <button
+                    onClick={() => { setModalSource('preview'); setModalIndex(0); setModalOpen(true) }}
+                    className="w-full h-full flex items-center justify-center"
+                    aria-label="Open thumbnail preview"
+                  >
+                    <img src={product.thumbnail} alt={`${product.name} thumbnail`} className="w-full h-full object-contain" />
+                  </button>
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-gray-500">No thumbnail</div>
+                )}
+              </div>
             </div>
 
             {previewImages.length > 1 && (
@@ -466,7 +483,7 @@ function Producttemplate(): JSX.Element {
 
           {videoEmbed ? (
             <section ref={el => (sectionRefs.current['video'] = el || null)} data-section="video" id="video" className="bg-white p-6 border" style={{ borderColor: BRAND.border, borderRadius: 0 }}>
-              <h2 className="text-lg uppercase text-gray-700 mb-4 font-semibold">Video</h2>
+              <h2 className="text-lg uppercase text-gray-700 mb-4 font-semibold">Product Video</h2>
               <div className="bg-black aspect-video overflow-hidden">
                 <iframe src={videoEmbed} title={`${product.name} Video`} className="w-full h-full" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
               </div>
@@ -475,7 +492,7 @@ function Producttemplate(): JSX.Element {
 
           {galleryImages.length > 0 && (
             <section ref={el => (sectionRefs.current['samples'] = el || null)} data-section="samples" id="samples" className="bg-white p-6 border" style={{ borderColor: BRAND.border, borderRadius: 0 }}>
-              <h2 className="text-lg uppercase text-gray-700 mb-4 font-semibold">Gallery</h2>
+              <h2 className="text-lg uppercase text-gray-700 mb-4 font-semibold">Cutting Samples</h2>
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                 {galleryImages.map((src, i) => (
                   <button key={i} onClick={() => { setModalSource('gallery'); setModalIndex(i); setModalOpen(true) }} className="aspect-square bg-white overflow-hidden border hover:shadow-sm transition" style={{ borderColor: BRAND.border }}>
