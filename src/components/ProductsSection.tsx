@@ -9,14 +9,10 @@ import {
   ArrowRight,
   Phone,
 } from "lucide-react";
-import { createClient } from "@supabase/supabase-js";
 
-// Initialize Supabase client
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { supabase } from "../lib/supabase";
 
-// Type for Supabase product data
+// Product Type
 type ProductType = {
   id: string;
   Segment: string;
@@ -26,10 +22,10 @@ type ProductType = {
   Thumbnail_url?: string[] | null;
 };
 
-// Function to fetch products from Supabase
+// Fetch products
 const fetchProducts = async (): Promise<ProductType[]> => {
   const { data, error } = await supabase
-    .from<ProductType>("products")
+    .from("products")
     .select(
       `id, Segment, SubCategory, ProductName, ShortDescription, Thumbnail_url`
     );
@@ -40,23 +36,20 @@ const fetchProducts = async (): Promise<ProductType[]> => {
   return data || [];
 };
 
-// Helper function to structure products for UI
+// Structure categories
 const getCategoryList = (products: ProductType[]) => {
   const grouped: Record<
     string,
-    { subs: Set<string>; products: any[] }
+    { subs: Set<string>; products: { id: string; name: string; subcategory: string; description: string; image: string | null }[] }
   > = {};
 
   products.forEach((product) => {
     const segment = product.Segment;
     const subCategory = product.SubCategory;
 
-    if (!grouped[segment]) {
-      grouped[segment] = { subs: new Set(), products: [] };
-    }
+    if (!grouped[segment]) grouped[segment] = { subs: new Set(), products: [] };
 
     grouped[segment].subs.add(subCategory);
-
     grouped[segment].products.push({
       id: product.id,
       name: product.ProductName,
@@ -84,7 +77,7 @@ export default function Product(): JSX.Element {
   const [mobileCatOpen, setMobileCatOpen] = useState(false);
   const [mobileSubOpen, setMobileSubOpen] = useState(false);
 
-  // Fetch products on mount
+  // Fetch products once
   useEffect(() => {
     fetchProducts().then((data) => {
       setProducts(data);
@@ -92,10 +85,10 @@ export default function Product(): JSX.Element {
     });
   }, []);
 
-  // Compute categories
+  // Categories Memo
   const CATEGORIES = useMemo(() => getCategoryList(products), [products]);
 
-  // Set default segment/subcategory once loaded
+  // Set default category/sub
   useEffect(() => {
     if (!loading && CATEGORIES.length > 0) {
       setCategoryId(CATEGORIES[0].id);
@@ -109,10 +102,7 @@ export default function Product(): JSX.Element {
   );
 
   const filteredProducts = useMemo(
-    () =>
-      category
-        ? category.products.filter((p) => p.subcategory === sub)
-        : [],
+    () => (category ? category.products.filter((p) => p.subcategory === sub) : []),
     [category, sub]
   );
 
@@ -127,24 +117,21 @@ export default function Product(): JSX.Element {
   return (
     <section className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-zinc-900 py-12 lg:py-20 mb-10">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
-        {/* Header Section */}
+        {/* HEADER */}
         <div className="text-center mb-12 lg:mb-16" id="#products">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-950/50 to-black/50 border border-red-900/30 rounded-full mb-4 backdrop-blur-sm">
             <Sparkles className="w-4 h-4 text-red-500" />
-            <span className="text-md font-normal text-red-400">
-              Premium Collection
-            </span>
+            <span className="text-md font-normal text-red-400">Premium Collection</span>
           </div>
           <h2 className="text-4xl lg:text-6xl font-normal text-white mb-5 tracking-tight">
             Industrial Equipment Catalog
           </h2>
           <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
-            Explore our complete range of laser cutting, welding, marking, and
-            automation systems designed for diverse industries.
+            Explore our complete range of laser cutting, welding, marking, and automation systems designed for diverse industries.
           </p>
         </div>
 
-        {/* Category Pills - Desktop */}
+        {/* DESKTOP CATEGORY PILLS */}
         <div className="hidden lg:flex justify-center gap-3 mb-12">
           {CATEGORIES.map((c) => (
             <button
@@ -153,7 +140,7 @@ export default function Product(): JSX.Element {
                 setCategoryId(c.id);
                 setSub(c.subs[0]);
               }}
-              className={`px-8 py-3.5  font-medium transition-all duration-300 border ${
+              className={`px-8 py-3.5 font-medium transition-all duration-300 border ${
                 c.id === categoryId
                   ? "bg-gradient-to-r from-red-900 to-red-950 text-white border-red-800 shadow-lg shadow-red-950/50"
                   : "bg-black/40 text-gray-300 hover:text-white hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
@@ -166,23 +153,20 @@ export default function Product(): JSX.Element {
 
         {/* MOBILE DROPDOWNS */}
         <div className="lg:hidden mb-8 flex flex-col gap-3">
+          {/* Category Dropdown */}
           <div className="relative">
             <button
               onClick={() => setMobileCatOpen(!mobileCatOpen)}
-              className="w-full px-5 py-4 bg-black/40 border border-zinc-800  text-white font-semibold flex justify-between items-center hover:border-zinc-700 transition-all backdrop-blur-sm"
+              className="w-full px-5 py-4 bg-black/40 border border-zinc-800 text-white font-semibold flex justify-between items-center hover:border-zinc-700 transition-all backdrop-blur-sm"
             >
               <span className="flex items-center gap-2">
                 <Grid className="w-5 h-5 text-red-500" />
                 {category.name}
               </span>
-              <ChevronDown
-                className={`w-5 h-5 text-gray-400 transform transition-transform duration-200 ${
-                  mobileCatOpen ? "rotate-180" : "rotate-0"
-                }`}
-              />
+              <ChevronDown className={`w-5 h-5 text-gray-400 transform transition-transform duration-200 ${mobileCatOpen ? "rotate-180" : "rotate-0"}`} />
             </button>
             {mobileCatOpen && (
-              <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800  shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl">
+              <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800 shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl">
                 {CATEGORIES.map((c) => (
                   <button
                     key={c.id}
@@ -204,20 +188,17 @@ export default function Product(): JSX.Element {
             )}
           </div>
 
+          {/* Subcategory Dropdown */}
           <div className="relative">
             <button
               onClick={() => setMobileSubOpen(!mobileSubOpen)}
               className="w-full px-5 py-4 bg-black/40 border border-zinc-800 text-white font-semibold flex justify-between items-center hover:border-zinc-700 transition-all backdrop-blur-sm"
             >
               <span>{sub}</span>
-              <ChevronDown
-                className={`w-5 h-5 text-gray-400 transform transition-transform duration-200 ${
-                  mobileSubOpen ? "rotate-180" : "rotate-0"
-                }`}
-              />
+              <ChevronDown className={`w-5 h-5 text-gray-400 transform transition-transform duration-200 ${mobileSubOpen ? "rotate-180" : "rotate-0"}`} />
             </button>
             {mobileSubOpen && (
-              <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800  shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl">
+              <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800 shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl">
                 {category.subs.map((s) => (
                   <button
                     key={s}
@@ -239,9 +220,9 @@ export default function Product(): JSX.Element {
           </div>
         </div>
 
-        {/* DESKTOP LAYOUT */}
+        {/* DESKTOP GRID */}
         <div className="hidden lg:grid grid-cols-5 gap-6">
-          {/* SIDEBAR - Fixed Height with Scroll */}
+          {/* Sidebar */}
           <aside className="bg-gradient-to-b from-zinc-900 to-black p-6 shadow-2xl border border-zinc-800 h-[600px] flex flex-col sticky top-6">
             <h4 className="text-xl font-medium mb-6 text-white flex items-center gap-3 pb-4 border-b border-zinc-800">
               <div className="p-2 bg-red-950/50 border border-red-900/30">
@@ -261,17 +242,13 @@ export default function Product(): JSX.Element {
                   }`}
                 >
                   <span>{s}</span>
-                  <ArrowRight
-                    className={`w-10 h-10 transition-transform ${
-                      s === sub ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-                    }`}
-                  />
+                  <ArrowRight className={`w-10 h-10 transition-transform ${s === sub ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
                 </button>
               ))}
             </nav>
           </aside>
 
-          {/* PRODUCTS */}
+          {/* Product Cards */}
           <main className="lg:col-span-4">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredProducts.length === 0 && (
@@ -286,6 +263,7 @@ export default function Product(): JSX.Element {
                   </div>
                 </div>
               )}
+
               {filteredProducts.map((p, index) => (
                 <div
                   key={p.id}
@@ -314,7 +292,6 @@ export default function Product(): JSX.Element {
                       {p.description}
                     </p>
                     <div className="flex w-full gap-3 mt-2">
-                      {/* View Details Button */}
                       <button
                         onClick={() => navigate(`/product/${p.id}`)}
                         className="flex-1 px-6 py-3.5 bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 hover:border-red-800 flex items-center justify-center gap-2 shadow-sm hover:shadow-md group/btn"
@@ -323,7 +300,6 @@ export default function Product(): JSX.Element {
                         <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
                       </button>
 
-                      {/* Enquire Button */}
                       <button
                         onClick={() => navigate("/contact")}
                         className="flex-1 px-6 py-3.5 bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-gray-800 hover:to-gray-900 transition-all duration-300 border border-gray-900 hover:border-gray-800 flex items-center justify-center gap-2 shadow-sm hover:shadow-md group/btn"
@@ -339,7 +315,7 @@ export default function Product(): JSX.Element {
           </main>
         </div>
 
-        {/* Mobile Product Grid */}
+        {/* MOBILE GRID */}
         <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-6">
           {filteredProducts.length === 0 && (
             <div className="col-span-full text-center py-20">
@@ -374,16 +350,14 @@ export default function Product(): JSX.Element {
               <div className="p-5">
                 <h3 className="text-2xl font-medium text-white mb-2">{p.name}</h3>
                 <p className="text-md text-gray-400 mb-4">{p.description}</p>
-
                 <div className="flex justify-center gap-4">
                   <button
                     onClick={() => navigate(`/product/${p.id}`)}
                     className="flex-1 max-w-[180px] px-5 py-3 bg-gradient-to-r from-red-900 to-red-950 text-white font-medium hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 flex items-center justify-center gap-2"
                   >
-                    <span>View Details</span>
+                    <span>View</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
-
                   <button
                     onClick={() => navigate(`/contact`)}
                     className="flex-1 max-w-[180px] px-5 py-3 bg-gradient-to-r from-red-900 to-red-950 text-white font-medium hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 flex items-center justify-center gap-2"

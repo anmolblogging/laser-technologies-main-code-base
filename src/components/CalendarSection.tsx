@@ -1,12 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Calendar, MapPin, Clock, ChevronLeft, ChevronRight } from "lucide-react";
-import { createClient } from "@supabase/supabase-js";
 
-
-// Initialize Supabase client
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { supabase } from "../lib/supabase";
 
 interface Event {
   date: string;
@@ -30,22 +25,21 @@ const eventColors: string[] = [
 export default function CalendarSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [events, setEvents] = useState<Event[]>([]);
-  const [scrollPos, setScrollPos] = useState(0);
 
-  // Fetch events from Supabase on mount
+  // Fetch events from Supabase
   useEffect(() => {
     const fetchEvents = async () => {
       const { data, error } = await supabase
-        .from("calendar") // your actual table
+        .from("calendar")
         .select("*")
-        .order("event_date", { ascending: true })
+        .order("event_date", { ascending: true });
 
       if (error) {
         console.error("Error fetching events:", error);
         return;
       }
 
-      const formattedEvents = (data || []).map((e: any) => {
+      const formattedEvents = (data || []).map((e) => {
         const d = new Date(e.event_date);
         return {
           title: e.event_name,
@@ -68,7 +62,6 @@ export default function CalendarSection() {
   const scrollBy = (offset: number) => {
     if (containerRef.current) {
       containerRef.current.scrollBy({ left: offset, behavior: "smooth" });
-      setScrollPos(containerRef.current.scrollLeft + offset);
     }
   };
 
@@ -91,7 +84,7 @@ export default function CalendarSection() {
 
         {/* Events Carousel */}
         <div className="relative">
-          {/* Arrows for desktop */}
+          {/* Desktop arrows */}
           <button
             onClick={() => scrollBy(-320)}
             className="rounded-full hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg p-2 z-30 hover:bg-gray-100 transition"
@@ -100,7 +93,6 @@ export default function CalendarSection() {
           >
             <ChevronLeft className="w-6 h-6 text-gray-700" />
           </button>
-
           <button
             onClick={() => scrollBy(320)}
             className="rounded-full hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg p-2 z-30 hover:bg-gray-100 transition"
