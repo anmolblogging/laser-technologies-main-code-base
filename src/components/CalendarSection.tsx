@@ -1,59 +1,70 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Calendar, MapPin, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { createClient } from "@supabase/supabase-js";
+
+
+// Initialize Supabase client
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 interface Event {
   date: string;
   day: string;
   month: string;
+  year: string;
   title: string;
   location: string;
   time: string;
-  color: string;
+  form_link: string;
 }
 
-const events: Event[] = [
-  {
-    date: '15',
-    day: 'MON',
-    month: 'OCT',
-    title: 'Laser Technology Expo 2025',
-    location: 'New Delhi Convention Center',
-    time: '9:00 AM - 6:00 PM',
-    color: 'from-red-400 to-red-500'
-  },
-  {
-    date: '22',
-    day: 'MON',
-    month: 'OCT',
-    title: 'Manufacturing Innovation Summit',
-    location: 'Mumbai International Trade Center',
-    time: '10:00 AM - 5:00 PM',
-    color: 'from-purple-400 to-purple-500'
-  },
-  {
-    date: '05',
-    day: 'TUE',
-    month: 'NOV',
-    title: 'Industrial Automation Workshop',
-    location: 'Bangalore Tech Park',
-    time: '2:00 PM - 7:00 PM',
-    color: 'from-blue-400 to-blue-500'
-  },
-  {
-    date: '18',
-    day: 'MON',
-    month: 'NOV',
-    title: 'Smart Factory Solutions Demo',
-    location: 'Pune Industrial Hub',
-    time: '11:00 AM - 4:00 PM',
-    color: 'from-green-400 to-green-500'
-  }
+// Gradient colors for cards
+const eventColors: string[] = [
+  "from-red-400 to-red-500",
+  "from-purple-400 to-purple-500",
+  "from-blue-400 to-blue-500",
+  "from-green-400 to-green-500",
 ];
 
 export default function CalendarSection() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [events, setEvents] = useState<Event[]>([]);
   const [scrollPos, setScrollPos] = useState(0);
-  console.log(scrollPos);
+
+  // Fetch events from Supabase on mount
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const { data, error } = await supabase
+        .from("calendar") // your actual table
+        .select("*")
+        .order("event_date", { ascending: true })
+
+      if (error) {
+        console.error("Error fetching events:", error);
+        return;
+      }
+
+      const formattedEvents = (data || []).map((e: any) => {
+        const d = new Date(e.event_date);
+        return {
+          title: e.event_name,
+          location: e.event_location,
+          time: e.event_time,
+          form_link: e.form_link,
+          date: d.getDate().toString().padStart(2, "0"),
+          day: d.toLocaleString("en-US", { weekday: "short" }),
+          month: d.toLocaleString("en-US", { month: "short" }),
+          year: d.getFullYear().toString(),
+        };
+      });
+
+      setEvents(formattedEvents);
+    };
+
+    fetchEvents();
+  }, []);
+
   const scrollBy = (offset: number) => {
     if (containerRef.current) {
       containerRef.current.scrollBy({ left: offset, behavior: "smooth" });
@@ -70,7 +81,7 @@ export default function CalendarSection() {
             <Calendar className="w-4 h-4" />
             Upcoming Events
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900 mb-4">
             Mark Your Calendar
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -83,38 +94,41 @@ export default function CalendarSection() {
           {/* Arrows for desktop */}
           <button
             onClick={() => scrollBy(-320)}
-            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg p-2 z-30 hover:bg-gray-100 transition"
+            className="rounded-full hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg p-2 z-30 hover:bg-gray-100 transition"
             aria-label="previous event"
-            style={{ marginLeft: '-28px' }} // nudge outside the container edge
+            style={{ marginLeft: "-28px" }}
           >
-            <ChevronLeft className="w-5 h-5 text-gray-700" />
+            <ChevronLeft className="w-6 h-6 text-gray-700" />
           </button>
+
           <button
             onClick={() => scrollBy(320)}
-            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg p-2 z-30 hover:bg-gray-100 transition"
+            className="rounded-full hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg p-2 z-30 hover:bg-gray-100 transition"
             aria-label="next event"
-            style={{ marginRight: '-28px' }} // nudge outside the container edge
+            style={{ marginRight: "-28px" }}
           >
-            <ChevronRight className="w-5 h-5 text-gray-700" />
+            <ChevronRight className="w-6 h-6 text-gray-700" />
           </button>
 
           {/* Scrollable container */}
           <div
             ref={containerRef}
             className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory lg:pl-14 lg:pr-14"
-            // added lg padding so cards start/end clear the arrow buttons on large screens
           >
             {events.map((event, idx) => (
               <div
                 key={idx}
-                className={`min-w-[280px] sm:min-w-[320px] md:min-w-[360px] lg:min-w-[300px] snap-start group bg-white  shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100`}
+                className={`min-w-[280px] sm:min-w-[320px] md:min-w-[360px] lg:min-w-[300px] snap-start group bg-white shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100`}
               >
-                <div className={`bg-gradient-to-br ${event.color} p-6 text-white relative overflow-hidden`}>
+                <div
+                  className={`bg-gradient-to-br ${eventColors[idx % eventColors.length]} p-6 text-white relative overflow-hidden`}
+                >
                   <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 -mr-12 -mt-12" />
                   <div className="relative text-center">
                     <div className="text-5xl font-bold mb-1">{event.date}</div>
                     <div className="text-sm font-semibold opacity-90">{event.day}</div>
-                    <div className="text-xs opacity-75 uppercase tracking-wider">{event.month}</div>
+                    <div className="text-sm opacity-75 uppercase tracking-wider">{event.month}</div>
+                    <div className="text-md font-medium tracking-wider">{event.year}</div>
                   </div>
                 </div>
                 <div className="p-6 space-y-4">
@@ -131,7 +145,10 @@ export default function CalendarSection() {
                       <span>{event.time}</span>
                     </div>
                   </div>
-                  <button className="w-full bg-red-50 hover:bg-red-600 text-red-600 hover:text-white font-semibold py-3 transition-all duration-300 text-sm">
+                  <button
+                    onClick={() => window.open(event.form_link, "_blank")}
+                    className="w-full bg-red-50 hover:bg-red-600 text-red-600 hover:text-white font-semibold py-3 transition-all duration-300 text-sm"
+                  >
                     Learn More
                   </button>
                 </div>

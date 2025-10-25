@@ -51,7 +51,7 @@ export default function TestimonialSlider() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
-          <h2 className="text-4xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900 mb-4">
             Our Clients Love Us
           </h2>
           <p className="text-base sm:text-lg text-gray-600">
@@ -106,11 +106,11 @@ export default function TestimonialSlider() {
                       </div>
 
                       {/* Content Section */}
-                      <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-12 order-2 lg:order-2 ">
+                      <div className="flex flex-col justify-center pt-8 p-2 md:p-10 lg:p-12 md:pt-0 lg:pt-0 order-2 lg:order-2 ">
                         <div className="space-y-6">
                           <div>
                             <div className="w-12 h-1 bg-red-600 mb-4"></div>
-                            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">
+                            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 leading-tight">
                               {testimonial.header}
                             </h3>
                           </div>

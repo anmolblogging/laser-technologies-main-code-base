@@ -12,16 +12,18 @@ import Blog from './components/Blog'
 import Producttemplate from './components/Producttemplate'
 import Footer from './components/Footer'
 import Gallery from './components/Gallery'
+import IndustryCarousel2 from './components/IndustryCarousel2'
 
 function Home() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       <Navbar />
       <Hero />
       <NoticeSection />
-      <CalendarSection />
       <ProductsSection />
+      <CalendarSection />
       <IndustryCarousel />
+      <IndustryCarousel2 />
       <StatsCounter />
       <VideoSection />
       <Blog />

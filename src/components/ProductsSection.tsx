@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Grid,
@@ -9,63 +9,136 @@ import {
   ArrowRight,
   Phone,
 } from "lucide-react";
-import {data}  from "../Data" ;
+import { createClient } from "@supabase/supabase-js";
 
+// Initialize Supabase client
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-const getCategoryList = () => {
-  return Object.entries(data).map(([segment, subCategories]) => {
-    return {
-      id: segment,
-      name: segment,
-      subs: Object.keys(subCategories),
-      products: Object.entries(subCategories).flatMap(([subCategory, products]) =>
-        products.map((product) => ({
-          id: product.ProductName.replace(/\s+/g, "-").toLowerCase(),
-          subcategory: subCategory,
-          name: product.ProductName,
-          description: product.ShortDescription || "No description available",
-          image: product.ThumbnailURL || null,
-        }))
-      ),
-    };
+// Type for Supabase product data
+type ProductType = {
+  id: string;
+  Segment: string;
+  SubCategory: string;
+  ProductName: string;
+  ShortDescription?: string | null;
+  Thumbnail_url?: string[] | null;
+};
+
+// Function to fetch products from Supabase
+const fetchProducts = async (): Promise<ProductType[]> => {
+  const { data, error } = await supabase
+    .from<ProductType>("products")
+    .select(
+      `id, Segment, SubCategory, ProductName, ShortDescription, Thumbnail_url`
+    );
+  if (error) {
+    console.error("Error fetching products:", error);
+    return [];
+  }
+  return data || [];
+};
+
+// Helper function to structure products for UI
+const getCategoryList = (products: ProductType[]) => {
+  const grouped: Record<
+    string,
+    { subs: Set<string>; products: any[] }
+  > = {};
+
+  products.forEach((product) => {
+    const segment = product.Segment;
+    const subCategory = product.SubCategory;
+
+    if (!grouped[segment]) {
+      grouped[segment] = { subs: new Set(), products: [] };
+    }
+
+    grouped[segment].subs.add(subCategory);
+
+    grouped[segment].products.push({
+      id: product.id,
+      name: product.ProductName,
+      subcategory: subCategory,
+      description: product.ShortDescription || "No description available",
+      image: product.Thumbnail_url?.[0] || null,
+    });
   });
+
+  return Object.entries(grouped).map(([segment, { subs, products }]) => ({
+    id: segment,
+    name: segment,
+    subs: Array.from(subs),
+    products,
+  }));
 };
 
 export default function Product(): JSX.Element {
-  const CATEGORIES = useMemo(() => getCategoryList(), []);
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  const [categoryId, setCategoryId] = useState<string>(CATEGORIES[0].id);
-  const [sub, setSub] = useState<string>(CATEGORIES[0].subs[0]);
+  const [categoryId, setCategoryId] = useState<string>("");
+  const [sub, setSub] = useState<string>("");
   const [mobileCatOpen, setMobileCatOpen] = useState(false);
   const [mobileSubOpen, setMobileSubOpen] = useState(false);
+
+  // Fetch products on mount
+  useEffect(() => {
+    fetchProducts().then((data) => {
+      setProducts(data);
+      setLoading(false);
+    });
+  }, []);
+
+  // Compute categories
+  const CATEGORIES = useMemo(() => getCategoryList(products), [products]);
+
+  // Set default segment/subcategory once loaded
+  useEffect(() => {
+    if (!loading && CATEGORIES.length > 0) {
+      setCategoryId(CATEGORIES[0].id);
+      setSub(CATEGORIES[0].subs[0]);
+    }
+  }, [loading, CATEGORIES]);
 
   const category = useMemo(
     () => CATEGORIES.find((c) => c.id === categoryId) || CATEGORIES[0],
     [categoryId, CATEGORIES]
   );
 
-  const products = useMemo(
-    () => category.products.filter((p) => p.subcategory === sub),
+  const filteredProducts = useMemo(
+    () =>
+      category
+        ? category.products.filter((p) => p.subcategory === sub)
+        : [],
     [category, sub]
   );
 
-  const navigate = useNavigate();
+  if (loading) {
+    return (
+      <section className="min-h-screen flex justify-center items-center bg-neutral-950 text-white">
+        <p>Loading products...</p>
+      </section>
+    );
+  }
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-zinc-900 py-12 lg:py-20">
+    <section className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-zinc-900 py-12 lg:py-20 mb-10">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
         <div className="text-center mb-12 lg:mb-16" id="#products">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-950/50 to-black/50 border border-red-900/30 rounded-full mb-4 backdrop-blur-sm">
             <Sparkles className="w-4 h-4 text-red-500" />
-            <span className="text-sm font-medium text-red-400">
+            <span className="text-md font-normal text-red-400">
               Premium Collection
             </span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-3 tracking-tight">
+          <h2 className="text-4xl lg:text-6xl font-normal text-white mb-5 tracking-tight">
             Industrial Equipment Catalog
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
             Explore our complete range of laser cutting, welding, marking, and
             automation systems designed for diverse industries.
           </p>
@@ -80,7 +153,7 @@ export default function Product(): JSX.Element {
                 setCategoryId(c.id);
                 setSub(c.subs[0]);
               }}
-              className={`px-8 py-3.5  font-semibold transition-all duration-300 border ${
+              className={`px-8 py-3.5  font-medium transition-all duration-300 border ${
                 c.id === categoryId
                   ? "bg-gradient-to-r from-red-900 to-red-950 text-white border-red-800 shadow-lg shadow-red-950/50"
                   : "bg-black/40 text-gray-300 hover:text-white hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
@@ -169,9 +242,9 @@ export default function Product(): JSX.Element {
         {/* DESKTOP LAYOUT */}
         <div className="hidden lg:grid grid-cols-5 gap-6">
           {/* SIDEBAR - Fixed Height with Scroll */}
-          <aside className="bg-gradient-to-b from-zinc-900 to-black  p-6 shadow-2xl border border-zinc-800 h-[600px] flex flex-col sticky top-6">
-            <h4 className="text-lg font-bold mb-6 text-white flex items-center gap-3 pb-4 border-b border-zinc-800">
-              <div className="p-2 bg-red-950/50  border border-red-900/30">
+          <aside className="bg-gradient-to-b from-zinc-900 to-black p-6 shadow-2xl border border-zinc-800 h-[600px] flex flex-col sticky top-6">
+            <h4 className="text-xl font-medium mb-6 text-white flex items-center gap-3 pb-4 border-b border-zinc-800">
+              <div className="p-2 bg-red-950/50 border border-red-900/30">
                 <Grid className="w-5 h-5 text-red-500" />
               </div>
               <span>Sub Categories</span>
@@ -181,7 +254,7 @@ export default function Product(): JSX.Element {
                 <button
                   key={s}
                   onClick={() => setSub(s)}
-                  className={`group w-full text-left px-4 py-3.5  font-semibold transition-all duration-200 flex items-center justify-between ${
+                  className={`group w-full text-left px-4 py-3.5 font-semibold transition-all duration-200 flex items-center justify-between ${
                     s === sub
                       ? "bg-gradient-to-r from-red-900 to-red-950 text-white shadow-lg"
                       : "text-gray-400 hover:text-white hover:bg-zinc-800/50"
@@ -201,7 +274,7 @@ export default function Product(): JSX.Element {
           {/* PRODUCTS */}
           <main className="lg:col-span-4">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {products.length === 0 && (
+              {filteredProducts.length === 0 && (
                 <div className="col-span-full text-center py-24">
                   <div className="inline-flex flex-col items-center gap-4">
                     <div className="p-6 bg-zinc-900 rounded-full border border-zinc-800">
@@ -213,10 +286,10 @@ export default function Product(): JSX.Element {
                   </div>
                 </div>
               )}
-              {products.map((p, index) => (
+              {filteredProducts.map((p, index) => (
                 <div
                   key={p.id}
-                  className="group bg-gradient-to-b from-zinc-900 to-black  overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-500 hover:shadow-2xl hover:shadow-red-950/20"
+                  className="group bg-gradient-to-b from-zinc-900 to-black overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-500 hover:shadow-2xl hover:shadow-red-950/20"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="relative h-80 bg-zinc-950 overflow-hidden">
@@ -234,17 +307,17 @@ export default function Product(): JSX.Element {
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">
+                    <h3 className="text-3xl font-medium text-white mb-2 group-hover:text-red-400 transition-colors">
                       {p.name}
                     </h3>
-                    <p className="text-sm text-gray-400 mb-5 leading-relaxed line-clamp-2">
+                    <p className="text-md text-gray-400 mb-5 leading-relaxed line-clamp-2">
                       {p.description}
                     </p>
                     <div className="flex w-full gap-3 mt-2">
                       {/* View Details Button */}
                       <button
                         onClick={() => navigate(`/product/${p.id}`)}
-                        className="flex-1 px-6 py-3.5 bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 hover:border-red-800 flex items-center justify-center gap-2  shadow-sm hover:shadow-md group/btn"
+                        className="flex-1 px-6 py-3.5 bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 hover:border-red-800 flex items-center justify-center gap-2 shadow-sm hover:shadow-md group/btn"
                       >
                         <span>View</span>
                         <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
@@ -253,7 +326,7 @@ export default function Product(): JSX.Element {
                       {/* Enquire Button */}
                       <button
                         onClick={() => navigate("/contact")}
-                        className="flex-1 px-6 py-3.5 bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-gray-800 hover:to-gray-900 transition-all duration-300 border border-gray-900 hover:border-gray-800 flex items-center justify-center gap-2  shadow-sm hover:shadow-md group/btn"
+                        className="flex-1 px-6 py-3.5 bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-gray-800 hover:to-gray-900 transition-all duration-300 border border-gray-900 hover:border-gray-800 flex items-center justify-center gap-2 shadow-sm hover:shadow-md group/btn"
                       >
                         <Phone className="w-4 h-4 transition-transform group-hover/btn:scale-110" />
                         <span>Enquire</span>
@@ -268,20 +341,20 @@ export default function Product(): JSX.Element {
 
         {/* Mobile Product Grid */}
         <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {products.length === 0 && (
+          {filteredProducts.length === 0 && (
             <div className="col-span-full text-center py-20">
               <div className="inline-flex flex-col items-center gap-4">
-                <div className="p-6 bg-zinc-900  border border-zinc-800">
+                <div className="p-6 bg-zinc-900 border border-zinc-800">
                   <ShoppingBag className="w-10 h-10 text-gray-600" />
                 </div>
                 <p className="text-gray-500 font-medium">No products found</p>
               </div>
             </div>
           )}
-          {products.map((p, index) => (
+          {filteredProducts.map((p, index) => (
             <div
               key={p.id}
-              className="group bg-gradient-to-b from-zinc-900 to-black  overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-500"
+              className="group bg-gradient-to-b from-zinc-900 to-black overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-500"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="relative h-56 bg-zinc-950 overflow-hidden">
@@ -289,7 +362,7 @@ export default function Product(): JSX.Element {
                   <img
                     src={p.image}
                     alt={p.name}
-                    className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover bg-white w-full h-full transition-transform duration-700 group-hover:scale-105"
                   />
                 ) : (
                   <div className="flex items-center justify-center h-full text-gray-700">
@@ -299,15 +372,26 @@ export default function Product(): JSX.Element {
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
               </div>
               <div className="p-5">
-                <h3 className="text-lg font-bold text-white mb-2">{p.name}</h3>
-                <p className="text-sm text-gray-400 mb-4">{p.description}</p>
-                <button
-                  onClick={() => navigate(`/product/${p.id}`)}
-                  className="w-full px-5 py-3  bg-gradient-to-r from-red-900 to-red-950 text-white font-semibold hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 flex items-center justify-center gap-2"
-                >
-                  <span>View Details</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
+                <h3 className="text-2xl font-medium text-white mb-2">{p.name}</h3>
+                <p className="text-md text-gray-400 mb-4">{p.description}</p>
+
+                <div className="flex justify-center gap-4">
+                  <button
+                    onClick={() => navigate(`/product/${p.id}`)}
+                    className="flex-1 max-w-[180px] px-5 py-3 bg-gradient-to-r from-red-900 to-red-950 text-white font-medium hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 flex items-center justify-center gap-2"
+                  >
+                    <span>View Details</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+
+                  <button
+                    onClick={() => navigate(`/contact`)}
+                    className="flex-1 max-w-[180px] px-5 py-3 bg-gradient-to-r from-red-900 to-red-950 text-white font-medium hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 flex items-center justify-center gap-2"
+                  >
+                    <span>Enquire</span>
+                    <Phone className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
           ))}

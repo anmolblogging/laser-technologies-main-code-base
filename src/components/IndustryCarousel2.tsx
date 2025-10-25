@@ -19,91 +19,50 @@ import {
 interface IndustryCard {
   title: string;
   icon: React.ReactNode;
-  image: string;
 }
 
 const industries: IndustryCard[] = [
-  {
-    title: "EV Charging Solutions",
-    icon: <Zap className="w-12 h-12" />,
-    image:
-      "https://images.pexels.com/photos/110844/pexels-photo-110844.jpeg?auto=compress&cs=tinysrgb&w=800",
-  },
-  {
-    title: "Laboratory Research",
-    icon: <FileText className="w-12 h-12" />,
-    image:
-      "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=800",
-  },
-  {
-    title: "Hospitality Innovations",
-    icon: <Wrench className="w-12 h-12" />,
-    image:
-      "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=800",
-  },
-  {
-    title: "Education Solutions",
-    icon: <Monitor className="w-12 h-12" />,
-    image:
-      "https://images.pexels.com/photos/1370295/pexels-photo-1370295.jpeg?auto=compress&cs=tinysrgb&w=800",
-  },
+  { title: "EV Charging Solutions", icon: <Zap className="w-16 h-16" /> },
+  { title: "Laboratory Research", icon: <FileText className="w-16 h-16" /> },
+  { title: "Hospitality Innovations", icon: <Wrench className="w-16 h-16" /> },
+  { title: "Education Solutions", icon: <Monitor className="w-16 h-16" /> },
   {
     title: "Automotive Laser Applications",
-    icon: <Car className="w-12 h-12" />,
-    image:
-      "https://images.pexels.com/photos/3802508/pexels-photo-3802508.jpeg?auto=compress&cs=tinysrgb&w=800",
+    icon: <Car className="w-16 h-16" />,
   },
   {
     title: "High-rise Building Technologies",
-    icon: <Building2 className="w-12 h-12" />,
-    image:
-      "https://images.pexels.com/photos/936722/pexels-photo-936722.jpeg?auto=compress&cs=tinysrgb&w=800",
+    icon: <Building2 className="w-16 h-16" />,
   },
-  {
-    title: "Advertising & Branding",
-    icon: <Radio className="w-12 h-12" />,
-    image:
-      "https://images.pexels.com/photos/1525041/pexels-photo-1525041.jpeg?auto=compress&cs=tinysrgb&w=800",
-  },
+  { title: "Advertising & Branding", icon: <Radio className="w-16 h-16" /> },
   {
     title: "Smart City Infrastructure",
-    icon: <AlertTriangle className="w-12 h-12" />,
-    image:
-      "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&w=800",
+    icon: <AlertTriangle className="w-16 h-16" />,
   },
   {
     title: "Entertainment & Events",
-    icon: <Clapperboard className="w-12 h-12" />,
-    image:
-      "https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800",
+    icon: <Clapperboard className="w-16 h-16" />,
   },
   {
     title: "Chemical Industry Solutions",
-    icon: <FlaskConical className="w-12 h-12" />,
-    image:
-      "https://images.pexels.com/photos/2280568/pexels-photo-2280568.jpeg?auto=compress&cs=tinysrgb&w=800",
+    icon: <FlaskConical className="w-16 h-16" />,
   },
   {
     title: "Industrial Manufacturing",
-    icon: <Factory className="w-12 h-12" />,
-    image:
-      "https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=800",
+    icon: <Factory className="w-16 h-16" />,
   },
   {
     title: "Marine & Offshore Applications",
-    icon: <Ship className="w-12 h-12" />,
-    image:
-      "https://images.pexels.com/photos/1484516/pexels-photo-1484516.jpeg?auto=compress&cs=tinysrgb&w=800",
+    icon: <Ship className="w-16 h-16" />,
   },
 ];
 
 export default function IndustryCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [itemsPerView, setItemsPerView] = useState(4);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [itemsPerView, setItemsPerView] = useState(4);
 
   const maxIndex = Math.max(0, industries.length - itemsPerView);
-  const cardWidthPercent = useMemo(() => 100 / itemsPerView, [itemsPerView]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -146,20 +105,22 @@ export default function IndustryCarousel() {
     pauseAndResume();
   };
 
+  const cardWidthPercent = useMemo(() => 100 / itemsPerView, [itemsPerView]);
+
   return (
-    <section className="py-16 lg:py-18 bg-gray-50 relative overflow-hidden">
+    <section className="py-16 lg:py-24 my-10 bg-black relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-black mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-4">
             Industry Solutions
           </h2>
-          <p className=" sm:text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto">
             Tailor-made solutions for different industries and application
             scenarios
           </p>
         </div>
 
-        <div className="relative max-w-8xl mx-auto">
+        <div className="relative max-w-10xl mx-auto">
           <div className="overflow-hidden mb-8">
             <div
               className="flex gap-4 sm:gap-6 will-change-transform"
@@ -171,29 +132,23 @@ export default function IndustryCarousel() {
               {industries.map((industry, idx) => (
                 <div
                   key={idx}
-                  className="group relative h-72 sm:h-80 md:h-96 overflow-hidden cursor-pointer bg-white  shadow-md"
+                  className="group relative h-64 sm:h-72 overflow-hidden cursor-pointer bg-black hover:bg-red-600 transition-all duration-500 border border-red-400 hover:border-red-600 shadow-sm hover:shadow-lg"
                   style={{
                     flex: `0 0 calc(${cardWidthPercent}% - ${
-                      (itemsPerView - 1) * 1.5
-                    }rem / ${itemsPerView})`,
+                      (itemsPerView - 1) * (24 / itemsPerView)
+                    }px)`,
                   }}
                 >
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                    style={{ backgroundImage: `url(${industry.image})` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-                  <div className="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end">
-                    <div className="transform transition-all duration-500">
-                      <div className="text-red-600 group-hover:text-white transition-colors duration-500 mb-2">
+                  <div className="absolute inset-0 p-6 sm:p-8 flex flex-col items-center justify-center text-center">
+                    <div className="transform transition-all duration-500 group-hover:scale-110">
+                      <div className="text-white group-hover:text-white transition-colors duration-500 mb-6 flex justify-center">
                         {industry.icon}
                       </div>
-                      <h4 className="text-lg sm:text-xl font-medium text-white leading-tight">
+                      <h4 className="text-lg sm:text-xl font-medium text-white group-hover:text-white leading-tight transition-colors duration-500">
                         {industry.title}
                       </h4>
                     </div>
                   </div>
-                  <div className="absolute inset-0 border border-transparent group-hover:border-red-600  transition-all duration-500" />
                 </div>
               ))}
             </div>
@@ -217,14 +172,14 @@ export default function IndustryCarousel() {
                   onClick={() => goToSlide(index)}
                   aria-label={`Go to slide ${index + 1}`}
                   className={`
-                    transition-all duration-300 rounded-full
-                            ${
-                                    index === currentIndex
-                                      ? "bg-red-600 w-2 sm:w-8 h-2 sm:h-1.5"
-                                      : "bg-gray-300 hover:bg-gray-400 w-1.5 sm:w-6 h-1.5 sm:h-1.5"
-                                  }
-                                `}
-                  />
+                              transition-all duration-300 rounded-full
+                                      ${
+                                        index === currentIndex
+                                          ? "bg-red-600 w-2 sm:w-8 h-2 sm:h-1.5"
+                                          : "bg-gray-300 hover:bg-gray-400 w-1.5 sm:w-6 h-1.5 sm:h-1.5"
+                                      }
+                                          `}
+                />
               ))}
             </div>
 

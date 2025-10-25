@@ -95,7 +95,7 @@ const Blog: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900 mb-4">
             Our Latest Insights
           </h2>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
@@ -149,7 +149,7 @@ const Blog: React.FC = () => {
 
                     {/* Content */}
                     <div className="p-5 sm:p-6 flex-1 flex flex-col">
-                      <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 group-hover:text-red-600 transition-colors duration-200">
+                      <h3 className="text-xl sm:text-2xl font-medium text-gray-900 mb-3 group-hover:text-red-600 transition-colors duration-200">
                         {blog.title}
                       </h3>
                       <p className="text-gray-600 text-sm sm:text-base leading-relaxed flex-1 line-clamp-3">
