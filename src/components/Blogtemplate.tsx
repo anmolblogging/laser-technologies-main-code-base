@@ -1,16 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, Calendar, Clock, Share2,  Tag} from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Share2, Tag } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { supabase } from "../lib/supabase";
+
+interface ContentSection {
+  description: string;
+  image: string | null;
+}
 
 interface BlogPost {
   id: string;
   title: string;
   summary: string;
   image: string;
-  content: Record<string, string>;
+  content: Record<string, ContentSection>;
   author: string;
   designation: string;
   authorImage: string;
@@ -45,15 +50,24 @@ const BlogTemplate: React.FC = () => {
           .single();
 
         if (error) {
-          console.error('Error fetching blog post:', error);
           setBlog(null);
         } else if (data) {
+          let content: Record<string, ContentSection>;
+          if (typeof data.content === 'string') {
+            try {
+              content = JSON.parse(data.content);
+            } catch {
+              content = {};
+            }
+          } else {
+            content = data.content;
+          }
           setBlog({
             id: data.id,
             title: data.title,
             summary: data.summary,
             image: data.image,
-            content: data.content,
+            content: content,
             author: data.author,
             designation: data.designation,
             authorImage: data.author_image,
@@ -67,7 +81,6 @@ const BlogTemplate: React.FC = () => {
         setLoading(false);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       };
-
       fetchBlog();
     }
   }, [id]);
@@ -80,13 +93,12 @@ const BlogTemplate: React.FC = () => {
           url: window.location.href,
         });
       } catch (err) {
-        console.error('Error sharing:', err);
+        // ignore error
       }
     }
   }, [blog]);
 
   const goBack = () => navigate(-1);
-//   const relatedBlogs = blog ? [] : []; // You may implement fetching related blogs similarly
 
   if (loading) {
     return (
@@ -160,22 +172,16 @@ const BlogTemplate: React.FC = () => {
             </div>
           </div>
 
+          {/* Banner/Card with Title, Summary, Author, Meta */}
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 -mt-20 sm:-mt-32 lg:-mt-40 z-20">
-            <div className="bg-white shadow-xl p-6 sm:p-8 lg:p-12 backdrop-blur-sm border" >
+            <div className="bg-white shadow-xl p-6 sm:p-8 lg:p-12 backdrop-blur-sm border">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-medium text-gray-900 mb-4 sm:mb-6 leading-tight">
                 {blog.title}
               </h1>
-              <p className="text-base sm:text-lg lg:text-2xl text-gray-600 leading-relaxed max-w-4xl">
+              <p className="text-base sm:text-lg lg:text-2xl text-gray-600 leading-relaxed max-w-4xl mb-8">
                 {blog.summary}
               </p>
-            </div>
-          </div>
-        </div>
-
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <article className="py-8 sm:py-12 lg:py-16">
-            <div className="bg-white p-6 sm:p-8 mb-12 border">
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 border py-3 px-4" >
                 <div className="flex items-center gap-4">
                   <div className="relative">
                     <img
@@ -194,8 +200,7 @@ const BlogTemplate: React.FC = () => {
                     <p className="text-md text-gray-500">{blog.designation}</p>
                   </div>
                 </div>
-
-                <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+                <div className="flex flex-wrap items-center gap-4 sm:gap-7">
                   <div className="flex items-center gap-2 text-gray-600">
                     <div className="p-2 rounded-lg" style={{ backgroundColor: BRAND.light }}>
                       <Calendar className="w-4 h-4" style={{ color: BRAND.primary }} />
@@ -211,7 +216,6 @@ const BlogTemplate: React.FC = () => {
                       </time>
                     </div>
                   </div>
-
                   <div className="flex items-center gap-2 text-gray-600">
                     <div className="p-2 rounded-lg" style={{ backgroundColor: BRAND.light }}>
                       <Clock className="w-4 h-4" style={{ color: BRAND.primary }} />
@@ -221,7 +225,6 @@ const BlogTemplate: React.FC = () => {
                       <span className="text-sm font-semibold text-gray-900">{blog.readTime}</span>
                     </div>
                   </div>
-
                   <button
                     onClick={handleShare}
                     className="flex items-center gap-2 px-6 py-3 text-white text-sm font-medium rounded-lg transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5"
@@ -236,10 +239,15 @@ const BlogTemplate: React.FC = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
 
+        {/* Content Sections */}
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+          <article className="py-8 sm:py-12 lg:py-16">
             <div className="bg-white p-6 sm:p-10 lg:p-16 mb-12 border">
               <div className="prose prose-lg max-w-none">
-                {Object.entries(blog.content).map(([heading, text], idx) => (
+                {Object.entries(blog.content).map(([heading, section], idx) => (
                   <div key={heading} className={idx > 0 ? "mt-12 pt-12 border-t" : ""} style={{ borderColor: idx > 0 ? BRAND.border : 'transparent' }}>
                     <div className="flex items-start gap-4 mb-6">
                       <div
@@ -251,8 +259,18 @@ const BlogTemplate: React.FC = () => {
                       </h2>
                     </div>
                     <p className="text-gray-700 text-base sm:text-lg leading-relaxed pl-8">
-                      {text}
+                      {section.description}
                     </p>
+                    {section.image && (
+                      <div className="mt-6 pl-8">
+                        <img
+                          src={section.image}
+                          alt={`${heading} illustration`}
+                          className="w-full max-w-4xl rounded-lg shadow-md"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
