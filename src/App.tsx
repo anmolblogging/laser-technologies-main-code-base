@@ -13,6 +13,9 @@ import Producttemplate from './components/Producttemplate'
 import Footer from './components/Footer'
 import Gallery from './components/Gallery'
 import IndustryCarousel2 from './components/IndustryCarousel2'
+import Blogtemplate from './components/Blogtemplate'
+import KnowledgeBase from './components/Knowledge'
+
 
 function Home() {
   return (
@@ -30,6 +33,7 @@ function Home() {
       <Testimonial />
       <Gallery />
       <Footer />
+   
     </div>
   )
 }
@@ -40,6 +44,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<Producttemplate />} />
+        <Route path="/blog/:id" element={<Blogtemplate />} />
+        <Route path="/knowledge" element={   <KnowledgeBase />} />
       </Routes>
     </BrowserRouter>
   )

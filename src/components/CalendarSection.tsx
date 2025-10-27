@@ -139,7 +139,7 @@ export default function CalendarSection() {
                   </div>
                   <button
                     onClick={() => window.open(event.form_link, "_blank")}
-                    className="w-full bg-red-50 hover:bg-red-600 text-red-600 hover:text-white font-semibold py-3 transition-all duration-300 text-sm"
+                    className="w-full bg-red-50 hover:bg-[#4f0b0b] text-[#4f0b0b] hover:text-white font-semibold py-3 transition-all duration-300 text-sm"
                   >
                     Learn More
                   </button>

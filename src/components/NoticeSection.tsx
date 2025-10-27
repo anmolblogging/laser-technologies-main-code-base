@@ -1,6 +1,12 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { X, Calendar, Bell } from "lucide-react";
 
+const BRAND = {
+  primary: '#6b0f0f',
+  hover: '#4f0b0b',
+  light: '#fef2f2',
+  border: 'rgba(107,15,15,0.15)',
+};
 type FormData = {
   name: string;
   email: string;
@@ -126,7 +132,8 @@ export default function NoticeSection() {
 
             <button
               onClick={() => setShowForm(true)}
-              className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold px-8 py-4 text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+              style={{backgroundColor : BRAND.primary}}
+              className=" hover:from-red-700 hover:to-red-800 text-white font-semibold px-8 py-4 text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
               aria-haspopup="dialog"
             >
               Register Your Interest
@@ -204,7 +211,8 @@ export default function NoticeSection() {
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 shadow-lg"
+                style={{backgroundColor : BRAND.primary}}
+                className="w-full  hover:from-red-700 hover:to-red-800 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 shadow-lg" 
               >
                 Submit Registration
               </button>

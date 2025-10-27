@@ -1,6 +1,13 @@
 import { memo } from "react";
 import Banner from "../assets/banner.png";
 
+
+const BRAND = {
+  primary: '#6b0f0f',
+  hover: '#4f0b0b',
+  light: '#fef2f2',
+  border: 'rgba(107,15,15,0.15)',
+};
 const HeroBanner = () => {
   return (
     <section
@@ -35,7 +42,7 @@ const HeroBanner = () => {
                 className="text-5xl md:text-6xl lg:text-7xl font-light text-white leading-tight md:leading-snug"
               >
                 Sharper. Faster.
-                <span className="block mt-2 bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
+                <span className="block mt-3 pb-1 bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
                   Smarter Manufacturing.
                 </span>
               </h1>
@@ -49,7 +56,7 @@ const HeroBanner = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4 md:pt-2">
               <a
                 href="/products"
-                className="bg-red-600 text-white px-10 py-4 text-base font-medium hover:bg-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-black"
+                className=" text-white px-10 py-4 text-base font-medium hover:bg-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-black" style={{backgroundColor : BRAND.primary}}
               >
                 Explore Products
               </a>

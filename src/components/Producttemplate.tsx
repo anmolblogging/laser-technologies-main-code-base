@@ -346,7 +346,7 @@ function Producttemplate(): JSX.Element {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white text-gray-900" style={{ fontFamily: 'Inter, Montserrat, sans-serif' }}>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white text-gray-900" >
       <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
         <Navbar />
       </div>
