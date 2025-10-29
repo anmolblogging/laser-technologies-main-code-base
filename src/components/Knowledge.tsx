@@ -717,7 +717,7 @@ const KnowledgeBase = () => {
 
       <Footer />
 
-      <style jsx>{`
+      <style >{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }
