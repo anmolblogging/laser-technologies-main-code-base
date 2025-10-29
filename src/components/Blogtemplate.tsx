@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { supabase } from "../lib/supabase";
+import Loading from './Loading';
 
 interface ContentSection {
   description: string;
@@ -93,7 +94,7 @@ const BlogTemplate: React.FC = () => {
           url: window.location.href,
         });
       } catch (err) {
-        // ignore error
+        console.error(`error in sharing -> ${err}`)
       }
     }
   }, [blog]);
@@ -101,18 +102,7 @@ const BlogTemplate: React.FC = () => {
   const goBack = () => navigate(-1);
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-red-50">
-        <div className="text-center">
-          <div className="inline-flex space-x-2 mb-4">
-            <div className="w-3 h-3 rounded-full animate-pulse" style={{ backgroundColor: BRAND.primary }}></div>
-            <div className="w-3 h-3 rounded-full animate-pulse" style={{ backgroundColor: BRAND.primary, animationDelay: '0.2s' }}></div>
-            <div className="w-3 h-3 rounded-full animate-pulse" style={{ backgroundColor: BRAND.primary, animationDelay: '0.4s' }}></div>
-          </div>
-          <p className="text-sm font-medium" style={{ color: BRAND.primary }}>Loading article</p>
-        </div>
-      </div>
-    );
+    return <Loading text='Articles'/>
   }
 
   if (!blog) {

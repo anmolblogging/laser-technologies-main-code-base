@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import Loading from "./Loading";
 import { supabase } from "../lib/supabase";
 
 const BRAND = {
@@ -12,11 +12,11 @@ const BRAND = {
 };
 
 interface BlogPost {
-  id: string; // uuid string
+  id: string;
   title: string | null;
   summary: string | null;
   image: string | null;
-  content: Record<string, string> | null; // JSONB parsed as object with {header: paragraph}
+  content: Record<string, string> | null; 
   author: string | null;
   designation: string | null;
   author_image: string | null;
@@ -43,7 +43,7 @@ const Blog = () => {
 
   const navigate = useNavigate();
 
-  // Fetch blogs from Supabase
+
   useEffect(() => {
     const fetchBlogs = async () => {
       setLoading(true);
@@ -57,7 +57,7 @@ const Blog = () => {
       if (error) {
         console.error("Error fetching blogs:", error);
       } else {
-        // supabase gives string[] for tags, content as json string parsed automatically, safe to cast as object
+      
         setBlogs((data as BlogPost[]) || []);
       }
       setLoading(false);
@@ -93,11 +93,7 @@ const Blog = () => {
   };
 
   if (loading) {
-    return (
-      <section className="py-20 text-center text-gray-500">
-        Loading blogs...
-      </section>
-    );
+    return <Loading text = 'blog'/>
   }
 
   return (

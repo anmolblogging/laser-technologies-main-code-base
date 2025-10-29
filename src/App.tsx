@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Hero from "./components/Hero";
 import NoticeSection from "./components/NoticeSection";
 import CalendarSection from "./components/CalendarSection";
-import IndustryCarousel from "./components/IndustryCarousel";
+
 import StatsCounter from "./components/StatsCounter";
 import VideoSection from "./components/VideoSection";
 import ProductsSection from "./components/ProductsSection";
@@ -16,6 +16,7 @@ import IndustryCarousel2 from "./components/IndustryCarousel2";
 import Blogtemplate from "./components/Blogtemplate";
 import KnowledgeBase from "./components/Knowledge";
 import ProductListingPage from "./components/ProductListingPage";
+import Awards from './components/Awards';
 
 function Home() {
   return (
@@ -25,7 +26,7 @@ function Home() {
       <NoticeSection />
       <ProductsSection />
       <CalendarSection />
-      <IndustryCarousel />
+
       <IndustryCarousel2 />
       <StatsCounter />
       <VideoSection />
@@ -45,10 +46,8 @@ function App() {
         <Route path="/product/:id" element={<Producttemplate />} />
         <Route path="/blog/:id" element={<Blogtemplate />} />
         <Route path="/knowledge" element={<KnowledgeBase />} />
-        <Route
-          path="/products/:segment/:subcategory"
-          element={<ProductListingPage />}
-        />
+        <Route path="/products/:segment/:subcategory"element={<ProductListingPage />}/>
+        <Route path="/awards"element={<Awards />}/>
       </Routes>
     </BrowserRouter>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loading from './Loading';
 import {
   Grid,
   Image,
@@ -107,11 +108,7 @@ export default function Product(): JSX.Element {
   );
 
   if (loading) {
-    return (
-      <section className="min-h-screen flex justify-center items-center bg-neutral-950 text-white">
-        <p>Loading products...</p>
-      </section>
-    );
+    return <Loading text='Products'/>
   }
 
   return (
