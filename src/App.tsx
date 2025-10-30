@@ -16,7 +16,8 @@ import IndustryCarousel2 from "./components/IndustryCarousel2";
 import Blogtemplate from "./components/Blogtemplate";
 import KnowledgeBase from "./components/Knowledge";
 import ProductListingPage from "./components/ProductListingPage";
-import Awards from './components/Awards';
+import AwardsPage from './components/AwardsAndGallery';
+import Careers from "./components/Careers";
 
 function Home() {
   return (
@@ -47,7 +48,8 @@ function App() {
         <Route path="/blog/:id" element={<Blogtemplate />} />
         <Route path="/knowledge" element={<KnowledgeBase />} />
         <Route path="/products/:segment/:subcategory"element={<ProductListingPage />}/>
-        <Route path="/awards"element={<Awards />}/>
+        <Route path="/awards"element={<AwardsPage />}/>
+        <Route path="/careers"element={<Careers />}/>
       </Routes>
     </BrowserRouter>
   );

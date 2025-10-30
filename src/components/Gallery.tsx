@@ -15,12 +15,14 @@ type ImageItem = {
   sourceUrl?: string
 }
 type ModalContent = { type: 'image' | 'video'; payload: ImageItem | Video }
+
 const BRAND = {
   primary: '#6b0f0f',
   hover: '#4f0b0b',
   light: '#fef2f2',
   border: 'rgba(107,15,15,0.15)',
 };
+
 const sizeHeights = [180, 260, 340, 220, 300]
 const getHeightForId = (id: number) => sizeHeights[id % sizeHeights.length]
 
