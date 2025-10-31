@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, Calendar, Clock, Share2, Tag } from 'lucide-react';
-import { useParams, useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
-import Footer from './Footer';
+import React, { useState, useEffect, useCallback } from "react";
+import { ArrowLeft, Calendar, Clock, Share2, Tag } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 import { supabase } from "../lib/supabase";
-import Loading from './Loading';
+import Loading from "./Loading";
 
 interface ContentSection {
   description: string;
@@ -28,10 +28,10 @@ interface BlogPost {
 }
 
 const BRAND = {
-  primary: '#6b0f0f',
-  hover: '#4f0b0b',
-  light: '#fef2f2',
-  border: 'rgba(107,15,15,0.15)',
+  primary: "#f31524",
+  hover: "#f31524",
+  light: "#fef2f2",
+  border: "rgba(107,15,15,0.15)",
 };
 
 const BlogTemplate: React.FC = () => {
@@ -45,16 +45,16 @@ const BlogTemplate: React.FC = () => {
       const fetchBlog = async () => {
         setLoading(true);
         const { data, error } = await supabase
-          .from('blog_posts')
-          .select('*')
-          .eq('id', id)
+          .from("blog_posts")
+          .select("*")
+          .eq("id", id)
           .single();
 
         if (error) {
           setBlog(null);
         } else if (data) {
           let content: Record<string, ContentSection>;
-          if (typeof data.content === 'string') {
+          if (typeof data.content === "string") {
             try {
               content = JSON.parse(data.content);
             } catch {
@@ -80,7 +80,7 @@ const BlogTemplate: React.FC = () => {
           });
         }
         setLoading(false);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: "smooth" });
       };
       fetchBlog();
     }
@@ -94,7 +94,7 @@ const BlogTemplate: React.FC = () => {
           url: window.location.href,
         });
       } catch (err) {
-        console.error(`error in sharing -> ${err}`)
+        console.error(`error in sharing -> ${err}`);
       }
     }
   }, [blog]);
@@ -102,21 +102,30 @@ const BlogTemplate: React.FC = () => {
   const goBack = () => navigate(-1);
 
   if (loading) {
-    return <Loading text='Articles'/>
+    return <Loading text="Articles" />;
   }
 
   if (!blog) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-red-50 px-4">
         <div className="text-center max-w-md">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4" style={{ color: BRAND.primary }}>404</h1>
+          <h1
+            className="text-5xl md:text-6xl font-bold mb-4"
+            style={{ color: BRAND.primary }}
+          >
+            404
+          </h1>
           <p className="text-gray-600 mb-8 text-lg">Article not found</p>
           <button
             onClick={goBack}
             className="inline-flex items-center gap-2 px-8 py-3 text-white text-sm font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             style={{ backgroundColor: BRAND.primary }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = BRAND.hover}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = BRAND.primary}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = BRAND.hover)
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = BRAND.primary)
+            }
           >
             <ArrowLeft className="w-4 h-4" />
             Go Back
@@ -130,12 +139,14 @@ const BlogTemplate: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
       <Navbar />
       <main className="flex-grow">
-        <header className="md:pt-4 top-0 mt-20 z-50 bg-white/80 backdrop-blur-md border-b" style={{ borderColor: BRAND.border }}>
+        <header
+          className="md:pt-4 top-0 mt-20 z-50 bg-white/80 backdrop-blur-md border-b"
+          style={{ borderColor: BRAND.border }}
+        >
           <div className="w-full pb-2 mx-auto px-4 sm:px-6 lg:px-12 ">
             <button
               onClick={goBack}
-              className="inline-flex items-left text-sm font-semibold duration-300 hover:gap-3"
-              style={{ color: BRAND.primary }}
+              className="inline-flex items-left text-sm font-semibold  bg-transparent hover:bg-transparent hover:text-black text-black "
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Articles</span>
@@ -155,7 +166,7 @@ const BlogTemplate: React.FC = () => {
             <div className="absolute top-6 left-6 sm:left-12 z-20">
               <span
                 className="inline-block px-4 py-2 text-md font-medium text-white backdrop-blur-sm shadow-lg"
-                style={{ backgroundColor: 'rgba(107, 15, 15, 0.9)' }}
+                style={{ backgroundColor: BRAND.primary }}
               >
                 {blog.category}
               </span>
@@ -171,7 +182,7 @@ const BlogTemplate: React.FC = () => {
               <p className="text-base sm:text-lg lg:text-2xl text-gray-600 leading-relaxed max-w-4xl mb-8">
                 {blog.summary}
               </p>
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 border py-3 px-4" >
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 border py-3 px-4">
                 <div className="flex items-center gap-4">
                   <div className="relative">
                     <img
@@ -186,41 +197,64 @@ const BlogTemplate: React.FC = () => {
                     ></div>
                   </div>
                   <div>
-                    <p className="text-xl font-medium text-gray-900">{blog.author}</p>
+                    <p className="text-xl font-medium text-gray-900">
+                      {blog.author}
+                    </p>
                     <p className="text-md text-gray-500">{blog.designation}</p>
                   </div>
                 </div>
                 <div className="flex flex-wrap items-center gap-4 sm:gap-7">
                   <div className="flex items-center gap-2 text-gray-600">
-                    <div className="p-2 rounded-lg" style={{ backgroundColor: BRAND.light }}>
-                      <Calendar className="w-4 h-4" style={{ color: BRAND.primary }} />
+                    <div
+                      className="p-2 rounded-lg"
+                      style={{ backgroundColor: BRAND.light }}
+                    >
+                      <Calendar
+                        className="w-4 h-4"
+                        style={{ color: BRAND.primary }}
+                      />
                     </div>
                     <div>
                       <p className="text-sm text-gray-500">Published</p>
-                      <time dateTime={blog.date} className="text-sm font-semibold text-gray-900">
-                        {new Date(blog.date).toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric'
+                      <time
+                        dateTime={blog.date}
+                        className="text-sm font-semibold text-gray-900"
+                      >
+                        {new Date(blog.date).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
                         })}
                       </time>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 text-gray-600">
-                    <div className="p-2 rounded-lg" style={{ backgroundColor: BRAND.light }}>
-                      <Clock className="w-4 h-4" style={{ color: BRAND.primary }} />
+                    <div
+                      className="p-2 rounded-lg"
+                      style={{ backgroundColor: BRAND.light }}
+                    >
+                      <Clock
+                        className="w-4 h-4"
+                        style={{ color: BRAND.primary }}
+                      />
                     </div>
                     <div>
                       <p className="text-sm text-gray-500">Read Time</p>
-                      <span className="text-sm font-semibold text-gray-900">{blog.readTime}</span>
+                      <span className="text-sm font-semibold text-gray-900">
+                        {blog.readTime}
+                      </span>
                     </div>
                   </div>
                   <button
                     onClick={handleShare}
                     className="flex items-center gap-2 px-6 py-3 text-white text-sm font-medium rounded-lg transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5"
                     style={{ backgroundColor: BRAND.primary }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = BRAND.hover}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = BRAND.primary}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.backgroundColor = BRAND.hover)
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.backgroundColor = BRAND.primary)
+                    }
                     aria-label="Share article"
                   >
                     <Share2 className="w-4 h-4" />
@@ -238,16 +272,23 @@ const BlogTemplate: React.FC = () => {
             <div className="bg-white p-6 sm:p-10 lg:p-16 mb-12 border">
               <div className="prose prose-lg max-w-none">
                 {Object.entries(blog.content).map(([heading, section], idx) => (
-                  <div key={heading} className={idx > 0 ? "mt-12 pt-12 border-t" : ""} style={{ borderColor: idx > 0 ? BRAND.border : 'transparent' }}>
-                    <div className="flex items-start gap-4 mb-6">
+                  <div
+                    key={heading}
+                    className={idx > 0 ? "mt-12 pt-12 border-t" : ""}
+                    style={{
+                      borderColor: idx > 0 ? BRAND.border : "transparent",
+                    }}
+                  >
+                    <div className="flex items-center gap-4 mb-6">
                       <div
-                        className="flex-shrink-0 w-1 md:w-1.5 h-8 md:h-12 mt-1"
+                        className="flex-shrink-0 w-1 md:w-1.5 h-4 md:h-12 mt-[0.15em]"
                         style={{ backgroundColor: BRAND.primary }}
                       ></div>
-                      <h2 className="text-2xl pt-1 sm:text-3xl lg:text-4xl font-medium text-gray-900 leading-tight">
+                      <h2 className="text-2xl sm:text-3xl lg:text-4xl pt-[-10px] font-medium text-gray-900 leading-tight">
                         {heading}
                       </h2>
                     </div>
+
                     <p className="text-gray-700 text-base sm:text-lg leading-relaxed pl-8">
                       {section.description}
                     </p>
@@ -268,19 +309,22 @@ const BlogTemplate: React.FC = () => {
 
             <div className="bg-white shadow-md p-6 sm:p-8 mb-12 border">
               <div className="flex items-center gap-3 mb-5">
-                <div className="p-2 rounded-lg" style={{ backgroundColor: BRAND.light }}>
+                <div
+                  className="p-2 rounded-lg"
+                  style={{ backgroundColor: BRAND.light }}
+                >
                   <Tag className="w-5 h-5" style={{ color: BRAND.primary }} />
                 </div>
                 <span className="text-lg font-medium text-black">Tags</span>
               </div>
               <div className="flex flex-wrap gap-3">
-                {blog.tags.map(tag => (
+                {blog.tags.map((tag) => (
                   <span
                     key={tag}
                     className="px-5 py-2.5 text-sm font-semibold transition-all duration-300"
                     style={{
                       backgroundColor: BRAND.light,
-                      color: BRAND.primary
+                      color: BRAND.primary,
                     }}
                   >
                     {tag}
