@@ -339,15 +339,12 @@ function Producttemplate(): JSX.Element {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white text-gray-900" >
-      {/* <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
-        <Navbar />
-      </div> */}
 
       {/* Enhanced sidebar */}
       <aside className="hidden lg:block fixed left-6 top-28 z-50 max-h-[calc(100vh-7rem)]" aria-label="Related products">
         <div className="w-64 bg-white overflow-hidden text-sm text-gray-900 shadow-lg border border-gray-100 transition-shadow hover:shadow-xl" style={{ borderRadius: '2px' }}>
           <div className="h-14 flex items-center justify-between px-5 bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
-            <div className="text-xs font-bold tracking-wider" style={{ color: BRAND.primary, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <div className="text-xs font-bold tracking-wider text-whiteBgButtonBg" style={{ textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               {product.subcategory}
             </div>
           </div>
@@ -359,9 +356,9 @@ function Producttemplate(): JSX.Element {
                   key={rp.id} 
                   onClick={() => navigate(`/product/${rp.id}`)} 
                   title={rp.ProductName} 
-                  className="group w-full text-left flex items-start gap-3 px-3 py-3 hover:bg-gray-50 transition-all duration-200 rounded-sm"
+                  className="group w-full text-left flex items-start gap-3 px-3 py-3 bg-white hover:bg-gray-50 transition-all duration-200 rounded-sm"
                 >
-                  <div style={{ minWidth: 8, height: 8, background: BRAND.primary, marginTop: 6, opacity: 0.6 }} className="group-hover:opacity-100 transition-opacity" />
+                  <div style={{ minWidth: 8, height: 8, marginTop: 6, opacity: 0.6 }} className="group-hover:opacity-100 bg-whiteBgTextHover transition-opacity" />
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium text-gray-800 group-hover:text-gray-900 transition-colors" style={{ lineHeight: '1.3' }}>
                       {rp.ProductName}
@@ -378,8 +375,8 @@ function Producttemplate(): JSX.Element {
           <div className="px-4 py-4 border-t border-gray-100 bg-gray-50 flex items-center gap-3">
             <button 
               onClick={() => window.open(`mailto:sales@example.com?subject=Quote%20request%20for%20${encodeURIComponent(product.name)}`)} 
-              className="flex-1 inline-flex items-center justify-center gap-2 text-sm font-bold px-4 py-2.5 text-white transition-all duration-200 hover:shadow-md active:scale-95" 
-              style={{ background: BRAND.primary, borderRadius: '2px' }}
+              className="flex-1 inline-flex items-center bg-whiteBgButtonBg justify-center gap-2 text-sm font-bold px-4 py-2.5 text-white transition-all duration-200 hover:shadow-md active:scale-95" 
+
             >
               <Mail className="w-4 h-4" />
               Quote
@@ -401,13 +398,13 @@ function Producttemplate(): JSX.Element {
         <div className="flex items-center gap-3 text-sm mb-8 text-gray-600">
           <button 
             onClick={() => navigate(-1)} 
-            className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors font-medium group"
+            className="flex items-center gap-2 bg-transparent hover:bg-transparent text-gray-500 hover:text-gray-900 transition-colors font-medium group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Back
           </button>
           <span className="text-gray-300">/</span>
-          <span className="text-gray-900 font-semibold">{product.name}</span>
+          <span className="text-gray-900 font-medium font-secondary">{product.name}</span>
         </div>
 
         {/* Enhanced hero section */}
@@ -465,7 +462,7 @@ function Producttemplate(): JSX.Element {
                 {product.thumbnail ? (
                   <button
                     onClick={() => { setModalSource('preview'); setModalIndex(0); setModalOpen(true) }}
-                    className="w-full h-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                    className="w-full bg-white hover:bg-white h-full flex items-center justify-center hover:opacity-80 transition-opacity"
                     aria-label="Open thumbnail preview"
                   >
                     <img src={product.thumbnail} alt={`${product.name} thumbnail`} className="w-full h-full object-contain" />
@@ -508,8 +505,8 @@ function Producttemplate(): JSX.Element {
                   {features.map((f: string, i: number) => (
                     <li key={i} className="flex items-start gap-3 text-sm text-gray-800 group">
                       <span 
-                        className="mt-1.5 w-2 h-2 flex-shrink-0 transition-transform group-hover:scale-125" 
-                        style={{ background: BRAND.primary, borderRadius: '50%' }} 
+                        className="mt-1.5 w-2 h-2  bg-whiteBgButtonBg bg-opacity-50 flex-shrink-0 transition-transform group-hover:scale-125" 
+
                       />
                       <span className="leading-relaxed">{f}</span>
                     </li>
@@ -521,8 +518,8 @@ function Producttemplate(): JSX.Element {
             <div className="flex flex-wrap gap-4 pt-4">
               <button 
                 onClick={() => window.open(`mailto:sales@example.com?subject=Quote%20request%20for%20${encodeURIComponent(product.name)}`)} 
-                className="flex-1 inline-flex items-center justify-center gap-3 text-white px-8 py-4 text-base font-bold transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 active:scale-95" 
-                style={{ background: BRAND.primary }}
+                className="flex-1 bg-whiteBgButtonBg inline-flex items-center justify-center gap-3 text-white px-8 py-4 text-base font-bold transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 active:scale-95" 
+
               >
                 <Mail className="w-5 h-5" />
                 Request Quote
@@ -539,15 +536,14 @@ function Producttemplate(): JSX.Element {
                 <button
                   key={t.id}
                   onClick={() => scrollToSection(t.id)}
-                  className={`text-sm font-bold uppercase tracking-wider pb-2 transition-all whitespace-nowrap relative ${
-                    activeSection === t.id ? 'text-[#6b0f0f]' : 'text-gray-600 hover:text-gray-900'
+                  className={`text-sm bg-transparent hover:bg-transparent font-bold uppercase tracking-wider pb-2 transition-all whitespace-nowrap relative ${
+                    activeSection === t.id ? 'text-black' : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
                   {t.label}
                   {activeSection === t.id && (
                     <span 
-                      className="absolute bottom-0 left-0 right-0 h-0.5" 
-                      style={{ background: BRAND.primary }}
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-black" 
                     />
                   )}
                 </button>
@@ -575,7 +571,7 @@ function Producttemplate(): JSX.Element {
                   {descriptionSections.map((section, idx) => (
                     <div key={idx} className="space-y-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-1 h-6 bg-[#6b0f0f]"></div>
+                        <div className="w-1 h-6 bg-black"></div>
                         <h3 className="text-2xl bg-gray-50 p-2 rounded-lg font-medium text-gray-900">{section.title}</h3>
                       </div>
                       <p className="text-black  text-lg leading-relaxed pl-4 whitespace-pre-wrap">

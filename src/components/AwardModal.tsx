@@ -120,7 +120,7 @@ export default function AwardModal({
           <div className="p-8 lg:p-12">
             <h2
               id="award-modal-title"
-              className="text-3xl lg:text-4xl font-medium mb-6 leading-tight p-2 font-primary text-whiteBgText"
+              className="text-3xl lg:text-4xl font-medium mb-6 leading-tight font-primary text-whiteBgText"
             >
               {award.title}
             </h2>

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Eye, Mail } from "lucide-react";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+
 import { supabase } from "../lib/supabase";
 import Loading from './Loading';
 
@@ -17,8 +16,8 @@ interface Product {
 }
 
 const BRAND = {
-  primary: '#6b0f0f',
-  hover: '#4f0b0b',
+  primary: '#f31524',
+  hover: '#f31524',
   light: '#fef2f2',
   border: 'rgba(107,15,15,0.15)',
   gradient: 'linear-gradient(135deg, #6b0f0f 0%, #4f0b0b 100%)',
@@ -84,10 +83,8 @@ const ProductListingPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50">
-      <Navbar />
-
       {/* Hero Header Section */}
-      <div className="relative overflow-hidden" style={{ marginTop: '80px', background: BRAND.gradient }}>
+      <div className="relative overflow-hidden mt-[80px] bg-black" >
         <div
           className="absolute inset-0 opacity-10"
           style={{
@@ -228,7 +225,7 @@ const ProductListingPage: React.FC = () => {
                   
                   {/* Product Info */}
                   <div className="p-4 flex-1 flex flex-col justify-between">
-                    <h3 className="text-xl font-medium text-gray-900 mb-2 line-clamp-2">{product.ProductName}</h3>
+                    <h3 className="text-2xl font-primary font-medium text-gray-900 mb-2 line-clamp-2">{product.ProductName}</h3>
                     {product.ShortDescription && (
                       <p className="text-sm text-gray-600 mb-4 line-clamp-2">{product.ShortDescription}</p>
                     )}
@@ -294,8 +291,6 @@ const ProductListingPage: React.FC = () => {
           </>
         )}
       </div>
-
-      <Footer />
 
       {/* Styles for animation and scrollbar */}
       <style>{`
