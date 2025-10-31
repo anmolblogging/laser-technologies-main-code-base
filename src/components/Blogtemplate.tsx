@@ -21,7 +21,6 @@ interface BlogPost {
   designation: string;
   authorImage: string;
   date: string;
-  readTime: string;
   category: string;
   tags: string[];
   shareCount?: number;
@@ -32,6 +31,13 @@ const BRAND = {
   hover: "#f31524",
   light: "#fef2f2",
   border: "rgba(107,15,15,0.15)",
+};
+
+const getCategoryPath = (category) => {
+  if (category === "News & Media") return "/news";
+  if (category === "CSR") return "/csr";
+  if (category === "Articles") return "/articles";
+  return "/";
 };
 
 const BlogTemplate: React.FC = () => {
@@ -73,7 +79,6 @@ const BlogTemplate: React.FC = () => {
             designation: data.designation,
             authorImage: data.author_image,
             date: data.created_at,
-            readTime: data.read_time,
             category: data.category,
             tags: data.tags || [],
             shareCount: 0,
@@ -164,11 +169,12 @@ const BlogTemplate: React.FC = () => {
               loading="eager"
             />
             <div className="absolute top-6 left-6 sm:left-12 z-20">
-              <span
-                className="inline-block px-4 py-2 text-md font-medium font-secondary text-white backdrop-blur-sm shadow-lg bg-whiteBgButtonBg bg-opacity-40"
+              <button
+                onClick={() => navigate(getCategoryPath(blog.category))}
+                className="inline-block px-4 py-2 text-md font-medium font-secondary text-white backdrop-blur-sm shadow-lg bg-whiteBgButtonBg hover:bg-whiteBgButtonBg  hover:bg-opacity-40 bg-opacity-40 cursor-pointer"
               >
                 {blog.category}
-              </span>
+              </button>
             </div>
           </div>
 
@@ -236,12 +242,6 @@ const BlogTemplate: React.FC = () => {
                         className="w-4 h-4"
                         style={{ color: BRAND.primary }}
                       />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-500">Read Time</p>
-                      <span className="text-sm font-semibold text-gray-900">
-                        {blog.readTime}
-                      </span>
                     </div>
                   </div>
                   <button

@@ -26,7 +26,7 @@ function App() {
         />
         <Route path="/awards" element={<AwardsPage />} />
         <Route path="/careers" element={<Careers />} />
-        <Route path="/blog" element={<Posts />} />
+        <Route path="/news" element={<Posts />} />
         <Route path="/csr" element={<Posts />} />
         <Route path="/articles" element={<Posts />} />
         <Route path="/blog/:id" element={<Blogtemplate />} />

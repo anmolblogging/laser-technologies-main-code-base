@@ -21,7 +21,7 @@ const Posts = () => {
   // Get category from URL path
   const getCurrentCategory = () => {
     const path = window.location.pathname;
-    if (path.includes("/blog")) return "News & Media";
+    if (path.includes("/news")) return "News & Media";
     if (path.includes("/csr")) return "CSR";
     if (path.includes("/articles")) return "Articles";
     return "No Category";
@@ -152,13 +152,13 @@ const Posts = () => {
       {/* Hero Section */}
       <section className="relative pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-14 md:pb-16 bg-black">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/20 backdrop-blur-sm rounded-full mb-4 sm:mb-6">
+          <div className="max-w-4xl mx-auto py-10 text-center">
+            {/* <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/20 backdrop-blur-sm rounded-full mb-4 sm:mb-6">
               <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-whiteBgButtonBg rounded-full animate-pulse"></div>
               <span className="text-white text-xs sm:text-sm font-medium font-primary">
                 {currentCategory}
               </span>
-            </div>
+            </div> */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-4 sm:mb-6 font-primary px-4">
               {currentCategory === "All" ? "Explore All Content" : currentCategory}
             </h1>
@@ -333,14 +333,7 @@ const Posts = () => {
                       {/* Meta Info */}
                       <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-gray-100">
                         <div className="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-xs text-gray-500 font-secondary">
-                          <div className="flex items-center gap-1">
-                          </div>
-                          {post.read_time && (
-                            <div className="flex items-center gap-1">
-                              <Clock className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                              <span>{post.read_time}</span>
-                            </div>
-                          )}
+                            Read More
                         </div>
                         <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-whiteBgButtonBg transform group-hover:translate-x-1 transition-transform" />
                       </div>

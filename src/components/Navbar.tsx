@@ -39,7 +39,7 @@ const Header = () => {
 
   const moreItems = [
     { name: "CSR", href: "/csr" },
-    { name: "News & Media ", href: "/blog" },
+    { name: "News & Media ", href: "/news" },
     { name: "Articles", href: "/articles" },
     { name: "Knowledge", href: "/knowledge" },
     { name: "Laser Gurukul", href: "/laser-gurukul" },
