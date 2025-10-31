@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Search, Calendar, Clock, User, Tag, ChevronRight, Loader2 } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import Header from "../components/Navbar";
+import Loading from "./Loading";
 
 const POSTS_PER_PAGE = 9;
 
@@ -243,18 +244,19 @@ const Posts = () => {
           </div>
 
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-lg animate-pulse">
-                  <div className="w-full h-40 sm:h-48 bg-gray-200"></div>
-                  <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
-                    <div className="h-3 sm:h-4 bg-gray-200 rounded w-3/4"></div>
-                    <div className="h-3 sm:h-4 bg-gray-200 rounded w-1/2"></div>
-                    <div className="h-16 sm:h-20 bg-gray-200 rounded"></div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            // <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+            //   {[1, 2, 3, 4, 5, 6].map((i) => (
+            //     <div key={i} className="bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-lg animate-pulse">
+            //       <div className="w-full h-40 sm:h-48 bg-gray-200"></div>
+            //       <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+            //         <div className="h-3 sm:h-4 bg-gray-200 rounded w-3/4"></div>
+            //         <div className="h-3 sm:h-4 bg-gray-200 rounded w-1/2"></div>
+            //         <div className="h-16 sm:h-20 bg-gray-200 rounded"></div>
+            //       </div>
+            //     </div>
+            //   ))}
+            // </div>
+            <Loading text='Posts'/>
           ) : filteredPosts.length === 0 ? (
             <div className="text-center py-16 sm:py-20">
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
@@ -388,10 +390,7 @@ const Posts = () => {
                     className="group relative px-8 sm:px-10 py-3 sm:py-4 bg-whiteBgButtonBg text-white rounded-xl sm:rounded-2xl hover:bg-whiteBgTextHover transition-all duration-300 font-primary font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   >
                     {loadingMore ? (
-                      <span className="flex items-center gap-2">
-                        <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
-                        <span>Loading...</span>
-                      </span>
+                      <Loading text='Posts'/>
                     ) : (
                       <span className="flex items-center gap-2">
                         <span>Load More Posts</span>
