@@ -126,7 +126,7 @@ export default function Product(): JSX.Element {
   return (
     <section
       id="products"
-      className="min-h-screen py-12 lg:py-20 mb-10 bg-gradient-to-br from-neutral-950 via-neutral-900 to-zinc-900 relative "
+      className="min-h-screen py-12 lg:py-16 my-16  bg-gradient-to-br from-neutral-950 via-neutral-900 to-zinc-900 relative "
       style={{
         // backgroundImage:`url(${bgImage})`,
         backgroundSize: "cover",
@@ -134,7 +134,7 @@ export default function Product(): JSX.Element {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 pt-16">
         {/* HEADER */}
         <div className="text-center mb-12 lg:mb-16" id="#products">
           <div className="inline-flex bg-whiteBgButtonBg bg-opacity-20 text-whiteBgButtonBg items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-950/50 to-black/50 border border-red-900/30 rounded-full mb-4 backdrop-blur-sm">
@@ -244,7 +244,7 @@ export default function Product(): JSX.Element {
         </div>
 
         {/* DESKTOP GRID */}
-        <div className="hidden lg:grid grid-cols-5 gap-6">
+        <div className="hidden lg:grid grid-cols-5 gap-6 pb-16">
           {/* Sidebar */}
           <aside className="bg-gradient-to-b  from-zinc-900 to-black p-6 shadow-2xl border border-zinc-800 h-[600px] flex flex-col sticky top-24">
             <h4 className="text-xl font-medium mb-6 font-primary text-darkBgText text-opacity-80 flex items-center gap-3 pb-4 border-b border-zinc-800">

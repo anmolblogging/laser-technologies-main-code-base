@@ -8,7 +8,7 @@ import Careers from "./pages/Careers";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import About from './pages/About';
+// import About from './pages/About';
 
 
 function App() {
@@ -23,7 +23,8 @@ function App() {
         <Route path="/products/:segment/:subcategory"element={<ProductListingPage />}/>
         <Route path="/awards"element={<AwardsPage />}/>
         <Route path="/careers"element={<Careers />}/>
-        <Route path="/about"element={<About />}/>
+        {/* <Route path="/about"element={<About />}/> */}
+        <Route path="/about"element={<Home />}/>
       </Routes>
       <Footer/>
     </BrowserRouter>

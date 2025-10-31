@@ -375,7 +375,7 @@ function Producttemplate(): JSX.Element {
           <div className="px-4 py-4 border-t border-gray-100 bg-gray-50 flex items-center gap-3">
             <button 
               onClick={() => window.open(`mailto:sales@example.com?subject=Quote%20request%20for%20${encodeURIComponent(product.name)}`)} 
-              className="flex-1 inline-flex items-center bg-whiteBgButtonBg justify-center gap-2 text-sm font-bold px-4 py-2.5 text-white transition-all duration-200 hover:shadow-md active:scale-95" 
+              className="flex-1 py-3 px-4 text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary font-semibold flex items-center justify-center gap-2 shadow-md transition-transform duration-200 hover:scale-105"
 
             >
               <Mail className="w-4 h-4" />
@@ -492,7 +492,7 @@ function Producttemplate(): JSX.Element {
           {/* Enhanced product info */}
           <div className="flex flex-col space-y-6">
             <div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900 leading-tight mb-4 tracking-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-[#060C2A] leading-tight mb-4 tracking-tight">
                 {product.name}
               </h1>
               <p className="text-gray-700 text-xl leading-relaxed">{product.shortDescription}</p>
@@ -518,7 +518,7 @@ function Producttemplate(): JSX.Element {
             <div className="flex flex-wrap gap-4 pt-4">
               <button 
                 onClick={() => window.open(`mailto:sales@example.com?subject=Quote%20request%20for%20${encodeURIComponent(product.name)}`)} 
-                className="flex-1 bg-whiteBgButtonBg inline-flex items-center justify-center gap-3 text-white px-8 py-4 text-base font-bold transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 active:scale-95" 
+               className="flex-1 py-3 px-4 text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary font-semibold flex items-center justify-center gap-2 shadow-md transition-transform duration-200 hover:scale-105"
 
               >
                 <Mail className="w-5 h-5" />

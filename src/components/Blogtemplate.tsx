@@ -165,8 +165,7 @@ const BlogTemplate: React.FC = () => {
             />
             <div className="absolute top-6 left-6 sm:left-12 z-20">
               <span
-                className="inline-block px-4 py-2 text-md font-medium text-white backdrop-blur-sm shadow-lg"
-                style={{ backgroundColor: BRAND.primary }}
+                className="inline-block px-4 py-2 text-md font-medium font-secondary text-white backdrop-blur-sm shadow-lg bg-whiteBgButtonBg bg-opacity-40"
               >
                 {blog.category}
               </span>
@@ -247,14 +246,7 @@ const BlogTemplate: React.FC = () => {
                   </div>
                   <button
                     onClick={handleShare}
-                    className="flex items-center gap-2 px-6 py-3 text-white text-sm font-medium rounded-lg transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5"
-                    style={{ backgroundColor: BRAND.primary }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.backgroundColor = BRAND.hover)
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.backgroundColor = BRAND.primary)
-                    }
+                    className="flex items-center gap-2 px-6 py-3 bg-whiteBgButtonBg bg-opacity-40 text-[#060C2A] text-sm font-semibold rounded-lg transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5"
                     aria-label="Share article"
                   >
                     <Share2 className="w-4 h-4" />

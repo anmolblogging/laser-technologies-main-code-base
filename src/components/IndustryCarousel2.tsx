@@ -196,10 +196,10 @@ export default function IndustryCarousel() {
     setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
 
   return (
-    <section className="py-16 bg-black md:mt-10 md:py-20 relative overflow-hidden">
+    <section className="py-12 lg:py-16 my-16  bg-black  relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-primary font-medium text-darkBgText mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-primary font-medium pt-10 text-darkBgText mb-4">
             Industry Solutions
           </h2>
           <p className="text-base sm:text-lg text-darkBgText text-opacity-50 max-w-3xl mx-auto font-secondary">
@@ -253,13 +253,13 @@ export default function IndustryCarousel() {
         <div className="flex items-center justify-center gap-4 sm:gap-6">
           <button
             onClick={prevSlide}
-            className="bg-whiteBgButtonBg text-whiteBgButtonText p-2 sm:p-3 border border-whiteBgButtonBg shadow-sm rounded-full"
+            className="bg-whiteBgButtonBg text-whiteBgButtonText p-2 mb-10 sm:p-3 border border-whiteBgButtonBg shadow-sm rounded-full"
             aria-label="Previous"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
 
-          <div className="hidden sm:flex items-center justify-center gap-1.5 sm:gap-2">
+          <div className="hidden sm:flex items-center justify-center gap-1.5 sm:gap-2 mb-10">
             {Array.from({ length: maxIndex + 1 }).map((_, index) => (
               <button
                 key={index}
@@ -276,7 +276,7 @@ export default function IndustryCarousel() {
 
           <button
             onClick={nextSlide}
-            className="bg-whiteBgButtonBg text-whiteBgButtonText p-2 sm:p-3 border border-whiteBgButtonBg shadow-sm rounded-full"
+            className="bg-whiteBgButtonBg text-whiteBgButtonText p-2 sm:p-3 border mb-10 border-whiteBgButtonBg shadow-sm rounded-full"
             aria-label="Next"
           >
             <ChevronRight className="w-6 h-6" />

@@ -46,11 +46,7 @@ const Gallery: React.FC = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  const [selectedAwardModal, setSelectedAwardModal] = useState<{
-    award: ImageItem;
-    imageIndex: number;
-  } | null>(null);
-
+  const [selectedAwardModal, setSelectedAwardModal] = useState<{ award: ImageItem; imageIndex: number } | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
 
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -214,7 +210,7 @@ const Gallery: React.FC = () => {
         </section>
 
         <section>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4 ">
+          <div className="flex flex-col pt-12 md:pt-20 sm:flex-row items-start sm:items-center justify-between mb-8 gap-4 ">
             <h2 className="text-4xl font-medium text-gray-900">Follow us on YouTube</h2>
             <div className="flex items-center gap-3">
               <a
@@ -300,6 +296,42 @@ const Gallery: React.FC = () => {
             setSelectedAwardModal((prev) => (prev ? { ...prev, imageIndex: idx } : null))
           }
         />
+      )}
+
+      {/* Video modal */}
+      {selectedVideo && (
+        <div
+          className="fixed inset-0 bg-black z-50 flex items-center justify-center p-4"
+          onClick={closeModal}
+          role="dialog"
+          aria-modal="true"
+        >
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              closeModal();
+            }}
+            className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10 p-2"
+            aria-label="Close video modal"
+            ref={closeBtnRef}
+          >
+            <X size={32} />
+          </button>
+
+          <div
+            className="relative max-w-7xl w-full aspect-[16/9] bg-black rounded-lg overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <iframe
+              title={selectedVideo.title}
+              src={`https://www.youtube.com/embed/${getYoutubeVideoId(selectedVideo.url)}?autoplay=1`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              className="absolute inset-0 w-full h-full"
+              frameBorder="0"
+              allowFullScreen
+            />
+          </div>
+        </div>
       )}
 
       <style>{`

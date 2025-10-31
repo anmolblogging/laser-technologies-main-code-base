@@ -47,7 +47,7 @@ export default function TestimonialSlider() {
   const goToSlide = (index: number) => setCurrentIndex(index);
 
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-gray-50">
+    <section className="py-16 lg:py-20 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
@@ -65,18 +65,20 @@ export default function TestimonialSlider() {
           {/* Desktop Arrows - Outside */}
           <button
             onClick={prevSlide}
-            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 rounded-full bg-whiteBgButtonBg border-2 border-whiteBgButtonBg text-whiteBgButtonText p-3 transition-transform duration-200 z-10 shadow-sm focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg hover:scale-110"
+            className="rounded-full hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white hover:bg-white border border-gray-200  hover:text-black shadow-lg p-2 z-30 text-black transition-transform"
             aria-label="Previous testimonial"
+            style={{ marginLeft: "-60px" }}
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-6 h-6 text-gray-700 transition-transform duration-300 hover:translate-x-1" />
           </button>
 
           <button
             onClick={nextSlide}
-            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 rounded-full bg-whiteBgButtonBg border-2 border-whiteBgButtonBg text-whiteBgButtonText p-3 transition-transform duration-200 z-10 shadow-sm focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg hover:scale-110"
+            className="rounded-full hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white hover:bg-white border border-gray-200  hover:text-black shadow-lg p-2 z-30 text-black transition-transform"
             aria-label="Next testimonial"
+            style={{ marginRight: "-60px" }}
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-6 h-6 text-gray-700 transition-transform duration-300 hover:translate-x-1" />
           </button>
 
           {/* Slider Content */}
@@ -143,7 +145,7 @@ export default function TestimonialSlider() {
         </div>
 
         {/* Dots Indicator */}
-        <div className="flex justify-center gap-2 mt-8">
+        <div className="flex justify-center gap-2 mt-8 ">
           {testimonialsData.map((_, idx) => (
             <button
               key={idx}
@@ -151,7 +153,7 @@ export default function TestimonialSlider() {
               className={`transition-all duration-300 rounded-full ${
                 currentIndex === idx
                   ? "w-8 h-2 bg-whiteBgButtonBg"
-                  : "w-2 h-2 bg-darkBgButtonBg hover:bg-darkBgTextHover"
+                  : "w-2 h-2 bg-gray-300 hover:bg-darkBgTextHover"
               }`}
               aria-label={`Go to testimonial ${idx + 1}`}
             />

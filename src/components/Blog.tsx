@@ -97,15 +97,16 @@ const Blog = () => {
   }
 
   return (
-    <section className="bg-gray-50 py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+    <section className="bg-gray-50 py-12 sm:py-20 lg:py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-whiteBgText mb-4 font-primary">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl pt-10 font-medium text-whiteBgText mb-4 font-primary">
             Our Latest Insights
           </h2>
           <p className="text-base sm:text-lg text-whiteBgText text-opacity-70 max-w-2xl mx-auto font-secondary">
-            Stay updated with the latest trends, tips, and innovations in laser technology
+            Stay updated with the latest trends, tips, and innovations in laser
+            technology
           </p>
         </div>
 
@@ -114,17 +115,19 @@ const Blog = () => {
           {/* Desktop Navigation */}
           <button
             onClick={prevSlide}
-            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 bg-whiteBgButtonBg border-2 border-whiteBgButtonBg text-whiteBgButtonText p-4 rounded-full transition-transform duration-200 z-10 shadow-sm focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg hover:scale-110"
-            aria-label="Previous blogs"
+            className="rounded-full hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white hover:bg-white border border-gray-200  hover:text-black shadow-lg p-2 z-30 text-black transition-transform"
+            aria-label="previous event"
+            style={{ marginLeft: "-60px" }}
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-6 h-6 text-gray-700 transition-transform duration-300 hover:translate-x-[-4px]" />
           </button>
           <button
             onClick={nextSlide}
-            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 bg-whiteBgButtonBg border-2 border-whiteBgButtonBg text-whiteBgButtonText p-4 rounded-full transition-transform duration-200 z-10 shadow-sm focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg hover:scale-110"
+            className="rounded-full hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white hover:bg-white border border-gray-200  hover:text-black shadow-lg p-2 z-30 text-black transition-transform"
             aria-label="Next blogs"
+            style={{ marginRight: "-60px" }}
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-6 h-6 text-gray-700 transition-transform duration-300 hover:translate-x-1" />
           </button>
 
           {/* Slides */}
@@ -132,7 +135,9 @@ const Blog = () => {
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{
-                transform: `translateX(-${(100 / cardsPerFrame) * currentIndex}%)`,
+                transform: `translateX(-${
+                  (100 / cardsPerFrame) * currentIndex
+                }%)`,
               }}
             >
               {blogs.map((blog) => (
@@ -146,7 +151,10 @@ const Blog = () => {
                       onClick={() => handleBlogClick(blog.id)}
                     >
                       <img
-                        src={blog.image || "https://via.placeholder.com/600x400?text=No+Image"}
+                        src={
+                          blog.image ||
+                          "https://via.placeholder.com/600x400?text=No+Image"
+                        }
                         alt={blog.title || "Blog image"}
                         loading="lazy"
                         className="w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-500"
@@ -155,13 +163,13 @@ const Blog = () => {
 
                     <div className="p-5 sm:p-6 flex-1 flex flex-col">
                       <h3
-                        className="text-xl sm:text-2xl font-medium text-whiteBgText mb-1 group-hover:text-whiteBgTextHover transition-colors duration-200 cursor-pointer"
+                        className="text-xl sm:text-2xl font-medium text-whiteBgText mb-1 transition-colors duration-200 cursor-pointer"
                         onClick={() => handleBlogClick(blog.id)}
                       >
                         {blog.title || "Untitled Blog"}
                       </h3>
                       {blog.category && (
-                        <p className="text-sm pt-2 text-whiteBgText opacity-70 mb-3 font-semibold font-primary">
+                        <p className="text-sm pt-2 text-whiteBgButtonBg opacity-70 mb-3 font-semibold font-primary">
                           {blog.category}
                         </p>
                       )}
@@ -170,7 +178,7 @@ const Blog = () => {
                       </p>
                       <button
                         onClick={() => handleBlogClick(blog.id)}
-                        className="mt-5 w-full py-3 text-darkBgText hover:text-opacity-90  hover:text-darkBgText text-opacity-90 font-semibold bg-whiteBgButtonBg hover:bg-whiteBgButtonBg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg focus:ring-offset-2 flex items-center justify-center gap-2"
+                        className="mt-5 w-full py-3 text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-primary transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg focus:ring-offset-2 flex items-center justify-center gap-2"
                       >
                         Read More
                         <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />

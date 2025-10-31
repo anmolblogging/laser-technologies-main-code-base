@@ -225,7 +225,7 @@ const ProductListingPage: React.FC = () => {
                   
                   {/* Product Info */}
                   <div className="p-4 flex-1 flex flex-col justify-between">
-                    <h3 className="text-2xl font-primary font-medium text-gray-900 mb-2 line-clamp-2">{product.ProductName}</h3>
+                    <h3 className="text-2xl font-primary font-medium text-[#060C2A] mb-2 line-clamp-2">{product.ProductName}</h3>
                     {product.ShortDescription && (
                       <p className="text-sm text-gray-600 mb-4 line-clamp-2">{product.ShortDescription}</p>
                     )}
@@ -249,14 +249,11 @@ const ProductListingPage: React.FC = () => {
                     <div className="flex items-center gap-3 mt-auto">
                       <button
                         onClick={() => handleViewProduct(product.id)}
-                        className="flex-1 py-3 px-4 bg-primary text-white font-semibold flex items-center justify-center gap-2 shadow-md transition-transform duration-200 hover:scale-105"
-                        style={{ backgroundColor: BRAND.primary }}
+                        className="flex-1 py-3 px-4 text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary font-semibold flex items-center justify-center gap-2 shadow-md transition-transform duration-200 hover:scale-105"
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = BRAND.hover;
                           e.currentTarget.style.transform = 'translateY(-2px)';
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor = BRAND.primary;
                           e.currentTarget.style.transform = 'translateY(0)';
                         }}
                       >
@@ -264,19 +261,12 @@ const ProductListingPage: React.FC = () => {
                       </button>
                       <button
                         onClick={handleEnquire}
-                        className="flex-1 py-3 px-4 border-2 border-primary text-primary font-semibold flex items-center justify-center gap-2 transition-transform duration-200 hover:scale-105"
-                        style={{
-                          color: BRAND.primary,
-                          borderColor: BRAND.primary,
-                          backgroundColor: 'white',
-                        }}
+                        className="flex-1 py-3 px-4 text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary font-semibold flex items-center justify-center gap-2 shadow-md transition-transform duration-200 hover:scale-105"
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = BRAND.light;
                           e.currentTarget.style.transform = 'translateY(-2px)';
                           e.currentTarget.style.boxShadow = '0 4px 12px rgba(107,15,15,0.15)';
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor = 'white';
                           e.currentTarget.style.transform = 'translateY(0)';
                           e.currentTarget.style.boxShadow = 'none';
                         }}

@@ -10,7 +10,6 @@ import ProductsSection from "../components/ProductsSection";
 import Testimonial from "../components/Testimonial";
 import Blog from "../components/Blog";
 
-
 import Gallery from "../components/Gallery";
 import IndustryCarousel2 from "../components/IndustryCarousel2";
 

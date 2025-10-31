@@ -41,7 +41,7 @@ export default function AboutSection() {
             </ul>
             <br />
             <a href="/about">
-              <button className="text-whiteBgButtonText bg-whiteBgButtonBg font-secondary px-8 py-3 text-lg  ">
+              <button className="text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary px-8 py-3 text-lg  ">
                 Learn More About Us
               </button>
             </a>
@@ -50,7 +50,7 @@ export default function AboutSection() {
           {/* Right Image */}
           <div className="relative overflow-hidden shadow-2xl ">
             <img
-              src="https://images.pexels.com/photos/3913020/pexels-photo-3913020.jpeg?auto=compress&cs=tinysrgb&w=800"
+              src="https://www.lasertechnologies.co.in/images/life-at-laser/life-at-laser.webp"
               alt="Laser cutting technology"
               className="w-full h-full object-cover"
               loading="lazy"

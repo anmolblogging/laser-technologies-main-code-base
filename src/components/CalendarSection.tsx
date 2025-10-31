@@ -97,7 +97,7 @@ export default function CalendarSection() {
             onClick={() => scrollBy(-320)}
             className="rounded-full hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white hover:bg-white border border-gray-200 shadow-lg p-2 z-30 transition-transform"
             aria-label="previous event"
-            style={{ marginLeft: "-28px" }}
+            style={{ marginLeft: "-60px" }}
           >
             <ChevronLeft className="w-6 h-6 text-gray-700 transition-transform duration-300 hover:translate-x-[-4px]" />
           </button>
@@ -106,7 +106,7 @@ export default function CalendarSection() {
             onClick={() => scrollBy(320)}
             className="rounded-full hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white hover:bg-white border border-gray-200 shadow-lg p-2 z-30 transition-transform"
             aria-label="next event"
-            style={{ marginRight: "-28px" }}
+            style={{ marginRight: "-60px" }}
           >
             <ChevronRight className="w-6 h-6 text-gray-700 transition-transform duration-300 hover:translate-x-1" />
           </button>
@@ -156,7 +156,8 @@ export default function CalendarSection() {
                   </div>
                   <button
                     onClick={() => window.open(event.form_link, "_blank")}
-                    className="w-full bg-whiteBgButtonBg text-whiteBgButtonText font-semibold py-3 text-sm flex items-center justify-center gap-2"
+                    className="w-full text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary
+ font-semibold py-3 text-sm flex items-center justify-center gap-2"
                   >
                     Learn More
                     <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" />
