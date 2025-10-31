@@ -3,7 +3,7 @@ import Image from '../assets/About-Home.webp';
 
 export default function AboutSection() {
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-10 pb-16 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-8xl">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Text Section */}

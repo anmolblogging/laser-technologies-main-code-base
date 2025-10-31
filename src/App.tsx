@@ -28,7 +28,7 @@ function App() {
         <Route path="/careers" element={<Careers />} />
         <Route path="/blog" element={<Posts />} />
         <Route path="/csr" element={<Posts />} />
-        <Route path="/article" element={<Posts />} />
+        <Route path="/articles" element={<Posts />} />
         <Route path="/blog/:id" element={<Blogtemplate />} />
         {/* <Route path="/about"element={<About />}/> */}
         <Route path="/about" element={<Home />} />
