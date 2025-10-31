@@ -138,16 +138,26 @@ const Awards = () => {
   }
 
   return (
-    <div className="min-h-screen md:pt-10 bg-gradient-to-br from-gray-50 to-red-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* Header Section */}
-        <div className="mb-16">
-          <h1 className="text-4xl md:text-6xl font-medium mb-4 text-gray-900">Awards & Accolades</h1>
-          <div className="w-20 h-1 mb-6 bg-whiteBgButtonBg"></div>
-          <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
-            Laser Technologies has been a pioneer in the laser community for the past 10 years. We have been rewarded for our dedication, hard work and integrity. Have a look at our achievements.
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50">
+      <div className="mx-auto">
+        
+        <div className="relative overflow-hidden mt-16 md:mt-20 bg-black">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm mb-6">
+              <span className="text-white text-sm font-medium">
+                Awards
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6">
+              Awards & Accolades
+            </h1>
+            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              Laser Technologies has been a pioneer in the laser community for the past 10 years. We have been rewarded for our dedication, hard work and integrity. Have a look at our achievements.
+            </p>
+          </div>
         </div>
+      </div>
 
         {/* Awards Grid */}
         {awards.length === 0 ? (
@@ -156,7 +166,7 @@ const Awards = () => {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <div className="grid grid-cols-1 mx-auto max-w-6xl pt-20 lg:grid-cols-2 gap-8 pb-12">
               {awards.map((award) => {
                 const currentIndex = carouselIndices[award.id] || 0;
                 const images = award.image_url || [];

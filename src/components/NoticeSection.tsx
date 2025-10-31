@@ -1,5 +1,5 @@
 import { Sparkles } from "lucide-react";
-
+import Image from '../assets/About-Home.webp';
 
 export default function AboutSection() {
   return (
@@ -50,7 +50,7 @@ export default function AboutSection() {
           {/* Right Image */}
           <div className="relative overflow-hidden shadow-2xl ">
             <img
-              src="https://www.lasertechnologies.co.in/images/life-at-laser/life-at-laser.webp"
+              src={Image}
               alt="Laser cutting technology"
               className="w-full h-full object-cover"
               loading="lazy"

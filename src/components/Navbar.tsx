@@ -28,14 +28,14 @@ const Header = () => {
   const moreContainerRef = useRef(null);
 
   const navItems = [
-    { name: "Homepage", href: "/" },
+    { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
     { name: "Awards", href: "/awards" },
     { name: "Careers", href: "/careers" },
   ];
 
-  const navItemsOrder = ["Homepage", "Product", "About", "Contact", "Awards", "Careers"];
+  const navItemsOrder = ["Home", "Product", "About", "Contact", "Awards", "Careers"];
 
   const moreItems = [
     { name: "CSR", href: "/csr" },
@@ -101,7 +101,7 @@ const Header = () => {
                 fontFamily: "'Titillium Web', sans-serif",
               }}
             >
-              Homepage
+              Home
               <span
                 className="absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"
                 style={{ backgroundColor: COLORS.whiteBgTextHover }}
@@ -224,7 +224,7 @@ const Header = () => {
               )}
             </div>
 
-            {navItems.filter(item => item.name !== "Homepage").map((item) => (
+            {navItems.filter(item => item.name !== "Home").map((item) => (
               <a
                 key={item.name}
                 href={item.href}

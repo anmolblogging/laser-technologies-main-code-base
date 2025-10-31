@@ -9,7 +9,7 @@ import ProductsSection from "../components/ProductsSection";
 
 import Testimonial from "../components/Testimonial";
 import Blog from "../components/Blog";
-
+import Clients from "../components/Clients";
 import Gallery from "../components/Gallery";
 import IndustryCarousel2 from "../components/IndustryCarousel2";
 
@@ -26,6 +26,7 @@ function Home() {
       <VideoSection />
       <Blog />
       <Testimonial />
+      <Clients />
       <Gallery />
 
     </div>

@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useMemo, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
-import bgImage from "../assets/image.png";
-
 import {
   Grid,
   Image,
@@ -12,10 +11,8 @@ import {
   ArrowRight,
   Phone,
 } from "lucide-react";
-
 import { supabase } from "../lib/supabase";
 
-// Product Type
 type ProductType = {
   id: string;
   Segment: string;
@@ -25,13 +22,10 @@ type ProductType = {
   Thumbnail_url?: string[] | null;
 };
 
-// Fetch products
 const fetchProducts = async (): Promise<ProductType[]> => {
   const { data, error } = await supabase
     .from("products")
-    .select(
-      `id, Segment, SubCategory, ProductName, ShortDescription, Thumbnail_url`
-    );
+    .select(`id, Segment, SubCategory, ProductName, ShortDescription, Thumbnail_url`);
   if (error) {
     console.error("Error fetching products:", error);
     return [];
@@ -39,7 +33,6 @@ const fetchProducts = async (): Promise<ProductType[]> => {
   return data || [];
 };
 
-// Structure categories
 const getCategoryList = (products: ProductType[]) => {
   const grouped: Record<
     string,
@@ -60,7 +53,6 @@ const getCategoryList = (products: ProductType[]) => {
     const subCategory = product.SubCategory;
 
     if (!grouped[segment]) grouped[segment] = { subs: new Set(), products: [] };
-
     grouped[segment].subs.add(subCategory);
     grouped[segment].products.push({
       id: product.id,
@@ -88,8 +80,22 @@ export default function Product(): JSX.Element {
   const [sub, setSub] = useState<string>("");
   const [mobileCatOpen, setMobileCatOpen] = useState(false);
   const [mobileSubOpen, setMobileSubOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // Fetch products once
+  const PRODUCTS_PER_PAGE = 9;
+
+  const productsRef = useRef<HTMLDivElement>(null);
+  const isInitialMount = useRef(true);
+
+  // ✅ prevents unwanted scroll on reload
+  const userTriggeredScroll = useRef(false);
+
+  useEffect(() => {
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname);
+    }
+  }, []);
+
   useEffect(() => {
     fetchProducts().then((data) => {
       setProducts(data);
@@ -97,14 +103,13 @@ export default function Product(): JSX.Element {
     });
   }, []);
 
-  // Categories Memo
   const CATEGORIES = useMemo(() => getCategoryList(products), [products]);
 
-  // Set default category/sub
   useEffect(() => {
     if (!loading && CATEGORIES.length > 0) {
       setCategoryId(CATEGORIES[0].id);
       setSub(CATEGORIES[0].subs[0]);
+      setCurrentPage(1);
     }
   }, [loading, CATEGORIES]);
 
@@ -114,50 +119,86 @@ export default function Product(): JSX.Element {
   );
 
   const filteredProducts = useMemo(
-    () =>
-      category ? category.products.filter((p) => p.subcategory === sub) : [],
+    () => (category ? category.products.filter((p) => p.subcategory === sub) : []),
     [category, sub]
   );
 
-  if (loading) {
-    return <Loading text="Products" />;
-  }
+  // ✅ FINAL FIXED SCROLL EFFECT
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
+    // Only scroll when user triggers (NOT on reload)
+    if (!userTriggeredScroll.current) return;
+    userTriggeredScroll.current = false;
+
+    // Scroll + Reset page
+    setCurrentPage(1);
+
+    setTimeout(() => {
+      productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  }, [sub, categoryId]);
+
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * PRODUCTS_PER_PAGE,
+    currentPage * PRODUCTS_PER_PAGE
+  );
+
+  const goToPage = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+
+    userTriggeredScroll.current = true;
+    setCurrentPage(page);
+
+    setTimeout(() => {
+      productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  };
+
+  if (loading) return <Loading text="Products" />;
 
   return (
     <section
       id="products"
-      className="min-h-screen py-12 lg:py-16 my-16  bg-gradient-to-br from-neutral-950 via-neutral-900 to-zinc-900 relative "
+      className="min-h-screen py-12 lg:py-16 my-16 bg-gradient-to-br from-neutral-950 via-neutral-900 to-zinc-900 relative"
       style={{
-        // backgroundImage:`url(${bgImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 pt-16">
+      <div ref={productsRef} className="max-w-[1600px] mx-auto px-4 sm:px-6 pt-16">
+
         {/* HEADER */}
         <div className="text-center mb-12 lg:mb-16" id="#products">
           <div className="inline-flex bg-whiteBgButtonBg bg-opacity-20 text-whiteBgButtonBg items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-950/50 to-black/50 border border-red-900/30 rounded-full mb-4 backdrop-blur-sm">
             <Sparkles className="w-4 h-4 " />
             <span className="font-normal">Premium Collection</span>
           </div>
+
           <h2 className="text-4xl lg:text-6xl font-normal font-primary text-darkBgText mb-5 tracking-tight">
             Industrial Equipment Catalog
           </h2>
+
           <p className="text-darkBgText opacity-60 text-lg md:text-xl max-w-2xl mx-auto font-secondary">
-            Explore our complete range of laser cutting, welding, marking, and
-            automation systems designed for diverse industries.
+            Explore our complete range of laser cutting, welding, marking, and automation systems.
           </p>
         </div>
 
-        {/* DESKTOP CATEGORY PILLS */}
+        {/* CATEGORY PILLS (DESKTOP) */}
         <div className="hidden lg:flex justify-center font-primary gap-3 mb-12 ">
           {CATEGORIES.map((c) => (
             <button
               key={c.id}
               onClick={() => {
+                userTriggeredScroll.current = true; // ✅ ✅ IMPORTANT
                 setCategoryId(c.id);
                 setSub(c.subs[0]);
+                setCurrentPage(1);
               }}
               className={`px-8 py-3.5 font-medium  transition-all duration-300 border ${
                 c.id === categoryId
@@ -170,8 +211,9 @@ export default function Product(): JSX.Element {
           ))}
         </div>
 
-        {/* MOBILE DROPDOWNS */}
+        {/* MOBILE CATEGORY DROPDOWNS */}
         <div className="lg:hidden mb-8 flex flex-col gap-3 font-secondary">
+
           {/* Category Dropdown */}
           <div className="relative">
             <button
@@ -188,15 +230,18 @@ export default function Product(): JSX.Element {
                 }`}
               />
             </button>
+
             {mobileCatOpen && (
               <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800 shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl">
                 {CATEGORIES.map((c) => (
                   <button
                     key={c.id}
                     onClick={() => {
+                      userTriggeredScroll.current = true; // ✅
                       setCategoryId(c.id);
                       setSub(c.subs[0]);
                       setMobileCatOpen(false);
+                      setCurrentPage(1);
                     }}
                     className={`w-full text-left px-5 py-4 transition-all border-b border-zinc-800 last:border-b-0 ${
                       c.id === categoryId
@@ -224,16 +269,19 @@ export default function Product(): JSX.Element {
                 }`}
               />
             </button>
+
             {mobileSubOpen && (
               <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800 shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl">
                 {category.subs.map((s) => (
                   <button
                     key={s}
                     onClick={() => {
+                      userTriggeredScroll.current = true; // ✅
                       setSub(s);
                       setMobileSubOpen(false);
+                      setCurrentPage(1);
                     }}
-                    className={`w-full text-left px-5 py-4 transition-all border-b border-zinc-800 last:border-b-0 bg-whiteBgButtonBg bg-opacity-30 text-darkBgText font-semibold`}
+                    className="w-full text-left px-5 py-4 transition-all border-b border-zinc-800 last:border-b-0 bg-whiteBgButtonBg bg-opacity-30 text-darkBgText font-semibold"
                   >
                     {s}
                   </button>
@@ -245,20 +293,26 @@ export default function Product(): JSX.Element {
 
         {/* DESKTOP GRID */}
         <div className="hidden lg:grid grid-cols-5 gap-6 pb-16">
-          {/* Sidebar */}
-          <aside className="bg-gradient-to-b  from-zinc-900 to-black p-6 shadow-2xl border border-zinc-800 h-[600px] flex flex-col sticky top-24">
+
+          {/* SIDEBAR */}
+          <aside className="bg-gradient-to-b from-zinc-900 to-black p-6 shadow-2xl border border-zinc-800 h-[600px] flex flex-col sticky top-24">
             <h4 className="text-xl font-medium mb-6 font-primary text-darkBgText text-opacity-80 flex items-center gap-3 pb-4 border-b border-zinc-800">
               <div className="p-2 bg-red-950/50 border border-red-900/30">
                 <Grid className="w-5 h-5 text-red-500" />
               </div>
               <span>Sub Categories</span>
             </h4>
-            <nav className="flex flex-col gap-2 overflow-y-auto pr-2  scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
+
+            <nav className="flex flex-col gap-2 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
               {category.subs.map((s) => (
                 <button
                   key={s}
-                  onClick={() => setSub(s)}
-                  className={`group w-full text-left px-4  py-3.5 font-semibold transition-all duration-200 flex items-center justify-between ${
+                  onClick={() => {
+                    userTriggeredScroll.current = true; // ✅
+                    setSub(s);
+                    setCurrentPage(1);
+                  }}
+                  className={`group w-full text-left px-4 py-3.5 font-semibold transition-all duration-200 flex items-center justify-between ${
                     s === sub
                       ? "bg-whiteBgButtonBg hover:bg-whiteBgButtonBg hover:bg-opacity-40 text-opacity-60 bg-opacity-40 text-darkBgTextHover shadow-lg"
                       : "text-darkBgTextHover text-opacity-80 bg-whiteBgButtonBg hover:bg-whiteBgButtonBg bg-opacity-40 hover:text-darkBgTextHover hover:bg-opacity-40"
@@ -267,9 +321,7 @@ export default function Product(): JSX.Element {
                   <span>{s}</span>
                   <ArrowRight
                     className={`w-10 h-10 transition-transform ${
-                      s === sub
-                        ? "opacity-100"
-                        : "opacity-0 group-hover:opacity-100"
+                      s === sub ? "opacity-100" : "opacity-0 group-hover:opacity-100"
                     }`}
                   />
                 </button>
@@ -277,10 +329,11 @@ export default function Product(): JSX.Element {
             </nav>
           </aside>
 
-          {/* Product Cards */}
+          {/* PRODUCT CARDS */}
           <main className="lg:col-span-4">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filteredProducts.length === 0 && (
+
+              {paginatedProducts.length === 0 && (
                 <div className="col-span-full text-center py-24">
                   <div className="inline-flex flex-col items-center gap-4">
                     <div className="p-6 bg-zinc-900 rounded-full border border-zinc-800">
@@ -293,7 +346,7 @@ export default function Product(): JSX.Element {
                 </div>
               )}
 
-              {filteredProducts.map((p, index) => (
+              {paginatedProducts.map((p, index) => (
                 <div
                   key={p.id}
                   className="group bg-gradient-to-b from-zinc-900 to-black overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-500 hover:shadow-2xl hover:shadow-red-950/20"
@@ -313,27 +366,29 @@ export default function Product(): JSX.Element {
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
                   </div>
+
                   <div className="p-6">
-                    <h3 className="text-3xl font-primary font-medium text-darkBgText mb-2 group-hover:text-whiteBgTextHover hover:text-opacity-10  transition-colors">
+                    <h3 className="text-3xl font-primary font-medium text-darkBgText mb-2 group-hover:text-whiteBgTextHover transition-colors">
                       {p.name}
                     </h3>
                     <p className="text-md text-darkBgText text-opacity-70 font-secondary mb-5 leading-relaxed line-clamp-2">
                       {p.description}
                     </p>
+
                     <div className="flex w-full gap-3 mt-2 font-secondary">
                       <button
                         onClick={() => navigate(`/product/${p.id}`)}
-                        className="flex-1 px-6 py-3.5 text-opacity-90 font-semibold transition-all duration-300 border border-red-900  flex items-center justify-center gap-2 shadow-sm hover:shadow-md group/btn bg-whiteBgButtonBg hover:bg-whiteBgButtonBg hover:bg-opacity-40 bg-opacity-40 text-darkBgTextHover "
+                        className="flex-1 px-6 py-3.5 text-opacity-90 font-semibold transition-all duration-300 border border-red-900 flex items-center justify-center gap-2 shadow-sm hover:shadow-md bg-whiteBgButtonBg bg-opacity-40 hover:bg-opacity-40 text-darkBgTextHover"
                       >
                         <span>View</span>
-                        <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                       </button>
 
                       <button
                         onClick={() => navigate("/contact")}
-                        className="flex-1 px-6 py-3.5 text-opacity-90 font-semibold transition-all duration-300 border border-red-900  flex items-center justify-center gap-2 shadow-sm hover:shadow-md group/btn bg-whiteBgButtonBg hover:bg-whiteBgButtonBg hover:bg-opacity-40 bg-opacity-40 text-darkBgTextHover "
+                        className="flex-1 px-6 py-3.5 text-opacity-90 font-semibold transition-all duration-300 border border-red-900 flex items-center justify-center gap-2 shadow-sm hover:shadow-md bg-whiteBgButtonBg bg-opacity-40 hover:bg-opacity-40 text-darkBgTextHover"
                       >
-                        <Phone className="w-4 h-4 transition-transform group-hover/btn:scale-110" />
+                        <Phone className="w-4 h-4 transition-transform group-hover:scale-110" />
                         <span>Enquire</span>
                       </button>
                     </div>
@@ -341,6 +396,44 @@ export default function Product(): JSX.Element {
                 </div>
               ))}
             </div>
+
+            {/* PAGINATION */}
+            {totalPages > 1 && (
+              <div className="flex justify-center gap-3 mt-12 font-secondary">
+                <button
+                  onClick={() => goToPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 border border-zinc-700 rounded-md bg-black/50 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+
+                {[...Array(totalPages)].map((_, i) => {
+                  const page = i + 1;
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => goToPage(page)}
+                      className={`px-4 py-2 border rounded-md ${
+                        page === currentPage
+                          ? "bg-whiteBgButtonBg bg-opacity-30 border-red-700 text-darkBgText font-semibold"
+                          : "border-zinc-700 text-white hover:bg-whiteBgButtonBg hover:bg-opacity-10"
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  );
+                })}
+
+                <button
+                  onClick={() => goToPage(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 border border-zinc-700 rounded-md bg-black/50 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </main>
         </div>
 
@@ -356,7 +449,8 @@ export default function Product(): JSX.Element {
               </div>
             </div>
           )}
-          {filteredProducts.map((p, index) => (
+
+          {paginatedProducts.map((p, index) => (
             <div
               key={p.id}
               className="group bg-gradient-to-b from-zinc-900 to-black overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-500"
@@ -376,11 +470,11 @@ export default function Product(): JSX.Element {
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
               </div>
+
               <div className="p-5">
-                <h3 className="text-2xl font-medium text-white mb-2">
-                  {p.name}
-                </h3>
+                <h3 className="text-2xl font-medium text-white mb-2">{p.name}</h3>
                 <p className="text-md text-gray-400 mb-4">{p.description}</p>
+
                 <div className="flex justify-center gap-4">
                   <button
                     onClick={() => navigate(`/product/${p.id}`)}
@@ -389,6 +483,7 @@ export default function Product(): JSX.Element {
                     <span>View</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
+
                   <button
                     onClick={() => navigate(`/contact`)}
                     className="flex-1 max-w-[180px] px-5 py-3 bg-gradient-to-r from-red-900 to-red-950 text-white font-medium hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 flex items-center justify-center gap-2"
@@ -401,6 +496,7 @@ export default function Product(): JSX.Element {
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );

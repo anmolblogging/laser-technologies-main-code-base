@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { BookOpen, Zap, Wrench, FileText, Cpu, Menu, X, ChevronRight,Clock,  ArrowRight } from 'lucide-react';
+import { BookOpen, Zap, Wrench, FileText, Cpu, Menu, X, ChevronRight,Clock } from 'lucide-react';
 
 const BRAND = {
   primary: '#060C2A', 
@@ -352,18 +352,29 @@ The future of laser technology lies in these smart, interconnected systems that 
 
 
 
+
 const KnowledgeBase = () => {
   const [activeSection, setActiveSection] = useState('');
   const [activeCategory, setActiveCategory] = useState('laser-cutting');
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const contentRef = useRef(null);
   const observerRef = useRef(null);
+  const firstSectionRef = useRef<HTMLDivElement>(null);
 
+  /** ✅ ALWAYS scroll to top when category changes */
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [activeCategory]);
+
+  /** Intersection observer to track active section */
   useEffect(() => {
     const options = {
       root: null,
-      rootMargin: '-20% 0px -35% 0px',
-      threshold: 0
+      rootMargin: "-20% 0px -35% 0px",
+      threshold: 0,
     };
 
     observerRef.current = new IntersectionObserver((entries) => {
@@ -374,54 +385,54 @@ const KnowledgeBase = () => {
       });
     }, options);
 
-    const sections = contentRef.current?.querySelectorAll('[data-section]');
+    const sections = contentRef.current?.querySelectorAll("[data-section]");
     sections?.forEach((section) => observerRef.current.observe(section));
 
     return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
+      observerRef.current?.disconnect();
     };
   }, [activeCategory]);
 
-  const activeCategories = knowledgeBase.categories.find(c => c.id === activeCategory);
+  const activeCategories = knowledgeBase.categories.find(
+    (c) => c.id === activeCategory
+  );
 
-  const scrollToSection = (sectionId) => {
+  /** Scroll to section manually on user click */
+  const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const offset = 100;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offset = 100; // adjust for sticky header
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
+
       window.scrollTo({
         top: elementPosition - offset,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
+
       setMobileNavOpen(false);
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
-
-
       {/* Hero Section */}
-      <div className="relative overflow-hidden mt-16 md:mt-20 bg-black" >
-        {/* <div className="absolute inset-0 opacity-10">
-          <div className="absolute transform rotate-45 -right-20 -top-20 w-96 h-96 rounded-full" style={{ backgroundColor: 'white' }}></div>
-          <div className="absolute transform -rotate-45 -left-20 -bottom-20 w-80 h-80 rounded-full" style={{ backgroundColor: 'white' }}></div>
-        </div> */}
+      <div className="relative overflow-hidden mt-16 md:mt-20 bg-black">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2  bg-white/20 backdrop-blur-sm mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm mb-6">
               <BookOpen className="text-white" size={20} />
-              <span className="text-white text-sm font-medium">Knowledge Center</span>
+              <span className="text-white text-sm font-medium">
+                Knowledge Center
+              </span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6">
               Laser University
             </h1>
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Take your creativity to the next level with comprehensive laser technology education
+              Take your creativity to the next level with comprehensive laser
+              technology education
             </p>
-
           </div>
         </div>
       </div>
@@ -433,16 +444,19 @@ const KnowledgeBase = () => {
             {knowledgeBase.categories.map((category) => {
               const Icon = category.icon;
               const isActive = activeCategory === category.id;
+
               return (
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
                   className="flex items-center gap-2 px-6 py-3 whitespace-nowrap rounded-lg transition-all flex-shrink-0"
                   style={{
-                    backgroundColor: isActive ? BRAND.light : 'transparent',
-                    color: isActive ? BRAND.primary : '#6b7280',
-                    fontWeight: isActive ? '600' : '500',
-                    border: `2px solid ${isActive ? BRAND.border : 'transparent'}`
+                    backgroundColor: isActive ? BRAND.light : "transparent",
+                    color: isActive ? BRAND.primary : "#6b7280",
+                    fontWeight: isActive ? "600" : "500",
+                    border: `2px solid ${
+                      isActive ? BRAND.border : "transparent"
+                    }`,
                   }}
                 >
                   <Icon size={18} />
@@ -459,36 +473,69 @@ const KnowledgeBase = () => {
         <div className="flex gap-8 relative pt-2">
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block w-72 flex-shrink-0 sticky top-32 self-start">
-            <div className="bg-white  shadow-sm p-6 border" style={{ borderColor: BRAND.border }}>
-              <div className="flex items-center gap-2 mb-6 pb-4 border-b" style={{ borderColor: BRAND.border }}>
+            <div
+              className="bg-white shadow-sm p-6 border"
+              style={{ borderColor: BRAND.border }}
+            >
+              <div
+                className="flex items-center gap-2 mb-6 pb-4 border-b"
+                style={{ borderColor: BRAND.border }}
+              >
                 <BookOpen size={20} style={{ color: BRAND.primary }} />
-                <h2 className="font-semibold" style={{ color: BRAND.primary }}>Table of Contents</h2>
+                <h2
+                  className="font-semibold"
+                  style={{ color: BRAND.primary }}
+                >
+                  Table of Contents
+                </h2>
               </div>
+
               <nav className="space-y-6">
                 {activeCategories?.topics.map((topic, topicIdx) => (
                   <div key={topic.id}>
-                    <h3 className="font-semibold text-sm mb-3 flex items-center gap-2" style={{ color: BRAND.primary }}>
-                      <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs" style={{ backgroundColor: BRAND.light }}>
+                    <h3
+                      className="font-semibold text-sm mb-3 flex items-center gap-2"
+                      style={{ color: BRAND.primary }}
+                    >
+                      <span
+                        className="w-6 h-6 rounded-full flex items-center justify-center text-xs"
+                        style={{ backgroundColor: BRAND.light }}
+                      >
                         {topicIdx + 1}
                       </span>
                       <span className="line-clamp-2">{topic.title}</span>
                     </h3>
+
                     <ul className="space-y-1 ml-8">
                       {topic.sections.map((section) => {
                         const isActive = activeSection === section.id;
+
                         return (
                           <li key={section.id}>
                             <button
                               onClick={() => scrollToSection(section.id)}
                               className="text-sm text-left w-full px-3 py-2 rounded-lg transition-all flex items-center gap-2 group"
                               style={{
-                                backgroundColor: isActive ? BRAND.light : 'transparent',
-                                color: isActive ? BRAND.primary : '#6b7280',
-                                fontWeight: isActive ? '500' : '400'
+                                backgroundColor: isActive
+                                  ? BRAND.light
+                                  : "transparent",
+                                color: isActive
+                                  ? BRAND.primary
+                                  : "#6b7280",
+                                fontWeight: isActive ? "500" : "400",
                               }}
                             >
-                              <ChevronRight size={14} className={`transition-transform ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'}`} />
-                              <span className="line-clamp-2">{section.title}</span>
+                              <ChevronRight
+                                size={14}
+                                className={`transition-transform ${
+                                  isActive
+                                    ? "opacity-100"
+                                    : "opacity-0 group-hover:opacity-50"
+                                }`}
+                              />
+                              <span className="line-clamp-2">
+                                {section.title}
+                              </span>
                             </button>
                           </li>
                         );
@@ -500,45 +547,71 @@ const KnowledgeBase = () => {
             </div>
           </aside>
 
-          {/* Mobile Navigation Button */}
+          {/* Mobile Nav Toggle */}
           <button
             onClick={() => setMobileNavOpen(!mobileNavOpen)}
             className="lg:hidden fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-lg flex items-center justify-center z-50"
             style={{ backgroundColor: BRAND.primary }}
           >
-            {mobileNavOpen ? <X className="text-white" size={24} /> : <Menu className="text-white" size={24} />}
+            {mobileNavOpen ? (
+              <X className="text-white" size={24} />
+            ) : (
+              <Menu className="text-white" size={24} />
+            )}
           </button>
 
           {/* Mobile Navigation */}
           {mobileNavOpen && (
-            <div className="lg:hidden fixed inset-0 bg-black/50 z-40 top-16" onClick={() => setMobileNavOpen(false)}>
-              <div className="absolute right-0 top-0 bottom-0 w-80 bg-white shadow-xl overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="lg:hidden fixed inset-0 bg-black/50 z-40 top-16"
+              onClick={() => setMobileNavOpen(false)}
+            >
+              <div
+                className="absolute right-0 top-0 bottom-0 w-80 bg-white shadow-xl overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <div className="p-6">
-                  <h2 className="font-semibold mb-6 flex items-center gap-2" style={{ color: BRAND.primary }}>
+                  <h2
+                    className="font-semibold mb-6 flex items-center gap-2"
+                    style={{ color: BRAND.primary }}
+                  >
                     <BookOpen size={20} />
                     Table of Contents
                   </h2>
+
                   <nav className="space-y-6">
                     {activeCategories?.topics.map((topic, topicIdx) => (
                       <div key={topic.id}>
-                        <h3 className="font-semibold text-sm mb-3 flex items-center gap-2" style={{ color: BRAND.primary }}>
-                          <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs" style={{ backgroundColor: BRAND.light }}>
+                        <h3
+                          className="font-semibold text-sm mb-3 flex items-center gap-2"
+                          style={{ color: BRAND.primary }}
+                        >
+                          <span
+                            className="w-6 h-6 rounded-full flex items-center justify-center text-xs"
+                            style={{ backgroundColor: BRAND.light }}
+                          >
                             {topicIdx + 1}
                           </span>
                           {topic.title}
                         </h3>
+
                         <ul className="space-y-1 ml-8">
                           {topic.sections.map((section) => {
                             const isActive = activeSection === section.id;
+
                             return (
                               <li key={section.id}>
                                 <button
                                   onClick={() => scrollToSection(section.id)}
                                   className="text-sm text-left w-full px-3 py-2 rounded-lg transition-all"
                                   style={{
-                                    backgroundColor: isActive ? BRAND.light : 'transparent',
-                                    color: isActive ? BRAND.primary : '#6b7280',
-                                    fontWeight: isActive ? '500' : '400'
+                                    backgroundColor: isActive
+                                      ? BRAND.light
+                                      : "transparent",
+                                    color: isActive
+                                      ? BRAND.primary
+                                      : "#6b7280",
+                                    fontWeight: isActive ? "500" : "400",
                                   }}
                                 >
                                   {section.title}
@@ -555,18 +628,38 @@ const KnowledgeBase = () => {
             </div>
           )}
 
-          {/* Content Area */}
+          {/* Main Content */}
           <main className="flex-1" ref={contentRef}>
-            <div className="bg-white  shadow-sm border" style={{ borderColor: BRAND.border }}>
+            <div
+              className="bg-white shadow-sm border"
+              style={{ borderColor: BRAND.border }}
+            >
               {activeCategories?.topics.map((topic, topicIdx) => (
-                <div key={topic.id} className="border-b last:border-b-0" style={{ borderColor: BRAND.border }}>
+                <div
+                  key={topic.id}
+                  className="border-b last:border-b-0"
+                  style={{ borderColor: BRAND.border }}
+                >
                   <div className="p-6 sm:p-8 lg:p-10">
+                    {/* Topic Header */}
                     <div className="flex items-start gap-4 mb-8">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: BRAND.light }}>
-                        <span className="text-xl font-bold" style={{ color: BRAND.primary }}>{topicIdx + 1}</span>
+                      <div
+                        className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style={{ backgroundColor: BRAND.light }}
+                      >
+                        <span
+                          className="text-xl font-bold"
+                          style={{ color: BRAND.primary }}
+                        >
+                          {topicIdx + 1}
+                        </span>
                       </div>
+
                       <div className="flex-1">
-                        <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: BRAND.primary }}>
+                        <h2
+                          className="text-2xl md:text-3xl font-bold mb-2"
+                          style={{ color: BRAND.primary }}
+                        >
                           {topic.title}
                         </h2>
                         <div className="flex items-center gap-4 text-sm text-gray-500">
@@ -580,88 +673,92 @@ const KnowledgeBase = () => {
                       </div>
                     </div>
 
-                    {topic.sections.map((section, sectionIdx) => (
+                    {/* Sections */}
+                    {topic.sections.map((section, idx) => (
                       <section
                         key={section.id}
                         id={section.id}
                         data-section
                         className="mb-12 last:mb-0 scroll-mt-32"
+                        ref={
+                          topicIdx === 0 && idx === 0
+                            ? firstSectionRef
+                            : null
+                        }
                       >
+                        {/* Section Header */}
                         <div className="flex items-start gap-3 mb-4">
-                          <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-sm font-semibold" style={{ backgroundColor: BRAND.light, color: BRAND.primary }}>
-                            {sectionIdx + 1}
+                          <div
+                            className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-sm font-semibold"
+                            style={{
+                              backgroundColor: BRAND.light,
+                              color: BRAND.primary,
+                            }}
+                          >
+                            {idx + 1}
                           </div>
-                          <h3 className="text-xl md:text-2xl font-semibold flex-1" style={{ color: BRAND.primary }}>
+
+                          <h3
+                            className="text-xl md:text-2xl font-semibold flex-1"
+                            style={{ color: BRAND.primary }}
+                          >
                             {section.title}
                           </h3>
                         </div>
-                        
+
+                        {/* Section Content */}
                         <div className="prose max-w-none pl-11">
-                          {section.content.split('\n\n').map((paragraph, idx) => {
-                            // Check if paragraph is a list item
-                            if (paragraph.trim().startsWith('•')) {
-                              const items = paragraph.split('\n').filter(line => line.trim());
-                              return (
-                                <ul key={idx} className="space-y-2 mb-6">
-                                  {items.map((item, itemIdx) => (
-                                    <li key={itemIdx} className="text-gray-700 leading-relaxed flex items-start gap-3">
-                                      <span className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: BRAND.primary }}></span>
-                                      <span>{item.replace('•', '').trim()}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              );
-                            }
-                            
-                            // Check if it's a heading (contains a colon at the end of first line)
-                            const lines = paragraph.split('\n');
-                            if (lines[0].trim().endsWith(':') && lines.length > 1) {
-                              return (
-                                <div key={idx} className="mb-6">
-                                  <h4 className="font-semibold text-lg mb-3" style={{ color: BRAND.primary }}>
-                                    {lines[0].trim()}
-                                  </h4>
-                                  <div className="space-y-2">
-                                    {lines.slice(1).map((line, lineIdx) => (
-                                      line.trim() && (
-                                        <p key={lineIdx} className="text-gray-700 leading-relaxed flex items-start gap-3">
-                                          <span className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: BRAND.primary }}></span>
-                                          <span>{line.replace('•', '').trim()}</span>
-                                        </p>
-                                      )
-                                    ))}
-                                  </div>
-                                </div>
-                              );
-                            }
-                            
-                            // Check if it's a numbered step
-                            if (paragraph.trim().match(/^(Step \d+:|^\d+\.)/)) {
-                              const stepMatch = paragraph.match(/^(Step \d+:|^\d+\.)(.+)/);
-                              if (stepMatch) {
+                          {section.content
+                            .split("\n\n")
+                            .map((paragraph, pIdx) => {
+                              if (paragraph.trim().startsWith("•")) {
+                                const items = paragraph
+                                  .split("\n")
+                                  .filter((line) => line.trim());
                                 return (
-                                  <div key={idx} className="mb-4 p-4 rounded-lg" style={{ backgroundColor: BRAND.light }}>
-                                    <p className="text-gray-700 leading-relaxed">
-                                      <span className="font-semibold" style={{ color: BRAND.primary }}>{stepMatch[1]}</span>
-                                      {stepMatch[2]}
-                                    </p>
-                                  </div>
+                                  <ul key={pIdx} className="space-y-2 mb-6">
+                                    {items.map((item, itemIdx) => (
+                                      <li
+                                        key={itemIdx}
+                                        className="text-gray-700 leading-relaxed flex items-start gap-3"
+                                      >
+                                        <span
+                                          className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full"
+                                          style={{
+                                            backgroundColor:
+                                              BRAND.primary,
+                                          }}
+                                        ></span>
+                                        <span>
+                                          {item
+                                            .replace("•", "")
+                                            .trim()}
+                                        </span>
+                                      </li>
+                                    ))}
+                                  </ul>
                                 );
                               }
-                            }
-                            
-                            // Regular paragraph
-                            return (
-                              <p key={idx} className="text-gray-700 mb-4 leading-relaxed">
-                                {paragraph}
-                              </p>
-                            );
-                          })}
+
+                              return (
+                                <p
+                                  key={pIdx}
+                                  className="text-gray-700 mb-4 leading-relaxed"
+                                >
+                                  {paragraph}
+                                </p>
+                              );
+                            })}
                         </div>
 
-                        {sectionIdx < topic.sections.length - 1 && (
+                        {idx < topic.sections.length - 1 && (
                           <div className="mt-8 pl-11">
-                            <div className="h-px" style={{ backgroundColor: BRAND.border }}></div>
+                            <div
+                              className="h-px"
+                              style={{
+                                backgroundColor: BRAND.border,
+                              }}
+                            ></div>
                           </div>
                         )}
                       </section>
@@ -670,60 +767,13 @@ const KnowledgeBase = () => {
                 </div>
               ))}
             </div>
-
-            {/* Related Topics Card
-            <div className="mt-8 bg-gradient-to-br from-white to-gray-50  shadow-sm border p-6 sm:p-8" style={{ borderColor: BRAND.border }}>
-              <h3 className="text-xl font-medium mb-4" style={{ color: BRAND.primary }}>
-                Explore More Topics
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {knowledgeBase.categories.filter(c => c.id !== activeCategory).map((category) => {
-                  const Icon = category.icon;
-                  return (
-                    <button
-                      key={category.id}
-                      onClick={() => {
-                        setActiveCategory(category.id);
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }}
-                      className="p-4  border-2 transition-all hover:shadow-md group text-left"
-                      style={{ borderColor: BRAND.border }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = BRAND.primary;
-                        e.currentTarget.style.backgroundColor = BRAND.light;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = BRAND.border;
-                        e.currentTarget.style.backgroundColor = 'white';
-                      }}
-                    >
-                      <Icon size={24} style={{ color: BRAND.primary }} className="mb-2" />
-                      <h4 className="font-semibold mb-1" style={{ color: BRAND.primary }}>{category.title}</h4>
-                      <p className="text-sm text-gray-600">Learn about {category.title.toLowerCase()} technology</p>
-                      <div className="flex items-center gap-1 mt-2 text-sm font-medium" style={{ color: BRAND.primary }}>
-                        <span>Explore</span>
-                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div> */}
-
           </main>
         </div>
       </div>
 
-
-
-      <style >{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .line-clamp-2 {
           display: -webkit-box;
           -webkit-line-clamp: 2;
@@ -735,4 +785,4 @@ const KnowledgeBase = () => {
   );
 };
 
-export default KnowledgeBase
+export default KnowledgeBase;
