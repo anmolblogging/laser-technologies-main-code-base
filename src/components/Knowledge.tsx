@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { BookOpen, Zap, Wrench, FileText, Cpu, Menu, X, ChevronRight,Clock,  ArrowRight } from 'lucide-react';
-import Navbar from './Navbar';
-import Footer from './Footer';
+
 const BRAND = {
-  primary: '#6b0f0f',
-  hover: '#4f0b0b',
-  light: '#fef2f2',
+  primary: '#060C2A', 
+  hover: '#f31524',
+  light: "rgba(243, 21, 36, 0.2)" ,
   border: 'rgba(107,15,15,0.15)',
 };
 
@@ -402,10 +401,10 @@ const KnowledgeBase = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
-      <Navbar />
+
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden mt-16 md:mt-20" style={{ background: `linear-gradient(135deg, ${BRAND.primary} 0%, ${BRAND.hover} 100%)` }}>
+      <div className="relative overflow-hidden mt-16 md:mt-20 bg-black" >
         {/* <div className="absolute inset-0 opacity-10">
           <div className="absolute transform rotate-45 -right-20 -top-20 w-96 h-96 rounded-full" style={{ backgroundColor: 'white' }}></div>
           <div className="absolute transform -rotate-45 -left-20 -bottom-20 w-80 h-80 rounded-full" style={{ backgroundColor: 'white' }}></div>
@@ -672,7 +671,7 @@ const KnowledgeBase = () => {
               ))}
             </div>
 
-            {/* Related Topics Card */}
+            {/* Related Topics Card
             <div className="mt-8 bg-gradient-to-br from-white to-gray-50  shadow-sm border p-6 sm:p-8" style={{ borderColor: BRAND.border }}>
               <h3 className="text-xl font-medium mb-4" style={{ color: BRAND.primary }}>
                 Explore More Topics
@@ -709,13 +708,13 @@ const KnowledgeBase = () => {
                   );
                 })}
               </div>
-            </div>
+            </div> */}
 
           </main>
         </div>
       </div>
 
-      <Footer />
+
 
       <style >{`
         .hide-scrollbar::-webkit-scrollbar {

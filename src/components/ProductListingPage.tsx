@@ -75,7 +75,7 @@ const ProductListingPage: React.FC = () => {
   };
 
   const handleEnquire = () => {
-    window.location.href = 'mailto:info@lasertechnologies.com?subject=Product Enquiry';
+    navigate('/contact');
   };
 
   if (loading) {
@@ -83,7 +83,7 @@ const ProductListingPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50">
       <Navbar />
 
       {/* Hero Header Section */}
@@ -215,7 +215,7 @@ const ProductListingPage: React.FC = () => {
                       <img
                         src={product.Thumbnail_url[0]}
                         alt={product.ProductName}
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                        className="w-full h-full object-contain transition-transform duration-500 hover:scale-110"
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full">

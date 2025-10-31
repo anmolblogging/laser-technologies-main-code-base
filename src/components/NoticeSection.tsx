@@ -1,11 +1,5 @@
 import { Sparkles } from "lucide-react";
 
-const BRAND = {
-  primary: '#6b0f0f',
-  hover: '#4f0b0b',
-  light: '#fef2f2',
-  border: 'rgba(107,15,15,0.15)',
-};
 
 export default function AboutSection() {
   return (
@@ -14,41 +8,43 @@ export default function AboutSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Text Section */}
           <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-semibold">
+            <div className="inline-flex items-center gap-2 bg-opacity-15 bg-whiteBgTextHover text-whiteBgTextHover px-4 py-2 rounded-full text-sm font-semibold font-secondary">
               <Sparkles className="w-4 h-4" />
               About Laser Technologies Pvt. Ltd.
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-medium text-gray-900 leading-tight">
+            <h2 className="text-4xl md:text-5xl font-medium font-primary text-whiteBgText leading-tight">
               Pioneering Innovation in Laser Manufacturing
             </h2>
 
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Laser Technologies Pvt. Ltd. is a leader in advanced laser cutting, welding, and marking systems built for unparalleled precision and performance. 
-              Our mission is to empower industries with intelligent, energy-efficient, and future-ready laser solutions.
+            <p className="text-lg text-whiteBgText font-secondary leading-relaxed">
+              Laser Technologies Pvt. Ltd. is a leader in advanced laser
+              cutting, welding, and marking systems built for unparalleled
+              precision and performance. Our mission is to empower industries
+              with intelligent, energy-efficient, and future-ready laser
+              solutions.
             </p>
 
-            <ul className="space-y-3 text-gray-700">
+            <ul className="space-y-3 text-whiteBgText font-secondary ">
               <li className="flex items-start gap-3">
-                <span className="w-2.5 h-2.5 mt-2   flex-shrink-0" style={{backgroundColor : BRAND.primary}}></span>
+                <span className="w-2.5 h-2.5 mt-2  bg-whiteBgTextHover  flex-shrink-0"></span>
                 Cutting-edge CNC and fiber laser systems
               </li>
               <li className="flex items-start gap-3">
-                <span className="w-2.5 h-2.5 mt-2   flex-shrink-0" style={{backgroundColor : BRAND.primary}}></span>
+                <span className="w-2.5 h-2.5 mt-2  bg-whiteBgTextHover  flex-shrink-0"></span>
                 Intelligent automation and path optimization
               </li>
               <li className="flex items-start gap-3">
-                <span className="w-2.5 h-2.5 mt-2   flex-shrink-0" style={{backgroundColor : BRAND.primary}}></span>
+                <span className="w-2.5 h-2.5 mt-2   bg-whiteBgTextHover flex-shrink-0"></span>
                 Unmatched support and global service network
               </li>
             </ul>
-
-            <button
-              style={{ backgroundColor: BRAND.primary }}
-              className="text-white font-medium px-8 py-3 text-lg  "
-            >
-              Learn More About Us
-            </button>
+            <br />
+            <a href="/about">
+              <button className="text-whiteBgButtonText bg-whiteBgButtonBg font-secondary px-8 py-3 text-lg  ">
+                Learn More About Us
+              </button>
+            </a>
           </div>
 
           {/* Right Image */}

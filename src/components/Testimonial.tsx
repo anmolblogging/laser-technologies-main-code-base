@@ -51,10 +51,10 @@ export default function TestimonialSlider() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-whiteBgText mb-4 font-primary">
             Our Clients Love Us
           </h2>
-          <p className="text-base sm:text-lg text-gray-600">
+          <p className="text-base sm:text-lg text-whiteBgText text-opacity-70">
             Real stories from businesses transformed by our precision laser
             systems.
           </p>
@@ -65,7 +65,7 @@ export default function TestimonialSlider() {
           {/* Desktop Arrows - Outside */}
           <button
             onClick={prevSlide}
-            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 rounded-full bg-white border-2 border-gray-200 text-gray-700 p-3 hover:border-red-600 hover:text-red-600 transition-all duration-200 z-10 shadow-sm"
+            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 rounded-full bg-whiteBgButtonBg border-2 border-whiteBgButtonBg text-whiteBgButtonText p-3 transition-transform duration-200 z-10 shadow-sm focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg hover:scale-110"
             aria-label="Previous testimonial"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -73,7 +73,7 @@ export default function TestimonialSlider() {
 
           <button
             onClick={nextSlide}
-            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 rounded-full bg-white border-2 border-gray-200 text-gray-700 p-3 hover:border-red-600 hover:text-red-600 transition-all duration-200 z-10 shadow-sm"
+            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 rounded-full bg-whiteBgButtonBg border-2 border-whiteBgButtonBg text-whiteBgButtonText p-3 transition-transform duration-200 z-10 shadow-sm focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg hover:scale-110"
             aria-label="Next testimonial"
           >
             <ChevronRight className="w-6 h-6" />
@@ -86,11 +86,8 @@ export default function TestimonialSlider() {
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
               {testimonialsData.map((testimonial, idx) => (
-                <div
-                  key={idx}
-                  className="flex-shrink-0 w-full"
-                >
-                  <div className="  shadow-sm overflow-hidden">
+                <div key={idx} className="flex-shrink-0 w-full">
+                  <div className="shadow-sm overflow-hidden">
                     <div className="grid lg:grid-cols-2 gap-0">
                       {/* Video Section */}
                       <div className="relative w-full bg-gray-900 order-1 lg:order-1">
@@ -106,15 +103,15 @@ export default function TestimonialSlider() {
                       </div>
 
                       {/* Content Section */}
-                      <div className="flex flex-col justify-center pt-8 p-2 md:p-10 lg:p-12 md:pt-0 lg:pt-0 order-2 lg:order-2 ">
+                      <div className="flex flex-col justify-center pt-8 p-2 md:p-10 lg:p-12 md:pt-0 lg:pt-0 order-2 lg:order-2">
                         <div className="space-y-6">
                           <div>
-                            <div className="w-12 h-1 bg-red-600 mb-4"></div>
-                            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 leading-tight">
+                            <div className="w-12 h-1 bg-whiteBgButtonBg mb-4"></div>
+                            <h3 className="text-xl sm:text-2xl font-semibold text-whiteBgText leading-tight">
                               {testimonial.header}
                             </h3>
                           </div>
-                          <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
+                          <p className="text-whiteBgText leading-relaxed text-sm sm:text-base">
                             {testimonial.description}
                           </p>
                         </div>
@@ -130,14 +127,14 @@ export default function TestimonialSlider() {
           <div className="flex lg:hidden justify-center gap-4 mt-6">
             <button
               onClick={prevSlide}
-              className="bg-white border-2 border-gray-200 rounded-full text-gray-700 p-3 hover:border-red-600 hover:text-red-600 transition-all duration-200 shadow-sm"
+              className="bg-whiteBgButtonBg border-2 border-whiteBgButtonBg rounded-full text-whiteBgButtonText p-3 transition-transform duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg hover:scale-110"
               aria-label="Previous testimonial"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={nextSlide}
-              className="bg-white border-2 rounded-full border-gray-200 text-gray-700 p-3 hover:border-red-600 hover:text-red-600 transition-all duration-200 shadow-sm"
+              className="bg-whiteBgButtonBg border-2 border-whiteBgButtonBg rounded-full text-whiteBgButtonText p-3 transition-transform duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg hover:scale-110"
               aria-label="Next testimonial"
             >
               <ChevronRight className="w-5 h-5" />
@@ -150,11 +147,11 @@ export default function TestimonialSlider() {
           {testimonialsData.map((_, idx) => (
             <button
               key={idx}
-              onClick={() => goToSlide(idx)}
-              className={`transition-all duration-300 ${
+              onClick={() => setCurrentIndex(idx)}
+              className={`transition-all duration-300 rounded-full ${
                 currentIndex === idx
-                  ? "w-8 h-2 bg-red-600"
-                  : "w-2 h-2 bg-gray-300 hover:bg-gray-400"
+                  ? "w-8 h-2 bg-whiteBgButtonBg"
+                  : "w-2 h-2 bg-darkBgButtonBg hover:bg-darkBgTextHover"
               }`}
               aria-label={`Go to testimonial ${idx + 1}`}
             />

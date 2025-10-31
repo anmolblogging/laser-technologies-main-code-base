@@ -1,13 +1,7 @@
 import { memo } from "react";
 import Banner from "../assets/banner.png";
+import { ArrowRight } from "lucide-react";
 
-
-const BRAND = {
-  primary: '#6b0f0f',
-  hover: '#4f0b0b',
-  light: '#fef2f2',
-  border: 'rgba(107,15,15,0.15)',
-};
 const HeroBanner = () => {
   return (
     <section
@@ -39,26 +33,30 @@ const HeroBanner = () => {
             <div className="space-y-6 md:space-y-4">
               <h1
                 id="hero-heading"
-                className="text-5xl md:text-6xl lg:text-7xl font-light text-white leading-tight md:leading-snug"
+                className="text-5xl font-primary md:text-6xl lg:text-7xl font-light text-darkBgText leading-tight md:leading-snug"
               >
                 Sharper. Faster.
-                <span className="block mt-3 pb-1 bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
+                <span className="block mt-3 font-primary pb-2 bg-[#f31524]  bg-clip-text text-transparent">
                   Smarter Manufacturing.
                 </span>
               </h1>
 
-              <p className="text-xl sm:text-2xl text-gray-300 leading-relaxed max-w-2xl mx-auto font-normal md:text-[1.35rem] md:leading-relaxed">
+              <p className="text-xl font-secondary sm:text-2xl text-darkBgText leading-relaxed max-w-2xl mx-auto font-normal md:text-[1.35rem] md:leading-relaxed">
                 Boost productivity and precision with state-of-the-art laser
                 machines and automation solutions.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4 md:pt-2">
+            <div className="flex flex-col font-secondary sm:flex-row gap-4 justify-center pt-4 md:pt-2">
               <a
-                href="/products"
-                className=" text-white px-10 py-4 text-base font-medium hover:bg-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-black" style={{backgroundColor : BRAND.primary}}
+                href="#products"
+                className="relative bg-darkBgButtonBg text-darkBgButtonText px-6 py-4 text-base font-medium duration-200 hover:text-black inline-flex items-center gap-2 group w-max mx-auto"
               >
                 Explore Products
+                <ArrowRight
+                  className="w-4 h-4 text-darkBgButtonText translate-x-0 group-hover:translate-x-2 transition-transform duration-300"
+                  strokeWidth={3}
+                />
               </a>
             </div>
           </div>

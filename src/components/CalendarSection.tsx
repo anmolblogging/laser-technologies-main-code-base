@@ -1,5 +1,12 @@
 import { useState, useRef, useEffect } from "react";
-import { Calendar, MapPin, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Calendar,
+  MapPin,
+  Clock,
+  ChevronLeft,
+  ChevronRight,
+  ArrowRight,
+} from "lucide-react";
 
 import { supabase } from "../lib/supabase";
 
@@ -70,15 +77,16 @@ export default function CalendarSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-red-100 text-red-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+          <div className="inline-flex items-center gap-2 bg-opacity-15 bg-whiteBgTextHover text-whiteBgTextHover font-secondary px-4 py-2 rounded-full text-sm font-semibold mb-4">
             <Calendar className="w-4 h-4" />
             Upcoming Events
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium font-primary text-whiteBgText mb-4">
             Mark Your Calendar
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Join us at these exclusive events to explore cutting-edge laser technology and connect with industry experts
+          <p className="text-lg font-secondary text-opacity-80 text-whiteBgText max-w-2xl mx-auto">
+            Join us at these exclusive events to explore cutting-edge laser
+            technology and connect with industry experts
           </p>
         </div>
 
@@ -87,25 +95,26 @@ export default function CalendarSection() {
           {/* Desktop arrows */}
           <button
             onClick={() => scrollBy(-320)}
-            className="rounded-full hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg p-2 z-30 hover:bg-gray-100 transition"
+            className="rounded-full hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white hover:bg-white border border-gray-200 shadow-lg p-2 z-30 transition-transform"
             aria-label="previous event"
             style={{ marginLeft: "-28px" }}
           >
-            <ChevronLeft className="w-6 h-6 text-gray-700" />
+            <ChevronLeft className="w-6 h-6 text-gray-700 transition-transform duration-300 hover:translate-x-[-4px]" />
           </button>
+
           <button
             onClick={() => scrollBy(320)}
-            className="rounded-full hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-200 shadow-lg p-2 z-30 hover:bg-gray-100 transition"
+            className="rounded-full hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white hover:bg-white border border-gray-200 shadow-lg p-2 z-30 transition-transform"
             aria-label="next event"
             style={{ marginRight: "-28px" }}
           >
-            <ChevronRight className="w-6 h-6 text-gray-700" />
+            <ChevronRight className="w-6 h-6 text-gray-700 transition-transform duration-300 hover:translate-x-1" />
           </button>
 
           {/* Scrollable container */}
           <div
             ref={containerRef}
-            className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory lg:pl-14 lg:pr-14"
+            className="flex gap-6 overflow-x-auto scrollbar-none snap-x font-secondary snap-mandatory lg:pl-14 lg:pr-14"
           >
             {events.map((event, idx) => (
               <div
@@ -113,14 +122,22 @@ export default function CalendarSection() {
                 className={`min-w-[280px] sm:min-w-[320px] md:min-w-[360px] lg:min-w-[300px] snap-start group bg-white shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100`}
               >
                 <div
-                  className={`bg-gradient-to-br ${eventColors[idx % eventColors.length]} p-6 text-white relative overflow-hidden`}
+                  className={`bg-gradient-to-br ${
+                    eventColors[idx % eventColors.length]
+                  } p-6 text-white relative overflow-hidden`}
                 >
                   <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 -mr-12 -mt-12" />
                   <div className="relative text-center">
                     <div className="text-5xl font-bold mb-1">{event.date}</div>
-                    <div className="text-sm font-semibold opacity-90">{event.day}</div>
-                    <div className="text-sm opacity-75 uppercase tracking-wider">{event.month}</div>
-                    <div className="text-md font-medium tracking-wider">{event.year}</div>
+                    <div className="text-sm font-semibold opacity-90">
+                      {event.day}
+                    </div>
+                    <div className="text-sm opacity-75 uppercase tracking-wider">
+                      {event.month}
+                    </div>
+                    <div className="text-md font-medium tracking-wider">
+                      {event.year}
+                    </div>
                   </div>
                 </div>
                 <div className="p-6 space-y-4">
@@ -139,9 +156,10 @@ export default function CalendarSection() {
                   </div>
                   <button
                     onClick={() => window.open(event.form_link, "_blank")}
-                    className="w-full bg-red-50 hover:bg-[#4f0b0b] text-[#4f0b0b] hover:text-white font-semibold py-3 transition-all duration-300 text-sm"
+                    className="w-full bg-whiteBgButtonBg text-whiteBgButtonText font-semibold py-3 text-sm flex items-center justify-center gap-2"
                   >
                     Learn More
+                    <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" />
                   </button>
                 </div>
               </div>

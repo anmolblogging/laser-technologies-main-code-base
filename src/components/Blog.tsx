@@ -1,22 +1,17 @@
-import  { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 import { supabase } from "../lib/supabase";
 
-const BRAND = {
-  primary: '#6b0f0f',
-  hover: '#4f0b0b',
-  light: '#fef2f2',
-  border: 'rgba(107,15,15,0.15)',
-};
+const PAGE_SIZE = 3;
 
 interface BlogPost {
   id: string;
   title: string | null;
   summary: string | null;
   image: string | null;
-  content: Record<string, string> | null; 
+  content: Record<string, string> | null;
   author: string | null;
   designation: string | null;
   author_image: string | null;
@@ -40,9 +35,9 @@ const Blog = () => {
         : 1
       : 3
   );
+  const [loadedCount, setLoadedCount] = useState(PAGE_SIZE);
 
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -52,19 +47,18 @@ const Blog = () => {
         .select(
           `id, title, summary, image, content, author, designation, author_image, read_time, category, tags, created_at, updated_at`
         )
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false })
+        .limit(loadedCount);
 
       if (error) {
         console.error("Error fetching blogs:", error);
       } else {
-      
         setBlogs((data as BlogPost[]) || []);
       }
       setLoading(false);
     };
-
     fetchBlogs();
-  }, []);
+  }, [loadedCount]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -72,6 +66,7 @@ const Blog = () => {
       else if (window.innerWidth >= 768) setCardsPerFrame(2);
       else setCardsPerFrame(1);
     };
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -83,9 +78,14 @@ const Blog = () => {
   };
 
   const nextSlide = () => {
-    setCurrentIndex((prev) =>
-      prev >= blogs.length - cardsPerFrame ? 0 : prev + 1
-    );
+    if (currentIndex >= blogs.length - cardsPerFrame) {
+      setCurrentIndex(0);
+    } else {
+      setCurrentIndex((prev) => prev + 1);
+      if (currentIndex + cardsPerFrame >= loadedCount) {
+        setLoadedCount((prev) => prev + PAGE_SIZE);
+      }
+    }
   };
 
   const handleBlogClick = (blogId: string) => {
@@ -93,7 +93,7 @@ const Blog = () => {
   };
 
   if (loading) {
-    return <Loading text = 'blog'/>
+    return <Loading text="blog" />;
   }
 
   return (
@@ -101,10 +101,10 @@ const Blog = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-whiteBgText mb-4 font-primary">
             Our Latest Insights
           </h2>
-          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-whiteBgText text-opacity-70 max-w-2xl mx-auto font-secondary">
             Stay updated with the latest trends, tips, and innovations in laser technology
           </p>
         </div>
@@ -114,14 +114,14 @@ const Blog = () => {
           {/* Desktop Navigation */}
           <button
             onClick={prevSlide}
-            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 bg-white border-2 border-gray-200 text-gray-700 p-4 rounded-full hover:border-red-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 z-10 shadow-sm"
+            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 bg-whiteBgButtonBg border-2 border-whiteBgButtonBg text-whiteBgButtonText p-4 rounded-full transition-transform duration-200 z-10 shadow-sm focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg hover:scale-110"
             aria-label="Previous blogs"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={nextSlide}
-            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 bg-white border-2 border-gray-200 text-gray-700 p-4 rounded-full hover:border-red-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 z-10 shadow-sm"
+            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 bg-whiteBgButtonBg border-2 border-whiteBgButtonBg text-whiteBgButtonText p-4 rounded-full transition-transform duration-200 z-10 shadow-sm focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg hover:scale-110"
             aria-label="Next blogs"
           >
             <ChevronRight className="w-5 h-5" />
@@ -155,19 +155,25 @@ const Blog = () => {
 
                     <div className="p-5 sm:p-6 flex-1 flex flex-col">
                       <h3
-                        className="text-xl sm:text-2xl font-medium text-gray-900 mb-3 group-hover:text-red-600 transition-colors duration-200 cursor-pointer"
+                        className="text-xl sm:text-2xl font-medium text-whiteBgText mb-1 group-hover:text-whiteBgTextHover transition-colors duration-200 cursor-pointer"
                         onClick={() => handleBlogClick(blog.id)}
                       >
                         {blog.title || "Untitled Blog"}
                       </h3>
-                      <p className="text-gray-600 text-sm sm:text-base leading-relaxed flex-1 line-clamp-3">
+                      {blog.category && (
+                        <p className="text-sm pt-2 text-whiteBgText opacity-70 mb-3 font-semibold font-primary">
+                          {blog.category}
+                        </p>
+                      )}
+                      <p className="text-whiteBgText text-sm sm:text-base leading-relaxed flex-1 line-clamp-3">
                         {blog.summary || "No description available."}
                       </p>
                       <button
                         onClick={() => handleBlogClick(blog.id)}
-                        className="mt-5 w-full py-3  text-white font-medium hover:bg-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" style={{backgroundColor : BRAND.primary}}
+                        className="mt-5 w-full py-3 text-darkBgText hover:text-opacity-90  hover:text-darkBgText text-opacity-90 font-semibold bg-whiteBgButtonBg hover:bg-whiteBgButtonBg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg focus:ring-offset-2 flex items-center justify-center gap-2"
                       >
                         Read More
+                        <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
                       </button>
                     </div>
                   </article>
@@ -180,14 +186,14 @@ const Blog = () => {
           <div className="flex lg:hidden justify-center gap-4 mt-8">
             <button
               onClick={prevSlide}
-              className="bg-white border-2 border-gray-200 text-gray-700 p-4 rounded-full hover:border-red-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 shadow-sm"
+              className="bg-whiteBgButtonBg border-2 border-whiteBgButtonBg text-whiteBgButtonText p-4 rounded-full transition-transform duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg hover:scale-110"
               aria-label="Previous blogs"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={nextSlide}
-              className="bg-white border-2 border-gray-200 text-gray-700 p-4 rounded-full hover:border-red-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 shadow-sm"
+              className="bg-whiteBgButtonBg border-2 border-whiteBgButtonBg text-whiteBgButtonText p-4 rounded-full transition-transform duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg hover:scale-110"
               aria-label="Next blogs"
             >
               <ChevronRight className="w-5 h-5" />

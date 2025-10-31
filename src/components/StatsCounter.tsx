@@ -1,35 +1,34 @@
-import { useEffect, useState, useRef } from 'react';
-import { TrendingUp, Users, Award } from 'lucide-react';
+import { useEffect, useState, useRef } from "react";
+import { TrendingUp, Users, Award } from "lucide-react";
 
 interface Stat {
   value: number;
   suffix: string;
   label: string;
   icon: React.ReactNode;
-  color: string;
+
 }
 
 const stats: Stat[] = [
   {
     value: 5500,
-    suffix: '+',
-    label: 'Machines Installed',
-    icon: <TrendingUp className="w-7 h-7" />,
-    color: 'from-blue-500 to-blue-700',
+    suffix: "+",
+    label: "Machines Installed",
+    icon: <TrendingUp className="w-7 h-7" />
+
   },
   {
     value: 7200,
-    suffix: '+',
-    label: 'Customers Served',
-    icon: <Users className="w-7 h-7" />,
-    color: 'from-indigo-500 to-indigo-700',
+    suffix: "+",
+    label: "Customers Served",
+    icon: <Users className="w-7 h-7" />
+
   },
   {
     value: 15,
-    suffix: '+',
-    label: 'Years of Expertise',
-    icon: <Award className="w-7 h-7" />,
-    color: 'from-violet-500 to-violet-700',
+    suffix: "+",
+    label: "Years of Expertise",
+    icon: <Award className="w-7 h-7" />
   },
 ];
 
@@ -39,7 +38,7 @@ interface CountUpProps {
   suffix?: string;
 }
 
-function CountUp({ end, duration = 2000, suffix = '' }: CountUpProps) {
+function CountUp({ end, duration = 2000, suffix = "" }: CountUpProps) {
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -80,7 +79,10 @@ function CountUp({ end, duration = 2000, suffix = '' }: CountUpProps) {
   }, [end, duration, hasAnimated]);
 
   return (
-    <div ref={ref} className="text-4xl font-semibold tracking-tight text-gray-900">
+    <div
+      ref={ref}
+      className="text-4xl font-semibold tracking-tight text-gray-900"
+    >
       {count.toLocaleString()}
       {suffix}
     </div>
@@ -110,7 +112,7 @@ export default function StatsCounter() {
               }}
             >
               <div
-                className={`flex items-center justify-center w-16 h-16 mb-6  bg-gradient-to-br ${stat.color} text-white shadow-md group-hover:scale-105 transition-transform duration-300`}
+                className={`flex items-center justify-center w-16 h-16 mb-6  bg-gradient-to-br bg-[#060C2A] text-white shadow-md group-hover:scale-105 transition-transform duration-300`}
               >
                 {stat.icon}
               </div>
@@ -122,7 +124,7 @@ export default function StatsCounter() {
               </div>
 
               <div
-                className={`absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r ${stat.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 `}
+                className={`absolute bottom-0 left-0 right-0 h-[3px] bg-[#060C2A] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 `}
               />
             </div>
           ))}
@@ -130,7 +132,8 @@ export default function StatsCounter() {
 
         <div className="mt-16 text-center">
           <p className="text-gray-500 text-sm max-w-3xl mx-auto">
-            Trusted by leading manufacturers across automotive, aerospace, electronics, and more.
+            Trusted by leading manufacturers across automotive, aerospace,
+            electronics, and more.
           </p>
         </div>
       </div>

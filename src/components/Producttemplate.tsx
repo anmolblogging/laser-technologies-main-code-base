@@ -2,8 +2,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, ChevronLeft, ChevronRight, Mail, X, Maximize2 } from 'lucide-react'
-import Navbar from './Navbar'
-import Footer from './Footer'
+import Loading from './Loading';
 import { supabase } from "../lib/supabase";
 
 const BRAND = {
@@ -310,14 +309,7 @@ function Producttemplate(): JSX.Element {
   }, [tabs])
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <div className="inline-block w-12 h-12 border-4 border-gray-200 border-t-[#6b0f0f] rounded-full animate-spin mb-4"></div>
-          <p className="text-gray-600 font-medium" style={{ fontFamily: 'Montserrat, sans-serif' }}>Loading product...</p>
-        </div>
-      </div>
-    )
+    return <Loading text='product'/>
   }
 
   if (product === null) {
@@ -347,9 +339,9 @@ function Producttemplate(): JSX.Element {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white text-gray-900" >
-      <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+      {/* <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
         <Navbar />
-      </div>
+      </div> */}
 
       {/* Enhanced sidebar */}
       <aside className="hidden lg:block fixed left-6 top-28 z-50 max-h-[calc(100vh-7rem)]" aria-label="Related products">
@@ -828,7 +820,7 @@ function Producttemplate(): JSX.Element {
         </div>
       )}
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }
