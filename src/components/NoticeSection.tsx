@@ -41,7 +41,7 @@ export default function AboutSection() {
             </ul>
             <br />
             <a href="/about">
-              <button className="text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary px-8 py-3 text-lg  ">
+              <button className="text-white  bg-whiteBgButtonBg  hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary px-8 py-3 text-lg  ">
                 Learn More About Us
               </button>
             </a>
