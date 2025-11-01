@@ -8,8 +8,11 @@ import Careers from "./pages/Careers";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-// import About from './pages/About';
+import About from './pages/About';
 import Posts from "./components/Posts";
+import Milestone from "./pages/Timeline";
+import LaserGurukul from "./pages/LaserGurukul";
+
 
 function App() {
   return (
@@ -30,8 +33,9 @@ function App() {
         <Route path="/csr" element={<Posts />} />
         <Route path="/articles" element={<Posts />} />
         <Route path="/blog/:id" element={<Blogtemplate />} />
-        {/* <Route path="/about"element={<About />}/> */}
-        <Route path="/about" element={<Home />} />
+        <Route path="/about/company"element={<About />}/>
+        <Route path="/about/milestone" element={<Milestone/>} />
+        <Route path="/laserGurukul" element={<LaserGurukul />} />
       </Routes>
       <Footer />
     </BrowserRouter>
