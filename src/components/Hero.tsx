@@ -7,7 +7,7 @@ const HeroBanner = () => {
     <section
       id="hero-banner"
       aria-labelledby="hero-heading"
-      className="relative bg-gray-50 mt-[75px] mb-[200px] md:mb-200 lg:mb-0"
+      className="relative bg-gray-50 md:mt-20 mt-16 mb-[200px] md:mb-200 lg:mb-0"
     >
       {/* Hero Content with Background */}
       <div className="relative h-[700px] md:min-h-[900px] flex items-center pb-0 lg:pb-64 xl:pb-80">

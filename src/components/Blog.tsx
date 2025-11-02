@@ -15,7 +15,6 @@ interface BlogPost {
   author: string | null;
   designation: string | null;
   author_image: string | null;
-  read_time: string | null;
   category: string | null;
   tags: string[] | null;
   created_at: string | null;
@@ -45,7 +44,7 @@ const Blog = () => {
       const { data, error } = await supabase
         .from("blog_posts")
         .select(
-          `id, title, summary, image, content, author, designation, author_image, read_time, category, tags, created_at, updated_at`
+          `id, title, summary, image, content, author, designation, author_image, category, tags, created_at, updated_at`
         )
         .order("created_at", { ascending: false })
         .limit(loadedCount);

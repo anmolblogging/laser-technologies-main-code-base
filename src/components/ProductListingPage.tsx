@@ -84,7 +84,7 @@ const ProductListingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50">
       {/* Hero Header Section */}
-      <div className="relative overflow-hidden mt-[80px] bg-black" >
+      {/* <div className="relative overflow-hidden mt-[80px] bg-black" >
         <div
           className="absolute inset-0 opacity-10"
           style={{
@@ -111,7 +111,64 @@ const ProductListingPage: React.FC = () => {
             </p>
           </div>
         </div>
+      </div> */}
+      <header className="relative mt-16 md:mt-20 bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div
+        className="absolute  bg-black inset-0 opacity-15"
+        style={{
+          // backgroundImage:
+          //   "url(https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1600&h=900&fit=crop)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      ></div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Back Button - Top Left */}
+        <div className="pt-8 pb-4">
+          <button
+            onClick={() => navigate('/')}
+            className="group inline-flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 hover:border-white/30 text-white transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            <ArrowLeft className="h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
+            <span className="font-medium text-sm tracking-wide">Back to Home</span>
+          </button>
+        </div>
+
+        {/* Main Content - Centered */}
+        <div className="text-center space-y-8 ">
+
+          {/* Title */}
+          <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium text-white leading-tight tracking-tight">
+            {decodedSegment}
+          </h1>
+
+          {/* Subtitle with Stats */}
+          <div className="space-y-4">
+            <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed font-light">
+              Explore our curated collection of premium products
+            </p>
+            
+            {/* Product Count Badge */}
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20">
+              <div className="w-2 h-2 bg-blue-400 animate-pulse"></div>
+              <span className="text-white font-medium text-lg">
+                {products.length} Product{products.length !== 1 ? 's' : ''} Available
+              </span>
+            </div>
+          </div>
+
+          {/* Decorative Bottom Line */}
+          <div className="flex items-center justify-center gap-4 pt-8">
+            <div className="h-px w-24 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+          </div>
+        </div>
       </div>
+
+      {/* Bottom Fade Effect */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent"></div>
+    </header>
 
       {/* Subcategory Navigation */}
       {allSubcategories.length > 1 && (

@@ -12,12 +12,14 @@ import About from './pages/About';
 import Posts from "./components/Posts";
 import Milestone from "./pages/Timeline";
 import LaserGurukul from "./pages/LaserGurukul";
+import Chatbot from "./components/Chatbot";
 
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<Producttemplate />} />
@@ -37,7 +39,9 @@ function App() {
         <Route path="/about/milestone" element={<Milestone/>} />
         <Route path="/laserGurukul" element={<LaserGurukul />} />
       </Routes>
+      <Chatbot/>
       <Footer />
+
     </BrowserRouter>
   );
 }

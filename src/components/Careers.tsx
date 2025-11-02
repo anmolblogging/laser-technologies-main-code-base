@@ -217,38 +217,35 @@ export default function Careers() {
 
       {/* Great Place to Work */}
       <section className="py-20 bg-gray-50">
-  <div className="max-w-5xl mx-auto px-6">
-    <div className="bg-white p-12 md:p-16 shadow-sm">
-      <div className="flex flex-col md:flex-row gap-8 items-center">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="bg-white p-12 md:p-16 shadow-sm">
+            <div className="flex flex-col md:flex-row gap-8 items-center">
+              {/* LOGO BOX */}
+              <div className="flex-shrink-0">
+                <div className=" flex items-center justify-center  overflow-hidden">
+                  <img
+                    src="data:image/png;base64,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"
+                    alt="Great Place To Work"
+                    className="h-60"
+                  />
+                </div>
+              </div>
 
-        {/* LOGO BOX */}
-        <div className="flex-shrink-0">
-          <div className=" flex items-center justify-center  rounded-lg overflow-hidden">
-            <img
-              src="data:image/png;base64,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"
-              alt="Great Place To Work"
-             
-            />
+              {/* TEXT */}
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-3xl mb-4 font-normal text-whiteBgButtonBg">
+                  Great Place to Work® Certified 2024
+                </h3>
+                <p className="text-lg text-gray-600 leading-relaxed font-light">
+                  We're proud to be recognized as a Great Place to Work, a
+                  testament to our commitment to fostering a positive and
+                  empowering workplace culture where every team member thrives.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* TEXT */}
-        <div className="flex-1 text-center md:text-left">
-          <h3 className="text-3xl mb-4 font-normal text-whiteBgButtonBg">
-            Great Place to Work® Certified 2024
-          </h3>
-          <p className="text-lg text-gray-600 leading-relaxed font-light">
-            We're proud to be recognized as a Great Place to Work, a testament to our
-            commitment to fostering a positive and empowering workplace culture where
-            every team member thrives.
-          </p>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
+      </section>
 
       {/* Open Positions */}
       <section id="positions" className="py-24 md:py-32">
@@ -311,9 +308,8 @@ export default function Careers() {
                         </span>
                       </div>
                       <p className="text-lg text-gray-600 leading-relaxed mb-6 font-light break-all">
-  {job.description}
-</p>
-
+                        {job.description}
+                      </p>
                     </div>
                     <div className="flex lg:flex-col gap-3">
                       <a

@@ -153,7 +153,7 @@ const clients = [
   }, []);
 
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 my-10 bg-gray-50 overflow-hidden" aria-label="Our Clients">
+    <section className="relative py-12 mb-20 my-10 bg-gray-50 overflow-hidden" aria-label="Our Clients">
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>

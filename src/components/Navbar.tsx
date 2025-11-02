@@ -390,15 +390,12 @@ const Header = () => {
                 </a>
               ))}
 
-            {/* ✅ MOBILE ABOUT ACCORDION */}
+            {/* MOBILE ABOUT ACCORDION */}
             <div>
               <button
                 onClick={() => setMobileExpandedAbout(!mobileExpandedAbout)}
-                className="flex bg-transparent items-center justify-between w-full px-4 py-3 font-medium"
-                style={{
-                  color: mobileExpandedAbout ? COLORS.whiteBgTextHover : COLORS.whiteBgText,
-                  fontFamily: `'Mulish', sans-serif`,
-                }}
+               className="flex items-center justify-between bg-transparent w-full px-4 py-3 font-primary text-black font-medium"
+
               >
                 <span>About</span>
                 <ChevronDown
@@ -426,15 +423,12 @@ const Header = () => {
               )}
             </div>
 
-            {/* MOBILE PRODUCTS ACCORDION (UNCHANGED) */}
+            {/* MOBILE PRODUCTS ACCORDION  */}
             <div>
               <button
                 onClick={() => setIsProductsOpen(!isProductsOpen)}
-                className="flex items-center justify-between w-full px-4 py-3 font-medium"
-                style={{
-                  color: isProductsOpen ? COLORS.whiteBgTextHover : COLORS.whiteBgText,
-                  fontFamily: `'Mulish', sans-serif`,
-                }}
+                className="flex items-center justify-between bg-transparent w-full px-4 py-3 font-primary text-black font-medium"
+                
               >
                 <span>Product</span>
                 <ChevronDown
@@ -457,14 +451,8 @@ const Header = () => {
                             mobileExpandedSegment === segment ? null : segment
                           )
                         }
-                        className="flex bg-transparent items-center justify-between w-full px-4 py-2.5 text-sm font-medium"
-                        style={{
-                          color:
-                            mobileExpandedSegment === segment
-                              ? COLORS.whiteBgTextHover
-                              : COLORS.whiteBgText,
-                          fontFamily: `'Mulish', sans-serif`,
-                        }}
+                        className="flex items-center justify-between bg-transparent w-full px-4 py-3 font-primary text-black font-medium"
+                        
                       >
                         <span>{segment}</span>
                         <ChevronDown
@@ -480,11 +468,8 @@ const Header = () => {
                             <a
                               key={subCategory}
                               href={`/products/${encodeURIComponent(segment)}/${encodeURIComponent(subCategory)}`}
-                              className="block bg-transparent px-6 py-2 text-sm font-medium"
-                              style={{
-                                color: COLORS.whiteBgText,
-                                fontFamily: `'Mulish', sans-serif`,
-                              }}
+                              className="flex items-center justify-between bg-transparent w-full px-4 py-3 font-primary text-black font-medium"
+                              
                               onClick={() => {
                                 setIsMenuOpen(false);
                                 setIsProductsOpen(false);
@@ -507,11 +492,8 @@ const Header = () => {
             <div>
               <button
                 onClick={() => setMobileExpandedMore(!mobileExpandedMore)}
-                className="flex items-center justify-between w-full px-4 py-3 font-medium"
-                style={{
-                  color: mobileExpandedMore ? COLORS.whiteBgTextHover : COLORS.whiteBgText,
-                  fontFamily: "'Mulish', sans-serif",
-                }}
+                className="flex items-center justify-between bg-transparent w-full px-4 py-3 font-primary text-black font-medium"
+                
               >
                 <span>More</span>
                 <ChevronDown
@@ -520,16 +502,12 @@ const Header = () => {
               </button>
 
               {mobileExpandedMore && (
-                <div className="space-y-0.5 pb-2">
+                <div className=" ">
                   {moreItems.map((item) => (
                     <a
                       key={item.name}
                       href={item.href}
-                      className="block px-8 py-2 text-sm font-medium"
-                      style={{
-                        color: COLORS.whiteBgText,
-                        fontFamily: "'Mulish', sans-serif",
-                      }}
+                      className="flex items-center border justify-between bg-transparent w-full px-4 py-3 font-primary text-black font-medium"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {item.name}

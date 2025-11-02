@@ -1,76 +1,82 @@
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Linkedin, Twitter, Mail, X, Building2, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from "react";
+import AboutCarousel from "../components/AboutCarousel";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Linkedin,
+  Twitter,
+  Quote,
+  Mail,
+  X,
+  Building2,
+  ArrowRight,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const BRAND = {
-  primary: '#6b0f0f',
-  hover: '#4f0b0b',
-  light: '#fef2f2',
-  border: 'rgba(107,15,15,0.15)',
+  primary: "#6b0f0f",
+  hover: "#4f0b0b",
+  light: "#fef2f2",
+  border: "rgba(107,15,15,0.15)",
 };
-
-// Company gallery images
-const GALLERY_IMAGES = [
-  "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1200&h=800&fit=crop",
-  "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1200&h=800&fit=crop",
-  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&h=800&fit=crop",
-  "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1200&h=800&fit=crop",
-  "https://images.unsplash.com/photo-1581092918484-8313e1f7e8d6?w=1200&h=800&fit=crop"
-];
 
 // Leadership team data
 const LEADERSHIP_DATA = [
   {
     name: "Mr. Rakesh Agarwal",
     title: "Founder & Managing Director",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=600&fit=crop",
-    bio: "Rakesh Agarwal is the founder of Laser Technologies. With an aim to make laser machines accessible to everyone in India, Mr. Agarwal founded this organization in 2011. He was the brain behind the \"Laser Tech 2010\", the biggest exhibition on laser technology in India.",
+    image:
+      "https://www.lasertechnologies.co.in/images/about_us/rakesh-agarwal.png",
+    bio: 'Rakesh Agarwal is the founder of Laser Technologies. With an aim to make laser machines accessible to everyone in India, Mr. Agarwal founded this organization in 2011. He was the brain behind the "Laser Tech 2010", the biggest exhibition on laser technology in India.',
     social: {
       linkedin: "#",
       twitter: "#",
-      email: "rakesh@lasertechnologies.co.in"
-    }
+      email: "rakesh@lasertechnologies.co.in",
+    },
   },
   {
     name: "Ms. Pankti Agarwal",
     title: "Co-Founder & Executive Director",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=600&fit=crop",
+    image:
+      "https://www.lasertechnologies.co.in/images/about_us/pankti-mob.png",
     bio: "Ms. Pankti Agarwal is the Director of Operations at Laser Technologies. She oversees all the behind-the-scenes operations happening at the office of Laser Technologies. She has been selected for Top 30 Business Women to Watch in 2020 by the CEO Magazine.",
     social: {
       linkedin: "#",
       twitter: "#",
-      email: "pankti@lasertechnologies.co.in"
-    }
+      email: "pankti@lasertechnologies.co.in",
+    },
   },
   {
     name: "Mr. Rana Pratap Singh",
     title: "Vice President - Sales",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=600&fit=crop",
+    image:
+      "https://www.lasertechnologies.co.in/images/about_us/desktop2.png",
     bio: "Mr. Rana Pratap Singh is the Vice President - Sales at Laser Technologies. He is responsible for developing and executing strategic plans to achieve the sales targets and expand our customer base.",
     social: {
       linkedin: "#",
       twitter: "#",
-      email: "rana@lasertechnologies.co.in"
-    }
-  }
+      email: "rana@lasertechnologies.co.in",
+    },
+  },
 ];
 
 export default function AboutUsPage() {
-  const [galleryIndex, setGalleryIndex] = useState(0);
+  const navigate = useNavigate();
   const [selectedLeader, setSelectedLeader] = useState(null);
-
-  const nextGallery = () => {
-    setGalleryIndex((prev) => (prev + 1) % GALLERY_IMAGES.length);
-  };
-
-  const prevGallery = () => {
-    setGalleryIndex((prev) => (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
-  };
 
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Header Section */}
       <header className="relative mt-16 md:mt-20 bg-black overflow-hidden">
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1600&h=900&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage:
+              "url(https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1600&h=900&fit=crop)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        ></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <div className="text-center space-y-6">
             <div className="inline-flex rounded-full items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20">
@@ -80,32 +86,103 @@ export default function AboutUsPage() {
               </span>
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium text-white leading-tight">
-              Empowering Industries,<br />Inspiring Generations
+              Empowering Industries,
+              <br />
+              Inspiring Generations
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-              Leading the revolution in laser technology with innovation, quality, and customer excellence since 2011.
+              Leading the revolution in laser technology with innovation,
+              quality, and customer excellence since 2011.
             </p>
-            
+
             {/* Stats */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-8">
               <div className="text-white">
                 <div className="text-4xl md:text-5xl font-bold">₹300Cr+</div>
-                <div className="text-sm md:text-base opacity-90 mt-1">Enterprise Value</div>
+                <div className="text-sm md:text-base opacity-90 mt-1">
+                  Enterprise Value
+                </div>
               </div>
               <div className="hidden sm:block w-px h-16 bg-white/30"></div>
               <div className="text-white">
                 <div className="text-4xl md:text-5xl font-bold">7200+</div>
-                <div className="text-sm md:text-base opacity-90 mt-1">Customers</div>
+                <div className="text-sm md:text-base opacity-90 mt-1">
+                  Customers
+                </div>
               </div>
               <div className="hidden sm:block w-px h-16 bg-white/30"></div>
               <div className="text-white">
                 <div className="text-4xl md:text-5xl font-bold">150+</div>
-                <div className="text-sm md:text-base opacity-90 mt-1">Employees</div>
+                <div className="text-sm md:text-base opacity-90 mt-1">
+                  Employees
+                </div>
               </div>
             </div>
           </div>
         </div>
       </header>
+
+      {/* About Content Section */}
+      <section className="pt-20 pb-10 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+              style={{ backgroundColor: BRAND.light }}
+            >
+              <div
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: BRAND.primary }}
+              ></div>
+              <span
+                className="text-sm font-semibold"
+                style={{ color: BRAND.primary }}
+              >
+                WHO WE ARE
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-medium  mb-4">
+              About Laser Technologies
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Delivering cutting-edge laser solutions across diverse industries
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <p className="text-gray-700 leading-relaxed text-lg">
+                At Laser Technologies Pvt Ltd, we understand that every industry
+                has unique needs and challenges. That's why we offer a wide
+                range of laser solutions that cater to diverse industries,
+                including manufacturing, automotive, aerospace, and more.
+              </p>
+              <p className="text-gray-700 leading-relaxed text-lg">
+                We believe that customer satisfaction is the key to our success.
+                Our team of experts works closely with customers to understand
+                their specific needs and requirements, and we provide customized
+                solutions that meet their unique demands.
+              </p>
+              <p className="text-gray-700 leading-relaxed text-lg">
+                Our Laser Source repairing center and head repairing center are
+                equipped with state-of-the-art technology to handle all kinds of
+                repair and maintenance needs.
+              </p>
+            </div>
+            <div className="relative">
+              <div
+                className="absolute -inset-4  opacity-10"
+                style={{ backgroundColor: BRAND.primary }}
+              ></div>
+              <img
+                src="https://www.lasertechnologies.co.in/images/life-at-laser/life-at-laser.webp"
+                alt="About Company"
+                className="relative shadow-2xl w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Mission Section - Full Width */}
       <section className="relative overflow-hidden bg-white">
@@ -114,32 +191,46 @@ export default function AboutUsPage() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="order-2 md:order-1">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-50 rounded-full mb-6">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: BRAND.primary }}></div>
-                  <span className="text-sm font-semibold" style={{ color: BRAND.primary }}>OUR MISSION</span>
+                  <div
+                    className="w-2 h-2 rounded-full"
+                    style={{ backgroundColor: BRAND.primary }}
+                  ></div>
+                  <span
+                    className="text-sm font-semibold"
+                    style={{ color: BRAND.primary }}
+                  >
+                    OUR MISSION
+                  </span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: BRAND.primary }}>
+                <h2 className="text-4xl md:text-5xl font-medium mb-6 text-whiteBgText">
                   Making Technology Accessible to All
                 </h2>
                 <div className="space-y-4 text-gray-700 leading-relaxed text-lg">
                   <p>
-                    Our mission is to make technology accessible to the masses, and we are grateful for the support of our partners and customers who have helped us grow into a leading player in the market.
+                    Our mission is to make technology accessible to the masses,
+                    and we are grateful for the support of our partners and
+                    customers who have helped us grow into a leading player in
+                    the market.
                   </p>
                   <p>
-                    Our focus on quality, innovation, and customer service has enabled us to build lasting relationships with our clients, who trust us to deliver the best laser solutions in the industry.
+                    Our focus on quality, innovation, and customer service has
+                    enabled us to build lasting relationships with our clients,
+                    who trust us to deliver the best laser solutions in the
+                    industry.
                   </p>
                 </div>
-                <button 
+                {/* <button 
                   className="mt-8 group inline-flex items-center gap-2 px-8 py-4 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-xl"
                   style={{ backgroundColor: BRAND.primary }}
                 >
                   <span>Learn More</span>
                   <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
-                </button>
+                </button> */}
               </div>
               <div className="order-1 md:order-2">
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                  <img 
-                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1000&h=800&fit=crop" 
+                <div className="relative overflow-hidden shadow-2xl">
+                  <img
+                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1000&h=800&fit=crop"
                     alt="Our Mission"
                     className="w-full h-full object-cover"
                   />
@@ -152,14 +243,14 @@ export default function AboutUsPage() {
       </section>
 
       {/* Vision Section - Full Width with Different Background */}
-      <section className="relative overflow-hidden" style={{ backgroundColor: BRAND.light }}>
-        <div className="relative py-20 md:py-32">
+      <section className="relative pb-20 overflow-hidden">
+        <div className="relative py-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                  <img 
-                    src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1000&h=800&fit=crop" 
+                <div className="relative overflow-hidden shadow-2xl">
+                  <img
+                    src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1000&h=800&fit=crop"
                     alt="Our Vision"
                     className="w-full h-full object-cover"
                   />
@@ -167,27 +258,43 @@ export default function AboutUsPage() {
                 </div>
               </div>
               <div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full mb-6">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: BRAND.primary }}></div>
-                  <span className="text-sm font-semibold" style={{ color: BRAND.primary }}>OUR VISION</span>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-50 rounded-full mb-6">
+                  <div
+                    className="w-2 h-2 rounded-full"
+                    style={{ backgroundColor: BRAND.primary }}
+                  ></div>
+                  <span
+                    className="text-sm font-semibold"
+                    style={{ color: BRAND.primary }}
+                  >
+                    OUR VISION
+                  </span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: BRAND.primary }}>
+                <h2 className="text-4xl md:text-5xl font-medium mb-6 text-whiteBgText">
                   Leading India to Global Excellence
                 </h2>
                 <div className="space-y-4 text-gray-700 leading-relaxed text-lg">
                   <p>
-                    Laser Technologies wants to be a global leader in delivering cost-effective solutions to global businesses and make India a superpower in the international laser market.
+                    Laser Technologies wants to be a global leader in delivering
+                    cost-effective solutions to global businesses and make India
+                    a superpower in the international laser market.
                   </p>
                   <p>
-                    Since the inception of Laser Technologies, our goal has been to ensure every Indian business in the laser community gets access to state-of-the-art laser machines.
+                    Since the inception of Laser Technologies, our goal has been
+                    to ensure every Indian business in the laser community gets
+                    access to state-of-the-art laser machines.
                   </p>
                 </div>
-                <button 
-                  className="mt-8 group inline-flex items-center gap-2 px-8 py-4 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-xl"
+                <button
+                  onClick={() => navigate("/about/milestone")}
+                  className="mt-8 group inline-flex items-center gap-2 px-8 py-4 text-white font-semibold transition-all duration-300 hover:shadow-xl"
                   style={{ backgroundColor: BRAND.primary }}
                 >
                   <span>Our Journey</span>
-                  <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
+                  <ArrowRight
+                    className="group-hover:translate-x-1 transition-transform"
+                    size={20}
+                  />
                 </button>
               </div>
             </div>
@@ -195,48 +302,8 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      {/* About Content Section */}
-      <section className="py-20 md:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style={{ backgroundColor: BRAND.light }}>
-              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: BRAND.primary }}></div>
-              <span className="text-sm font-semibold" style={{ color: BRAND.primary }}>WHO WE ARE</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: BRAND.primary }}>
-              About Laser Technologies
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Delivering cutting-edge laser solutions across diverse industries
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <p className="text-gray-700 leading-relaxed text-lg">
-                At Laser Technologies Pvt Ltd, we understand that every industry has unique needs and challenges. That's why we offer a wide range of laser solutions that cater to diverse industries, including manufacturing, automotive, aerospace, and more.
-              </p>
-              <p className="text-gray-700 leading-relaxed text-lg">
-                We believe that customer satisfaction is the key to our success. Our team of experts works closely with customers to understand their specific needs and requirements, and we provide customized solutions that meet their unique demands.
-              </p>
-              <p className="text-gray-700 leading-relaxed text-lg">
-                Our Laser Source repairing center and head repairing center are equipped with state-of-the-art technology to handle all kinds of repair and maintenance needs.
-              </p>
-            </div>
-            <div className="relative">
-              <div className="absolute -inset-4 rounded-3xl opacity-10" style={{ backgroundColor: BRAND.primary }}></div>
-              <img 
-                src="https://www.lasertechnologies.co.in/images/life-at-laser/life-at-laser.webp" 
-                alt="About Company"
-                className="relative rounded-2xl shadow-2xl w-full"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Gallery Carousel */}
-      <section className="py-20 md:py-32 bg-gray-900">
+      {/* <section className="py-20 md:py-32 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6">
@@ -296,84 +363,191 @@ export default function AboutUsPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+      <AboutCarousel />
 
       {/* Leadership Section */}
-      <section className="py-20 md:py-32 bg-white">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style={{ backgroundColor: BRAND.light }}>
-              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: BRAND.primary }}></div>
-              <span className="text-sm font-semibold" style={{ color: BRAND.primary }}>LEADERSHIP</span>
+            <div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+              style={{ backgroundColor: BRAND.light }}
+            >
+              <div
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: BRAND.primary }}
+              ></div>
+              <span
+                className="text-sm font-semibold"
+                style={{ color: BRAND.primary }}
+              >
+                LEADERSHIP
+              </span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: BRAND.primary }}>
+            <h2 className="text-4xl md:text-5xl font-medium mb-6 text-whiteBgText">
               The Torchbearers
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
-              Here's presenting the trinity of Laser Technologies who are striving to come up with the best and innovative solutions. With their unwavering commitment, guidance and strong leadership, Laser Technologies has been able to capture the attention of the Indian laser community.
+              Here's presenting the trinity of Laser Technologies who are
+              striving to come up with the best and innovative solutions. With
+              their unwavering commitment, guidance and strong leadership, Laser
+              Technologies has been able to capture the attention of the Indian
+              laser community.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 md:gap-12">
             {LEADERSHIP_DATA.map((leader, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="group cursor-pointer"
                 onClick={() => setSelectedLeader(leader)}
               >
-                <div className="relative overflow-hidden rounded-2xl shadow-xl mb-6 aspect-square">
-                  <img 
-                    src={leader.image} 
+                <div className="relative overflow-hidden shadow-xl mb-6 aspect-square">
+                  <img
+                    src={leader.image}
                     alt={leader.name}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-cover "
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="absolute bottom-6 left-6 right-6 text-white">
                       <p className="text-sm font-medium">Click to learn more</p>
                     </div>
                   </div>
+                  {/* Arrow Icon Always in Bottom Right */}
+                  <div className="absolute bottom-4 right-4">
+                    <ArrowRight className="w-8 h-8 text-red-400 p-1" />
+                  </div>
                 </div>
-                <h3 className="text-xl md:text-2xl font-bold mb-2 group-hover:opacity-80 transition-colors" style={{ color: BRAND.primary }}>
+                <h3
+                  className="text-xl md:text-2xl font-bold mb-2 group-hover:opacity-80 transition-colors"
+                  style={{ color: BRAND.primary }}
+                >
                   {leader.name}
                 </h3>
                 <p className="text-gray-600 font-medium">{leader.title}</p>
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Quote Section */}
-          <div className="mt-20 p-8 md:p-12 rounded-2xl shadow-xl relative overflow-hidden" style={{ backgroundColor: BRAND.light }}>
-            <div className="absolute top-0 left-0 w-2 h-full" style={{ backgroundColor: BRAND.primary }}></div>
-            <div className="relative">
-              <svg className="w-12 h-12 mb-4 opacity-30" style={{ color: BRAND.primary }} fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
-              </svg>
-              <p className="text-gray-700 italic leading-relaxed text-lg md:text-xl mb-6">
-                Since the inception of Laser Technologies, our goal has been to ensure every Indian business in the laser community gets access to state-of-the-art laser machines. The Laser Technologies team aspires to solve the growing demand for laser cutting and marking machines through our modernistic approach. Welcome to Laser Technologies.
-              </p>
-              <p className="text-right font-bold text-lg md:text-xl" style={{ color: BRAND.primary }}>
-                - Pankti Agarwal
-              </p>
-              <p className="text-right text-gray-600 text-sm md:text-base">
-                Co-Founder & Executive Director
-              </p>
+      <section className="relative w-full bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-20 md:py-32 overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200/30 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-300/20 blur-3xl"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Left Side - Text Content */}
+            <div className="space-y-8 lg:pr-12">
+              {/* Quote Icon */}
+              <div className="relative">
+                <Quote
+                  className="w-16 h-16 md:w-20 md:h-20 text-blue-400/40 absolute -top-4 -left-2"
+                  fill="currentColor"
+                />
+              </div>
+
+              {/* Owner Name with Accent */}
+              <div className="space-y-3 pt-8">
+                <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-blue-300"></div>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900 leading-tight">
+                  Pankti Agarwal
+                </h2>
+                <p className="text-lg md:text-xl text-blue-600 font-medium tracking-wide">
+                  Co-Founder & Executive Director
+                </p>
+              </div>
+
+              {/* Quote Text */}
+              <blockquote className="space-y-6">
+                <p className="text-xl md:text-2xl lg:text-3xl text-gray-800 leading-relaxed font-light">
+                  "Since the inception of Laser Technologies, our goal has been
+                  to ensure every Indian business in the laser community gets
+                  access to state-of-the-art laser machines."
+                </p>
+
+                <p className="text-base md:text-lg text-gray-600 leading-relaxed border-l-4 border-blue-400 pl-6">
+                  The Laser Technologies team aspires to solve the growing
+                  demand for laser cutitng and marking machines through our
+                  modernistic approach. Welcome to Laser Technologies.
+                </p>
+              </blockquote>
+
+              {/* Signature or Additional Element */}
+              <div className="flex items-center gap-4 pt-4">
+                <div className="flex-1 h-px bg-gradient-to-r from-blue-400 to-transparent"></div>
+                <svg className="w-32 h-12" viewBox="0 0 200 60">
+                  <path
+                    d="M10 40 Q 30 10, 50 30 T 90 40 Q 110 25, 130 35 T 170 40"
+                    stroke="#3b82f6"
+                    strokeWidth="2"
+                    fill="none"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            {/* Right Side - Image */}
+            <div className="relative lg:pl-12">
+              {/* Background Accent Shape */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 transform translate-x-6 translate-y-6 -z-10"></div>
+
+              {/* Main Image Container */}
+              <div className="relative bg-white p-2 shadow-2xl">
+                <div className="relative overflow-hidden">
+                  <img
+                    src="https://mehtautsav.com/wp-content/uploads/2025/09/director-img-1536x1536.png"
+                    alt="Sarah Mitchell - Founder and CEO"
+                    className="w-full h-[500px] md:h-[600px] lg:h-[700px] object-cover object-center"
+                    loading="lazy"
+                  />
+
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent"></div>
+                </div>
+
+                {/* Stats Overlay */}
+                {/* <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm p-6 shadow-lg">
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <div className="text-2xl md:text-3xl font-bold text-blue-600">15+</div>
+                    <div className="text-xs md:text-sm text-gray-600 mt-1">Years</div>
+                  </div>
+                  <div className="border-l border-r border-gray-200">
+                    <div className="text-2xl md:text-3xl font-bold text-blue-600">500+</div>
+                    <div className="text-xs md:text-sm text-gray-600 mt-1">Projects</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl md:text-3xl font-bold text-blue-600">50+</div>
+                    <div className="text-xs md:text-sm text-gray-600 mt-1">Awards</div>
+                  </div>
+                </div>
+              </div> */}
+              </div>
+
+              {/* Decorative Corner Elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 border-t-4 border-r-4 border-blue-500"></div>
+              <div className="absolute -bottom-4 -left-4 w-24 h-24 border-b-4 border-l-4 border-blue-500"></div>
             </div>
           </div>
         </div>
       </section>
-
       {/* Leader Modal */}
       {selectedLeader && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 backdrop-blur-sm"
           onClick={() => setSelectedLeader(null)}
         >
-          <div 
-            className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+          <div
+            className="bg-white  max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative">
-              <button 
+              <button
                 onClick={() => setSelectedLeader(null)}
                 className="absolute top-6 right-6 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors z-10"
                 style={{ color: BRAND.primary }}
@@ -381,38 +555,47 @@ export default function AboutUsPage() {
               >
                 <X size={24} />
               </button>
-              
+
               <div className="grid md:grid-cols-5 gap-8 p-8">
                 <div className="md:col-span-2">
                   <div className="sticky top-8">
-                    <div className="rounded-2xl overflow-hidden shadow-xl mb-6">
-                      <img 
-                        src={selectedLeader.image} 
+                    <div className=" overflow-hidden shadow-xl mb-6">
+                      <img
+                        src={selectedLeader.image}
                         alt={selectedLeader.name}
                         className="w-full aspect-square object-cover"
                       />
                     </div>
                     <div className="flex gap-4 justify-center">
-                      <a 
+                      <a
                         href={selectedLeader.social.linkedin}
                         className="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110 hover:shadow-lg"
-                        style={{ backgroundColor: BRAND.light, color: BRAND.primary }}
+                        style={{
+                          backgroundColor: BRAND.light,
+                          color: BRAND.primary,
+                        }}
                         aria-label="LinkedIn profile"
                       >
                         <Linkedin size={20} />
                       </a>
-                      <a 
+                      <a
                         href={selectedLeader.social.twitter}
                         className="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110 hover:shadow-lg"
-                        style={{ backgroundColor: BRAND.light, color: BRAND.primary }}
+                        style={{
+                          backgroundColor: BRAND.light,
+                          color: BRAND.primary,
+                        }}
                         aria-label="Twitter profile"
                       >
                         <Twitter size={20} />
                       </a>
-                      <a 
+                      <a
                         href={`mailto:${selectedLeader.social.email}`}
                         className="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110 hover:shadow-lg"
-                        style={{ backgroundColor: BRAND.light, color: BRAND.primary }}
+                        style={{
+                          backgroundColor: BRAND.light,
+                          color: BRAND.primary,
+                        }}
                         aria-label="Send email"
                       >
                         <Mail size={20} />
@@ -420,27 +603,33 @@ export default function AboutUsPage() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="md:col-span-3 space-y-6">
                   <div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-3" style={{ color: BRAND.primary }}>
+                    <h3
+                      className="text-3xl md:text-4xl font-semibold mb-3"
+                      style={{ color: BRAND.primary }}
+                    >
                       {selectedLeader.name}
                     </h3>
                     <p className="text-xl text-gray-600 font-medium">
                       {selectedLeader.title}
                     </p>
                   </div>
-                  
-                  <div className="h-1 w-20 rounded-full" style={{ backgroundColor: BRAND.primary }}></div>
-                  
+
+                  <div
+                    className="h-1 w-20 rounded-full"
+                    style={{ backgroundColor: BRAND.primary }}
+                  ></div>
+
                   <p className="text-gray-700 leading-relaxed text-lg">
                     {selectedLeader.bio}
                   </p>
-                  
+
                   <div className="pt-6">
-                    <a 
+                    <a
                       href={`mailto:${selectedLeader.social.email}`}
-                      className="inline-block px-8 py-4 text-white font-semibold rounded-xl transition-all transform hover:scale-105 hover:shadow-xl"
+                      className="inline-block px-8 py-4 text-white font-medium  transition-all transform hover:scale-105 hover:shadow-xl"
                       style={{ backgroundColor: BRAND.primary }}
                     >
                       Get in Touch

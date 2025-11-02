@@ -1,28 +1,28 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Calendar,
   MapPin,
   Clock,
+  ArrowRight,
   ChevronLeft,
   ChevronRight,
-  ArrowRight,
 } from "lucide-react";
-
 import { supabase } from "../lib/supabase";
 
 interface Event {
-  date: string;
-  day: string;
-  month: string;
-  year: string;
+  start_date: string;
+  end_date?: string;
   title: string;
   location: string;
   time: string;
   form_link: string;
+  date: string;
+  day: string;
+  month: string;
+  year: string;
 }
 
-// Gradient colors for cards
-const eventColors: string[] = [
+const eventColors = [
   "from-red-400 to-red-500",
   "from-purple-400 to-purple-500",
   "from-blue-400 to-blue-500",
@@ -30,142 +30,241 @@ const eventColors: string[] = [
 ];
 
 export default function CalendarSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [events, setEvents] = useState<Event[]>([]);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
-  // Fetch events from Supabase
+  const [events, setEvents] = useState<Event[]>([]);
+  const [page, setPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(3);
+
+  // ✅ Update items per page based on screen size
+  useEffect(() => {
+    const updateItems = () => {
+      if (window.innerWidth < 640) setItemsPerPage(1);
+      else if (window.innerWidth < 1024) setItemsPerPage(2);
+      else setItemsPerPage(3);
+    };
+    updateItems();
+    window.addEventListener("resize", updateItems);
+    return () => window.removeEventListener("resize", updateItems);
+  }, []);
+
+  // ✅ Fetch events
   useEffect(() => {
     const fetchEvents = async () => {
       const { data, error } = await supabase
         .from("calendar")
-        .select("*")
-        .order("event_date", { ascending: true });
+        .select(
+          "event_name, event_location, event_time, form_link, start_date, end_date"
+        )
+        .order("start_date", { ascending: true });
 
-      if (error) {
-        console.error("Error fetching events:", error);
-        return;
-      }
+      if (error) return console.error("Error:", error);
 
-      const formattedEvents = (data || []).map((e) => {
-        const d = new Date(e.event_date);
-        return {
-          title: e.event_name,
-          location: e.event_location,
-          time: e.event_time,
-          form_link: e.form_link,
-          date: d.getDate().toString().padStart(2, "0"),
-          day: d.toLocaleString("en-US", { weekday: "short" }),
-          month: d.toLocaleString("en-US", { month: "short" }),
-          year: d.getFullYear().toString(),
-        };
-      });
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
-      setEvents(formattedEvents);
+      const formatted = (data || [])
+        .map((e) => {
+          const start = new Date(e.start_date);
+          const end = e.end_date ? new Date(e.end_date) : new Date(e.start_date);
+
+          return {
+            start_date: e.start_date,
+            end_date: e.end_date,
+            title: e.event_name,
+            location: e.event_location,
+            time: e.event_time,
+            form_link: e.form_link,
+            date: start.getDate().toString().padStart(2, "0"),
+            day: start.toLocaleString("en-US", { weekday: "short" }),
+            month: start.toLocaleString("en-US", { month: "short" }),
+            year: start.getFullYear().toString(),
+            _endObj: end,
+          };
+        })
+        .filter((ev) => ev._endObj >= today)
+        .map((ev) => {
+          delete (ev as any)._endObj;
+          return ev;
+        });
+
+      setEvents(formatted);
     };
 
     fetchEvents();
   }, []);
 
-  const scrollBy = (offset: number) => {
-    if (containerRef.current) {
-      containerRef.current.scrollBy({ left: offset, behavior: "smooth" });
-    }
+  const totalPages = Math.ceil(events.length / itemsPerPage);
+
+  const goToPage = (p: number) => {
+    if (!sliderRef.current) return;
+
+    const width = sliderRef.current.clientWidth;
+    sliderRef.current.scrollTo({
+      left: width * p,
+      behavior: "smooth",
+    });
+
+    setPage(p);
+  };
+
+  const nextPage = () => page < totalPages - 1 && goToPage(page + 1);
+  const prevPage = () => page > 0 && goToPage(page - 1);
+
+  const formatFullDate = (iso: string) => {
+    const d = new Date(iso);
+    return `${d.getDate()} ${d.toLocaleString("en-US", {
+      month: "short",
+    })} ${d.getFullYear()}`;
   };
 
   return (
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Heading */}
+
+        {/* ✅ Heading */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-opacity-15 bg-whiteBgTextHover text-whiteBgTextHover font-secondary px-4 py-2 rounded-full text-sm font-semibold mb-4">
             <Calendar className="w-4 h-4" />
             Upcoming Events
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium font-primary text-whiteBgText mb-4">
+
+          <h2 className="text-4xl md:text-5xl font-medium font-primary text-whiteBgText mb-4">
             Mark Your Calendar
           </h2>
+
           <p className="text-lg font-secondary text-opacity-80 text-whiteBgText max-w-2xl mx-auto">
-            Join us at these exclusive events to explore cutting-edge laser
-            technology and connect with industry experts
+            Join us at these exclusive events and explore cutting-edge laser innovations.
           </p>
         </div>
 
-        {/* Events Carousel */}
-        <div className="relative">
-          {/* Desktop arrows */}
+        {/* ✅ Slider Section */}
+        <div className="relative w-full">
+
+          {/* ✅ Arrow Buttons (Desktop Only) */}
           <button
-            onClick={() => scrollBy(-320)}
-            className="rounded-full hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white hover:bg-white border border-gray-200 shadow-lg p-2 z-30 transition-transform"
-            aria-label="previous event"
-            style={{ marginLeft: "-60px" }}
+            onClick={prevPage}
+            disabled={page === 0}
+            className={`rounded-full hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 
+              bg-white hover:bg-white border border-gray-200 shadow-lg 
+              p-3 z-30 transition-all
+              ${
+                page === 0
+                  ? "opacity-30 cursor-not-allowed"
+                  : "hover:scale-110"
+              }`}
+            style={{ marginLeft: "-55px" }}
           >
-            <ChevronLeft className="w-6 h-6 text-gray-700 transition-transform duration-300 hover:translate-x-[-4px]" />
+            <ChevronLeft className="w-6 h-6 text-black" />
           </button>
 
           <button
-            onClick={() => scrollBy(320)}
-            className="rounded-full hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white hover:bg-white border border-gray-200 shadow-lg p-2 z-30 transition-transform"
-            aria-label="next event"
-            style={{ marginRight: "-60px" }}
+            onClick={nextPage}
+            disabled={page === totalPages - 1}
+            className={`rounded-full hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 
+              bg-white hover:bg-white border border-gray-200 shadow-lg 
+              p-3 z-30 transition-all
+              ${
+                page === totalPages - 1
+                  ? "opacity-30 cursor-not-allowed"
+                  : "hover:scale-110"
+              }`}
+            style={{ marginRight: "-55px" }}
           >
-            <ChevronRight className="w-6 h-6 text-gray-700 transition-transform duration-300 hover:translate-x-1" />
+            <ChevronRight className="w-6 h-6 text-black" />
           </button>
 
-          {/* Scrollable container */}
+          {/* ✅ Slider Wrapper */}
           <div
-            ref={containerRef}
-            className="flex gap-6 overflow-x-auto scrollbar-none snap-x font-secondary snap-mandatory lg:pl-14 lg:pr-14"
+            ref={sliderRef}
+            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none scroll-smooth"
           >
-            {events.map((event, idx) => (
+            {Array.from({ length: totalPages }).map((_, p) => (
               <div
-                key={idx}
-                className={`min-w-[280px] sm:min-w-[320px] md:min-w-[360px] lg:min-w-[300px] snap-start group bg-white shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100`}
+                key={p}
+                className="w-full flex-shrink-0 px-2 sm:px-4"
+                style={{ scrollSnapAlign: "start" }}
               >
                 <div
-                  className={`bg-gradient-to-br ${
-                    eventColors[idx % eventColors.length]
-                  } p-6 text-white relative overflow-hidden`}
+                  className={`grid gap-6`}
+                  style={{
+                    gridTemplateColumns: `repeat(${itemsPerPage}, minmax(0, 1fr))`,
+                  }}
                 >
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 -mr-12 -mt-12" />
-                  <div className="relative text-center">
-                    <div className="text-5xl font-bold mb-1">{event.date}</div>
-                    <div className="text-sm font-semibold opacity-90">
-                      {event.day}
-                    </div>
-                    <div className="text-sm opacity-75 uppercase tracking-wider">
-                      {event.month}
-                    </div>
-                    <div className="text-md font-medium tracking-wider">
-                      {event.year}
-                    </div>
-                  </div>
-                </div>
-                <div className="p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-gray-900 leading-tight group-hover:text-red-600 transition-colors">
-                    {event.title}
-                  </h3>
-                  <div className="space-y-2 text-sm text-gray-600">
-                    <div className="flex items-start gap-2">
-                      <MapPin className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                      <span>{event.location}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                      <span>{event.time}</span>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => window.open(event.form_link, "_blank")}
-                    className="w-full text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary
- font-semibold py-3 text-sm flex items-center justify-center gap-2"
-                  >
-                    Learn More
-                    <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" />
-                  </button>
+                  {events
+                    .slice(
+                      p * itemsPerPage,
+                      p * itemsPerPage + itemsPerPage
+                    )
+                    .map((event, idx) => (
+                      <div
+                        key={idx}
+                        className="bg-white shadow-lg border border-gray-100  overflow-hidden 
+                          h-[460px] flex flex-col"
+                      >
+                        {/* ✅ Header */}
+                        <div
+                          className={`bg-gradient-to-br ${
+                            eventColors[idx % eventColors.length]
+                          } p-6 text-white h-[160px]`}
+                        >
+                          <div className="text-center">
+                            <div className="text-5xl font-bold">{event.date}</div>
+                            <div className="text-md">{event.day}</div>
+                            <div className="uppercase text-sm opacity-75">
+                              {event.month}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* ✅ Content */}
+                        <div className="p-6 flex-1 flex flex-col justify-between min-h-[200px]">
+                          <div className="space-y-4 overflow-y-auto pr-1">
+                            <h3 className="text-lg font-bold text-gray-900">
+                              {event.title}
+                            </h3>
+
+                            <div className="flex items-start gap-2 text-sm text-gray-600">
+                              <MapPin className="w-4 h-4 text-gray-400 mt-0.5" />
+                              <span>{event.location}</span>
+                            </div>
+
+                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                              <Clock className="w-4 h-4 text-gray-400" />
+                              <span>{event.time}</span>
+                            </div>
+
+                            <div className="flex items-center gap-2 text-sm text-gray-700 font-medium">
+                              <Calendar className="w-4 h-4 text-gray-500" />
+
+                              {event.end_date ? (
+                                <span>
+                                  {formatFullDate(event.start_date)} –{" "}
+                                  {formatFullDate(event.end_date)}
+                                </span>
+                              ) : (
+                                <span>{formatFullDate(event.start_date)}</span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* ✅ Learn More Button (Exact Style) */}
+                          <button
+                            onClick={() => window.open(event.form_link, "_blank")}
+                            className="w-full mt-4 py-3 bg-whiteBgButtonBg bg-opacity-20 
+                              text-[#060C2A] font-semibold text-sm flex items-center justify-center gap-2"
+                          >
+                            Learn More
+                            <ArrowRight className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                 </div>
               </div>
             ))}
           </div>
+
         </div>
       </div>
     </section>
