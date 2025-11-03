@@ -147,10 +147,10 @@ const Posts = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50">
-      <Header />
+      {/* <Header /> */}
       
       {/* Hero Section */}
-      <section className="relative pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-14 md:pb-16 bg-black">
+      <section className="relative pt-24 sm:pt-28 mt-16 md:mt-20  md:pt-32 pb-12 sm:pb-14 md:pb-16 bg-black">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto py-10 text-center">
             {/* <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/20 backdrop-blur-sm rounded-full mb-4 sm:mb-6">
@@ -162,7 +162,7 @@ const Posts = () => {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-4 sm:mb-6 font-primary px-4">
               {currentCategory === "All" ? "Explore All Content" : currentCategory}
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-secondary px-4 ">
+            <p className="text-base pb-4 sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-secondary px-4 ">
               Discover insights, updates, and stories that matter
             </p>
           </div>

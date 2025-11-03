@@ -3,7 +3,7 @@ import React from "react";
 import { FaWhatsapp } from "react-icons/fa";
 
 // Update this to your WhatsApp number
-const WHATSAPP_LINK = "https://wa.me/919876543210";
+const WHATSAPP_LINK = "https://wa.me/9100000000";
 
 const Chatbot: React.FC = () => (
   <a

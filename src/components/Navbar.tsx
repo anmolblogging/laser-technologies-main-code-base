@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { supabase } from "../lib/supabase";
-import Logo from '../assets/logo.png';
+import Logo from "../assets/logo.png";
 
 const COLORS = {
   whiteBgText: "#060C2A",
@@ -33,21 +33,22 @@ const Header = () => {
   const navItems = [
     { name: "Home", href: "/" },
     { name: "Contact", href: "/contact" },
-    { name: "Awards", href: "/awards" },
-    { name: "Careers", href: "/careers" },
+    { name: "Laser Gurukul", href: "/laserGurukul" },
+    { name: "CSR", href: "/csr" },
   ];
 
   const moreItems = [
-    { name: "CSR", href: "/csr" },
-    { name: "News & Media ", href: "/news" },
+
     { name: "Articles", href: "/articles" },
     { name: "Knowledge", href: "/knowledge" },
-    { name: "Laser Gurukul", href: "/laserGurukul" },
+    { name: "Careers", href: "/careers" },
   ];
 
   const aboutItems = [
     { name: "About Company", href: "/about/company" },
     { name: "Milestone", href: "/about/milestone" },
+    { name: "Awards", href: "/awards" },
+    { name: "News & Media ", href: "/news" },
   ];
 
   useEffect(() => {
@@ -85,7 +86,6 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
-
           <div className="flex items-center">
             <a href="/">
               <img src={Logo} alt="Logo" className="h-12 w-auto" />
@@ -93,7 +93,6 @@ const Header = () => {
           </div>
 
           <nav className="hidden lg:flex items-center space-x-1">
-
             {/* HOME */}
             <a
               href="/"
@@ -116,8 +115,15 @@ const Header = () => {
               ref={containerRef}
               onMouseEnter={() => setIsProductsOpen(true)}
               onMouseLeave={(e) => {
-                const related = e.relatedTarget || (e.nativeEvent && e.nativeEvent.relatedTarget);
-                if (related && containerRef.current && containerRef.current.contains(related)) return;
+                const related =
+                  e.relatedTarget ||
+                  (e.nativeEvent && e.nativeEvent.relatedTarget);
+                if (
+                  related &&
+                  containerRef.current &&
+                  containerRef.current.contains(related)
+                )
+                  return;
                 setIsProductsOpen(false);
                 setHoveredSegment(null);
               }}
@@ -131,30 +137,35 @@ const Header = () => {
               >
                 Product
                 <ChevronDown
-                  className={`h-4 w-4 transition-transform duration-200 ${isProductsOpen ? "rotate-180" : ""}`}
+                  className={`h-4 w-4 transition-transform duration-200 ${
+                    isProductsOpen ? "rotate-180" : ""
+                  }`}
                 />
                 <span
                   className="absolute bottom-0 left-0 h-0.5 transition-all duration-300"
                   style={{
-                    width: isProductsOpen ? '100%' : '0',
-                    backgroundColor: COLORS.whiteBgTextHover
+                    width: isProductsOpen ? "100%" : "0",
+                    backgroundColor: COLORS.whiteBgTextHover,
                   }}
                 ></span>
               </button>
 
               {isProductsOpen && !loading && (
-                <div className="absolute top-full left-0 flex z-40" style={{ border: `1px solid ${COLORS.border}` }}>
+                <div
+                  className="absolute top-full left-0 flex z-40"
+                  style={{ border: `1px solid ${COLORS.border}` }}
+                >
                   <div className="bg-white shadow-xl py-2 px-2 min-w-[200px]">
-
                     {Object.keys(productData).map((segment) => (
                       <div
                         key={segment}
                         onMouseEnter={() => setHoveredSegment(segment)}
                         className="px-4 py-3 text-sm font-medium cursor-pointer flex items-center justify-between transition-all duration-150"
                         style={{
-                          backgroundColor: hoveredSegment === segment
-                            ? "rgba(243, 21, 36, 0.05)"
-                            : "transparent",
+                          backgroundColor:
+                            hoveredSegment === segment
+                              ? "rgba(243, 21, 36, 0.05)"
+                              : "transparent",
                           color:
                             hoveredSegment === segment
                               ? COLORS.whiteBgTextHover
@@ -166,7 +177,6 @@ const Header = () => {
                         <ChevronRight className="h-4 w-4" />
                       </div>
                     ))}
-
                   </div>
 
                   {hoveredSegment && (
@@ -188,18 +198,23 @@ const Header = () => {
                       {productData[hoveredSegment].map((subCategory) => (
                         <a
                           key={subCategory}
-                          href={`/products/${encodeURIComponent(hoveredSegment)}/${encodeURIComponent(subCategory)}`}
+                          href={`/products/${encodeURIComponent(
+                            hoveredSegment
+                          )}/${encodeURIComponent(subCategory)}`}
                           className="block px-4 py-2.5 text-sm transition-all duration-150 font-medium"
                           style={{
                             color: COLORS.whiteBgText,
                             fontFamily: "'Mulish', sans-serif",
                           }}
                           onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = "rgba(243, 21, 36, 0.05)";
-                            e.currentTarget.style.color = COLORS.whiteBgTextHover;
+                            e.currentTarget.style.backgroundColor =
+                              "rgba(243, 21, 36, 0.05)";
+                            e.currentTarget.style.color =
+                              COLORS.whiteBgTextHover;
                           }}
                           onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = "transparent";
+                            e.currentTarget.style.backgroundColor =
+                              "transparent";
                             e.currentTarget.style.color = COLORS.whiteBgText;
                           }}
                         >
@@ -235,7 +250,7 @@ const Header = () => {
                   className="absolute bottom-0 left-0 h-0.5 transition-all duration-300"
                   style={{
                     width: isAboutOpen ? "100%" : "0",
-                    backgroundColor: COLORS.whiteBgTextHover
+                    backgroundColor: COLORS.whiteBgTextHover,
                   }}
                 ></span>
               </button>
@@ -256,7 +271,8 @@ const Header = () => {
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.color = COLORS.whiteBgTextHover;
-                        e.currentTarget.style.backgroundColor = "rgba(243, 21, 36, 0.05)";
+                        e.currentTarget.style.backgroundColor =
+                          "rgba(243, 21, 36, 0.05)";
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.color = COLORS.whiteBgText;
@@ -272,7 +288,7 @@ const Header = () => {
 
             {/* REST OF NAV ITEMS (UNCHANGED) */}
             {navItems
-              .filter(item => item.name !== "Home" && item.name !== "About")
+              .filter((item) => item.name !== "Home" && item.name !== "About")
               .map((item) => (
                 <a
                   key={item.name}
@@ -297,8 +313,15 @@ const Header = () => {
               ref={moreContainerRef}
               onMouseEnter={() => setIsMoreOpen(true)}
               onMouseLeave={(e) => {
-                const related = e.relatedTarget || (e.nativeEvent && e.nativeEvent.relatedTarget);
-                if (related && moreContainerRef.current && moreContainerRef.current.contains(related)) return;
+                const related =
+                  e.relatedTarget ||
+                  (e.nativeEvent && e.nativeEvent.relatedTarget);
+                if (
+                  related &&
+                  moreContainerRef.current &&
+                  moreContainerRef.current.contains(related)
+                )
+                  return;
                 setIsMoreOpen(false);
               }}
             >
@@ -311,13 +334,15 @@ const Header = () => {
               >
                 More
                 <ChevronDown
-                  className={`h-4 w-4 transition-transform duration-200 ${isMoreOpen ? "rotate-180" : ""}`}
+                  className={`h-4 w-4 transition-transform duration-200 ${
+                    isMoreOpen ? "rotate-180" : ""
+                  }`}
                 />
                 <span
                   className="absolute bottom-0 left-0 h-0.5 transition-all duration-300"
                   style={{
-                    width: isMoreOpen ? '100%' : '0',
-                    backgroundColor: COLORS.whiteBgTextHover
+                    width: isMoreOpen ? "100%" : "0",
+                    backgroundColor: COLORS.whiteBgTextHover,
                   }}
                 ></span>
               </button>
@@ -338,7 +363,8 @@ const Header = () => {
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.color = COLORS.whiteBgTextHover;
-                        e.currentTarget.style.backgroundColor = "rgba(243, 21, 36, 0.05)";
+                        e.currentTarget.style.backgroundColor =
+                          "rgba(243, 21, 36, 0.05)";
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.color = COLORS.whiteBgText;
@@ -351,7 +377,6 @@ const Header = () => {
                 </div>
               )}
             </div>
-
           </nav>
 
           {/* MOBILE HAMBURGER */}
@@ -365,16 +390,17 @@ const Header = () => {
               <Menu className="h-6 w-6" style={{ color: COLORS.whiteBgText }} />
             )}
           </button>
-
         </div>
 
         {/* MOBILE MENU */}
         {isMenuOpen && (
-          <nav className="lg:hidden py-4" style={{ borderTop: `1px solid ${COLORS.border}` }}>
-
+          <nav
+            className="lg:hidden py-4"
+            style={{ borderTop: `1px solid ${COLORS.border}` }}
+          >
             {/* MOBILE HOME, ABOUT, CONTACT, etc. */}
             {navItems
-              .filter(item => item.name !== "About")
+              .filter((item) => item.name !== "About")
               .map((item) => (
                 <a
                   key={item.name}
@@ -394,12 +420,13 @@ const Header = () => {
             <div>
               <button
                 onClick={() => setMobileExpandedAbout(!mobileExpandedAbout)}
-               className="flex items-center justify-between bg-transparent w-full px-4 py-3 font-primary text-black font-medium"
-
+                className="flex items-center justify-between bg-transparent w-full px-4 py-3 font-primary text-black font-medium"
               >
                 <span>About</span>
                 <ChevronDown
-                  className={`h-4 w-4 transition-transform ${mobileExpandedAbout ? "rotate-180" : ""}`}
+                  className={`h-4 w-4 transition-transform ${
+                    mobileExpandedAbout ? "rotate-180" : ""
+                  }`}
                 />
               </button>
 
@@ -428,17 +455,17 @@ const Header = () => {
               <button
                 onClick={() => setIsProductsOpen(!isProductsOpen)}
                 className="flex items-center justify-between bg-transparent w-full px-4 py-3 font-primary text-black font-medium"
-                
               >
                 <span>Product</span>
                 <ChevronDown
-                  className={`h-4 w-4 transition-transform ${isProductsOpen ? "rotate-180" : ""}`}
+                  className={`h-4 w-4 transition-transform ${
+                    isProductsOpen ? "rotate-180" : ""
+                  }`}
                 />
               </button>
 
               {isProductsOpen && !loading && (
                 <div className="mt-2 max-h-[60vh] overflow-y-auto space-y-1">
-
                   {Object.keys(productData).map((segment) => (
                     <div
                       key={segment}
@@ -452,12 +479,13 @@ const Header = () => {
                           )
                         }
                         className="flex items-center justify-between bg-transparent w-full px-4 py-3 font-primary text-black font-medium"
-                        
                       >
                         <span>{segment}</span>
                         <ChevronDown
                           className={`h-3.5 w-3.5 transition-transform ${
-                            mobileExpandedSegment === segment ? "rotate-180" : ""
+                            mobileExpandedSegment === segment
+                              ? "rotate-180"
+                              : ""
                           }`}
                         />
                       </button>
@@ -467,9 +495,10 @@ const Header = () => {
                           {productData[segment].map((subCategory) => (
                             <a
                               key={subCategory}
-                              href={`/products/${encodeURIComponent(segment)}/${encodeURIComponent(subCategory)}`}
+                              href={`/products/${encodeURIComponent(
+                                segment
+                              )}/${encodeURIComponent(subCategory)}`}
                               className="flex items-center justify-between bg-transparent w-full px-4 py-3 font-primary text-black font-medium"
-                              
                               onClick={() => {
                                 setIsMenuOpen(false);
                                 setIsProductsOpen(false);
@@ -483,7 +512,6 @@ const Header = () => {
                       )}
                     </div>
                   ))}
-
                 </div>
               )}
             </div>
@@ -493,11 +521,12 @@ const Header = () => {
               <button
                 onClick={() => setMobileExpandedMore(!mobileExpandedMore)}
                 className="flex items-center justify-between bg-transparent w-full px-4 py-3 font-primary text-black font-medium"
-                
               >
                 <span>More</span>
                 <ChevronDown
-                  className={`h-4 w-4 transition-transform ${mobileExpandedMore ? "rotate-180" : ""}`}
+                  className={`h-4 w-4 transition-transform ${
+                    mobileExpandedMore ? "rotate-180" : ""
+                  }`}
                 />
               </button>
 
@@ -516,10 +545,8 @@ const Header = () => {
                 </div>
               )}
             </div>
-
           </nav>
         )}
-
       </div>
     </header>
   );

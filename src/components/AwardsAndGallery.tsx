@@ -158,7 +158,7 @@ const Awards = () => {
               Celebrating a decade of innovation and excellence
             </p>
             
-            <p className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto px-8 py-4">
               Recognized for dedication, integrity, and pioneering achievements in laser technology
             </p>
 

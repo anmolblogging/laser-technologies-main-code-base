@@ -302,138 +302,9 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      {/* Gallery Carousel */}
-      {/* <section className="py-20 md:py-32 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6">
-              <div className="w-2 h-2 rounded-full bg-white"></div>
-              <span className="text-sm font-semibold text-white">OUR FACILITIES</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
-              State-of-the-Art Infrastructure
-            </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Explore our world-class facilities and cutting-edge technology
-            </p>
-          </div>
 
-          <div className="relative">
-            <div className="relative h-[400px] md:h-[600px] rounded-2xl overflow-hidden shadow-2xl">
-              <img 
-                src={GALLERY_IMAGES[galleryIndex]} 
-                alt={`Gallery ${galleryIndex + 1}`}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-            </div>
-
-            <button
-              onClick={prevGallery}
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-3 md:p-4 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all transform hover:scale-110"
-              style={{ color: BRAND.primary }}
-              aria-label="Previous image"
-            >
-              <ChevronLeft size={24} />
-            </button>
-            <button
-              onClick={nextGallery}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-3 md:p-4 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all transform hover:scale-110"
-              style={{ color: BRAND.primary }}
-              aria-label="Next image"
-            >
-              <ChevronRight size={24} />
-            </button>
-
-            <div className="flex justify-center gap-3 mt-8">
-              {GALLERY_IMAGES.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setGalleryIndex(index)}
-                  className={`h-2 rounded-full transition-all ${
-                    index === galleryIndex ? 'w-8' : 'w-2'
-                  }`}
-                  style={{ 
-                    backgroundColor: index === galleryIndex ? BRAND.primary : '#fff',
-                    opacity: index === galleryIndex ? 1 : 0.5
-                  }}
-                  aria-label={`Go to image ${index + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section> */}
-      <AboutCarousel />
-
-      {/* Leadership Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
-              style={{ backgroundColor: BRAND.light }}
-            >
-              <div
-                className="w-2 h-2 rounded-full"
-                style={{ backgroundColor: BRAND.primary }}
-              ></div>
-              <span
-                className="text-sm font-semibold"
-                style={{ color: BRAND.primary }}
-              >
-                LEADERSHIP
-              </span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-medium mb-6 text-whiteBgText">
-              The Torchbearers
-            </h2>
-            <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
-              Here's presenting the trinity of Laser Technologies who are
-              striving to come up with the best and innovative solutions. With
-              their unwavering commitment, guidance and strong leadership, Laser
-              Technologies has been able to capture the attention of the Indian
-              laser community.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
-            {LEADERSHIP_DATA.map((leader, index) => (
-              <div
-                key={index}
-                className="group cursor-pointer"
-                onClick={() => setSelectedLeader(leader)}
-              >
-                <div className="relative overflow-hidden shadow-xl mb-6 aspect-square">
-                  <img
-                    src={leader.image}
-                    alt={leader.name}
-                    className="w-full h-full object-cover "
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-6 left-6 right-6 text-white">
-                      <p className="text-sm font-medium">Click to learn more</p>
-                    </div>
-                  </div>
-                  {/* Arrow Icon Always in Bottom Right */}
-                  <div className="absolute bottom-4 right-4">
-                    <ArrowRight className="w-8 h-8 text-red-400 p-1" />
-                  </div>
-                </div>
-                <h3
-                  className="text-xl md:text-2xl font-bold mb-2 group-hover:opacity-80 transition-colors"
-                  style={{ color: BRAND.primary }}
-                >
-                  {leader.name}
-                </h3>
-                <p className="text-gray-600 font-medium">{leader.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative w-full bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-20 md:py-32 overflow-hidden">
+      {/* pankti agarwal -- card */}
+ <section className="relative w-full bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-20 md:py-32 overflow-hidden">
         {/* Decorative Elements */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200/30 blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-300/20 blur-3xl"></div>
@@ -536,6 +407,140 @@ export default function AboutUsPage() {
           </div>
         </div>
       </section>
+
+      {/* Leadership Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+              style={{ backgroundColor: BRAND.light }}
+            >
+              <div
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: BRAND.primary }}
+              ></div>
+              <span
+                className="text-sm font-semibold"
+                style={{ color: BRAND.primary }}
+              >
+                LEADERSHIP
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-medium mb-6 text-whiteBgText">
+              The Torchbearers
+            </h2>
+            <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
+              Here's presenting the trinity of Laser Technologies who are
+              striving to come up with the best and innovative solutions. With
+              their unwavering commitment, guidance and strong leadership, Laser
+              Technologies has been able to capture the attention of the Indian
+              laser community.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+            {LEADERSHIP_DATA.map((leader, index) => (
+              <div
+                key={index}
+                className="group cursor-pointer"
+                onClick={() => setSelectedLeader(leader)}
+              >
+                <div className="relative overflow-hidden shadow-xl mb-6 aspect-square">
+                  <img
+                    src={leader.image}
+                    alt={leader.name}
+                    className="w-full h-full object-cover "
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-6 left-6 right-6 text-white">
+                      <p className="text-sm font-medium">Click to learn more</p>
+                    </div>
+                  </div>
+                  {/* Arrow Icon Always in Bottom Right */}
+                  <div className="absolute bottom-4 right-4">
+                    <ArrowRight className="w-8 h-8 text-red-400 p-1" />
+                  </div>
+                </div>
+                <h3
+                  className="text-xl md:text-2xl font-bold mb-2 group-hover:opacity-80 transition-colors"
+                  style={{ color: BRAND.primary }}
+                >
+                  {leader.name}
+                </h3>
+                <p className="text-gray-600 font-medium">{leader.title}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+     
+
+
+      {/* Gallery Carousel */}
+      {/* <section className="py-20 md:py-32 bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6">
+              <div className="w-2 h-2 rounded-full bg-white"></div>
+              <span className="text-sm font-semibold text-white">OUR FACILITIES</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+              State-of-the-Art Infrastructure
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Explore our world-class facilities and cutting-edge technology
+            </p>
+          </div>
+
+          <div className="relative">
+            <div className="relative h-[400px] md:h-[600px] rounded-2xl overflow-hidden shadow-2xl">
+              <img 
+                src={GALLERY_IMAGES[galleryIndex]} 
+                alt={`Gallery ${galleryIndex + 1}`}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            </div>
+
+            <button
+              onClick={prevGallery}
+              className="absolute left-4 top-1/2 -translate-y-1/2 p-3 md:p-4 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all transform hover:scale-110"
+              style={{ color: BRAND.primary }}
+              aria-label="Previous image"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              onClick={nextGallery}
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-3 md:p-4 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all transform hover:scale-110"
+              style={{ color: BRAND.primary }}
+              aria-label="Next image"
+            >
+              <ChevronRight size={24} />
+            </button>
+
+            <div className="flex justify-center gap-3 mt-8">
+              {GALLERY_IMAGES.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setGalleryIndex(index)}
+                  className={`h-2 rounded-full transition-all ${
+                    index === galleryIndex ? 'w-8' : 'w-2'
+                  }`}
+                  style={{ 
+                    backgroundColor: index === galleryIndex ? BRAND.primary : '#fff',
+                    opacity: index === galleryIndex ? 1 : 0.5
+                  }}
+                  aria-label={`Go to image ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section> */}
+      <AboutCarousel />
       {/* Leader Modal */}
       {selectedLeader && (
         <div

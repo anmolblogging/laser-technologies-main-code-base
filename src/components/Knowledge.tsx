@@ -417,7 +417,7 @@ const KnowledgeBase = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
       {/* Hero Section */}
-      <div className="relative overflow-hidden mt-16 md:mt-20 bg-black">
+      <header className="relative overflow-hidden mt-16 md:mt-20 bg-black">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
           <div className="text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm mb-6">
@@ -429,13 +429,13 @@ const KnowledgeBase = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6">
               Laser University
             </h1>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl pb-4 text-white/90 mb-8 max-w-2xl mx-auto">
               Take your creativity to the next level with comprehensive laser
               technology education
             </p>
           </div>
         </div>
-      </div>
+      </header>
 
       {/* Category Navigation */}
       <div className="bg-white shadow-sm sticky top-16 z-40">

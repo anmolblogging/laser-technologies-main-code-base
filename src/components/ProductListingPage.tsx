@@ -112,7 +112,7 @@ const ProductListingPage: React.FC = () => {
           </div>
         </div>
       </div> */}
-      <header className="relative mt-16 md:mt-20 bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden">
+      <header className="relative mt-16 md:mt-20 bg-gradient-to-br pb-4 from-gray-900 via-black to-gray-900 overflow-hidden">
       {/* Background Image with Overlay */}
       <div
         className="absolute  bg-black inset-0 opacity-15"
@@ -146,17 +146,17 @@ const ProductListingPage: React.FC = () => {
 
           {/* Subtitle with Stats */}
           <div className="space-y-4">
-            <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed font-light">
+            <p className="text-xl md:text-2xl text-white/80 max-w-3xl py-4  mx-auto leading-relaxed font-light">
               Explore our curated collection of premium products
             </p>
             
             {/* Product Count Badge */}
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20">
+            {/* <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20">
               <div className="w-2 h-2 bg-blue-400 animate-pulse"></div>
               <span className="text-white font-medium text-lg">
                 {products.length} Product{products.length !== 1 ? 's' : ''} Available
               </span>
-            </div>
+            </div> */}
           </div>
 
           {/* Decorative Bottom Line */}
@@ -167,7 +167,7 @@ const ProductListingPage: React.FC = () => {
       </div>
 
       {/* Bottom Fade Effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent"></div>
+      <div className="absolute bottom-0 pb-4 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent"></div>
     </header>
 
       {/* Subcategory Navigation */}

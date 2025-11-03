@@ -12,7 +12,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { supabase } from "../lib/supabase";
-import Logo from '../assets/logo.png';
+import Logo from '../assets/footer-logo.png';
 
 const PAGE_LIMIT = 60;
 
@@ -121,7 +121,7 @@ const Footer = () => {
 
           {/* ✅ Company Info */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="flex bg-white/80 items-center gap-3">
+            <div className="flex  items-center gap-3">
               <img src={Logo} alt="" />
             </div>
 
