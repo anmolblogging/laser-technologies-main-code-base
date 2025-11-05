@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, Award } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import Loading from "./Loading";
 import AwardModal from "./AwardModal";
-
+import logo from "../assets/background.jpg";
 const ITEMS_PER_PAGE = 6;
 
 interface Award {
@@ -140,7 +140,7 @@ const Awards = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-red-50 mt-16 md:mt-20">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-black">
+      <header className="relative overflow-hidden bg-black" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40"></div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
@@ -165,7 +165,7 @@ const Awards = () => {
             
           </div>
         </div>
-      </div>
+      </header>
 
       {/* Awards Grid Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">

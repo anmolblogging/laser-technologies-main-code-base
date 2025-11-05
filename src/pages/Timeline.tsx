@@ -1,6 +1,6 @@
 import React, { useRef , useState, useEffect } from 'react';
 import { BookOpen , ArrowRight , ChevronLeft, ChevronRight } from 'lucide-react';
-
+import logo from "../assets/background.jpg";
 // Example API mock. Replace with your real fetch from database later.
 const PAGE_SIZE = 5;
 
@@ -108,7 +108,7 @@ const PaginatedTimeline = () => {
   return (
     <>
       {/* Custom Header */}
-      <header className="relative mt-16 md:mt-20 bg-black overflow-hidden">
+      <header className="relative mt-16 md:mt-20 bg-black overflow-hidden" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
   <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
     <div className="text-center space-y-6">
       <div className="inline-flex rounded-full items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20">

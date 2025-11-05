@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import logo from "../assets/background.jpg";
 
 import AdvertisingBrandingIcon from "../assets/icon/Advertising & Branding.png";
 import AutomotiveLaserIcon from "../assets/icon/Automotive Laser Applications.png";
@@ -196,7 +197,7 @@ export default function IndustryCarousel() {
     setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
 
   return (
-    <section className="py-12 lg:py-16 my-16  bg-black  relative overflow-hidden">
+    <section className="py-12 lg:py-16 my-16   relative overflow-hidden" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-primary font-medium pt-10 text-darkBgText mb-4">

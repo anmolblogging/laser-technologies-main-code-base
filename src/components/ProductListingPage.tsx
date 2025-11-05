@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Eye, Mail } from "lucide-react";
-
+import logo from "../assets/background.jpg";
 import { supabase } from "../lib/supabase";
 import Loading from './Loading';
 
@@ -112,17 +112,7 @@ const ProductListingPage: React.FC = () => {
           </div>
         </div>
       </div> */}
-      <header className="relative mt-16 md:mt-20 bg-gradient-to-br pb-4 from-gray-900 via-black to-gray-900 overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div
-        className="absolute  bg-black inset-0 opacity-15"
-        style={{
-          // backgroundImage:
-          //   "url(https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1600&h=900&fit=crop)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      ></div>
+      <header className="relative mt-16 md:mt-20 pb-4 bg-black" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button - Top Left */}

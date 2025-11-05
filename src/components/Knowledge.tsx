@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { BookOpen, Zap, Wrench, FileText, Cpu, Menu, X, ChevronRight,Clock } from 'lucide-react';
-
+import logo from "../assets/background.jpg";
 const BRAND = {
   primary: '#060C2A', 
   hover: '#f31524',
@@ -417,10 +417,10 @@ const KnowledgeBase = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
       {/* Hero Section */}
-      <header className="relative overflow-hidden mt-16 md:mt-20 bg-black">
+      <header className="relative overflow-hidden mt-16 md:mt-20 bg-black" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm mb-6">
+            <div className="inline-flex items-center rounded-full gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm mb-6">
               <BookOpen className="text-white" size={20} />
               <span className="text-white text-sm font-medium">
                 Knowledge Center

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Search, Calendar, Clock, User, Tag, ChevronRight, Loader2 } from "lucide-react";
 import { supabase } from "../lib/supabase";
-import Header from "../components/Navbar";
+import logo from "../assets/background.jpg";
 import Loading from "./Loading";
 
 const POSTS_PER_PAGE = 9;
@@ -150,7 +150,7 @@ const Posts = () => {
       {/* <Header /> */}
       
       {/* Hero Section */}
-      <section className="relative pt-24 sm:pt-28 mt-16 md:mt-20  md:pt-32 pb-12 sm:pb-14 md:pb-16 bg-black">
+      <section className="relative pt-24 sm:pt-28 mt-16 md:mt-20  md:pt-32 pb-12 sm:pb-14 md:pb-16 bg-black" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto py-10 text-center">
             {/* <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/20 backdrop-blur-sm rounded-full mb-4 sm:mb-6">

@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
+import logo from "../assets/background.jpg";
 import {
   Grid,
   Image,
@@ -165,11 +166,12 @@ export default function Product(): JSX.Element {
     <section
       id="products"
       className="min-h-screen py-12 lg:py-16 my-16 bg-gradient-to-br from-neutral-950 via-neutral-900 to-zinc-900 relative"
-      style={{
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
+      // style={{
+      //   backgroundSize: "cover",
+      //   backgroundPosition: "center",
+      //   backgroundRepeat: "no-repeat",
+      // }}
+      // style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
       <div ref={productsRef} className="max-w-[1600px] mx-auto px-4 sm:px-6 pt-16">
 

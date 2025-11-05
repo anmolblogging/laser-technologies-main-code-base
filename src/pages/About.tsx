@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import AboutCarousel from "../components/AboutCarousel";
+import logo from "../assets/background.jpg";
 import {
   ChevronLeft,
   ChevronRight,
@@ -67,8 +68,8 @@ export default function AboutUsPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Header Section */}
-      <header className="relative mt-16 md:mt-20 bg-black overflow-hidden">
-        <div
+      <header className="relative mt-16 md:mt-20 bg-black overflow-hidden" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        {/* <div
           className="absolute inset-0 opacity-20"
           style={{
             backgroundImage:
@@ -76,7 +77,7 @@ export default function AboutUsPage() {
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
-        ></div>
+        ></div> */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <div className="text-center space-y-6">
             <div className="inline-flex rounded-full items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20">

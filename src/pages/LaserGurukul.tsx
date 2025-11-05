@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
+import logo from "../assets/background.jpg";
 import {
   BookOpen,
   Scissors,
@@ -162,7 +163,9 @@ const LaserGurukul: React.FC = () => {
   return (
     <div className="min-h-screen bg-white overflow-hidden">
       {/* Hero Header */}
-      <header className="relative mt-16 md:mt-20 bg-black overflow-hidden">
+      <header className="relative mt-16 md:mt-20  overflow-hidden" 
+      style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <div className="text-center space-y-6">
             <div className="inline-flex rounded-full items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20">

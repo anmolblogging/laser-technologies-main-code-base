@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import Loading from "./Loading";
-
+import logo from "../assets/background.jpg";
 interface JobPosition {
   id: string;
   title: string;
@@ -44,7 +44,7 @@ export default function Careers() {
   return (
     <div className="min-h-screen bg-white font-secondary">
       {/* Hero Section - Full Width Impact */}
-      <section className="pt-10 relative bg-gradient-to-r from-white via-red-50 to-white overflow-hidden font-primary">
+      <section className="pt-10 relative bg-gradient-to-r from-white via-red-50 to-white overflow-hidden font-primary" >
         {/* <div className="absolute inset-0 opacity-5">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-whiteBgButtonBg opacity-70"></div>
           <div className="absolute bottom-0 left-0 w-[800px] h-[800px] rounded-full bg-whiteBgButtonBg opacity-70"></div>
@@ -69,7 +69,7 @@ export default function Careers() {
             </button>
           </div>
         </div> */}
-        <div className="relative overflow-hidden mt-10 bg-black">
+        <div className="relative overflow-hidden mt-10 bg-black" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
             <div className="text-center">
               {/* <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm mb-6">
@@ -80,7 +80,7 @@ export default function Careers() {
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6">
                 Shape the Future of
                 <br />
-                <span className="font-semibold">Laser Technology</span>
+                <span className="font-medium">Laser Technology</span>
               </h1>
               <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
                 Join world-class engineers and designers revolutionizing
