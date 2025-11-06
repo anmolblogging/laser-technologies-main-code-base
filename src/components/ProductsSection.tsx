@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
+import Form from "./Form";
 import logo from "../assets/background.jpg";
 import {
   Grid,
@@ -26,7 +27,9 @@ type ProductType = {
 const fetchProducts = async (): Promise<ProductType[]> => {
   const { data, error } = await supabase
     .from("products")
-    .select(`id, Segment, SubCategory, ProductName, ShortDescription, Thumbnail_url`);
+    .select(
+      `id, Segment, SubCategory, ProductName, ShortDescription, Thumbnail_url`
+    );
   if (error) {
     console.error("Error fetching products:", error);
     return [];
@@ -73,6 +76,10 @@ const getCategoryList = (products: ProductType[]) => {
 };
 
 export default function Product(): JSX.Element {
+  const [showEnquiryForm, setShowEnquiryForm] = useState(false);
+  const [enquiryInitialData, setEnquiryInitialData] = useState<
+    Record<string, string>
+  >({});
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -93,7 +100,7 @@ export default function Product(): JSX.Element {
 
   useEffect(() => {
     if (window.location.hash) {
-      history.replaceState(null, '', window.location.pathname);
+      history.replaceState(null, "", window.location.pathname);
     }
   }, []);
 
@@ -120,7 +127,8 @@ export default function Product(): JSX.Element {
   );
 
   const filteredProducts = useMemo(
-    () => (category ? category.products.filter((p) => p.subcategory === sub) : []),
+    () =>
+      category ? category.products.filter((p) => p.subcategory === sub) : [],
     [category, sub]
   );
 
@@ -139,7 +147,10 @@ export default function Product(): JSX.Element {
     setCurrentPage(1);
 
     setTimeout(() => {
-      productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      productsRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }, 100);
   }, [sub, categoryId]);
 
@@ -156,7 +167,10 @@ export default function Product(): JSX.Element {
     setCurrentPage(page);
 
     setTimeout(() => {
-      productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      productsRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }, 100);
   };
 
@@ -173,8 +187,10 @@ export default function Product(): JSX.Element {
       // }}
       // style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
-      <div ref={productsRef} className="max-w-[1600px] mx-auto px-4 sm:px-6 pt-16">
-
+      <div
+        ref={productsRef}
+        className="max-w-[1600px] mx-auto px-4 sm:px-6 pt-16"
+      >
         {/* HEADER */}
         <div className="text-center mb-12 lg:mb-16" id="#products">
           <div className="inline-flex bg-whiteBgButtonBg bg-opacity-20 text-whiteBgButtonBg items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-950/50 to-black/50 border border-red-900/30 rounded-full mb-4 backdrop-blur-sm">
@@ -187,7 +203,8 @@ export default function Product(): JSX.Element {
           </h2>
 
           <p className="text-darkBgText opacity-60 text-lg md:text-xl max-w-2xl mx-auto font-secondary">
-            Explore our complete range of laser cutting, welding, marking, and automation systems.
+            Explore our complete range of laser cutting, welding, marking, and
+            automation systems.
           </p>
         </div>
 
@@ -197,7 +214,7 @@ export default function Product(): JSX.Element {
             <button
               key={c.id}
               onClick={() => {
-                userTriggeredScroll.current = true; // ✅ ✅ IMPORTANT
+                userTriggeredScroll.current = true;
                 setCategoryId(c.id);
                 setSub(c.subs[0]);
                 setCurrentPage(1);
@@ -215,7 +232,6 @@ export default function Product(): JSX.Element {
 
         {/* MOBILE CATEGORY DROPDOWNS */}
         <div className="lg:hidden mb-8 flex flex-col gap-3 font-secondary">
-
           {/* Category Dropdown */}
           <div className="relative">
             <button
@@ -295,7 +311,6 @@ export default function Product(): JSX.Element {
 
         {/* DESKTOP GRID */}
         <div className="hidden lg:grid grid-cols-5 gap-6 pb-16">
-
           {/* SIDEBAR */}
           <aside className="bg-gradient-to-b from-zinc-900 to-black p-6 shadow-2xl border border-zinc-800 h-[600px] flex flex-col sticky top-24">
             <h4 className="text-xl font-medium mb-6 font-primary text-darkBgText text-opacity-80 flex items-center gap-3 pb-4 border-b border-zinc-800">
@@ -323,7 +338,9 @@ export default function Product(): JSX.Element {
                   <span>{s}</span>
                   <ArrowRight
                     className={`w-10 h-10 transition-transform ${
-                      s === sub ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                      s === sub
+                        ? "opacity-100"
+                        : "opacity-0 group-hover:opacity-100"
                     }`}
                   />
                 </button>
@@ -334,7 +351,6 @@ export default function Product(): JSX.Element {
           {/* PRODUCT CARDS */}
           <main className="lg:col-span-4">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-
               {paginatedProducts.length === 0 && (
                 <div className="col-span-full text-center py-24">
                   <div className="inline-flex flex-col items-center gap-4">
@@ -370,7 +386,7 @@ export default function Product(): JSX.Element {
                   </div>
 
                   <div className="p-6">
-                    <h3 className="text-3xl font-primary font-medium text-darkBgText mb-2 group-hover:text-whiteBgTextHover transition-colors">
+                    <h3 className="text-3xl font-primary font-medium text-darkBgText mb-2 group-hover:text-white transition-colors">
                       {p.name}
                     </h3>
                     <p className="text-md text-darkBgText text-opacity-70 font-secondary mb-5 leading-relaxed line-clamp-2">
@@ -380,15 +396,23 @@ export default function Product(): JSX.Element {
                     <div className="flex w-full gap-3 mt-2 font-secondary">
                       <button
                         onClick={() => navigate(`/product/${p.id}`)}
-                        className="flex-1 px-6 py-3.5 text-opacity-90 font-semibold transition-all duration-300 border border-red-900 flex items-center justify-center gap-2 shadow-sm hover:shadow-md bg-whiteBgButtonBg bg-opacity-40 hover:bg-opacity-40 text-darkBgTextHover"
+                        className="flex-1 px-6 py-3.5 text-opacity-90 hover:border-red-900 font-semibold transition-all duration-300 border border-red-900 flex items-center justify-center gap-2 shadow-sm hover:shadow-md bg-whiteBgButtonBg hover:bg-whiteBgButtonBg bg-opacity-40 hover:bg-opacity-40 text-darkBgTextHover"
                       >
                         <span>View</span>
                         <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                       </button>
 
                       <button
-                        onClick={() => navigate("/contact")}
-                        className="flex-1 px-6 py-3.5 text-opacity-90 font-semibold transition-all duration-300 border border-red-900 flex items-center justify-center gap-2 shadow-sm hover:shadow-md bg-whiteBgButtonBg bg-opacity-40 hover:bg-opacity-40 text-darkBgTextHover"
+                        onClick={() => {
+                          // open enquiry form with product context
+                          setEnquiryInitialData({
+                            segment: category.name,
+                            subcategory: p.subcategory,
+                            product: p.name,
+                          });
+                          setShowEnquiryForm(true);
+                        }}
+                        className="flex-1 px-6 py-3.5 text-opacity-90 hover:border-red-900 font-semibold transition-all duration-300 border border-red-900 flex items-center justify-center gap-2 shadow-sm hover:shadow-md bg-whiteBgButtonBg hover:bg-whiteBgButtonBg bg-opacity-40 hover:bg-opacity-40 text-darkBgTextHover"
                       >
                         <Phone className="w-4 h-4 transition-transform group-hover:scale-110" />
                         <span>Enquire</span>
@@ -474,7 +498,9 @@ export default function Product(): JSX.Element {
               </div>
 
               <div className="p-5">
-                <h3 className="text-2xl font-medium text-white mb-2">{p.name}</h3>
+                <h3 className="text-2xl font-medium text-white mb-2">
+                  {p.name}
+                </h3>
                 <p className="text-md text-gray-400 mb-4">{p.description}</p>
 
                 <div className="flex justify-center gap-4">
@@ -487,7 +513,14 @@ export default function Product(): JSX.Element {
                   </button>
 
                   <button
-                    onClick={() => navigate(`/contact`)}
+                    onClick={() => {
+                      setEnquiryInitialData({
+                        segment: category.name,
+                        subcategory: p.subcategory,
+                        product: p.name,
+                      });
+                      setShowEnquiryForm(true);
+                    }}
                     className="flex-1 max-w-[180px] px-5 py-3 bg-gradient-to-r from-red-900 to-red-950 text-white font-medium hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 flex items-center justify-center gap-2"
                   >
                     <span>Enquire</span>
@@ -498,8 +531,16 @@ export default function Product(): JSX.Element {
             </div>
           ))}
         </div>
-
       </div>
+
+      {/* Enquiry form modal */}
+      {showEnquiryForm && (
+        <Form
+          type="PRODUCT_ENQUIRY"
+          onClose={() => setShowEnquiryForm(false)}
+          initialData={enquiryInitialData}
+        />
+      )}
     </section>
   );
 }

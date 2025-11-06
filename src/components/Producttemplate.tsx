@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeft, ChevronLeft, ChevronRight, Mail, X, Maximize2 } from 'lucide-react'
+import { ArrowLeft, ChevronLeft, ChevronRight, Mail, X, Maximize2, Download } from 'lucide-react'
 import Loading from './Loading';
 import { supabase } from "../lib/supabase";
+import Form from './Form';
 
 const BRAND = {
   primary: '#6b0f0f',
@@ -48,9 +49,13 @@ function Producttemplate(): JSX.Element {
   const relatedScrollRef = useRef<HTMLDivElement | null>(null)
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({})
 
+  const [showDownloadDialog, setShowDownloadDialog] = useState(false)
+  const [downloadAllowed, setDownloadAllowed] = useState(false)
+  const [showEnquiryForm, setShowEnquiryForm] = useState(false)
+
   useEffect(() => {
     if (!id) return
-    setLoading(true)
+    setLoading(true) // Added missing parenthesis here
     const fetchData = async () => {
       try {
         const { data: prodData, error: prodError } = await supabase
@@ -77,7 +82,7 @@ function Producttemplate(): JSX.Element {
 
         setRelatedProducts(related || [])
       } catch (err) {
-        console.error('Fetch product error', err)
+        console.error('Fetch product error:', err) 
         setRawProduct(null)
         setRelatedProducts([])
       } finally {
@@ -140,6 +145,7 @@ function Producttemplate(): JSX.Element {
       samplesRaw,
       technicalRaw,
       rawVideo,
+      brochureUrl: p.bro_url ?? p.brochure_url ?? p.BrochureURL ?? null, // Add this line
     }
   }, [rawProduct])
 
@@ -308,6 +314,37 @@ function Producttemplate(): JSX.Element {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [tabs])
 
+  const handleDownloadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    setShowDownloadDialog(false)
+    setDownloadAllowed(true)
+
+    // Log download attempt to supabase
+    await supabase.from('brochure_downloads').insert({
+      product_id: product?.id,
+      name: 'User',
+      email: 'user@example.com',
+      phone: '1234567890',
+      downloaded_at: new Date().toISOString(),
+    })
+
+    // Here you'll integrate EmailJS in the future
+    // await emailjs.send(...)
+
+    // Create a temporary hidden link and trigger download
+    if (product?.brochureUrl) {
+      const link = document.createElement('a')
+      link.href = product.brochureUrl
+      link.target = '_blank'
+      link.rel = 'noopener noreferrer'
+      link.style.display = 'none'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    }
+  }
+
   if (loading) {
     return <Loading text='product'/>
   }
@@ -374,9 +411,8 @@ function Producttemplate(): JSX.Element {
 
           <div className="px-4 py-4 border-t border-gray-100 bg-gray-50 flex items-center gap-3">
             <button 
-              onClick={() => window.open(`mailto:sales@example.com?subject=Quote%20request%20for%20${encodeURIComponent(product.name)}`)} 
+              onClick={() => setShowEnquiryForm(true)} 
               className="flex-1 py-3 px-4 text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary font-semibold flex items-center justify-center gap-2 shadow-md transition-transform duration-200 hover:scale-105"
-
             >
               <Mail className="w-4 h-4" />
               Quote
@@ -516,13 +552,32 @@ function Producttemplate(): JSX.Element {
             )}
 
             <div className="flex flex-wrap gap-4 pt-4">
-              <button 
-                onClick={() => window.open(`mailto:sales@example.com?subject=Quote%20request%20for%20${encodeURIComponent(product.name)}`)} 
-               className="flex-1 py-3 px-4 text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary font-semibold flex items-center justify-center gap-2 shadow-md transition-transform duration-200 hover:scale-105"
 
+              {/* Add download button if brochure exists */}
+              {product.brochureUrl && (
+                <button
+                  onClick={() => {
+                    // If user already submitted valid details, perform download directly
+                    if (downloadAllowed) {
+                      window.open(product.brochureUrl, '_blank', 'noopener,noreferrer')
+                      return
+                    }
+                    // otherwise open brochure form modal
+                    setShowDownloadDialog(true)
+                  }}
+                  className="flex-1 py-3 px-4 text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary font-semibold flex items-center justify-center gap-2 shadow-md transition-transform duration-200 hover:scale-105"
+                >
+                  <Download className="w-5 h-5" />
+                  Download Brochure
+                </button>
+              )}
+
+              <button 
+                onClick={() => setShowEnquiryForm(true)}
+                className="flex-1 py-3 px-4 text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary font-semibold flex items-center justify-center gap-2 shadow-md transition-transform duration-200 hover:scale-105"
               >
-                <Mail className="w-5 h-5" />
-                Request Quote
+                <Mail className="w-4 h-4" />
+                Enquire Now
               </button>
             </div>
           </div>
@@ -814,6 +869,34 @@ function Producttemplate(): JSX.Element {
             )}
           </div>
         </div>
+      )}
+
+      {/* Brochure form modal (uses shared Form UI) */}
+      {showDownloadDialog && (
+        <Form
+          type="BROCHURE_DOWNLOAD"
+          onClose={() => setShowDownloadDialog(false)}
+          onSuccess={() => {
+            setShowDownloadDialog(false)
+            setDownloadAllowed(true)
+          }}
+          initialData={{
+            product: product.name
+          }}
+        />
+      )}
+
+      {/* Enquiry Form */}
+      {showEnquiryForm && (
+        <Form
+          type="PRODUCT_ENQUIRY"
+          onClose={() => setShowEnquiryForm(false)}
+          initialData={{
+            segment: product.segment,
+            subcategory: product.subcategory,
+            product: product.name
+          }}
+        />
       )}
 
       {/* <Footer /> */}

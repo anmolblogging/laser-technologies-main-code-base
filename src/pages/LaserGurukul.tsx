@@ -16,9 +16,13 @@ import {
 
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Form, { FormField } from "../components/Form";
+
 const LaserGurukul: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
+  const [showRegForm, setShowRegForm] = useState(false);
+  const [regInitialData, setRegInitialData] = useState<Record<string,string>>({});
 
   const carouselImages = useMemo(
     () => [
@@ -160,6 +164,14 @@ const LaserGurukul: React.FC = () => {
     []
   );
 
+  const regFields: FormField[] = useMemo(() => [
+    { id: 'name', label: 'Name', type: 'text', required: true },
+    { id: 'company', label: 'Company Name', type: 'text', required: false },
+    { id: 'email', label: 'Email', type: 'email', required: true },
+    { id: 'phone', label: 'Phone', type: 'tel', required: true },
+    { id: 'module', label: 'Module', type: 'select', required: true, options: modules.map(m => m.title) },
+  ], [modules]);
+
   return (
     <div className="min-h-screen bg-white overflow-hidden">
       {/* Hero Header */}
@@ -184,8 +196,8 @@ const LaserGurukul: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
-              <button
-                
+              {/* <button
+                 onClick={() => navigate("/contact")}
                 className="group px-8 py-4 bg-whiteBgButtonBg text-whiteBgButtonText font-semibold hover:bg-whiteBgTextHover transition-all duration-300 flex items-center gap-2"
                 aria-label="Register for courses"
               >
@@ -194,7 +206,7 @@ const LaserGurukul: React.FC = () => {
                   className="group-hover:translate-x-1 transition-transform"
                   size={20}
                 />
-              </button>
+              </button> */}
               {/* <button 
                 className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold hover:bg-white hover:text-whiteBgText transition-all duration-300 flex items-center gap-2"
                 aria-label="Watch introduction video"
@@ -246,7 +258,11 @@ const LaserGurukul: React.FC = () => {
             </p>
 
             <button 
-            onClick={() => navigate("/contact")}
+           
+            onClick={() => {
+                  setRegInitialData({ module: '' })
+                  setShowRegForm(true)
+                }}
             className="px-10 py-5 bg-whiteBgButtonBg text-whiteBgButtonText font-bold text-lg hover:bg-whiteBgTextHover transition-all duration-300 transform hover:scale-105">
               REGISTER NOW
             </button>
@@ -254,8 +270,117 @@ const LaserGurukul: React.FC = () => {
         </div>
       </section>
 
-      {/* Modules Section - Vertically Stacked with Alternating Layout */}
-      <section className="pb-20 md:pb-32 bg-gray-50">
+     
+   {/* Why Choose Section */}
+      <section className="py-12 pb-32 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 md:mb-24">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-whiteBgText mb-6">
+              Why Choose{" "}
+              <span className="text-whiteBgButtonBg">Laser Gurukul?</span>
+            </h2>
+            <div className="w-24 h-1 bg-whiteBgButtonBg mx-auto mb-6"></div>
+            <p className="text-xl text-whiteBgText/70 max-w-3xl mx-auto">
+              Experience the difference with our world-class training approach
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                id={`feature-${index}`}
+                data-animate
+                className={`group bg-white p-8 md:p-10 border-l-4 border-whiteBgButtonBg shadow-lg hover:shadow-2xl transition-all duration-500 ${
+                  isVisible[`feature-${index}`]
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
+                }`}
+                style={{ transitionDelay: `${index * 150}ms` }}
+              >
+                <div className="flex items-start gap-6">
+                  <div className="p-5 bg-gradient-to-br from-whiteBgButtonBg to-whiteBgTextHover flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                    <feature.icon className="text-white" size={40} />
+                  </div>
+
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-whiteBgText mb-4">
+                      {feature.title}
+                    </h3>
+
+                    <p className="text-whiteBgText/80 text-lg leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+       {/* Carousel Section - Moved to bottom before CTA */}
+      <section
+        className="relative h-[400px] md:h-[600px]  bg-black overflow-hidden"
+        aria-label="Training facility showcase"
+      >
+        <div className="relative h-full">
+          {carouselImages.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
+              }`}
+            >
+              <img
+                src={slide.url}
+                alt={slide.alt}
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+
+        <button
+          onClick={prevSlide}
+          className="absolute rounded-full left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 p-4 bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="text-white" size={28} />
+        </button>
+
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 rounded-full md:right-8 top-1/2 -translate-y-1/2 z-30 p-4 bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="text-white" size={28} />
+        </button>
+
+        <div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3"
+          role="tablist"
+        >
+          {carouselImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`h-1 transition-all duration-300 ${
+                index === currentSlide ? "bg-white w-12" : "bg-white/40 w-8"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+              role="tab"
+              aria-selected={index === currentSlide}
+            />
+          ))}
+        </div>
+      </section>
+
+   
+
+           {/* Modules Section - Vertically Stacked with Alternating Layout */}
+      <section className="pb-20 pt-32 md:pb-32 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 md:mb-24">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-whiteBgText mb-6">
@@ -345,7 +470,10 @@ const LaserGurukul: React.FC = () => {
                   </ul>
 
                   <button 
-                  onClick={() => navigate('/contact')}
+                  onClick={() => {
+                    setRegInitialData({ module: module.title })
+                    setShowRegForm(true)
+                  }}
                   className="mt-8 px-8 py-4 bg-whiteBgButtonBg text-white font-semibold hover:bg-whiteBgTextHover transition-all duration-300 inline-flex items-center gap-2 border-2 border-whiteBgButtonBg hover:border-whiteBgTextHover">
                     <span>Enroll in This Module</span>
                     <ArrowRight size={20} />
@@ -356,148 +484,17 @@ const LaserGurukul: React.FC = () => {
           </div>
         </div>
       </section>
-
-       {/* Carousel Section - Moved to bottom before CTA */}
-      <section
-        className="relative h-[400px] md:h-[600px] bg-black overflow-hidden"
-        aria-label="Training facility showcase"
-      >
-        <div className="relative h-full">
-          {carouselImages.map((slide, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
-              }`}
-            >
-              <img
-                src={slide.url}
-                alt={slide.alt}
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
-
-        <button
-          onClick={prevSlide}
-          className="absolute rounded-full left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 p-4 bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="text-white" size={28} />
-        </button>
-
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 rounded-full md:right-8 top-1/2 -translate-y-1/2 z-30 p-4 bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="text-white" size={28} />
-        </button>
-
-        <div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3"
-          role="tablist"
-        >
-          {carouselImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`h-1 transition-all duration-300 ${
-                index === currentSlide ? "bg-white w-12" : "bg-white/40 w-8"
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-              role="tab"
-              aria-selected={index === currentSlide}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* Why Choose Section */}
-      <section className="py-20 md:py-32 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 md:mb-24">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-whiteBgText mb-6">
-              Why Choose{" "}
-              <span className="text-whiteBgButtonBg">Laser Gurukul?</span>
-            </h2>
-            <div className="w-24 h-1 bg-whiteBgButtonBg mx-auto mb-6"></div>
-            <p className="text-xl text-whiteBgText/70 max-w-3xl mx-auto">
-              Experience the difference with our world-class training approach
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                id={`feature-${index}`}
-                data-animate
-                className={`group bg-white p-8 md:p-10 border-l-4 border-whiteBgButtonBg shadow-lg hover:shadow-2xl transition-all duration-500 ${
-                  isVisible[`feature-${index}`]
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-10"
-                }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                <div className="flex items-start gap-6">
-                  <div className="p-5 bg-gradient-to-br from-whiteBgButtonBg to-whiteBgTextHover flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                    <feature.icon className="text-white" size={40} />
-                  </div>
-
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-whiteBgText mb-4">
-                      {feature.title}
-                    </h3>
-
-                    <p className="text-whiteBgText/80 text-lg leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
      
-
-      {/* CTA Section */}
-      {/* <section className="relative bg-whiteBgText py-24 md:py-40 overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-whiteBgButtonBg via-transparent to-whiteBgButtonBg"></div>
-        </div>
-        
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-block mb-6 px-6 py-3 bg-whiteBgButtonBg/20 border border-whiteBgButtonBg">
-            <span className="text-whiteBgButtonBg font-bold tracking-wide">LIMITED SEATS AVAILABLE</span>
-          </div>
-          
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
-            Ready to Transform<br />Your Career?
-          </h2>
-          
-          <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Join Laser Gurukul today and unlock your potential in laser technology. Get hands-on training from industry experts and secure your future in a growing field.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <button className="w-full sm:w-auto px-12 py-5 bg-whiteBgButtonBg text-white font-bold text-lg hover:bg-whiteBgTextHover transition-all duration-300 transform hover:scale-105 shadow-2xl">
-              ENROLL NOW
-            </button>
-            <button className="w-full sm:w-auto px-12 py-5 bg-transparent border-2 border-white text-white font-bold text-lg hover:bg-white hover:text-whiteBgText transition-all duration-300">
-              DOWNLOAD BROCHURE
-            </button>
-          </div>
-
-          <div className="mt-12 text-white/70 text-sm">
-            <p>Questions? Call us at <a href="tel:+911234567890" className="text-whiteBgButtonBg hover:text-white transition-colors">+91 123 456 7890</a></p>
-          </div>
-        </div>
-      </section> */}
+      {/* Registration modal */}
+      {showRegForm && (
+        <Form
+          type="REGISTRATION"
+          fields={regFields}
+          initialData={regInitialData}
+          onClose={() => setShowRegForm(false)}
+          onSuccess={() => setShowRegForm(false)}
+        />
+      )}
     </div>
   );
 };

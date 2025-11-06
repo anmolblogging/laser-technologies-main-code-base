@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { ArrowLeft, Calendar, Clock, Share2, Tag } from "lucide-react";
 import { useParams, useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
 import { supabase } from "../lib/supabase";
 import Loading from "./Loading";
 
@@ -142,7 +140,6 @@ const BlogTemplate: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
-      <Navbar />
       <main className="flex-grow">
         <header
           className="md:pt-4 top-0 mt-20 z-50 bg-white/80 backdrop-blur-md border-b"
@@ -318,7 +315,6 @@ const BlogTemplate: React.FC = () => {
           </article>
         </main>
       </main>
-      <Footer />
     </div>
   );
 };

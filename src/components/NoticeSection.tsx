@@ -40,7 +40,7 @@ export default function AboutSection() {
               </li>
             </ul>
             <br />
-            <a href="/about">
+            <a href="/about/company">
               <button className="text-white  bg-whiteBgButtonBg  hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary px-8 py-3 text-lg  ">
                 Learn More About Us
               </button>

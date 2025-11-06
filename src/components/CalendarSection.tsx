@@ -8,6 +8,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { supabase } from "../lib/supabase";
+import Form from "./Form";
 
 interface Event {
   start_date: string;
@@ -31,6 +32,9 @@ const eventColors = [
 
 export default function CalendarSection() {
   const sliderRef = useRef<HTMLDivElement>(null);
+
+  const [showEventForm, setShowEventForm] = useState(false);
+  const [eventInitialData, setEventInitialData] = useState<Record<string,string>>({});
 
   const [events, setEvents] = useState<Event[]>([]);
   const [page, setPage] = useState(0);
@@ -250,7 +254,21 @@ export default function CalendarSection() {
 
                           {/* ✅ Learn More Button (Exact Style) */}
                           <button
-                            onClick={() => window.open(event.form_link, "_blank")}
+                            onClick={() => {
+                              if (event.form_link) {
+                                window.open(event.form_link, "_blank")
+                                return
+                              }
+
+                              // No external link — open local registration modal with event details
+                              setEventInitialData({
+                                event_name: event.title,
+                                event_location: event.location,
+                                event_date: formatFullDate(event.start_date),
+                                event_time: event.time || '',
+                              })
+                              setShowEventForm(true)
+                            }}
                             className="w-full mt-4 py-3 bg-whiteBgButtonBg bg-opacity-20 
                               text-[#060C2A] font-semibold text-sm flex items-center justify-center gap-2"
                           >
@@ -264,9 +282,18 @@ export default function CalendarSection() {
               </div>
             ))}
           </div>
-
         </div>
       </div>
+
+      {/* Event registration modal */}
+      {showEventForm && (
+        <Form
+          type="EVENT_FORM"
+          onClose={() => setShowEventForm(false)}
+          initialData={eventInitialData}
+        />
+      )}
+
     </section>
   );
 }

@@ -4,6 +4,7 @@ import { ArrowLeft, Eye, Mail } from "lucide-react";
 import logo from "../assets/background.jpg";
 import { supabase } from "../lib/supabase";
 import Loading from './Loading';
+import Form from './Form';
 
 interface Product {
   id: string;
@@ -29,6 +30,8 @@ const ProductListingPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [allSubcategories, setAllSubcategories] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [showEnquiryForm, setShowEnquiryForm] = useState(false);
+  const [enquiryInitialData, setEnquiryInitialData] = useState<Record<string,string>>({});
 
   const decodedSegment = decodeURIComponent(segment || '');
   const decodedSubcategory = decodeURIComponent(subcategory || '');
@@ -69,12 +72,32 @@ const ProductListingPage: React.FC = () => {
     }
   }, [decodedSegment, decodedSubcategory]);
 
+  // If the user is at (or near) the bottom when they change category/subcategory,
+  // scroll to top so they see the newly loaded products.
+  useEffect(() => {
+    try {
+      const scrollPos = window.scrollY + window.innerHeight
+      const docHeight = document.documentElement.scrollHeight || document.body.scrollHeight
+      const nearBottom = scrollPos >= docHeight - 120 // 120px threshold
+      if (nearBottom) {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    } catch {
+      // no-op in non-browser environments
+    }
+  }, [decodedSegment, decodedSubcategory])
   const handleViewProduct = (productId: string) => {
     navigate(`/product/${productId}`);
   };
 
-  const handleEnquire = () => {
-    navigate('/contact');
+  const handleEnquire = (product?: Product) => {
+    // open enquiry form with context (if product provided, prefill name)
+    setEnquiryInitialData({
+      segment: decodedSegment,
+      subcategory: decodedSubcategory,
+      product: product?.ProductName ?? '',
+    });
+    setShowEnquiryForm(true);
   };
 
   if (loading) {
@@ -159,8 +182,16 @@ const ProductListingPage: React.FC = () => {
       {/* Bottom Fade Effect */}
       <div className="absolute bottom-0 pb-4 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent"></div>
     </header>
+    {/* Enquiry form modal */}
+    {showEnquiryForm && (
+      <Form
+        type="PRODUCT_ENQUIRY"
+        onClose={() => setShowEnquiryForm(false)}
+        initialData={enquiryInitialData}
+      />
+    )}
 
-      {/* Subcategory Navigation */}
+       {/* Subcategory Navigation */}
       {allSubcategories.length > 1 && (
         <div className="bg-white shadow-sm border-b sticky top-20 z-40">
           <div className="container mx-auto px-4 py-6">
@@ -307,7 +338,7 @@ const ProductListingPage: React.FC = () => {
                         <Eye className="h-4 w-4" /> View
                       </button>
                       <button
-                        onClick={handleEnquire}
+                        onClick={() => handleEnquire(product)}
                         className="flex-1 py-3 px-4 text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-secondary font-semibold flex items-center justify-center gap-2 shadow-md transition-transform duration-200 hover:scale-105"
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'translateY(-2px)';
