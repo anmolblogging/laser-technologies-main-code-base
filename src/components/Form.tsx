@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react'
 import { X, Loader2, Upload, Check } from 'lucide-react'
+import emailjs from '@emailjs/browser'
 
 export interface FormField {
   id: string
@@ -55,7 +56,6 @@ export const FORM_TYPES = {
       { id: 'name', label: 'Full Name', type: 'text', required: true, placeholder: 'John Doe' },
       { id: 'email', label: 'Email', type: 'email', required: true, placeholder: 'you@example.com' },
       { id: 'phone', label: 'Phone', type: 'tel', required: true, placeholder: '+91 98765 43210' },
-      { id: 'cv', label: 'CV Upload', type: 'file', required: true },
       { id: 'cover_message', label: 'Cover Message', type: 'textarea', required: true, placeholder: 'Write a short cover message...' },
     ],
   },
@@ -93,118 +93,203 @@ interface FormProps {
   fields?: FormField[]
 }
 
-const Form: React.FC<FormProps> = ({ type, onClose, onSuccess, initialData = {}, fields }) => {
+const Form: React.FC<FormProps> = ({
+  type, onClose, onSuccess, initialData = {}, fields,
+}) => {
   const formConfig = FORM_TYPES[type]
   const [formData, setFormData] = useState<Record<string, string>>({})
+  const [fileObjects, setFileObjects] = useState<Record<string, File | null>>({})
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [fileUploading, setFileUploading] = useState<Record<string, boolean>>({})
   const [fileErrors, setFileErrors] = useState<Record<string, string>>({})
+  const [success, setSuccess] = useState(false)
 
   useEffect(() => {
     const cfgFields = fields ?? formConfig.fields
     const initialFormData: Record<string, string> = {}
+    const initialFileObjs: Record<string, File | null> = {}
     cfgFields.forEach(field => {
       initialFormData[field.id] = initialData[field.id] ?? field.value ?? ''
+      initialFileObjs[field.id] = null
     })
     setFormData(initialFormData)
-    // clear previous errors/upload state when opening new form/config changes
+    setFileObjects(initialFileObjs)
     setErrors({})
     setFileErrors({})
     setFileUploading({})
+    setSuccess(false)
   }, [formConfig.fields, initialData, fields])
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
     const cfgFields = fields ?? formConfig.fields
-
     cfgFields.forEach(field => {
       const val = (formData[field.id] || '').trim()
-
       if (field.required) {
         if (field.type === 'file') {
-          if (!val) newErrors[field.id] = `${field.label} is required`
+          if (!fileObjects[field.id] && !val)
+            newErrors[field.id] = `${field.label} is required`
         } else if (!val) {
           newErrors[field.id] = `${field.label} is required`
           return
         }
       }
-
-      if (field.type === 'email' && val && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+      if (
+        field.type === 'email' &&
+        val &&
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)
+      ) {
         newErrors[field.id] = 'Please enter a valid email address'
       }
-
-      if (field.type === 'tel' && val && !/^[\d\s+()-]{7,}$/.test(val)) {
+      if (
+        field.type === 'tel' &&
+        val &&
+        !/^[\d\s+()-]{7,}$/.test(val)
+      ) {
         newErrors[field.id] = 'Please enter a valid phone number'
       }
     })
-
     setErrors(newErrors)
-    return Object.keys(newErrors).length === 0 && Object.values(fileUploading).every(v => v === false)
+    return Object.keys(newErrors).length === 0 &&
+      Object.values(fileUploading).every(v => v === false)
   }
+
+  const fileToDataUrl = (file: File): Promise<string> =>
+    new Promise((res, rej) => {
+      const reader = new FileReader()
+      reader.onload = () => {
+        res(reader.result as string)
+      }
+      reader.onerror = e => rej(e)
+      reader.readAsDataURL(file)
+    })
 
   const handleFileChange = async (fieldId: string, file?: File | null) => {
     setFileErrors(prev => ({ ...prev, [fieldId]: '' }))
     if (!file) {
       setFormData(prev => ({ ...prev, [fieldId]: '' }))
+      setFileObjects(prev => ({ ...prev, [fieldId]: null }))
       return
     }
-
     try {
       setFileUploading(prev => ({ ...prev, [fieldId]: true }))
-
-      // No backend configured — create object URL for preview.
       const objectUrl = URL.createObjectURL(file)
       setFormData(prev => ({ ...prev, [fieldId]: objectUrl }))
-    } catch (err: any) {
-      console.error('File handling error:', err)
-      setFileErrors(prev => ({ ...prev, [fieldId]: 'Upload failed' }))
+      setFileObjects(prev => ({ ...prev, [fieldId]: file }))
+    } catch {
+      setFileErrors(prev => ({
+        ...prev,
+        [fieldId]: 'Upload failed',
+      }))
       setFormData(prev => ({ ...prev, [fieldId]: '' }))
+      setFileObjects(prev => ({ ...prev, [fieldId]: null }))
     } finally {
       setFileUploading(prev => ({ ...prev, [fieldId]: false }))
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitError(null)
-
-    if (!validateForm()) return
-
-    setIsSubmitting(true)
-
-    try {
-      // No backend: simulate submit
-      const payload = {
-        ...formData,
-        submitted_at: new Date().toISOString(),
-      }
-
-      await new Promise(res => setTimeout(res, 600)) // simulate latency
-
-      if (typeof onSuccess === 'function') {
-        try {
-          onSuccess(payload)
-        } catch (cbErr) {
-          // swallow callback errors but log
-          // eslint-disable-next-line no-console
-          console.warn('onSuccess callback error', cbErr)
-        }
-      }
-
-      onClose()
-    } catch (err: any) {
-      const message = err?.message ?? 'Failed to submit form. Please try again.'
-      // eslint-disable-next-line no-console
-      console.error('Submission error:', err)
-      setSubmitError(message)
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
   const cfgFields = fields ?? formConfig.fields
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault()
+  //   setSubmitError(null)
+  //   if (!validateForm()) return
+  //   setIsSubmitting(true)
+
+  //   try {
+  //     const get = (id: string) => (typeof formData[id] === 'string' ? formData[id] : '') || ''
+  //     const content = cfgFields.map(f => `${f.label}: ${get(f.id)}`).join('\n')
+
+  //     const payload: Record<string, any> = {
+  //       subject: `New ${formConfig.title} submission`,
+  //       submission_date: new Date().toLocaleString(),
+  //       form_type: formConfig.title,
+  //       content,
+  //       customer_email: get('email') || 'N/A',
+  //     }
+
+  //     const attachments: Array<{ name: string; data: string }> = []
+  //     for (const f of cfgFields) {
+  //       if (f.type === 'file') {
+  //         const fileObj = fileObjects[f.id]
+  //         if (fileObj) {
+  //           const dataUrl = await fileToDataUrl(fileObj)
+  //           attachments.push({ name: fileObj.name, data: dataUrl })
+  //           payload.content += `\n${f.label}: ${fileObj.name}`
+  //         }
+  //       }
+  //     }
+
+  //     if (attachments.length > 0) {
+  //       payload.attachment = attachments.length === 1 ? attachments[0].data : attachments.map(a => a.data)
+  //       payload.attachment_names = attachments.map(a => a.name).join(', ')
+  //     }
+
+  //     console.log('Sending payload:', payload)
+
+  //     await emailjs.send(
+  //       import.meta.env.VITE_EMAILJS_SERVICE_ID,
+  //       import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+  //       payload,
+  //       import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+  //     )
+
+  //     setSuccess(true)
+  //     onSuccess?.(payload)
+
+  //     setTimeout(() => {
+  //       setIsSubmitting(false)
+  //       onClose()
+  //     }, 1100)
+  //   } catch (err) {
+  //     console.error(err)
+  //     setSubmitError('Failed to submit. Please try again.')
+  //     setIsSubmitting(false)
+  //   }
+  // }
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+  setSubmitError(null)
+  if (!validateForm()) return
+  setIsSubmitting(true)
+
+  try {
+    // Compose a single content string containing all labels and values
+    const get = (id: string) => (typeof formData[id] === 'string' ? formData[id] : '') || ''
+    const content = cfgFields.map(f => `${f.label}: ${get(f.id)}`).join('\n')
+
+    // Minimal payload with only 3 variables
+    const payload = {
+      subject: `New ${formConfig.title} submission`,
+      submission_date: new Date().toLocaleString(),
+      content,
+    }
+
+    console.log('Sending payload:', payload)
+
+    await emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      payload,
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    )
+
+    setSuccess(true)
+    onSuccess?.(payload)
+
+    setTimeout(() => {
+      setIsSubmitting(false)
+      onClose()
+    }, 1100)
+  } catch (err) {
+    console.error(err)
+    setSubmitError('Failed to submit. Please try again.')
+    setIsSubmitting(false)
+  }
+}
+
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-6">
@@ -215,7 +300,6 @@ const Form: React.FC<FormProps> = ({ type, onClose, onSuccess, initialData = {},
             <X className="w-5 h-5" />
           </button>
         </div>
-
         <form onSubmit={handleSubmit} className="p-6 max-h-[80vh] overflow-y-auto">
           <div className="space-y-6">
             {cfgFields.map(field => (
@@ -224,11 +308,15 @@ const Form: React.FC<FormProps> = ({ type, onClose, onSuccess, initialData = {},
                   {field.label}
                   {field.required && <span className="text-red-500 ml-1">*</span>}
                 </label>
-
                 {field.type === 'textarea' ? (
                   <textarea
                     value={formData[field.id] ?? ''}
-                    onChange={e => setFormData(prev => ({ ...prev, [field.id]: e.target.value }))}
+                    onChange={e =>
+                      setFormData(prev => ({
+                        ...prev,
+                        [field.id]: e.target.value,
+                      }))
+                    }
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#6b0f0f]"
                     placeholder={field.placeholder}
                     rows={4}
@@ -237,12 +325,19 @@ const Form: React.FC<FormProps> = ({ type, onClose, onSuccess, initialData = {},
                 ) : field.type === 'select' ? (
                   <select
                     value={formData[field.id] ?? ''}
-                    onChange={e => setFormData(prev => ({ ...prev, [field.id]: e.target.value }))}
+                    onChange={e =>
+                      setFormData(prev => ({
+                        ...prev,
+                        [field.id]: e.target.value,
+                      }))
+                    }
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#6b0f0f]"
                     required={field.required}
                     disabled={field.readOnly}
                   >
-                    <option value="">{field.readOnly ? '' : `Select ${field.label}`}</option>
+                    <option value="">
+                      {field.readOnly ? '' : `Select ${field.label}`}
+                    </option>
                     {(field.options ?? []).map(opt => (
                       <option key={opt} value={opt}>
                         {opt}
@@ -253,7 +348,9 @@ const Form: React.FC<FormProps> = ({ type, onClose, onSuccess, initialData = {},
                   <div>
                     <label className="flex items-center gap-3 px-3 py-2 border border-dashed border-gray-300 rounded-md cursor-pointer">
                       <Upload className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm text-gray-700">Choose file (pdf, doc)</span>
+                      <span className="text-sm text-gray-700">
+                        Choose file (pdf, doc)
+                      </span>
                       <input
                         type="file"
                         accept=".pdf,.doc,.docx"
@@ -264,52 +361,76 @@ const Form: React.FC<FormProps> = ({ type, onClose, onSuccess, initialData = {},
                         className="hidden"
                       />
                     </label>
-
                     {fileUploading[field.id] && (
                       <div className="mt-2 text-sm text-gray-600 flex items-center gap-2">
                         <Loader2 className="w-4 h-4 animate-spin" /> Uploading...
                       </div>
                     )}
-
                     {formData[field.id] && !fileUploading[field.id] && (
                       <div className="mt-2 text-sm text-gray-700">
-                        Uploaded:{" "}
-                        <a href={formData[field.id]} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                        Uploaded:{' '}
+                        <a
+                          href={formData[field.id]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 underline"
+                        >
                           View
                         </a>
                       </div>
                     )}
-
-                    {fileErrors[field.id] && <p className="mt-2 text-sm text-red-500">{fileErrors[field.id]}</p>}
+                    {fileErrors[field.id] && (
+                      <p className="mt-2 text-sm text-red-500">
+                        {fileErrors[field.id]}
+                      </p>
+                    )}
                   </div>
                 ) : (
                   <input
                     type={field.type}
                     value={formData[field.id] ?? ''}
-                    onChange={e => setFormData(prev => ({ ...prev, [field.id]: e.target.value }))}
+                    onChange={e =>
+                      setFormData(prev => ({
+                        ...prev,
+                        [field.id]: e.target.value,
+                      }))
+                    }
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#6b0f0f]"
                     placeholder={field.placeholder}
                     readOnly={field.readOnly}
                     required={field.required}
                   />
                 )}
-
-                {errors[field.id] && <p className="mt-2 text-sm text-red-500">{errors[field.id]}</p>}
+                {errors[field.id] && (
+                  <p className="mt-2 text-sm text-red-500">
+                    {errors[field.id]}
+                  </p>
+                )}
               </div>
             ))}
-
-            {submitError && <div className="text-sm text-red-500 bg-red-50 px-4 py-3 rounded">{submitError}</div>}
-
-            <div className="pt-2">
+            {submitError && (
+              <div className="text-sm text-red-500 bg-red-50 px-4 py-3 rounded">
+                {submitError}
+              </div>
+            )}
+            <div className="pt-2 relative">
               <button
                 type="submit"
-                disabled={isSubmitting || Object.values(fileUploading).some(v => v)}
+                disabled={
+                  isSubmitting ||
+                  Object.values(fileUploading).some(v => v)
+                }
                 className={`w-full py-3 px-4 bg-red-200 text-black hover:bg-red-200 hover:text-black font-medium rounded-md flex items-center justify-center gap-2 disabled:opacity-60`}
               >
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    Processing...
+                    Submitting...
+                  </>
+                ) : success ? (
+                  <>
+                    <Check className="w-4 h-4" />
+                    Sent
                   </>
                 ) : (
                   <>
@@ -318,6 +439,24 @@ const Form: React.FC<FormProps> = ({ type, onClose, onSuccess, initialData = {},
                   </>
                 )}
               </button>
+              {success && (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs flex items-center gap-2 shadow">
+                  <svg
+                    className="w-3 h-3"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  Successfully sent
+                </div>
+              )}
             </div>
           </div>
         </form>
