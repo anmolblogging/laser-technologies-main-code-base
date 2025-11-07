@@ -72,20 +72,11 @@ const ProductListingPage: React.FC = () => {
     }
   }, [decodedSegment, decodedSubcategory]);
 
-  // If the user is at (or near) the bottom when they change category/subcategory,
-  // scroll to top so they see the newly loaded products.
-  useEffect(() => {
-    try {
-      const scrollPos = window.scrollY + window.innerHeight
-      const docHeight = document.documentElement.scrollHeight || document.body.scrollHeight
-      const nearBottom = scrollPos >= docHeight - 120 // 120px threshold
-      if (nearBottom) {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }
-    } catch {
-      // no-op in non-browser environments
-    }
-  }, [decodedSegment, decodedSubcategory])
+  // page scroll
+ useEffect(() => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}, [decodedSegment, decodedSubcategory]);
+
   const handleViewProduct = (productId: string) => {
     navigate(`/product/${productId}`);
   };

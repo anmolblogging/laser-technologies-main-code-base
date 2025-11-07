@@ -291,11 +291,11 @@ const clients = [
         }
 
         .animate-marquee-left {
-          animation: marquee-left 25s linear infinite;
+          animation: marquee-left 45s linear infinite;
         }
 
         .animate-marquee-right {
-          animation: marquee-right 25s linear infinite;
+          animation: marquee-right 45s linear infinite;
         }
 
         .animate-blob {
