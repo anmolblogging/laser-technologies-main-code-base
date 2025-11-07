@@ -196,24 +196,7 @@ const LaserGurukul: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
-              {/* <button
-                 onClick={() => navigate("/contact")}
-                className="group px-8 py-4 bg-whiteBgButtonBg text-whiteBgButtonText font-semibold hover:bg-whiteBgTextHover transition-all duration-300 flex items-center gap-2"
-                aria-label="Register for courses"
-              >
-                <span>Start Your Journey</span>
-                <ArrowRight
-                  className="group-hover:translate-x-1 transition-transform"
-                  size={20}
-                />
-              </button> */}
-              {/* <button 
-                className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold hover:bg-white hover:text-whiteBgText transition-all duration-300 flex items-center gap-2"
-                aria-label="Watch introduction video"
-              >
-                <Play size={20} />
-                <span>Watch Demo</span>
-              </button> */}
+              
             </div>
           </div>
         </div>
@@ -319,68 +302,8 @@ const LaserGurukul: React.FC = () => {
         </div>
       </section>
 
-       {/* Carousel Section - Moved to bottom before CTA */}
-      <section
-        className="relative h-[400px] md:h-[600px]  bg-black overflow-hidden"
-        aria-label="Training facility showcase"
-      >
-        <div className="relative h-full">
-          {carouselImages.map((slide, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
-              }`}
-            >
-              <img
-                src={slide.url}
-                alt={slide.alt}
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
-
-        <button
-          onClick={prevSlide}
-          className="absolute rounded-full left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 p-4 bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="text-white" size={28} />
-        </button>
-
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 rounded-full md:right-8 top-1/2 -translate-y-1/2 z-30 p-4 bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="text-white" size={28} />
-        </button>
-
-        <div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3"
-          role="tablist"
-        >
-          {carouselImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`h-1 transition-all duration-300 ${
-                index === currentSlide ? "bg-white w-12" : "bg-white/40 w-8"
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-              role="tab"
-              aria-selected={index === currentSlide}
-            />
-          ))}
-        </div>
-      </section>
-
-   
-
-           {/* Modules Section - Vertically Stacked with Alternating Layout */}
-      <section className="pb-20 pt-32 md:pb-32 bg-gray-50">
+     
+      <section className="pb-20 pt-10 md:pb-32 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 md:mb-24">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-whiteBgText mb-6">
@@ -482,6 +405,63 @@ const LaserGurukul: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+        {/* Carousel Section - Moved to bottom before CTA */}
+      <section
+        className="relative h-[400px] md:h-[600px]  bg-black overflow-hidden"
+        aria-label="Training facility showcase"
+      >
+        <div className="relative h-full">
+          {carouselImages.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
+              }`}
+            >
+              <img
+                src={slide.url}
+                alt={slide.alt}
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+
+        <button
+          onClick={prevSlide}
+          className="absolute rounded-full left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 p-4 bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="text-white" size={28} />
+        </button>
+
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 rounded-full md:right-8 top-1/2 -translate-y-1/2 z-30 p-4 bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="text-white" size={28} />
+        </button>
+
+        <div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3"
+          role="tablist"
+        >
+          {carouselImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`h-1 transition-all duration-300 ${
+                index === currentSlide ? "bg-white w-12" : "bg-white/40 w-8"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+              role="tab"
+              aria-selected={index === currentSlide}
+            />
+          ))}
         </div>
       </section>
      

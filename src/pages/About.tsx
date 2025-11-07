@@ -38,8 +38,7 @@ const LEADERSHIP_DATA = [
   {
     name: "Ms. Pankti Agarwal",
     title: "Co-Founder & Executive Director",
-    image:
-      "https://www.lasertechnologies.co.in/images/about_us/pankti-mob.png",
+    image: "https://www.lasertechnologies.co.in/images/about_us/pankti-mob.png",
     bio: "Ms. Pankti Agarwal is the Director of Operations at Laser Technologies. She oversees all the behind-the-scenes operations happening at the office of Laser Technologies. She has been selected for Top 30 Business Women to Watch in 2020 by the CEO Magazine.",
     social: {
       linkedin: "#",
@@ -50,8 +49,7 @@ const LEADERSHIP_DATA = [
   {
     name: "Mr. Rana Pratap Singh",
     title: "Vice President - Sales",
-    image:
-      "https://www.lasertechnologies.co.in/images/about_us/desktop2.png",
+    image: "https://www.lasertechnologies.co.in/images/about_us/desktop2.png",
     bio: "Mr. Rana Pratap Singh is the Vice President - Sales at Laser Technologies. He is responsible for developing and executing strategic plans to achieve the sales targets and expand our customer base.",
     social: {
       linkedin: "#",
@@ -68,7 +66,14 @@ export default function AboutUsPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Header Section */}
-      <header className="relative mt-16 md:mt-20 bg-black overflow-hidden" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <header
+        className="relative mt-16 md:mt-20 bg-black overflow-hidden"
+        style={{
+          backgroundImage: `url(${logo})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         {/* <div
           className="absolute inset-0 opacity-20"
           style={{
@@ -303,12 +308,11 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-
       {/* pankti agarwal -- card */}
- <section className="relative w-full bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-20 md:py-32 overflow-hidden">
+      <section className="relative w-full bg-gradient-to-br from-slate-50 via-red-50 to-slate-100 py-20 md:py-32 overflow-hidden">
         {/* Decorative Elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200/30 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-300/20 blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-red-200/30 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-300/20 blur-3xl"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -317,18 +321,18 @@ export default function AboutUsPage() {
               {/* Quote Icon */}
               <div className="relative">
                 <Quote
-                  className="w-16 h-16 md:w-20 md:h-20 text-blue-400/40 absolute -top-4 -left-2"
+                  className="w-16 h-16 md:w-20 md:h-20 text-red-400/40 absolute -top-4 -left-2"
                   fill="currentColor"
                 />
               </div>
 
               {/* Owner Name with Accent */}
               <div className="space-y-3 pt-8">
-                <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-blue-300"></div>
+                <div className="w-16 h-1 bg-gradient-to-r from-red-500 to-red-300"></div>
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900 leading-tight">
                   Pankti Agarwal
                 </h2>
-                <p className="text-lg md:text-xl text-blue-600 font-medium tracking-wide">
+                <p className="text-lg md:text-xl text-red-600 font-medium tracking-wide">
                   Co-Founder & Executive Director
                 </p>
               </div>
@@ -341,7 +345,7 @@ export default function AboutUsPage() {
                   access to state-of-the-art laser machines."
                 </p>
 
-                <p className="text-base md:text-lg text-gray-600 leading-relaxed border-l-4 border-blue-400 pl-6">
+                <p className="text-base md:text-lg text-gray-600 leading-relaxed border-l-4 border-red-400 pl-6">
                   The Laser Technologies team aspires to solve the growing
                   demand for laser cutitng and marking machines through our
                   modernistic approach. Welcome to Laser Technologies.
@@ -350,11 +354,11 @@ export default function AboutUsPage() {
 
               {/* Signature or Additional Element */}
               <div className="flex items-center gap-4 pt-4">
-                <div className="flex-1 h-px bg-gradient-to-r from-blue-400 to-transparent"></div>
+                <div className="flex-1 h-px bg-gradient-to-r from-red-400 to-transparent"></div>
                 <svg className="w-32 h-12" viewBox="0 0 200 60">
                   <path
                     d="M10 40 Q 30 10, 50 30 T 90 40 Q 110 25, 130 35 T 170 40"
-                    stroke="#3b82f6"
+                    stroke="#ef4444"
                     strokeWidth="2"
                     fill="none"
                     strokeLinecap="round"
@@ -366,7 +370,7 @@ export default function AboutUsPage() {
             {/* Right Side - Image */}
             <div className="relative lg:pl-12">
               {/* Background Accent Shape */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 transform translate-x-6 translate-y-6 -z-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-red-400 to-red-600 transform translate-x-6 translate-y-6 -z-10"></div>
 
               {/* Main Image Container */}
               <div className="relative bg-white p-2 shadow-2xl">
@@ -379,31 +383,13 @@ export default function AboutUsPage() {
                   />
 
                   {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-red-900/20 via-transparent to-transparent"></div>
                 </div>
-
-                {/* Stats Overlay */}
-                {/* <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm p-6 shadow-lg">
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  <div>
-                    <div className="text-2xl md:text-3xl font-bold text-blue-600">15+</div>
-                    <div className="text-xs md:text-sm text-gray-600 mt-1">Years</div>
-                  </div>
-                  <div className="border-l border-r border-gray-200">
-                    <div className="text-2xl md:text-3xl font-bold text-blue-600">500+</div>
-                    <div className="text-xs md:text-sm text-gray-600 mt-1">Projects</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl md:text-3xl font-bold text-blue-600">50+</div>
-                    <div className="text-xs md:text-sm text-gray-600 mt-1">Awards</div>
-                  </div>
-                </div>
-              </div> */}
               </div>
 
               {/* Decorative Corner Elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 border-t-4 border-r-4 border-blue-500"></div>
-              <div className="absolute -bottom-4 -left-4 w-24 h-24 border-b-4 border-l-4 border-blue-500"></div>
+              <div className="absolute -top-4 -right-4 w-24 h-24 border-t-4 border-r-4 border-red-500"></div>
+              <div className="absolute -bottom-4 -left-4 w-24 h-24 border-b-4 border-l-4 border-red-500"></div>
             </div>
           </div>
         </div>
@@ -475,9 +461,6 @@ export default function AboutUsPage() {
           </div>
         </div>
       </section>
-
-     
-
 
       {/* Gallery Carousel */}
       {/* <section className="py-20 md:py-32 bg-gray-900">
