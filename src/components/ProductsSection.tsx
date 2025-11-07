@@ -375,7 +375,7 @@ export default function Product(): JSX.Element {
                       <img
                         src={p.image}
                         alt={p.name}
-                        className="object-contain w-full h-full transition-transform duration-700 group-hover:scale-105 bg-white"
+                        className="object-fit w-full h-full transition-transform duration-700 group-hover:scale-105 bg-white"
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full text-gray-700">

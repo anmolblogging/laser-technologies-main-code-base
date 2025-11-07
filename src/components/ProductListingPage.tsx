@@ -281,7 +281,7 @@ const ProductListingPage: React.FC = () => {
                       <img
                         src={product.Thumbnail_url[0]}
                         alt={product.ProductName}
-                        className="w-full h-full object-contain transition-transform duration-500 hover:scale-110"
+                        className="w-full h-full object-fit transition-transform duration-500 hover:scale-110"
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full">
