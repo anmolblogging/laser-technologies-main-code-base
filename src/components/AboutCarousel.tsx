@@ -3,10 +3,10 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Use your set of images or replace/add more as needed
 const GALLERY_IMAGES = [
-  'https://mehtautsav.com/wp-content/uploads/2025/09/about-us-5-2048x875.png',
-  'https://mehtautsav.com/wp-content/uploads/2025/09/about-group-2048x875.png',
-  "https://mehtautsav.com/wp-content/uploads/2025/09/about-us-3-2048x868.png",
-  "https://mehtautsav.com/wp-content/uploads/2025/09/about-us-4-2048x875.png",
+  'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/laser_tech_about_us_group_slider_1.JPG',
+'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/laser_tech_about_us_group_slider_2.jpg',
+  'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/laser_tech_about_us_group_slider_3.JPG',
+  'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/laser_tech_about_us_group_slider_4.JPG',
 ];
 
 export default function GalleryPeekModernCarousel() {
@@ -54,7 +54,7 @@ export default function GalleryPeekModernCarousel() {
         </div>
       </div>
       {/* Carousel Track */}
-      <div className="relative w-full flex justify-center items-center select-none pb-2">
+      <div className="relative w-full flex justify-center items-center select-none pb-2 px-10">
         <div className="
           flex 
           items-center 
@@ -69,7 +69,6 @@ export default function GalleryPeekModernCarousel() {
               key={slideIdx}
               className={`
                 relative 
-                shadow-lg 
                 overflow-hidden
                 transition-all duration-700 ease-in-out
                 flex-shrink-0
@@ -79,9 +78,6 @@ export default function GalleryPeekModernCarousel() {
               style={{
                 width: i === 1 ? '70%' : '15%',
                 height: '100%',
-                boxShadow: i === 1 
-                  ? '0 0 36px 0 rgba(0,0,0,0.45), 0 1px 0 #F40021'
-                  : '0 0 8px 0 rgba(0,0,0,0.16)',
               }}
             >
               <img

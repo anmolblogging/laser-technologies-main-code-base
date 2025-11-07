@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import AboutCarousel from "../components/AboutCarousel";
-import logo from "../assets/background.jpg";
+const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg' ;
 import {
   ChevronLeft,
   ChevronRight,
@@ -27,7 +27,7 @@ const LEADERSHIP_DATA = [
     name: "Mr. Rakesh Agarwal",
     title: "Founder & Managing Director",
     image:
-      "https://www.lasertechnologies.co.in/images/about_us/rakesh-agarwal.png",
+      "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/rakesh-agarwal.jpg",
     bio: 'Rakesh Agarwal is the founder of Laser Technologies. With an aim to make laser machines accessible to everyone in India, Mr. Agarwal founded this organization in 2011. He was the brain behind the "Laser Tech 2010", the biggest exhibition on laser technology in India.',
     social: {
       linkedin: "#",
@@ -38,7 +38,7 @@ const LEADERSHIP_DATA = [
   {
     name: "Ms. Pankti Agarwal",
     title: "Co-Founder & Executive Director",
-    image: "https://www.lasertechnologies.co.in/images/about_us/pankti-mob.png",
+    image: "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/pankti-mob.jpg",
     bio: "Ms. Pankti Agarwal is the Director of Operations at Laser Technologies. She oversees all the behind-the-scenes operations happening at the office of Laser Technologies. She has been selected for Top 30 Business Women to Watch in 2020 by the CEO Magazine.",
     social: {
       linkedin: "#",
@@ -49,7 +49,7 @@ const LEADERSHIP_DATA = [
   {
     name: "Mr. Rana Pratap Singh",
     title: "Vice President - Sales",
-    image: "https://www.lasertechnologies.co.in/images/about_us/desktop2.png",
+    image: "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/rana-pratap.jpg",
     bio: "Mr. Rana Pratap Singh is the Vice President - Sales at Laser Technologies. He is responsible for developing and executing strategic plans to achieve the sales targets and expand our customer base.",
     social: {
       linkedin: "#",
@@ -181,7 +181,7 @@ export default function AboutUsPage() {
                 style={{ backgroundColor: BRAND.primary }}
               ></div>
               <img
-                src="https://www.lasertechnologies.co.in/images/life-at-laser/life-at-laser.webp"
+                src="https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/laser_tech_about_us_main_image.jpg"
                 alt="About Company"
                 className="relative shadow-2xl w-full"
               />
@@ -236,7 +236,7 @@ export default function AboutUsPage() {
               <div className="order-1 md:order-2">
                 <div className="relative overflow-hidden shadow-2xl">
                   <img
-                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1000&h=800&fit=crop"
+                    src="https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/laser_tech_about_us_mission.jpg"
                     alt="Our Mission"
                     className="w-full h-full object-cover"
                   />
@@ -256,7 +256,7 @@ export default function AboutUsPage() {
               <div>
                 <div className="relative overflow-hidden shadow-2xl">
                   <img
-                    src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1000&h=800&fit=crop"
+                    src="https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/laser_tech_about_us_vision.jpg"
                     alt="Our Vision"
                     className="w-full h-full object-cover"
                   />
@@ -376,8 +376,8 @@ export default function AboutUsPage() {
               <div className="relative bg-white p-2 shadow-2xl">
                 <div className="relative overflow-hidden">
                   <img
-                    src="https://mehtautsav.com/wp-content/uploads/2025/09/director-img-1536x1536.png"
-                    alt="Sarah Mitchell - Founder and CEO"
+                    src="https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/director-img.jpg"
+                    alt="Pankti Agarwal - Founder and CEO"
                     className="w-full h-[500px] md:h-[600px] lg:h-[700px] object-cover object-center"
                     loading="lazy"
                   />

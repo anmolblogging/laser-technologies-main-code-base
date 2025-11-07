@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, Award } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import Loading from "./Loading";
 import AwardModal from "./AwardModal";
-import logo from "../assets/background.jpg";
+const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg' ;
 const ITEMS_PER_PAGE = 6;
 
 interface Award {

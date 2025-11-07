@@ -1,7 +1,7 @@
 import { memo } from "react";
-import Banner from "../assets/banner.png";
 import { ArrowRight } from "lucide-react";
 
+const bannerUrl = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/banner.png'
 const HeroBanner = () => {
   return (
     <section
@@ -14,7 +14,7 @@ const HeroBanner = () => {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <img
-            src={Banner}
+            src={bannerUrl}
             alt="Advanced laser manufacturing facility"
             className="w-full h-full object-cover"
             loading="eager"

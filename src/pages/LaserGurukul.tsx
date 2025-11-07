@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import logo from "../assets/background.jpg";
+const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg' ;
 import {
   BookOpen,
   Scissors,
@@ -27,19 +27,19 @@ const LaserGurukul: React.FC = () => {
   const carouselImages = useMemo(
     () => [
       {
-        url: "https://www.lasertechnologies.co.in/images/gurukul/gurukul-img-web-8.webp",
+        url: "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/laser-gurukul/laser_gurukul_slider_1.jpg",
         alt: "Modern laser cutting facility",
       },
       {
-        url: "https://www.lasertechnologies.co.in/images/gurukul/gurukul-img-web-2.webp",
+        url: "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/laser-gurukul/laser_gurukul_slider_2.jpg",
         alt: "Professional laser technology training",
       },
       {
-        url: 'https://www.lasertechnologies.co.in/images/gurukul/gurukul-img-web-6.webp', 
+        url: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/laser-gurukul/laser_gurukul_slider_3.jpg', 
         alt: "Career opportunities in laser technology",
       },
       {
-        url: 'https://www.lasertechnologies.co.in/images/gurukul/gurukul-img-web-5.webp',
+        url: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/laser-gurukul/laser_gurukul_slider_4.jpg',
         alt: "Career opportunities in laser technology",
       },
     ],
@@ -85,7 +85,7 @@ const LaserGurukul: React.FC = () => {
         icon: Scissors,
         title: "Laser Cutting Module",
         image:
-          'https://www.lasertechnologies.co.in/images/gurukul/img-web-1.webp',
+          'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/laser-gurukul/laser_tech_laser_cutting.jpg',
         duration: "12 Weeks",
         level: "Beginner to Advanced",
         description:
@@ -101,7 +101,7 @@ const LaserGurukul: React.FC = () => {
         icon: Zap,
         title: "Laser Welding Module",
         image:
-          'https://www.lasertechnologies.co.in/images/gurukul/img-web-2.webp',
+          'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/laser-gurukul/laser_tech_gurukul_welding.jpg',
         duration: "10 Weeks",
         level: "Intermediate to Advanced",
         description:
@@ -117,7 +117,7 @@ const LaserGurukul: React.FC = () => {
         icon: Tag,
         title: "Laser Marking Module",
         image:
-        'https://www.lasertechnologies.co.in/images/gurukul/img-web-3.webp',
+        'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/laser-gurukul/laser_tech_laser_marking.jpg',
         duration: "8 Weeks",
         level: "Beginner to Intermediate",
         description:
@@ -409,7 +409,7 @@ const LaserGurukul: React.FC = () => {
       </section>
         {/* Carousel Section - Moved to bottom before CTA */}
       <section
-        className="relative h-[400px] md:h-[600px]  bg-black overflow-hidden"
+        className="relative h-[400px] md:h-[600px] bg-gray-50 overflow-hidden"
         aria-label="Training facility showcase"
       >
         <div className="relative h-full">
@@ -424,6 +424,7 @@ const LaserGurukul: React.FC = () => {
                 src={slide.url}
                 alt={slide.alt}
                 loading="lazy"
+                draggable={false}
                 className="w-full h-full object-cover"
               />
             </div>

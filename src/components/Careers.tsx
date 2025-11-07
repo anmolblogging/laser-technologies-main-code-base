@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import Loading from "./Loading";
-import logo from "../assets/background.jpg";
-import Form from "./Form";
 
+import Form from "./Form";
+const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg' ;
 interface JobPosition {
   id: string;
   title: string;
@@ -213,14 +213,14 @@ export default function Careers() {
             <div className="relative">
               {/* BIG MAIN IMAGE */}
               <img
-                src="https://www.lasertechnologies.co.in/images/career/slider-1.webp"
+                src="https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/careers/laser_tech_careers_main%20image.jpg"
                 alt=""
                 className="w-full h-auto object-cover"
               />
 
               {/* SMALL OVERLAY IMAGE (BOTTOM RIGHT) */}
               <img
-                src="https://www.lasertechnologies.co.in/images/career/slider-2.webp"
+                src="https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/careers/laser_tech_careers_small_image.jpg"
                 alt=""
                 className="absolute bottom-4 right-4 w-52 h-36 object-cover shadow-xl border-2 border-white"
               />

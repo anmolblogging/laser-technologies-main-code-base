@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import logo from "../assets/background.jpg";
+const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg';
 
 import AdvertisingBrandingIcon from "../assets/icon/Advertising & Branding.png";
 import AutomotiveLaserIcon from "../assets/icon/Automotive Laser Applications.png";

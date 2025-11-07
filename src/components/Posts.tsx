@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Search, Calendar, Clock, User, Tag, ChevronRight, Loader2 } from "lucide-react";
 import { supabase } from "../lib/supabase";
-import logo from "../assets/background.jpg";
+const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg' ;
 import Loading from "./Loading";
 
 const POSTS_PER_PAGE = 9;

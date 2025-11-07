@@ -12,7 +12,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { supabase } from "../lib/supabase";
-import Logo from '../assets/footer-logo.png';
+const Logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/footer-logo.png'
 
 const PAGE_LIMIT = 60;
 

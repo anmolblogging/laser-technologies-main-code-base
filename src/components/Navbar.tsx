@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { supabase } from "../lib/supabase";
-import Logo from "../assets/logo.png";
+const Logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/logo.png'
 
 const COLORS = {
   whiteBgText: "#060C2A",

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Eye, Mail } from "lucide-react";
-import logo from "../assets/background.jpg";
+
 import { supabase } from "../lib/supabase";
 import Loading from './Loading';
 import Form from './Form';
-
+const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg' ;
 interface Product {
   id: string;
   ProductName: string;

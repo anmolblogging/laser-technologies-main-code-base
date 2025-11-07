@@ -1,5 +1,5 @@
 import { Sparkles } from "lucide-react";
-import Image from '../assets/About-Home.webp';
+const Image = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/laser_gurukul_main_image.jpg'  
 
 export default function AboutSection() {
   return (
