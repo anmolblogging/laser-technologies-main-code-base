@@ -24,10 +24,7 @@ interface Event {
 }
 
 const eventColors = [
-  "from-red-400 to-red-500",
-  "from-purple-400 to-purple-500",
-  "from-blue-400 to-blue-500",
-  "from-green-400 to-green-500",
+  "from-blue-900 to-blue-900",
 ];
 
 export default function CalendarSection() {
@@ -40,7 +37,7 @@ export default function CalendarSection() {
   const [page, setPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
 
-  // ✅ Update items per page based on screen size
+  // Update items per page based on screen size
   useEffect(() => {
     const updateItems = () => {
       if (window.innerWidth < 640) setItemsPerPage(1);
@@ -52,7 +49,7 @@ export default function CalendarSection() {
     return () => window.removeEventListener("resize", updateItems);
   }, []);
 
-  // ✅ Fetch events
+  // Fetch events
   useEffect(() => {
     const fetchEvents = async () => {
       const { data, error } = await supabase
@@ -126,7 +123,7 @@ export default function CalendarSection() {
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* ✅ Heading */}
+        {/* Heading */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-opacity-15 bg-whiteBgTextHover text-whiteBgTextHover font-secondary px-4 py-2 rounded-full text-sm font-semibold mb-4">
             <Calendar className="w-4 h-4" />
@@ -142,10 +139,10 @@ export default function CalendarSection() {
           </p>
         </div>
 
-        {/* ✅ Slider Section */}
+        {/* Slider Section */}
         <div className="relative w-full">
 
-          {/* ✅ Arrow Buttons (Desktop Only) */}
+          {/* Desktop Arrow Buttons (absolute sides, hidden on mobile) */}
           <button
             onClick={prevPage}
             disabled={page === 0}
@@ -158,6 +155,7 @@ export default function CalendarSection() {
                   : "hover:scale-110"
               }`}
             style={{ marginLeft: "-55px" }}
+            aria-label="Previous page"
           >
             <ChevronLeft className="w-6 h-6 text-black" />
           </button>
@@ -174,11 +172,12 @@ export default function CalendarSection() {
                   : "hover:scale-110"
               }`}
             style={{ marginRight: "-55px" }}
+            aria-label="Next page"
           >
             <ChevronRight className="w-6 h-6 text-black" />
           </button>
 
-          {/* ✅ Slider Wrapper */}
+          {/* Slider Wrapper */}
           <div
             ref={sliderRef}
             className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none scroll-smooth"
@@ -206,7 +205,7 @@ export default function CalendarSection() {
                         className="bg-white shadow-lg border border-gray-100  overflow-hidden 
                           h-[460px] flex flex-col"
                       >
-                        {/* ✅ Header */}
+                        {/* Header */}
                         <div
                           className={`bg-gradient-to-br ${
                             eventColors[idx % eventColors.length]
@@ -221,7 +220,7 @@ export default function CalendarSection() {
                           </div>
                         </div>
 
-                        {/* ✅ Content */}
+                        {/* Content */}
                         <div className="p-6 flex-1 flex flex-col justify-between min-h-[200px]">
                           <div className="space-y-4 overflow-y-auto pr-1">
                             <h3 className="text-lg font-bold text-gray-900">
@@ -252,22 +251,20 @@ export default function CalendarSection() {
                             </div>
                           </div>
 
-                          {/* ✅ Learn More Button (Exact Style) */}
+                          {/* Learn More Button */}
                           <button
                             onClick={() => {
                               if (event.form_link) {
-                                window.open(event.form_link, "_blank")
-                                return
+                                window.open(event.form_link, "_blank");
+                                return;
                               }
-
-                              // No external link — open local registration modal with event details
                               setEventInitialData({
                                 event_name: event.title,
                                 event_location: event.location,
                                 event_date: formatFullDate(event.start_date),
                                 event_time: event.time || '',
-                              })
-                              setShowEventForm(true)
+                              });
+                              setShowEventForm(true);
                             }}
                             className="w-full mt-4 py-3 bg-whiteBgButtonBg bg-opacity-20 
                               text-[#060C2A] font-semibold text-sm flex items-center justify-center gap-2"
@@ -282,6 +279,32 @@ export default function CalendarSection() {
               </div>
             ))}
           </div>
+
+          {/* Mobile Arrow Buttons (below slider, visible only on mobile/tablet) */}
+          <div className="flex lg:hidden justify-center items-center gap-6 mt-4">
+            <button
+              onClick={prevPage}
+              disabled={page === 0}
+              className={`rounded-full bg-white hover:bg-white border border-gray-200 shadow-lg p-3
+                transition-all ${
+                  page === 0 ? "opacity-30 cursor-not-allowed" : "hover:scale-110"
+                }`}
+              aria-label="Previous page"
+            >
+              <ChevronLeft className="w-6 h-6 text-black" />
+            </button>
+            <button
+              onClick={nextPage}
+              disabled={page === totalPages - 1}
+              className={`rounded-full bg-white hover:bg-white border border-gray-200 shadow-lg p-3
+                transition-all ${
+                  page === totalPages - 1 ? "opacity-30 cursor-not-allowed" : "hover:scale-110"
+                }`}
+              aria-label="Next page"
+            >
+              <ChevronRight className="w-6 h-6 text-black" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -293,7 +316,6 @@ export default function CalendarSection() {
           initialData={eventInitialData}
         />
       )}
-
     </section>
   );
 }
