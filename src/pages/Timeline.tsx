@@ -85,6 +85,21 @@ const PaginatedTimeline = () => {
       {/* Timeline Section */}
       <section className="py-28 bg-gray-50 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    {/* Year Dropdown (Mobile only) - Improved styling */}
+          <div className="md:hidden mb-6 px-4">
+            <select
+              value={currentTimelineIndex}
+              onChange={(e) => setCurrentTimelineIndex(Number(e.target.value))}
+              className="w-full px-5 py-3 bg-transparent text-black border border-black/20 rounded-lg text-base font-semibold focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+              aria-label="Select year"
+            >
+              {timelineData.map((item, idx) => (
+                <option key={item.year} value={idx}>
+                  {item.year} - {item.title}
+                </option>
+              ))}
+            </select>
+          </div>
           {/* Timeline Card */}
           <div className="relative mb-16">
             <div className="bg-gradient-to-br from-gray-800 rounded-sm to-gray-900 overflow-hidden border border-white/50">
@@ -201,21 +216,7 @@ const PaginatedTimeline = () => {
             </div>
           </div>
 
-          {/* Year Dropdown (Mobile only) - Improved styling */}
-          <div className="md:hidden mb-6 px-4">
-            <select
-              value={currentTimelineIndex}
-              onChange={(e) => setCurrentTimelineIndex(Number(e.target.value))}
-              className="w-full px-5 py-3 bg-gray-800 text-white border border-gray-700 rounded-md shadow-md text-base font-semibold focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
-              aria-label="Select year"
-            >
-              {timelineData.map((item, idx) => (
-                <option key={item.year} value={idx}>
-                  {item.year} - {item.title}
-                </option>
-              ))}
-            </select>
-          </div>
+
 
           {/* Clickable Progress Bar */}
           <div className="relative px-8">

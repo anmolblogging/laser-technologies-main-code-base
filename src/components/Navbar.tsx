@@ -556,9 +556,9 @@ const Header = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
-              <X className="h-6 w-6" style={{ color: COLORS.whiteBgText }} />
+              <X className="h-6 w-6 text-white"  />
             ) : (
-              <Menu className="h-6 w-6" style={{ color: COLORS.whiteBgText }} />
+              <Menu className="h-6 w-6 text-white" />
             )}
           </button>
         </div>
