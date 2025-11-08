@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Eye, Mail } from "lucide-react";
 
 import { supabase } from "../lib/supabase";
 import Loading from './Loading';
 import Form from './Form';
-const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg' ;
+
+const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg';
+
 interface Product {
   id: string;
   ProductName: string;
@@ -32,6 +34,9 @@ const ProductListingPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [showEnquiryForm, setShowEnquiryForm] = useState(false);
   const [enquiryInitialData, setEnquiryInitialData] = useState<Record<string,string>>({});
+
+  const navContainerRef = useRef<HTMLDivElement>(null);
+  const activeButtonRef = useRef<HTMLButtonElement>(null);
 
   const decodedSegment = decodeURIComponent(segment || '');
   const decodedSubcategory = decodeURIComponent(subcategory || '');
@@ -73,9 +78,20 @@ const ProductListingPage: React.FC = () => {
   }, [decodedSegment, decodedSubcategory]);
 
   // page scroll
- useEffect(() => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}, [decodedSegment, decodedSubcategory]);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [decodedSegment, decodedSubcategory]);
+
+  // Auto scroll active subcategory button into view on mobile nav
+  useEffect(() => {
+    if (activeButtonRef.current && navContainerRef.current) {
+      activeButtonRef.current.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }
+  }, [decodedSubcategory, allSubcategories]);
 
   const handleViewProduct = (productId: string) => {
     navigate(`/product/${productId}`);
@@ -97,102 +113,57 @@ const ProductListingPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50">
-      {/* Hero Header Section */}
-      {/* <div className="relative overflow-hidden mt-[80px] bg-black" >
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 80%, white 1px, transparent 1px)',
-            backgroundSize: '50px 50px',
-          }}
-        ></div>
-        <div className="container mx-auto px-4 py-8 md:py-12 relative z-10">
-          <button
-            onClick={() => navigate('/')}
-            className="inline-flex items-center font-medium transition-all duration-200 mb-6 px-4 py-2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Home
-          </button>
-          <div className="max-w-3xl">
-            <div className="inline-block px-3 py-1 bg-white bg-opacity-20 text-white text-xs font-semibold mb-4 uppercase tracking-wider">
-              {decodedSegment}
-            </div>
-            <h1 className="text-3xl md:text-5xl font-medium text-white mb-3 leading-tight">{decodedSubcategory}</h1>
-            <p className="text-white text-opacity-90 text-lg">
-              Explore our collection of {products.length} premium product{products.length !== 1 ? 's' : ''}
-            </p>
-          </div>
-        </div>
-      </div> */}
       <header className="relative mt-16 md:mt-20 pb-4 bg-black" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back Button - Top Left */}
-        <div className="pt-8 pb-4">
-          <button
-            onClick={() => navigate('/')}
-            className="group inline-flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 hover:border-white/30 text-white transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            <ArrowLeft className="h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
-            <span className="font-medium text-sm tracking-wide">Back to Home</span>
-          </button>
-        </div>
-
-        {/* Main Content - Centered */}
-        <div className="text-center space-y-8 ">
-
-          {/* Title */}
-          <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium text-white leading-tight tracking-tight">
-            {decodedSegment}
-          </h1>
-
-          {/* Subtitle with Stats */}
-          <div className="space-y-4">
-            <p className="text-xl md:text-2xl text-white/80 max-w-3xl py-4  mx-auto leading-relaxed font-light">
-              Explore our curated collection of premium products
-            </p>
-            
-            {/* Product Count Badge */}
-            {/* <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20">
-              <div className="w-2 h-2 bg-blue-400 animate-pulse"></div>
-              <span className="text-white font-medium text-lg">
-                {products.length} Product{products.length !== 1 ? 's' : ''} Available
-              </span>
-            </div> */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="pt-8 pb-4">
+            <button
+              onClick={() => navigate('/')}
+              className="group inline-flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 hover:border-white/30 text-white transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              <ArrowLeft className="h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
+              <span className="font-medium text-sm tracking-wide">Back to Home</span>
+            </button>
           </div>
-
-          {/* Decorative Bottom Line */}
-          <div className="flex items-center justify-center gap-4 pt-8">
-            <div className="h-px w-24 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+          <div className="text-center space-y-8 ">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium text-white leading-tight tracking-tight">
+              {decodedSegment}
+            </h1>
+            <div className="space-y-4">
+              <p className="text-xl md:text-2xl text-white/80 max-w-3xl py-4  mx-auto leading-relaxed font-light">
+                Explore our curated collection of premium products
+              </p>
+            </div>
+            <div className="flex items-center justify-center gap-4 pt-8">
+              <div className="h-px w-24 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+            </div>
           </div>
         </div>
-      </div>
+        <div className="absolute bottom-0 pb-4 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent"></div>
+      </header>
 
-      {/* Bottom Fade Effect */}
-      <div className="absolute bottom-0 pb-4 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent"></div>
-    </header>
-    {/* Enquiry form modal */}
-    {showEnquiryForm && (
-      <Form
-        type="PRODUCT_ENQUIRY"
-        onClose={() => setShowEnquiryForm(false)}
-        initialData={enquiryInitialData}
-      />
-    )}
+      {showEnquiryForm && (
+        <Form
+          type="PRODUCT_ENQUIRY"
+          onClose={() => setShowEnquiryForm(false)}
+          initialData={enquiryInitialData}
+        />
+      )}
 
-       {/* Subcategory Navigation */}
+      {/* Subcategory Navigation */}
       {allSubcategories.length > 1 && (
         <div className="bg-white shadow-sm border-b sticky top-20 z-40">
           <div className="container mx-auto px-4 py-6">
             <h2 className="text-sm font-medium text-gray-500 mb-4 uppercase tracking-wider">Browse <strong>{decodedSubcategory}</strong> Categories</h2>
-            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+            <div
+              ref={navContainerRef}
+              className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+            >
               {allSubcategories.map((subcat) => {
                 const isActive = subcat === decodedSubcategory;
                 return (
                   <button
                     key={subcat}
+                    ref={isActive ? activeButtonRef : null}
                     onClick={() =>
                       navigate(`/products/${encodeURIComponent(decodedSegment)}/${encodeURIComponent(subcat)}`)
                     }
@@ -203,7 +174,7 @@ const ProductListingPage: React.FC = () => {
                       border: `2px solid ${isActive ? BRAND.primary : BRAND.border}`,
                       boxShadow: isActive ? '0 4px 12px rgba(107,15,15,0.2)' : 'none',
                       outline: 'none',
-                      borderRadius: '0', // no rounded borders
+                      borderRadius: '0',
                     }}
                     onMouseEnter={(e) => {
                       if (!isActive) {
@@ -265,7 +236,6 @@ const ProductListingPage: React.FC = () => {
                 Showing <span className="font-semibold text-gray-900">{products.length}</span> result{products.length !== 1 ? 's' : ''}
               </p>
             </div>
-            {/* 3 columns on desktop, 1 on mobile */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               {products.map((product, index) => (
                 <article
@@ -275,7 +245,6 @@ const ProductListingPage: React.FC = () => {
                     animation: `fadeInUp 0.5s ease-out ${index * 0.1}s both`,
                   }}
                 >
-                  {/* Product Image */}
                   <div className="h-[250px] md:h-[300px] bg-gradient-to-br from-gray-100 to-gray-50 overflow-hidden flex-shrink-0">
                     {product.Thumbnail_url && product.Thumbnail_url[0] ? (
                       <img
@@ -291,14 +260,11 @@ const ProductListingPage: React.FC = () => {
                       </div>
                     )}
                   </div>
-                  
-                  {/* Product Info */}
                   <div className="p-4 flex-1 flex flex-col justify-between">
                     <h3 className="text-2xl font-primary font-medium text-[#060C2A] mb-2 line-clamp-2">{product.ProductName}</h3>
                     {product.ShortDescription && (
                       <p className="text-sm text-gray-600 mb-4 line-clamp-2">{product.ShortDescription}</p>
                     )}
-                    {/* Features */}
                     {product.Features && product.Features.length > 0 && (
                       <div className="mb-4">
                         <p className="text-xs font-semibold uppercase mb-2" style={{ color: BRAND.primary }}>Key Features</p>
@@ -314,7 +280,6 @@ const ProductListingPage: React.FC = () => {
                         </ul>
                       </div>
                     )}
-                    {/* Buttons */}
                     <div className="flex items-center gap-3 mt-auto">
                       <button
                         onClick={() => handleViewProduct(product.id)}
@@ -351,7 +316,6 @@ const ProductListingPage: React.FC = () => {
         )}
       </div>
 
-      {/* Styles for animation and scrollbar */}
       <style>{`
         @keyframes fadeInUp {
           from { opacity: 0; transform: translateY(30px); }
@@ -371,7 +335,6 @@ const ProductListingPage: React.FC = () => {
         .scrollbar-thin::-webkit-scrollbar-thumb:hover {
           background: #9ca3af;
         }
-        /* No border-radius for no-rounded style */
         button, article, div {
           border-radius: 0 !important;
         }

@@ -2,32 +2,31 @@ import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg';
 
-import AdvertisingBrandingIcon from "../assets/icon/Advertising & Branding.png";
-import AutomotiveLaserIcon from "../assets/icon/Automotive Laser Applications.png";
-import ChemicalIndustryIcon from "../assets/icon/Chemical Industry Solutions.png";
-import EducationSolutionsIcon from "../assets/icon/Education Solutions.png";
-import EntertainmentEventsIcon from "../assets/icon/Entertainment & Events.png";
-import EVChargingIcon from "../assets/icon/EV Charging Solutions.png";
-import HighRiseBuildingIcon from "../assets/icon/High-rise Building Technologies.png";
-import HospitalityInnovationsIcon from "../assets/icon/Hospitality Innovations.png";
-import IndustrialManufacturingIcon from "../assets/icon/Industrial Manufacturing.png";
-import LaboratoryResearchIcon from "../assets/icon/Laboratory Research.png";
-import MarineOffshoreIcon from "../assets/icon/Marine & Offshore Applications.png";
-import SmartCityIcon from "../assets/icon/Smart City Infrastructure.png";
+const AdvertisingBrandingIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Advertising%20&%20Branding.png'
+const AutomotiveLaserIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Automotive%20Laser%20Applications.png'
+const ChemicalIndustryIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Chemical%20Industry%20Solutions.png' ;
+const EducationSolutionsIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Education%20Solutions.png'
+const EntertainmentEventsIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Entertainment%20&%20Events.png'
+const EVChargingIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/EV%20Charging%20Solutions.png'
+const HighRiseBuildingIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/High-rise%20Building%20Technologies.png'
+const HospitalityInnovationsIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Hospitality%20Innovations.png'
+const IndustrialManufacturingIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Industrial%20Manufacturing.png'
+const LaboratoryResearchIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Laboratory%20Research.png'
+const MarineOffshoreIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Marine%20&%20Offshore%20Applications.png' ;
+const SmartCityIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Smart%20City%20Infrastructure.png'
 
-import AdvertisingBrandingBg from "../assets/icon-bg/Advertising & Branding.webp";
-import AutomotiveLaserBg from "../assets/icon-bg/Automotive Laser Applications.jpeg";
-import ChemicalIndustryBg from "../assets/icon-bg/Chemical Industry Solutions.webp";
-import EducationSolutionsBg from "../assets/icon-bg/Education Solutions.avif";
-import EntertainmentEventsBg from "../assets/icon-bg/Entertainment & Events.jpeg";
-import EVChargingBg from "../assets/icon-bg/EV Charging Solutions.jpeg";
-import HighRiseBuildingBg from "../assets/icon-bg/High-rise Building Technologies.jpg";
-import HospitalityInnovationsBg from "../assets/icon-bg/Hospitality Innovations.jpeg";
-import IndustrialManufacturingBg from "../assets/icon-bg/Industrial Manufacturing.jpg";
-import LaboratoryResearchBg from "../assets/icon-bg/Laboratory Research.jpg";
-import MarineOffshoreBg from "../assets/icon-bg/Marine & Offshore Applications.jpg";
-import SmartCityBg from "../assets/icon-bg/Smart City Infrastructure.jpg";
-
+const AdvertisingBrandingBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Advertising%20&%20Branding.webp'
+const AutomotiveLaserBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Automotive%20Laser%20Applications.jpeg'
+const ChemicalIndustryBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Chemical%20Industry%20Solutions.webp'
+const EducationSolutionsBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Education%20Solutions.avif'
+const EntertainmentEventsBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Entertainment%20&%20Events.jpeg'
+const EVChargingBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/EV%20Charging%20Solutions.jpeg'
+const HighRiseBuildingBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/High-rise%20Building%20Technologies.jpg'
+const HospitalityInnovationsBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Hospitality%20Innovations.jpeg'
+const IndustrialManufacturingBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Industrial%20Manufacturing.jpg'
+const LaboratoryResearchBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Laboratory%20Research.jpg'
+const MarineOffshoreBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Marine%20&%20Offshore%20Applications.jpg'
+const SmartCityBg  = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Smart%20City%20Infrastructure.jpg'
 const industries = [
   {
     title: "Advertising & Branding",

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, useRef } from "react";
+import Loading from "./Loading";
 import {
   BookOpen,
   Zap,
@@ -33,7 +34,7 @@ const ICONS = {
 };
 
 // helper: slugify a section title => unique id
-const slugify = (text) =>
+const slugify = (text: string) =>
   text
     .toString()
     .toLowerCase()
@@ -44,17 +45,19 @@ const slugify = (text) =>
     .replace(/-+$/, "");
 
 const KnowledgeBase = () => {
-  const [dataGrouped, setDataGrouped] = useState(null);
+  const [dataGrouped, setDataGrouped] = useState<null | any>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   // UI state
   const [activeCategory, setActiveCategory] = useState("laser-cutting");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
-  const contentRef = useRef(null);
-  const observerRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const navContainerRef = useRef<HTMLDivElement>(null);
+  const activeButtonRef = useRef<HTMLButtonElement>(null);
 
   // fetch all rows from Supabase and group
   useEffect(() => {
@@ -70,12 +73,15 @@ const KnowledgeBase = () => {
         if (!mounted) return;
 
         // Group rows -> category -> topic -> sections
-        const grouped = {};
-        (data || []).forEach((row) => {
+        const grouped: any = {};
+        (data || []).forEach((row: any) => {
           const categoryKey = (row.category || "Uncategorized").toString();
           const topicKey = (row.topic || "General").toString();
-          const sectionTitle = row.section_title || row.section_number || "Untitled";
-          const sectionId = slugify(sectionTitle + "-" + (row.section_number || ""));
+          const sectionTitle =
+            row.section_title || row.section_number || "Untitled";
+          const sectionId = slugify(
+            sectionTitle + "-" + (row.section_number || "")
+          );
           const sectionObj = {
             id: sectionId,
             title: sectionTitle,
@@ -83,9 +89,18 @@ const KnowledgeBase = () => {
             content: row.content || "",
           };
 
-          if (!grouped[categoryKey]) grouped[categoryKey] = { id: categoryKey, title: categoryKey, topics: {} };
+          if (!grouped[categoryKey])
+            grouped[categoryKey] = {
+              id: categoryKey,
+              title: categoryKey,
+              topics: {},
+            };
           if (!grouped[categoryKey].topics[topicKey])
-            grouped[categoryKey].topics[topicKey] = { id: topicKey, title: topicKey, sections: [] };
+            grouped[categoryKey].topics[topicKey] = {
+              id: topicKey,
+              title: topicKey,
+              sections: [],
+            };
 
           grouped[categoryKey].topics[topicKey].sections.push(sectionObj);
         });
@@ -114,7 +129,7 @@ const KnowledgeBase = () => {
             setActiveCategory(categories[0].id);
           }
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error(err);
         if (mounted) setError(err.message || String(err));
       } finally {
@@ -129,7 +144,9 @@ const KnowledgeBase = () => {
   }, []);
 
   // Helper: get active category object
-  const activeCategories = dataGrouped?.categories?.find((c) => c.id === activeCategory);
+  const activeCategories = dataGrouped?.categories?.find(
+    (c: any) => c.id === activeCategory
+  );
 
   // Intersection Observer: track visible section
   useEffect(() => {
@@ -151,7 +168,7 @@ const KnowledgeBase = () => {
     }, options);
 
     const sections = contentRef.current.querySelectorAll("[data-section]");
-    sections.forEach((section) => observerRef.current.observe(section));
+    sections.forEach((section) => observerRef.current!.observe(section));
 
     return () => {
       observerRef.current?.disconnect();
@@ -159,20 +176,41 @@ const KnowledgeBase = () => {
   }, [activeCategory, dataGrouped, mobileNavOpen]);
 
   // Scroll to section handler
-  const handleSidebarClick = (sectionId) => {
+  const handleSidebarClick = (sectionId: string) => {
     const el = document.getElementById(sectionId);
     if (el) {
       const offset = 100;
-      const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+      const elementPosition =
+        el.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({ top: elementPosition - offset, behavior: "smooth" });
     }
     setMobileNavOpen(false);
   };
 
+  // Auto scroll active category button into view on mobile nav
+  useEffect(() => {
+    if (activeButtonRef.current && navContainerRef.current) {
+      setTimeout(() => {
+        activeButtonRef.current!.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
+      }, 0);
+    }
+  }, [activeCategory, dataGrouped]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
-        <header className="relative overflow-hidden mt-16 md:mt-20 bg-black" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <header
+          className="relative overflow-hidden mt-16 md:mt-20 bg-black"
+          style={{
+            backgroundImage: `url(${logo})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
             <div className="text-center">
               <div className="inline-flex items-center rounded-full gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm mb-6">
@@ -191,8 +229,8 @@ const KnowledgeBase = () => {
           </div>
         </header>
 
-        <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center py-12">Loading knowledge base from Supabase…</div>
+        <div className="">
+          <Loading text="Content" />
         </div>
       </div>
     );
@@ -219,7 +257,11 @@ const KnowledgeBase = () => {
     );
   }
 
-  if (!dataGrouped || !dataGrouped.categories || dataGrouped.categories.length === 0) {
+  if (
+    !dataGrouped ||
+    !dataGrouped.categories ||
+    dataGrouped.categories.length === 0
+  ) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
@@ -233,21 +275,25 @@ const KnowledgeBase = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
       {/* Hero Section */}
-      <header className="relative overflow-hidden mt-16 md:mt-20 bg-black" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <header
+        className="relative overflow-hidden mt-16 md:mt-20 bg-black"
+        style={{
+          backgroundImage: `url(${logo})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
           <div className="text-center">
             <div className="inline-flex items-center rounded-full gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm mb-6">
               <BookOpen className="text-white" size={20} />
-              <span className="text-white text-sm font-medium">
-                Knowledge Center
-              </span>
+              <span className="text-white text-sm font-medium">Knowledge Center</span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6">
               Laser University
             </h1>
             <p className="text-xl pb-4 text-white/90 mb-8 max-w-2xl mx-auto">
-              Take your creativity to the next level with comprehensive laser
-              technology education
+              Take your creativity to the next level with comprehensive laser technology education
             </p>
           </div>
         </div>
@@ -256,27 +302,30 @@ const KnowledgeBase = () => {
       {/* Category Navigation */}
       <div className="bg-white shadow-sm sticky top-16 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex gap-2 overflow-x-auto py-4 hide-scrollbar">
-            {dataGrouped.categories.map((category) => {
+          <div
+            ref={navContainerRef}
+            className="flex gap-2 overflow-x-auto py-4 hide-scrollbar"
+          >
+            {dataGrouped.categories.map((category: any) => {
               const Icon = ICONS[category.id] || BookOpen;
               const isActive = activeCategory === category.id;
 
               return (
                 <button
-                  key={category.id}
                   onClick={() => {
                     setActiveCategory(category.id);
                     setMobileNavOpen(false);
                     setActiveSection("");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
+                  key={category.id}
+                  ref={isActive ? activeButtonRef : null}
                   className="flex items-center gap-2 px-6 py-3 whitespace-nowrap rounded-lg transition-all flex-shrink-0"
                   style={{
                     backgroundColor: isActive ? BRAND.light : "transparent",
                     color: isActive ? BRAND.primary : "#6b7280",
                     fontWeight: isActive ? "600" : "500",
-                    border: `2px solid ${
-                      isActive ? BRAND.border : "transparent"
-                    }`,
+                    border: `2px solid ${isActive ? BRAND.border : "transparent"}`,
                   }}
                 >
                   <Icon size={18} />
@@ -293,41 +342,24 @@ const KnowledgeBase = () => {
         <div className="flex gap-8 relative pt-2">
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block w-72 flex-shrink-0 sticky top-32 self-start max-h-[calc(100vh-10rem)] overflow-y-auto">
-            <div
-              className="bg-white shadow-sm p-6 border"
-              style={{ borderColor: BRAND.border }}
-            >
-              <div
-                className="flex items-center gap-2 mb-6 pb-4 border-b"
-                style={{ borderColor: BRAND.border }}
-              >
+            <div className="bg-white shadow-sm p-6 border" style={{ borderColor: BRAND.border }}>
+              <div className="flex items-center gap-2 mb-6 pb-4 border-b" style={{ borderColor: BRAND.border }}>
                 <BookOpen size={20} style={{ color: BRAND.primary }} />
-                <h2
-                  className="font-semibold"
-                  style={{ color: BRAND.primary }}
-                >
-                  Table of Contents
-                </h2>
+                <h2 className="font-semibold" style={{ color: BRAND.primary }}>Table of Contents</h2>
               </div>
 
               <nav className="space-y-6">
-                {activeCategories?.topics.map((topic, topicIdx) => (
+                {activeCategories?.topics.map((topic: any, topicIdx: number) => (
                   <div key={topic.id}>
-                    <h3
-                      className="font-semibold text-sm mb-3 flex items-center gap-2"
-                      style={{ color: BRAND.primary }}
-                    >
-                      <span
-                        className="w-6 h-6 rounded-full flex items-center justify-center text-xs"
-                        style={{ backgroundColor: BRAND.light }}
-                      >
+                    <h3 className="font-semibold text-sm mb-3 flex items-center gap-2" style={{ color: BRAND.primary }}>
+                      <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs" style={{ backgroundColor: BRAND.light }}>
                         {topicIdx + 1}
                       </span>
                       <span className="line-clamp-2">{topic.title}</span>
                     </h3>
 
                     <ul className="space-y-1 ml-8">
-                      {topic.sections.map((section) => {
+                      {topic.sections.map((section: any) => {
                         const isActive = activeSection === section.id;
 
                         return (
@@ -336,26 +368,13 @@ const KnowledgeBase = () => {
                               onClick={() => handleSidebarClick(section.id)}
                               className="text-sm text-left w-full px-3 py-2 rounded-lg transition-all flex items-center gap-2 group"
                               style={{
-                                backgroundColor: isActive
-                                  ? BRAND.light
-                                  : "transparent",
-                                color: isActive
-                                  ? BRAND.primary
-                                  : "#6b7280",
+                                backgroundColor: isActive ? BRAND.light : "transparent",
+                                color: isActive ? BRAND.primary : "#6b7280",
                                 fontWeight: isActive ? "500" : "400",
                               }}
                             >
-                              <ChevronRight
-                                size={14}
-                                className={`transition-transform ${
-                                  isActive
-                                    ? "opacity-100"
-                                    : "opacity-0 group-hover:opacity-50"
-                                }`}
-                              />
-                              <span className="line-clamp-2">
-                                {section.title}
-                              </span>
+                              <ChevronRight size={14} className={`transition-transform ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-50"}`} />
+                              <span className="line-clamp-2">{section.title}</span>
                             </button>
                           </li>
                         );
@@ -373,50 +392,31 @@ const KnowledgeBase = () => {
             className="lg:hidden fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-lg flex items-center justify-center z-50"
             style={{ backgroundColor: BRAND.primary }}
           >
-            {mobileNavOpen ? (
-              <X className="text-white" size={24} />
-            ) : (
-              <Menu className="text-white" size={24} />
-            )}
+            {mobileNavOpen ? <X className="text-white" size={24} /> : <Menu className="text-white" size={24} />}
           </button>
 
           {/* Mobile Navigation */}
           {mobileNavOpen && (
-            <div
-              className="lg:hidden fixed inset-0 bg-black/50 z-40 top-16"
-              onClick={() => setMobileNavOpen(false)}
-            >
-              <div
-                className="absolute right-0 top-0 bottom-0 w-80 bg-white shadow-xl overflow-y-auto"
-                onClick={(e) => e.stopPropagation()}
-              >
+            <div className="lg:hidden fixed inset-0 bg-black/50 z-40 top-16" onClick={() => setMobileNavOpen(false)}>
+              <div className="absolute right-0 top-0 bottom-0 w-80 bg-white shadow-xl overflow-y-auto" onClick={(e) => e.stopPropagation()}>
                 <div className="p-6">
-                  <h2
-                    className="font-semibold mb-6 flex items-center gap-2"
-                    style={{ color: BRAND.primary }}
-                  >
+                  <h2 className="font-semibold mb-6 flex items-center gap-2" style={{ color: BRAND.primary }}>
                     <BookOpen size={20} />
                     Table of Contents
                   </h2>
 
                   <nav className="space-y-6">
-                    {activeCategories?.topics.map((topic, topicIdx) => (
+                    {activeCategories?.topics.map((topic: any, topicIdx: number) => (
                       <div key={topic.id}>
-                        <h3
-                          className="font-semibold text-sm mb-3 flex items-center gap-2"
-                          style={{ color: BRAND.primary }}
-                        >
-                          <span
-                            className="w-6 h-6 rounded-full flex items-center justify-center text-xs"
-                            style={{ backgroundColor: BRAND.light }}
-                          >
+                        <h3 className="font-semibold text-sm mb-3 flex items-center gap-2" style={{ color: BRAND.primary }}>
+                          <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs" style={{ backgroundColor: BRAND.light }}>
                             {topicIdx + 1}
                           </span>
                           {topic.title}
                         </h3>
 
                         <ul className="space-y-1 ml-8">
-                          {topic.sections.map((section) => {
+                          {topic.sections.map((section: any) => {
                             const isActive = activeSection === section.id;
 
                             return (
@@ -425,12 +425,8 @@ const KnowledgeBase = () => {
                                   onClick={() => handleSidebarClick(section.id)}
                                   className="text-sm text-left w-full px-3 py-2 rounded-lg transition-all"
                                   style={{
-                                    backgroundColor: isActive
-                                      ? BRAND.light
-                                      : "transparent",
-                                    color: isActive
-                                      ? BRAND.primary
-                                      : "#6b7280",
+                                    backgroundColor: isActive ? BRAND.light : "transparent",
+                                    color: isActive ? BRAND.primary : "#6b7280",
                                     fontWeight: isActive ? "500" : "400",
                                   }}
                                 >
@@ -450,139 +446,91 @@ const KnowledgeBase = () => {
 
           {/* Main Content */}
           <main className="flex-1" ref={contentRef}>
-            <div
-              className="bg-white shadow-sm border"
-              style={{ borderColor: BRAND.border }}
-            >
-              {activeCategories?.topics.map((topic, topicIdx) => {
-                return (
-                  <div
-                    key={topic.id}
-                    className="border-b last:border-b-0"
-                    style={{ borderColor: BRAND.border }}
-                  >
-                    <div className="p-6 sm:p-8 lg:p-10">
-                      {/* Topic Header */}
-                      <div className="flex items-start gap-4 mb-8">
-                        <div
-                          className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                          style={{ backgroundColor: BRAND.light }}
-                        >
-                          <span
-                            className="text-xl font-bold"
-                            style={{ color: BRAND.primary }}
-                          >
-                            {topicIdx + 1}
-                          </span>
-                        </div>
-
-                        <div className="flex-1">
-                          <h2
-                            className="text-2xl md:text-3xl font-bold mb-2"
-                            style={{ color: BRAND.primary }}
-                          >
-                            {topic.title}
-                          </h2>
-                          <div className="flex items-center gap-4 text-sm text-gray-500">
-                            <span className="flex items-center gap-1">
-                              <Clock size={14} />
-                              {topic.sections.length * 5} min read
-                            </span>
-                            <span>•</span>
-                            <span>{topic.sections.length} sections</span>
-                          </div>
-                        </div>
+            <div className="bg-white shadow-sm border" style={{ borderColor: BRAND.border }}>
+              {activeCategories?.topics.map((topic: any, topicIdx: number) => (
+                <div key={topic.id} className="border-b last:border-b-0" style={{ borderColor: BRAND.border }}>
+                  <div className="p-6 sm:p-8 lg:p-10">
+                    {/* Topic Header */}
+                    <div className="flex items-start gap-4 mb-8">
+                      <div
+                        className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style={{ backgroundColor: BRAND.light }}
+                      >
+                        <span className="text-xl font-bold" style={{ color: BRAND.primary }}>
+                          {topicIdx + 1}
+                        </span>
                       </div>
 
-                      {/* All Sections */}
-                      {topic.sections.map((section, idx) => (
-                        <section
-                          key={section.id}
-                          id={section.id}
-                          data-section
-                          className="mb-12 last:mb-0 scroll-mt-32"
-                        >
-                          {/* Section Header */}
-                          <div className="flex items-start gap-3 mb-4">
-                            <div
-                              className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-sm font-semibold"
-                              style={{
-                                backgroundColor: BRAND.light,
-                                color: BRAND.primary,
-                              }}
-                            >
-                              {idx + 1}
-                            </div>
+                      <div className="flex-1">
+                        <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: BRAND.primary }}>
+                          {topic.title}
+                        </h2>
+                        <div className="flex items-center gap-4 text-sm text-gray-500">
+                          <span className="flex items-center gap-1">
+                            <Clock size={14} />
+                            {topic.sections.length * 5} min read
+                          </span>
+                          <span>•</span>
+                          <span>{topic.sections.length} sections</span>
+                        </div>
+                      </div>
+                    </div>
 
-                          <h3
-                            className="text-xl md:text-2xl font-semibold flex-1"
-                            style={{ color: BRAND.primary }}
+                    {/* All Sections */}
+                    {topic.sections.map((section: any, idx: number) => (
+                      <section key={section.id} id={section.id} data-section className="mb-12 last:mb-0 scroll-mt-32">
+                        {/* Section Header */}
+                        <div className="flex items-start gap-3 mb-4">
+                          <div
+                            className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-sm font-semibold"
+                            style={{ backgroundColor: BRAND.light, color: BRAND.primary }}
                           >
+                            {idx + 1}
+                          </div>
+
+                          <h3 className="text-xl md:text-2xl font-semibold flex-1" style={{ color: BRAND.primary }}>
                             {section.title}
                           </h3>
+                        </div>
+
+                        {/* Section Content */}
+                        <div className="prose max-w-none pl-11">
+                          {section.content.split("\n\n").map((paragraph: string, pIdx: number) => {
+                            if (paragraph.trim().startsWith("•")) {
+                              const items = paragraph.split("\n").filter((line) => line.trim());
+                              return (
+                                <ul key={pIdx} className="space-y-2 mb-6">
+                                  {items.map((item: string, itemIdx: number) => (
+                                    <li key={itemIdx} className="text-gray-700 leading-relaxed flex items-start gap-3">
+                                      <span
+                                        className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full"
+                                        style={{ backgroundColor: BRAND.primary }}
+                                      ></span>
+                                      <span>{item.replace("•", "").trim()}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              );
+                            }
+
+                            return (
+                              <p key={pIdx} className="text-gray-700 mb-4 leading-relaxed">
+                                {paragraph}
+                              </p>
+                            );
+                          })}
+                        </div>
+
+                        {idx < topic.sections.length - 1 && (
+                          <div className="mt-8 pl-11">
+                            <div className="h-px" style={{ backgroundColor: BRAND.border }}></div>
                           </div>
-
-                          {/* Section Content */}
-                          <div className="prose max-w-none pl-11">
-                            {section.content
-                              .split("\n\n")
-                              .map((paragraph, pIdx) => {
-                                if (paragraph.trim().startsWith("•")) {
-                                  const items = paragraph
-                                    .split("\n")
-                                    .filter((line) => line.trim());
-                                  return (
-                                    <ul key={pIdx} className="space-y-2 mb-6">
-                                      {items.map((item, itemIdx) => (
-                                        <li
-                                          key={itemIdx}
-                                          className="text-gray-700 leading-relaxed flex items-start gap-3"
-                                        >
-                                          <span
-                                            className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full"
-                                            style={{
-                                              backgroundColor:
-                                                BRAND.primary,
-                                            }}
-                                          ></span>
-                                          <span>
-                                            {item
-                                              .replace("•", "")
-                                              .trim()}
-                                          </span>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  );
-                                }
-
-                                return (
-                                  <p
-                                    key={pIdx}
-                                    className="text-gray-700 mb-4 leading-relaxed"
-                                  >
-                                    {paragraph}
-                                  </p>
-                                );
-                              })}
-                          </div>
-
-                          {idx < topic.sections.length - 1 && (
-                            <div className="mt-8 pl-11">
-                              <div
-                                className="h-px"
-                                style={{
-                                  backgroundColor: BRAND.border,
-                                }}
-                              ></div>
-                            </div>
-                          )}
-                        </section>
-                      ))}
-                    </div>
+                        )}
+                      </section>
+                    ))}
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
           </main>
         </div>

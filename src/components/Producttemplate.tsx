@@ -1022,12 +1022,12 @@ IMAGE PROP DISCUSS - SIR
                         setModalIndex(i);
                         setModalOpen(true);
                       }}
-                      className="aspect-square bg-white overflow-hidden border-2 border-gray-200 hover:shadow-lg hover:border-gray-300 transition-all group relative"
+                      className="aspect-square bg-white hover:bg-white overflow-hidden border-2 border-gray-200 hover:shadow-lg hover:border-gray-300 transition-all group relative"
                     >
                       <img
                         src={src}
                         alt={`${product.name} Cutting sample ${i + 1}`}
-                        className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform hover:bg-white duration-300 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center">
                         <Maximize2 className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg" />
@@ -1117,13 +1117,13 @@ IMAGE PROP DISCUSS - SIR
               <img
                 src={cuttingSamples[modalIndex]}
                 alt={`${product.name} cutting sample ${modalIndex + 1}`}
-                className="w-full h-auto max-h-[85vh] object-contain shadow-2xl"
+                className="w-full bg-white h-auto max-h-[85vh] object-cover shadow-2xl"
               />
             ) : (
               <img
                 src={previewImages[modalIndex]}
                 alt={`${product.name} preview ${modalIndex + 1}`}
-                className="w-full h-auto max-h-[85vh] object-contain shadow-2xl"
+                className="w-full bg-white h-auto max-h-[85vh] object-cover shadow-2xl"
               />
             )}
 
@@ -1149,12 +1149,6 @@ IMAGE PROP DISCUSS - SIR
                 >
                   <ChevronRight className="w-7 h-7" />
                 </button>
-                <div
-                  className="absolute bottom-6 left-1/2 -translate-x-1/2 px-5 py-2 bg-white backdrop-blur-md text-sm font-semibold text-black border border-white/20"
-                  style={{ borderRadius: "20px" }}
-                >
-                  {modalIndex + 1} / {activeCount(modalSource)}
-                </div>
               </>
             )}
           </div>

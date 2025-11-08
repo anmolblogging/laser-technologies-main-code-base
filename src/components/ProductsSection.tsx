@@ -24,12 +24,17 @@ type ProductType = {
   Thumbnail_url?: string[] | null;
 };
 
+
 const fetchProducts = async (): Promise<ProductType[]> => {
   const { data, error } = await supabase
     .from("products")
     .select(
       `id, Segment, SubCategory, ProductName, ShortDescription, Thumbnail_url`
-    );
+    )
+    .order("Segment", { ascending: true })
+    .order("SubCategory", { ascending: false });
+
+
   if (error) {
     console.error("Error fetching products:", error);
     return [];
