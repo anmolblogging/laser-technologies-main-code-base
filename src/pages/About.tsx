@@ -153,8 +153,20 @@ export default function AboutUsPage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Delivering cutting-edge laser solutions across diverse industries
             </p>
+            
+            {/* Mobile image - only visible on small screens */}
+            <div className="relative mt-8 md:hidden">
+              <div
+                className="absolute -inset-4  opacity-10"
+                style={{ backgroundColor: BRAND.primary }}
+              ></div>
+              <img
+                src="https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/laser_tech_about_us_main_image.jpg"
+                alt="About Company"
+                className="relative shadow-2xl w-full"
+              />
+            </div>
           </div>
-
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <p className="text-gray-700 leading-relaxed text-lg">
@@ -175,7 +187,8 @@ export default function AboutUsPage() {
                 repair and maintenance needs.
               </p>
             </div>
-            <div className="relative">
+            {/* Desktop image - hidden on mobile, visible on md and up */}
+            <div className="relative hidden md:block">
               <div
                 className="absolute -inset-4  opacity-10"
                 style={{ backgroundColor: BRAND.primary }}

@@ -17,6 +17,21 @@ interface JobPosition {
 }
 
 const currentYear = new Date().getFullYear();
+const features = [
+    {
+      title: "Innovation First",
+      desc: "Work on cutting-edge projects that define the future of the laser industry",
+    },
+    {
+      title: "Global Impact",
+      desc: "Your work reaches customers and partners across 15+ countries worldwide",
+    },
+    {
+      title: "Continuous Growth",
+      desc: "Access world-class training, mentorship, and career development programs",
+    },
+  ];
+
 const stats = [
   { value: "500+", label: "Global Team Members" },
   { value: "15+", label: "Countries" },
@@ -151,81 +166,68 @@ export default function Careers() {
           </div>
         </div>
       </section>
-{/* Culture Showcase */}
-      <section className="py-24 md:py-32">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* LEFT CONTENT */}
-            <div className="space-y-8">
-              <div>
-                <div className="inline-block px-4 py-2 rounded-full mb-6 text-sm uppercase tracking-widest bg-opacity-15 bg-whiteBgTextHover text-whiteBgTextHover font-normal">
-                  Our Culture
-                </div>
-
-                <h2 className="text-4xl md:text-5xl lg:text-6xl mb-6 font-medium text-whiteBgText tracking-tight">
-                  Where Innovation
-                  <br />
-                  Meets Excellence
-                </h2>
-
-                <p className="text-xl text-gray-600 leading-relaxed font-light">
-                  At Laser Technologies, we've created an environment where the
-                  world's brightest minds collaborate to push the boundaries of
-                  what's possible in laser technology.
-                </p>
-              </div>
-
-              <div className="space-y-6">
-                {[
-                  {
-                    title: "Innovation First",
-                    desc: "Work on cutting-edge projects that define the future of the laser industry",
-                  },
-                  {
-                    title: "Global Impact",
-                    desc: "Your work reaches customers and partners across 15+ countries worldwide",
-                  },
-                  {
-                    title: "Continuous Growth",
-                    desc: "Access world-class training, mentorship, and career development programs",
-                  },
-                ].map((item, idx) => (
-                  <div key={idx} className="flex gap-4">
-                    <div
-                      className="flex-shrink-0 w-1.5 rounded-full mt-2 bg-whiteBgButtonBg"
-                      style={{ height: "40px" }}
-                    ></div>
-
-                    <div>
-                      <h3 className="text-xl mb-2 text-whiteBgButtonBg font-normal">
-                        {item.title}
-                      </h3>
-                      <p className="text-gray-600 font-light">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+<section className="py-16 md:py-24 lg:py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left Content */}
+          <div className="space-y-8">
+            <div className="space-y-6">
+              <span className="inline-block px-4 py-2 rounded-full text-sm uppercase tracking-wider bg-red-100 text-red-600 font-smeibold">
+                Our Culture
+              </span>
+              
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900 leading-tight">
+                Where Innovation
+                <br />
+                Meets Excellence
+              </h2>
+              
+              <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-xl">
+                At Laser Technologies, we've created an environment where the
+                world's brightest minds collaborate to push the boundaries of
+                what's possible in laser technology.
+              </p>
             </div>
 
-            {/* RIGHT IMAGES */}
+            {/* Features */}
+            <div className="space-y-6 pt-4">
+              {features.map((item, idx) => (
+                <div key={idx} className="flex gap-4 items-start">
+                  <div className="flex-shrink-0 w-1 h-12 rounded-full bg-red-200 mt-1" />
+                  <div className="space-y-1">
+                    <h3 className="text-lg md:text-2xl font-medium text-gray-900">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Images */}
+          <div className="relative order-first lg:order-last">
             <div className="relative">
-              {/* BIG MAIN IMAGE */}
               <img
                 src="https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/careers/laser_tech_careers_main%20image.jpg"
-                alt=""
-                className="w-full h-auto object-cover"
+                alt="Laser Technologies workplace"
+                draggable="false"
+                className="w-full h-auto shadow-lg object-cover"
               />
-
-              {/* SMALL OVERLAY IMAGE (BOTTOM RIGHT) */}
               <img
                 src="https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/careers/laser_tech_careers_small_image.jpg"
-                alt=""
-                className="absolute bottom-4 right-4 w-52 h-36 object-cover shadow-xl border-2 border-white"
+                alt="Team collaboration"
+                draggable="false"
+                className="absolute bottom-4 right-4 w-48 h-32 md:w-52 md:h-36 object-cover shadow-2xl border-2 border-white"
               />
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+
 
       {/* Great Place to Work */}
       <section className="py-20 bg-gray-50">

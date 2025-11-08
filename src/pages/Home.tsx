@@ -23,8 +23,13 @@ function Home() {
       <CalendarSection />
       <IndustryCarousel2 />
       <StatsCounter />
+      <div className="hidden md:block">
       <VideoSection />
-      <Blog />
+      </div>
+      <div className="sm:-pt-20 lg:mt-0">
+          <Blog />
+      </div>
+      
       <Testimonial />
       <Clients />
       <Gallery />
