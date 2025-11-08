@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import Loading from "./Loading";
-
 import Form from "./Form";
-const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg' ;
+import { useNavigate } from "react-router-dom";
+
+const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg';
+
 interface JobPosition {
   id: string;
   title: string;
@@ -14,18 +16,57 @@ interface JobPosition {
   created_at: string;
 }
 
+const currentYear = new Date().getFullYear();
+const stats = [
+  { value: "500+", label: "Global Team Members" },
+  { value: "15+", label: "Countries" },
+  { value: `${currentYear}` , label: "Great Place to Work®" },
+  { value: "20+", label: "Years of Innovation" },
+];
+
+const parseNumber = (str: string) => {
+  const num = parseInt(str.replace(/[^0-9]/g, ""), 10);
+  return isNaN(num) ? 0 : num;
+};
+
+const formatValue = (val: number, original: string) => {
+  return original.includes("+") ? `${val}+` : `${val}`;
+};
+
+const AnimatedCounter: React.FC<{ value: string }> = ({ value }) => {
+  const targetNumber = parseNumber(value);
+  const [count, setCount] = useState(10);
+
+  useEffect(() => {
+    let startTimestamp: number | null = null;
+    const duration = 1000;
+
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = timestamp - startTimestamp;
+      const progressRatio = Math.min(progress / duration, 1);
+      const currentCount = Math.floor(progressRatio * targetNumber);
+      setCount(currentCount);
+      if (progress < duration) {
+        window.requestAnimationFrame(step);
+      } else {
+        setCount(targetNumber);
+      }
+    };
+
+    window.requestAnimationFrame(step);
+  }, [targetNumber]);
+
+  return <>{formatValue(count, value)}</>;
+};
+
 export default function Careers() {
   const [openPositions, setOpenPositions] = useState<JobPosition[]>([]);
   const [loading, setLoading] = useState(true);
   const [showApplicationForm, setShowApplicationForm] = useState(false);
-  const [selectedJob, setSelectedJob] = useState<{
-    title: string;
-    department: string;
-  } | null>(null);
+  const [selectedJob, setSelectedJob] = useState<{ title: string; department: string } | null>(null);
 
-  useEffect(() => {
-    fetchOpenPositions();
-  }, []);
+  const navigate = useNavigate();
 
   const fetchOpenPositions = async () => {
     try {
@@ -44,38 +85,18 @@ export default function Careers() {
     }
   };
 
+  useEffect(() => {
+    fetchOpenPositions();
+  }, []);
+
   if (loading) {
     return <Loading text="Careers" />;
   }
 
   return (
     <div className="min-h-screen bg-white font-secondary">
-      {/* Hero Section - Full Width Impact */}
+      {/* Hero Section */}
       <section className="pt-10 relative bg-gradient-to-r from-white via-red-50 to-white overflow-hidden font-primary">
-        {/* <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-whiteBgButtonBg opacity-70"></div>
-          <div className="absolute bottom-0 left-0 w-[800px] h-[800px] rounded-full bg-whiteBgButtonBg opacity-70"></div>
-        </div> */}
-        {/* <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-32">
-          <div className="max-w-5xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl mb-8 leading-none text-whiteBgButtonBg font-light tracking-tight">
-              Shape the Future of<br/>
-              <span className="font-semibold">Laser Technology</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-700 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-              Join world-class engineers and designers revolutionizing industries through precision, innovation, and excellence.
-            </p>
-            <button 
-              onClick={() => document.getElementById('positions')?.scrollIntoView({ behavior: 'smooth' })}
-              className="inline-flex items-center gap-3 px-10 py-5 text-white text-lg bg-whiteBgButtonBg font-normal transition-all duration-300 hover:shadow-2xl"
-            >
-              View Open Roles
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </button>
-          </div>
-        </div> */}
         <div
           className="relative overflow-hidden mt-10 bg-black"
           style={{
@@ -86,11 +107,6 @@ export default function Careers() {
         >
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
             <div className="text-center">
-              {/* <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm mb-6">
-              <span className="text-white text-sm font-medium">
-                Knowledge Center
-              </span>
-            </div> */}
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6">
                 Shape the Future of
                 <br />
@@ -104,25 +120,13 @@ export default function Careers() {
             <div className="flex justify-center">
               <button
                 onClick={() =>
-                  document
-                    .getElementById("positions")
-                    ?.scrollIntoView({ behavior: "smooth" })
+                  document.getElementById("positions")?.scrollIntoView({ behavior: "smooth" })
                 }
                 className="inline-flex items-center gap-3 px-10 py-5 text-white text-lg bg-whiteBgButtonBg font-normal transition-all duration-300 hover:shadow-2xl"
               >
                 View Open Roles
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </button>
             </div>
@@ -134,15 +138,10 @@ export default function Careers() {
       <section className="py-20 border-b border-whiteBgButtonBg">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-y-12 text-center">
-            {[
-              { value: "500+", label: "Global Team Members" },
-              { value: "15+", label: "Countries" },
-              { value: "2024", label: "Great Place to Work®" },
-              { value: "20+", label: "Years of Innovation" },
-            ].map((stat, idx) => (
+            {stats.map((stat, idx) => (
               <div key={idx}>
                 <div className="text-5xl md:text-6xl mb-3 text-whiteBgText">
-                  {stat.value}
+                  <AnimatedCounter value={stat.value} />
                 </div>
                 <div className="text-gray-600 uppercase text-sm tracking-widest">
                   {stat.label}
@@ -152,8 +151,7 @@ export default function Careers() {
           </div>
         </div>
       </section>
-
-      {/* Culture Showcase */}
+{/* Culture Showcase */}
       <section className="py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -265,7 +263,7 @@ export default function Careers() {
       <section id="positions" className="py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 rounded-full mb-6 text-sm uppercase tracking-widest bg-opacity-15 bg-whiteBgTextHover text-whiteBgTextHover  font-normal">
+            <div className="inline-block px-4 py-2 rounded-full mb-6 text-sm uppercase tracking-widest bg-opacity-15 bg-whiteBgTextHover text-whiteBgTextHover font-normal">
               Opportunities
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl mb-6 font-light tracking-tight text-whiteBgText">
@@ -278,19 +276,9 @@ export default function Careers() {
 
           {openPositions.length === 0 ? (
             <div className="max-w-2xl mx-auto text-center py-16">
-              <div className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center bg-whiteBgButtonBg">
-                <svg
-                  className="w-10 h-10 text-whiteBgText"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
+              <div className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center bg-red-200">
+                <svg className="w-10 h-10 text-whiteBgText" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
               <h3 className="text-3xl mb-4 font-normal text-whiteBgButtonBg">
@@ -300,24 +288,18 @@ export default function Careers() {
                 We're not actively hiring right now, but we're always interested
                 in connecting with exceptional talent.
               </p>
-              <button className="px-8 py-4 rounded-full border-2 transition-all duration-300 hover:bg-gray-50 border-whiteBgButtonBg text-whiteBgButtonBg font-normal">
-                Submit Your Resume
-              </button>
             </div>
           ) : (
             <div className="space-y-6 max-w-5xl mx-auto">
-              {openPositions.map((job, idx) => (
-                <div
-                  key={job.id}
-                  className="group bg-white border-2 p-8 md:p-10 transition-all duration-300  border-black/10"
-                >
+              {openPositions.map((job) => (
+                <div key={job.id} className="group bg-white border-2 p-8 md:p-10 transition-all duration-300 border-black/10">
                   <div className="flex flex-col lg:flex-row lg:items-start gap-6">
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-3 mb-4">
                         <h3 className="text-2xl md:text-3xl font-normal text-whiteBgButtonBg">
                           {job.title}
                         </h3>
-                        <span className="px-4 py-1.5 rounded-full text-xs uppercase tracking-widest bg-gray-100 text-gray-600 font-normal">
+                        <span className="px-5 py-1.5 rounded-full text-sm uppercase tracking-widest bg-gray-100 text-gray-800 font-medium">
                           {job.experience}
                         </span>
                       </div>
@@ -327,22 +309,18 @@ export default function Careers() {
                     </div>
                     <div className="flex lg:flex-col gap-3">
                       {job.apply_link ? (
-                        <a
-                          href={job.apply_link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <button className="flex-1 lg:flex-none px-8 py-4 text-darkBgText hover:text-darkBgText bg-whiteBgButtonBg transition-all duration-300 hover:shadow-lg font-normal whitespace-nowrap">
+                        <a href={job.apply_link} target="_blank" rel="noopener noreferrer">
+                          <button className="w-full lg:w-auto font-medium px-8 py-4 text-darkBgText hover:text-darkBgText bg-whiteBgButtonBg transition-all duration-300 hover:shadow-lg whitespace-nowrap">
                             Apply Now
                           </button>
                         </a>
                       ) : (
                         <button
                           onClick={() => {
-                            setSelectedJob({ title: job.title, department: job.experience || '' });
+                            setSelectedJob({ title: job.title, department: job.experience || "" });
                             setShowApplicationForm(true);
                           }}
-                          className="flex-1 lg:flex-none px-8 py-4 text-darkBgText hover:text-darkBgText bg-whiteBgButtonBg transition-all duration-300 hover:shadow-lg font-normal whitespace-nowrap"
+                          className="w-full lg:w-auto px-8 py-4 text-darkBgText hover:text-darkBgText bg-whiteBgButtonBg transition-all duration-300 hover:shadow-lg font-medium whitespace-nowrap"
                         >
                           Apply Now
                         </button>
@@ -356,98 +334,7 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 md:py-32 bg-whiteBgButtonBg bg-opacity-40 text-white relative overflow-hidden font-primary">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white rounded-full blur-3xl"></div>
-        </div>
-        <div className="relative max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl mb-6 text-black font-light tracking-tight">
-            Don't see the right role?
-          </h2>
-          <p className="text-xl md:text-2xl text-black mb-12 leading-relaxed font-light">
-            We're always looking for exceptional talent. Share your resume and
-            let's explore how you can contribute to our mission.
-          </p>
-          <button className="inline-flex items-center gap-3 px-10 py-5 bg-white  hover:bg-white hover:text-whiteBgButtonBg text-lg transition-all duration-300 font-primary text-whiteBgButtonBg">
-            Get in Touch
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </button>
-        </div>
-      </section>
-
-      {/* Location */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl md:text-5xl mb-6 font-light text-whiteBgText">
-                Visit Our Headquarters
-              </h2>
-              <div className="space-y-4 text-gray-600 font-light">
-                <p className="flex items-start gap-3 text-lg">
-                  <svg
-                    className="w-6 h-6 mt-1 flex-shrink-0 text-whiteBgButtonBg"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  <span>
-                    Plot No. PAP/R/406, MIDC Rabale TTC Industrial Area
-                    <br />
-                    Rabale, Navi Mumbai - 400701, Maharashtra, India
-                  </span>
-                </p>
-              </div>
-            </div>
-            <div className="aspect-[4/3] bg-gray-100 rounded-2xl overflow-hidden">
-              <div className="w-full h-full flex items-center justify-center">
-                <svg
-                  className="w-20 h-20 text-gray-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Application Form - Conditionally Rendered */}
+      {/* Application Form Modal */}
       {showApplicationForm && selectedJob && (
         <Form
           type="CAREER_APPLICATION"
