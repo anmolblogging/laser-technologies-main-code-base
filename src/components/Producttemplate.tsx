@@ -91,7 +91,7 @@ function Producttemplate(): JSX.Element {
 
         setRawProduct(prodData);
 
-        const { data: related, error: relatedError } = await supabase
+        const { data: related } = await supabase
           .from("products")
           .select("id, ProductName, Thumbnail_url, SubCategory, Segment")
           .eq("Segment", prodData.Segment)
@@ -214,16 +214,7 @@ function Producttemplate(): JSX.Element {
     };
   }, [rawProduct]);
 
-  // Helper to clean URLs, remove markdown links/brackets
-  const cleanUrl = (url: string) => {
-    let cleaned = url.trim();
-    if (cleaned.startsWith("[") && cleaned.includes("](")) {
-      const match = cleaned.match(/\]\((.*?)\)/);
-      if (match && match[1]) cleaned = match[1];
-    }
-    cleaned = cleaned.replace(/^\[|\]$/g, "").replace(/^\(|\)$/g, "");
-    return cleaned;
-  };
+  // (helper removed — not used)
 
   // Product main images from Thumbnail_url
   const galleryImages = useMemo(() => {
