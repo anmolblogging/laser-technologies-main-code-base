@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight, ShoppingCart } from "lucide-react";
 import { supabase } from "../lib/supabase";
 
-const Logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/logo.png'
+const Logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/logo.png';
 
 const COLORS = {
   whiteBgText: "#060C2A",
@@ -22,7 +22,6 @@ const Header = () => {
   const [isMoreOpen, setIsMoreOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
 
-  // typed state
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null);
   const [mobileExpandedSegment, setMobileExpandedSegment] = useState<string | null>(null);
   const [mobileExpandedMore, setMobileExpandedMore] = useState(false);
@@ -35,20 +34,17 @@ const Header = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const moreContainerRef = useRef<HTMLDivElement | null>(null);
 
-
   const navigationStructure = [
     { type: "link", name: "Home", href: "/" },
     { type: "dropdown", name: "Product", key: "products" },
     { type: "dropdown", name: "About", key: "about" },
     { type: "link", name: "CSR", href: "/csr" },
     { type: "link", name: "Contact", href: "/contact" },
-    
     { type: "dropdown", name: "Knowledge", key: "Knowledge" },
   ];
 
   const KnowledgeItems = [
-    // { name: "Laser University", href: "/knowledge" },
-    {name: "Laser Gurukul", href: "/laserGurukul" },
+    { name: "Laser Gurukul", href: "/laserGurukul" },
     { name: "Articles", href: "/articles" },
   ];
 
@@ -91,19 +87,15 @@ const Header = () => {
     fetchProducts();
   }, []);
 
-  // ✅ Render Desktop Navigation
   const renderDesktopNav = () => {
     return navigationStructure.map((item) => {
-      // Regular Link
       if (item.type === "link") {
         return (
           <a
             key={item.name}
             href={item.href}
             className="px-4 py-2 font-medium transition-all duration-200 relative group"
-            style={{
-              color: COLORS.whiteBgText,
-            }}
+            style={{ color: COLORS.whiteBgText }}
           >
             {item.name}
             <span
@@ -114,7 +106,6 @@ const Header = () => {
         );
       }
 
-      // Products Dropdown
       if (item.type === "dropdown" && item.key === "products") {
         return (
           <div
@@ -131,9 +122,7 @@ const Header = () => {
           >
             <button
               className="px-4 py-2 bg-transparent hover:bg-transparent font-medium flex items-center gap-1 transition-all duration-200 relative group"
-              style={{
-                color: COLORS.whiteBgText,
-              }}
+              style={{ color: COLORS.whiteBgText }}
             >
               {item.name}
               <ChevronDown
@@ -177,10 +166,7 @@ const Header = () => {
                   >
                     <div
                       className="px-4 py-2 text-xs font-medium uppercase tracking-wider mb-2"
-                      style={{
-                        borderBottom: `1px solid ${COLORS.border}`,
-                        color: COLORS.whiteBgText,
-                      }}
+                      style={{ borderBottom: `1px solid ${COLORS.border}`, color: COLORS.whiteBgText }}
                     >
                       {hoveredSegment}
                     </div>
@@ -190,9 +176,7 @@ const Header = () => {
                         key={subCategory}
                         href={`/products/${encodeURIComponent(hoveredSegment)}/${encodeURIComponent(subCategory)}`}
                         className="block px-4 py-2.5 text-sm transition-all duration-150 font-medium"
-                        style={{
-                          color: COLORS.whiteBgText,
-                        }}
+                        style={{ color: COLORS.whiteBgText }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.backgroundColor = "rgba(243, 21, 36, 0.05)";
                           e.currentTarget.style.color = COLORS.whiteBgTextHover;
@@ -213,7 +197,6 @@ const Header = () => {
         );
       }
 
-      // About Dropdown
       if (item.type === "dropdown" && item.key === "about") {
         return (
           <div
@@ -224,9 +207,7 @@ const Header = () => {
           >
             <button
               className="px-4 py-2 bg-transparent hover:bg-transparent font-medium flex items-center gap-1 transition-all duration-200 relative group"
-              style={{
-                color: COLORS.whiteBgText,
-              }}
+              style={{ color: COLORS.whiteBgText }}
             >
               {item.name}
               <ChevronDown
@@ -251,9 +232,7 @@ const Header = () => {
                     key={aboutItem.name}
                     href={aboutItem.href}
                     className="block px-4 py-2.5 text-sm transition-all duration-200 font-medium"
-                    style={{
-                      color: COLORS.whiteBgText,
-                    }}
+                    style={{ color: COLORS.whiteBgText }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.color = COLORS.whiteBgTextHover;
                       e.currentTarget.style.backgroundColor = "rgba(243, 21, 36, 0.05)";
@@ -272,7 +251,6 @@ const Header = () => {
         );
       }
 
-      // More Dropdown (Knowledge)
       if (item.type === "dropdown" && item.key === "Knowledge") {
         return (
           <div
@@ -288,9 +266,7 @@ const Header = () => {
           >
             <button
               className="px-4 py-2 bg-transparent hover:bg-transparent font-medium flex items-center gap-1 transition-all duration-200 relative group"
-              style={{
-                color: COLORS.whiteBgText,
-              }}
+              style={{ color: COLORS.whiteBgText }}
             >
               {item.name}
               <ChevronDown
@@ -315,9 +291,7 @@ const Header = () => {
                     key={moreItem.name}
                     href={moreItem.href}
                     className="block px-4 py-2.5 text-sm transition-all duration-200 font-medium"
-                    style={{
-                      color: COLORS.whiteBgText,
-                    }}
+                    style={{ color: COLORS.whiteBgText }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.color = COLORS.whiteBgTextHover;
                       e.currentTarget.style.backgroundColor = "rgba(243, 21, 36, 0.05)";
@@ -340,19 +314,15 @@ const Header = () => {
     });
   };
 
-  // ✅ Render Mobile Navigation
   const renderMobileNav = () => {
     return navigationStructure.map((item) => {
-      // Regular Link
       if (item.type === "link") {
         return (
           <a
             key={item.name}
             href={item.href}
             className="block px-4 py-3 font-medium"
-            style={{
-              color: COLORS.whiteBgText,
-            }}
+            style={{ color: COLORS.whiteBgText }}
             onClick={() => setIsMenuOpen(false)}
           >
             {item.name}
@@ -360,7 +330,6 @@ const Header = () => {
         );
       }
 
-      // Products Dropdown
       if (item.type === "dropdown" && item.key === "products") {
         return (
           <div key={item.name}>
@@ -375,21 +344,16 @@ const Header = () => {
             </button>
 
             {mobileExpandedProducts && !loading && (
-              <div 
+              <div
                 className="mx-4 mt-2 mb-3 rounded-lg overflow-hidden"
-                style={{ 
-                  border: `1px solid ${COLORS.border}`,
-                  backgroundColor: 'rgba(6,12,42,0.02)'
-                }}
+                style={{ border: `1px solid ${COLORS.border}`, backgroundColor: 'rgba(6,12,42,0.02)' }}
               >
                 <div className="max-h-[60vh] overflow-y-auto">
                   {Object.keys(productData).map((segment, segmentIndex) => (
                     <div
                       key={segment}
-                      style={{ 
-                        borderBottom: segmentIndex !== Object.keys(productData).length - 1 
-                          ? `1px solid ${COLORS.border}` 
-                          : 'none'
+                      style={{
+                        borderBottom: segmentIndex !== Object.keys(productData).length - 1 ? `1px solid ${COLORS.border}` : 'none',
                       }}
                     >
                       <button
@@ -409,20 +373,13 @@ const Header = () => {
                       </button>
 
                       {mobileExpandedSegment === segment && (
-                        <div 
-                          className="bg-white/30"
-                          style={{ borderTop: `1px solid ${COLORS.border}` }}
-                        >
+                        <div className="bg-white/30" style={{ borderTop: `1px solid ${COLORS.border}` }}>
                           {productData[segment].map((subCategory, subIndex) => (
                             <a
                               key={subCategory}
                               href={`/products/${encodeURIComponent(segment)}/${encodeURIComponent(subCategory)}`}
                               className="block px-6 py-2.5 text-sm text-black font-medium hover:bg-white/30 "
-                              style={{
-                                borderBottom: subIndex !== productData[segment].length - 1 
-                                  ? `1px solid ${COLORS.border}` 
-                                  : 'none'
-                              }}
+                              style={{ borderBottom: subIndex !== productData[segment].length - 1 ? `1px solid ${COLORS.border}` : 'none' }}
                               onClick={() => {
                                 setIsMenuOpen(false);
                                 setMobileExpandedProducts(false);
@@ -443,7 +400,6 @@ const Header = () => {
         );
       }
 
-      // About Dropdown
       if (item.type === "dropdown" && item.key === "about") {
         return (
           <div key={item.name}>
@@ -458,24 +414,16 @@ const Header = () => {
             </button>
 
             {mobileExpandedAbout && (
-              <div 
+              <div
                 className="mx-4 mt-2 mb-3 rounded-lg overflow-hidden"
-                style={{ 
-                  border: `1px solid ${COLORS.border}`,
-                  backgroundColor: 'rgba(6,12,42,0.02)'
-                }}
+                style={{ border: `1px solid ${COLORS.border}`, backgroundColor: 'rgba(6,12,42,0.02)' }}
               >
                 {aboutItems.map((aboutItem, index) => (
                   <a
                     key={aboutItem.name}
                     href={aboutItem.href}
                     className="block px-6 py-2.5 text-sm font-medium hover:bg-white/80 transition-colors"
-                    style={{
-                      color: COLORS.whiteBgText,
-                      borderBottom: index !== aboutItems.length - 1 
-                        ? `1px solid ${COLORS.border}` 
-                        : 'none'
-                    }}
+                    style={{ color: COLORS.whiteBgText, borderBottom: index !== aboutItems.length - 1 ? `1px solid ${COLORS.border}` : 'none' }}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {aboutItem.name}
@@ -487,7 +435,6 @@ const Header = () => {
         );
       }
 
-      // More Dropdown (Knowledge)
       if (item.type === "dropdown" && item.key === "Knowledge") {
         return (
           <div key={item.name}>
@@ -502,24 +449,16 @@ const Header = () => {
             </button>
 
             {mobileExpandedMore && (
-              <div 
+              <div
                 className="mx-4 mt-2 mb-3 rounded-lg overflow-hidden"
-                style={{ 
-                  border: `1px solid ${COLORS.border}`,
-                  backgroundColor: 'rgba(6,12,42,0.02)'
-                }}
+                style={{ border: `1px solid ${COLORS.border}`, backgroundColor: 'rgba(6,12,42,0.02)' }}
               >
                 {KnowledgeItems.map((moreItem, index) => (
                   <a
                     key={moreItem.name}
                     href={moreItem.href}
                     className="block px-6 py-2.5 text-sm font-medium hover:bg-white/80 transition-colors"
-                    style={{
-                      color: COLORS.whiteBgText,
-                      borderBottom: index !== KnowledgeItems.length - 1 
-                        ? `1px solid ${COLORS.border}` 
-                        : 'none'
-                    }}
+                    style={{ color: COLORS.whiteBgText, borderBottom: index !== KnowledgeItems.length - 1 ? `1px solid ${COLORS.border}` : 'none' }}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {moreItem.name}
@@ -548,6 +487,25 @@ const Header = () => {
           {/* DESKTOP NAVIGATION */}
           <nav className="hidden lg:flex items-center space-x-1">
             {renderDesktopNav()}
+            {/* Shop Now Button Desktop */}
+            <a
+              href="https://www.laserconsumable.co.in/" target="_blank" rel="noopener noreferrer"
+              className="ml-4 px-5 py-2 rounded flex items-center gap-2 text-white hover:text-white font-medium transition-colors duration-200"
+              style={{ backgroundColor: COLORS.whiteBgButtonBg }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.backgroundColor = COLORS.whiteBgTextHover;
+                const icon = (e.currentTarget.querySelector('svg') as HTMLElement);
+                if (icon) icon.style.transform = "rotate(360deg)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.backgroundColor = COLORS.whiteBgButtonBg;
+                const icon = (e.currentTarget.querySelector('svg') as HTMLElement);
+                if (icon) icon.style.transform = "rotate(0deg)";
+              }}
+            >
+              Shop Now
+              <ShoppingCart className="transition-transform duration-300" />
+            </a>
           </nav>
 
           {/* MOBILE HAMBURGER */}
@@ -556,7 +514,7 @@ const Header = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
-              <X className="h-6 w-6 text-white"  />
+              <X className="h-6 w-6 text-white" />
             ) : (
               <Menu className="h-6 w-6 text-white" />
             )}
@@ -565,11 +523,27 @@ const Header = () => {
 
         {/* MOBILE MENU */}
         {isMenuOpen && (
-          <nav
-            className="lg:hidden py-4"
-            style={{ borderTop: `1px solid ${COLORS.border}` }}
-          >
+          <nav className="lg:hidden py-4" style={{ borderTop: `1px solid ${COLORS.border}` }}>
             {renderMobileNav()}
+            {/* Shop Now Button Mobile */}
+            <a
+              href="https://www.laserconsumable.co.in/" target="_blank" rel="noopener noreferrer"
+              className=" mt-4 mx-4 px-4 py-3 rounded text-center bg-red-600 text-white hover:text-white font-semibold flex items-center justify-center gap-2"
+              onClick={() => setIsMenuOpen(false)}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = COLORS.whiteBgTextHover;
+                const icon = e.currentTarget.querySelector('svg') as HTMLElement;
+                if (icon) icon.style.transform = "rotate(360deg)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = COLORS.whiteBgButtonBg;
+                const icon = e.currentTarget.querySelector('svg') as HTMLElement;
+                if (icon) icon.style.transform = "rotate(0deg)";
+              }}
+            >
+              Shop Now
+              <ShoppingCart className="transition-transform duration-300" />
+            </a>
           </nav>
         )}
       </div>

@@ -111,7 +111,7 @@ export default function Careers() {
   return (
     <div className="min-h-screen bg-white font-secondary">
       {/* Hero Section */}
-      <section className="pt-10 relative bg-gradient-to-r from-white via-red-50 to-white overflow-hidden font-primary">
+      <section className="pt-6 md:pt-10 relative bg-gradient-to-r from-white via-red-50 to-white overflow-hidden font-primary">
         <div
           className="relative overflow-hidden mt-10 bg-black"
           style={{
