@@ -119,12 +119,28 @@ export default function Product(): JSX.Element {
   const CATEGORIES = useMemo(() => getCategoryList(products), [products]);
 
   useEffect(() => {
-    if (!loading && CATEGORIES.length > 0) {
+  if (!loading && CATEGORIES.length > 0) {
+    // Try to find 'laser cutting' category
+    const defaultCat = CATEGORIES.find(
+      c => c.name.toLowerCase() === "laser cutting"
+    );
+    // If 'laser cutting' found, try to select 'sheet cutting Machine' sub
+    let defaultSub = "";
+    if (defaultCat) {
+      defaultSub =
+        defaultCat.subs.find(
+          s => s.toLowerCase() === "sheet cutting machine"
+        ) || defaultCat.subs[0];
+      setCategoryId(defaultCat.id);
+      setSub(defaultSub);
+    } else {
+      // fallback to first
       setCategoryId(CATEGORIES[0].id);
       setSub(CATEGORIES[0].subs[0]);
-      setCurrentPage(1);
     }
-  }, [loading, CATEGORIES]);
+    setCurrentPage(1);
+  }
+}, [loading, CATEGORIES]);
 
   const category = useMemo(
     () => CATEGORIES.find((c) => c.id === categoryId) || CATEGORIES[0],

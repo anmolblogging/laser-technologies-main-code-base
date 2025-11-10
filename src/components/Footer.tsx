@@ -100,11 +100,10 @@ const Footer = () => {
 
   // ✅ Social
   const socialLinks = [
-    { Icon: Facebook, href: "https://facebook.com", label: "Facebook" },
-    { Icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-    { Icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-    { Icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-    { Icon: Youtube, href: "https://youtube.com", label: "YouTube" },
+    { Icon: Facebook, href: "https://www.facebook.com/LaserTechnologiesOfficial", label: "Facebook" },
+    { Icon: Instagram, href: "https://www.instagram.com/lasertechnologiesofficial/", label: "Instagram" },
+    { Icon: Linkedin, href: "https://www.linkedin.com/company/lasertechnologiesofficial/", label: "LinkedIn" },
+    { Icon: Youtube, href: "https://www.youtube.com/@LaserTechnologiesOfficial", label: "YouTube" },
   ];
 
   // ✅ Contact Info
