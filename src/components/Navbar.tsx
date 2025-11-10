@@ -54,7 +54,8 @@ const Header = () => {
     { name: "Milestone", href: "/about/milestone" },
     { name: "Awards & Accolades", href: "/awards" },
     { name: "Careers", href: "/careers" },
-    { name: "News & Media ", href: "/news" },
+    { name: "News & Media", href: "/news" },
+    { name: "Our Partners", href: "/partners" },
   ];
 
   useEffect(() => {

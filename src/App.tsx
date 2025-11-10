@@ -14,6 +14,7 @@ import Milestone from "./pages/Timeline";
 import LaserGurukul from "./pages/LaserGurukul";
 import Chatbot from "./components/Chatbot";
 import Contact from "./pages/Contact";
+import Partners from "./pages/Partners";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/about/milestone" element={<Milestone/>} />
         <Route path="/laserGurukul" element={<LaserGurukul />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/partners" element={<Partners />} />
       </Routes>
       <Chatbot/>
       <Footer />
