@@ -42,9 +42,10 @@ const Header = () => {
     { type: "link", name: "Contact", href: "/contact" },
     { type: "dropdown", name: "Knowledge", key: "Knowledge" },
   ];
-
+  
   const KnowledgeItems = [
     { name: "Laser Gurukul", href: "/laserGurukul" },
+    { name: "Laser University", href: "/laser-university" },
     { name: "Articles", href: "/articles" },
   ];
 

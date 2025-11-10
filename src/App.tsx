@@ -24,7 +24,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<Producttemplate />} />
         <Route path="/blog/:id" element={<Blogtemplate />} />
-        <Route path="/knowledge" element={<KnowledgeBase />} />
+        <Route path="/laser-university" element={<KnowledgeBase />} />
         <Route
           path="/products/:segment/:subcategory"
           element={<ProductListingPage />}
