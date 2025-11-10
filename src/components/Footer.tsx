@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { supabase } from "../lib/supabase";
 
-const Logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/footer-logo.png';
+const Logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/logo-footer.png';
 const GreatPlaceToWorkLogo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/gptw.png';
 
 const PAGE_LIMIT = 20;

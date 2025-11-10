@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown, ChevronRight, ShoppingCart } from "lucide-react";
 import { supabase } from "../lib/supabase";
 
-const Logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/logo.png';
+const Logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/logo-nav.png';
 
 const COLORS = {
   whiteBgText: "#060C2A",

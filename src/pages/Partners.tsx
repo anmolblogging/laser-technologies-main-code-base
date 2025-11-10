@@ -1,5 +1,5 @@
-import React from 'react';
-import { Globe,Handshake , Award, ExternalLink, MapPin, Calendar, TrendingUp, Trophy, Target, Zap, ArrowRight } from 'lucide-react';
+
+import { Globe,Handshake , ExternalLink, MapPin, Calendar, TrendingUp, Trophy, Target, Zap, ArrowRight } from 'lucide-react';
 
 const Partners = () => {
   const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg';
@@ -81,7 +81,7 @@ const Partners = () => {
       established: "N/A",
       description: "With Centricut consumables for CO2 & fiber optic laser cutting system, you get the same quality as OEM parts, but at a lower cost. They offer more than 3000 part numbers - one of the largest inventories anywhere including OEM quality laser optics, nozzles, nozzle holders & accessories. All are precision manufactured and come with a seal of approval.",
       specialization: "Laser Consumables & Parts",
-      website: "https://www.centricut.com",
+      website: "https://www.hypertherm.com/resources/training/",
       image: "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/partners-logo/CENTRICUT%20LOGO.png",
       achievements: [
         { icon: Trophy, text: "3000+ Parts", color: "text-red-800" },
@@ -95,7 +95,7 @@ const Partners = () => {
       established: "N/A",
       description: "GHBM is a national high-tech enterprise dedicated to providing intelligent bending equipment for users around the world. It has always focused on manufacturing intelligent bending equipment. It has a professional and independent core R&D team for CNC Press Brake.",
       specialization: "Intelligent Bending Equipment",
-      website: "https://www.ghbmpress.com",
+      website: "http://www.fsghkj.com/en/",
       image: "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/partners-logo/GHBM%20LOGO.png",
       achievements: [
         { icon: Zap, text: "Hi-Tech Certified", color: "text-red-800"},
@@ -178,11 +178,11 @@ const Partners = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
                   {/* Image */}
                   <div className={`relative overflow-hidden ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                    <div className="aspect-[4/3] relative bg-white rounded-lg">
+                    <div className="aspect-[4/3] relative p-2 bg-white rounded-lg">
                       <img 
                         src={partner.image}
                         alt={partner.name}
-                        className="w-full h-full object-contain "
+                        className="w-full h-full p-2 object-contain "
                         loading="lazy"
                       />
                     </div>
