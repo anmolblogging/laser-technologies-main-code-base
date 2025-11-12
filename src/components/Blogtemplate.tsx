@@ -157,12 +157,12 @@ const BlogTemplate: React.FC = () => {
         </header>
 
         <div className="relative w-full">
-          <div className="relative w-full h-[40vh] sm:h-[50vh] lg:h-[65vh] overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10"></div>
+          <div className="relative object-center overflow-hidden">
+            <div className="absolute inset-0"></div>
             <img
               src={blog.image}
               alt={blog.title}
-              className="w-full h-full object-cover"
+              className=" w-full object-cover object-center"
               loading="eager"
             />
             <div className="absolute top-6 left-6 sm:left-12 z-20">
@@ -190,7 +190,7 @@ const BlogTemplate: React.FC = () => {
                     <img
                       src={blog.authorImage}
                       alt={blog.author}
-                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover ring-4 ring-white shadow-lg"
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-contain ring-4 ring-white shadow-lg"
                       loading="lazy"
                     />
                     <div
@@ -277,7 +277,7 @@ const BlogTemplate: React.FC = () => {
                         <img
                           src={section.image}
                           alt={`${heading} illustration`}
-                          className="w-full max-w-4xl rounded-lg shadow-md"
+                          className="md:w-50 md:h-100 w-full   md:max-w-2xl  shadow-md"
                           loading="lazy"
                         />
                       </div>

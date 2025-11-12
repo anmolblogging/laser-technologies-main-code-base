@@ -587,7 +587,7 @@ const KnowledgeBase = () => {
                         </div>
 
                         {/* CONTENT BLOCKS */}
-                        <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none pl-10 md:pl-12">
+                        <div className="px-2 prose prose-sm sm:prose-base lg:prose-lg max-w-none pl-10 md:pl-12">
                           {blocks ? (
                             blocks.length > 0 ? (
                               blocks.map((block: any) => {
@@ -610,27 +610,54 @@ const KnowledgeBase = () => {
                                   );
                                 }
                                 if (block.block_type === "table") {
-                                  return (
-                                    <div key={block.id} className="overflow-x-auto mb-4 -mx-2 sm:mx-0">
-                                      <table className="min-w-full table-auto border-collapse border border-gray-300 text-sm">
-                                        <tbody>
-                                          {block.content.rows.map((row: any[], ri: number) => (
-                                            <tr key={ri} className="even:bg-gray-50">
-                                              {row.map((cell: string, ci: number) => (
-                                                <td
-                                                  key={ci}
-                                                  className="border border-gray-300 px-3 py-2 text-gray-700 break-words"
-                                                >
-                                                  {cell}
-                                                </td>
-                                              ))}
-                                            </tr>
-                                          ))}
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  );
-                                }
+  const { headers, rows } = block.content;
+  return (
+    <div
+      key={block.id}
+      className="mb-8 px-4 -mx-4 sm:px-0 sm:mx-0"
+    >
+      <div className="inline-block min-w-full border border-gray-200 shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto border-collapse">
+            {headers && (
+              <thead>
+                <tr className="bg-gradient-to-r  border-b-2 border-gray-200">
+                  {headers.map((header: string, hi: number) => (
+                    <th
+                      key={hi}
+                      className="px-6 py-4 text-left font-medium text-gray-800 text-sm md:text-base whitespace-nowrap first:pl-8 border-r border-gray-200 last:border-r-0"
+                    >
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+            )}
+            <tbody>
+              {rows.map((row: any[], ri: number) => (
+                <tr
+                  key={ri}
+                  className="border-b border-gray-100 last:border-b-0 hover:bg-blue-50 transition-all duration-200 ease-in-out"
+                >
+                  {row.map((cell: string, ci: number) => (
+                    <td
+                      key={ci}
+                      className="px-6 py-4 text-gray-700 text-sm md:text-base align-top break-words first:pl-8 border-r border-gray-100 last:border-r-0"
+                    >
+                      <div className="min-h-[2rem] flex items-center">
+                        {cell}
+                      </div>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
                                 return null;
                               })
                             ) : (
