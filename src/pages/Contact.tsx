@@ -11,6 +11,11 @@ import {
   MessageSquare,
   Briefcase,
   CheckCircle,
+  MessageCircle,
+  ArrowRight,
+  Users,
+  Award,
+  Headphones,
 } from "lucide-react";
 
 const logo =
@@ -89,34 +94,38 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: Phone,
-      title: "Phone",
-      details: ["+91 22 6666 6666", "+91 22 6666 6667"],
-      link: "tel:+912266666666",
+      title: "Call Us",
+      details: ["8657412551"],
+      link: "tel:8657412551",
+      description: "Mon-Fri 9 AM - 6 PM, Sat 9 AM - 1 PM",
     },
     {
       icon: Mail,
-      title: "Email",
-      details: ["info@lasertechnologies.in", "sales@lasertechnologies.in"],
-      link: "mailto:info@lasertechnologies.in",
+      title: "Email Us",
+      details: ["info@lasertechnologies.co.in"],
+      link: "mailto:info@lasertechnologies.co.in",
+      description: "We'll respond within 24 hours",
     },
     {
       icon: MapPin,
-      title: "Address",
+      title: "Visit Us",
       details: [
         "Laser Technologies Pvt Ltd",
         "Mumbai, Maharashtra 400001",
         "India",
       ],
       link: null,
+      description: "Our headquarters location",
     },
     {
       icon: Clock,
-      title: "Business Hours",
+      title: "Working Hours",
       details: [
         "Monday - Friday: 9:00 AM - 6:00 PM",
         "Saturday: 9:00 AM - 1:00 PM",
       ],
       link: null,
+      description: "Sunday closed",
     },
   ];
 
@@ -130,9 +139,20 @@ const Contact = () => {
     "Other",
   ];
 
+  const experienceCentres = [
+    { city: "Pune", state: "Maharashtra", region: "West India" },
+    { city: "Ahmadabad", state: "Gujarat", region: "West India" },
+    { city: "Delhi", state: "Delhi", region: "North India" },
+    { city: "Indore", state: "Madhya Pradesh", region: "Central India" },
+    { city: "Kolkata", state: "West Bengal", region: "East India" },
+    { city: "Raipur", state: "Chhattisgarh", region: "Central India" },
+    { city: "Bangalore", state: "Karnataka", region: "South India" },
+    { city: "Rajkot", state: "Gujarat", region: "West India" },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Hero Section */}
+      {/* Hero Section with SEO-optimized content */}
       <header
         className="relative mt-16 md:mt-20 bg-black overflow-hidden"
         style={{
@@ -140,127 +160,183 @@ const Contact = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
+        role="banner"
+        aria-label="Contact page hero section"
       >
+        <div className="absolute inset-0 bg-black/40"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <div className="text-center space-y-6">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium text-white leading-tight">
-              Get In Touch
+              Get In Touch With Us
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-              We're here to help and answer any question you might have.
+              We're here to help and answer any question you might have. We look forward to hearing from you.
             </p>
+            <div className="flex flex-wrap justify-center gap-4 pt-4">
+              <a
+                href="tel:8657412551"
+                className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 font-semibold hover:bg-gray-100 transition-colors"
+                aria-label="Call us at 8657412551"
+              >
+                <Phone className="h-5 w-5" />
+                Call Now
+              </a>
+              <a
+                href="https://wa.me/919004005151"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-green-500 text-white px-6 py-3 font-semibold hover:bg-green-600 transition-colors"
+                aria-label="Chat with us on WhatsApp"
+              >
+                <MessageCircle className="h-5 w-5" />
+                WhatsApp Us
+              </a>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main className="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Contact Information */}
-          <div className="lg:col-span-1 space-y-6">
-            {contactInfo.map((info, index) => (
-              <div
-                key={index}
-                className="bg-white shadow-md hover:shadow-xl transition-shadow duration-300 p-6"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-red-200">
-                    <info.icon className="h-6 w-6 text-black" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">
-                      {info.title}
-                    </h3>
-                    {info.details.map((detail, idx) => (
-                      <p key={idx} className="text-sm text-gray-600 mb-1">
-                        {info.link && idx === 0 ? (
-                          <a
-                            className="hover:text-black"
-                            href={info.link}
-                          >
-                            {detail}
-                          </a>
-                        ) : (
-                          detail
+          <aside className="lg:col-span-1 space-y-6" aria-label="Contact information">
+            <div className="bg-white p-8 text-black shadow-xl">
+              <h2 className="text-2xl font-bold mb-3">Let's Connect</h2>
+              <p className="text-black/80 text-sm leading-relaxed mb-6">
+                Have questions about our laser technology solutions? Our team is ready to help you find the perfect solution for your business needs.
+              </p>
+              <div className="h-px bg-white/20 mb-6"></div>
+              <div className="space-y-4">
+                {contactInfo.map((info, index) => (
+                  <div key={index} className="group">
+                    <div className="flex items-start gap-4 p-4 bg-black/5  ">
+                      <div className="p-2 bg-red-200 ">
+                        <info.icon className="h-5 w-5 text-black" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-sm font-bold text-black mb-1">
+                          {info.title}
+                        </h3>
+                        {info.details.map((detail, idx) => (
+                          <p key={idx} className="text-sm text-black/80 mb-1">
+                            {info.link && idx === 0 ? (
+                              <a
+                                className="hover:text-red-200 transition-colors"
+                                href={info.link}
+                                aria-label={`${info.title}: ${detail}`}
+                              >
+                                {detail}
+                              </a>
+                            ) : (
+                              detail
+                            )}
+                          </p>
+                        ))}
+                        {info.description && (
+                          <p className="text-xs text-white/60 mt-1 italic">
+                            {info.description}
+                          </p>
                         )}
-                      </p>
-                    ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
-
-            {/* Map */}
-            <div className="bg-white shadow-md overflow-hidden">
-              <div className="h-64">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12..."
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  loading="lazy"
-                  title="LaserTech Office Location"
-                />
+                ))}
               </div>
             </div>
-          </div>
+
+            {/* WhatsApp CTA Card */}
+            {/* <div className="bg-gradient-to-br from-green-500 to-green-600 p-6 text-white shadow-xl">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-white">
+                  <MessageCircle className="h-6 w-6 text-green-600" />
+                </div>
+                <h3 className="text-xl font-bold">Quick Chat on WhatsApp</h3>
+              </div>
+              <p className="text-white/90 text-sm mb-4 leading-relaxed">
+                Get instant responses to your queries. Our team is available on WhatsApp for faster communication.
+              </p>
+              <a
+                href="https://wa.me/919004005151"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-white text-green-600 px-5 py-2.5 font-semibold hover:bg-gray-100 transition-colors text-sm"
+                aria-label="Start WhatsApp conversation at 9004005151"
+              >
+                Chat Now
+                <ArrowRight className="h-4 w-4" />
+              </a> */}
+            {/* </div> */}
+
+            {/* Trust Badge */}
+            {/* <div className="bg-white p-6 shadow-md border-l-4 border-red-200">
+              <p className="text-sm text-gray-600 leading-relaxed italic">
+                "Your privacy matters to us. All information shared through this form is confidential and used solely to serve you better."
+              </p>
+            </div> */}
+          </aside>
 
           {/* Contact Form */}
           <div className="lg:col-span-2">
-            <div className="bg-white shadow-md p-8">
+            <div className="bg-white shadow-xl p-8 md:p-10">
               <div className="mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
                   Send Us A Message
                 </h2>
-                <p className="text-gray-600">
-                  Fill out the form below and we'll get back to you shortly.
+                <p className="text-gray-600 leading-relaxed">
+                  Share your requirements with us and we'll get back to you with tailored solutions. Our experts typically respond within 24 hours.
                 </p>
               </div>
 
               {submitSuccess && (
-                <div className="mb-6 p-4 bg-green-50 border border-green-200 flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
-                  <p className="text-green-800 font-medium">
-                    Thank you! Your message has been sent successfully.
-                  </p>
+                <div className="mb-6 p-5 bg-green-50 border-l-4 border-green-500 flex items-start gap-3" role="alert">
+                  <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-green-800 font-bold mb-1">Message Sent Successfully!</p>
+                    <p className="text-green-700 text-sm">Thank you for reaching out. Our team will contact you shortly.</p>
+                  </div>
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <div onSubmit={handleSubmit} className="space-y-6">
                 {/* Name + Email */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Full Name *
+                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Full Name <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5 pointer-events-none" />
                       <input
                         type="text"
+                        id="name"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300"
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 focus:border-red-300 focus:ring-2 focus:ring-red-100 outline-none transition-all"
                         placeholder="John Doe"
+                        aria-required="true"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Email Address *
+                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Email Address <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5 pointer-events-none" />
                       <input
                         type="email"
+                        id="email"
                         name="email"
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300"
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 focus:border-red-300 focus:ring-2 focus:ring-red-100 outline-none transition-all"
                         placeholder="john@example.com"
+                        aria-required="true"
                       />
                     </div>
                   </div>
@@ -269,34 +345,36 @@ const Contact = () => {
                 {/* Phone + Company */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Phone
+                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Phone Number
                     </label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5 pointer-events-none" />
                       <input
                         type="tel"
+                        id="phone"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300"
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 focus:border-red-300 focus:ring-2 focus:ring-red-100 outline-none transition-all"
                         placeholder="+91 98765 43210"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Company
+                    <label htmlFor="company" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Company / Organization
                     </label>
                     <div className="relative">
-                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5 pointer-events-none" />
                       <input
                         type="text"
+                        id="company"
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300"
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 focus:border-red-300 focus:ring-2 focus:ring-red-100 outline-none transition-all"
                         placeholder="Company Name"
                       />
                     </div>
@@ -305,19 +383,21 @@ const Contact = () => {
 
                 {/* Subject */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Subject *
+                  <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
+                    How Can We Help You? <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+                    <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5 pointer-events-none" />
                     <select
+                      id="subject"
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 bg-white"
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 bg-white focus:border-red-300 focus:ring-2 focus:ring-red-100 outline-none transition-all"
+                      aria-required="true"
                     >
-                      <option value="">Select subject</option>
+                      <option value="">Select a topic</option>
                       {subjects.map((s) => (
                         <option key={s} value={s}>
                           {s}
@@ -329,33 +409,40 @@ const Contact = () => {
 
                 {/* Message */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Message *
+                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Your Message <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <MessageSquare className="absolute left-3 top-3 text-gray-400 h-5 w-5" />
+                    <MessageSquare className="absolute left-3 top-3 text-gray-400 h-5 w-5 pointer-events-none" />
                     <textarea
+                      id="message"
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
                       required
                       rows={6}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 resize-none"
-                      placeholder="Tell us more about your inquiry..."
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 resize-none focus:border-red-300 focus:ring-2 focus:ring-red-100 outline-none transition-all"
+                      placeholder="Tell us more about your requirements, project details, or any questions you have..."
+                      aria-required="true"
                     />
                   </div>
+                  <p className="text-xs text-gray-500 mt-2">
+                    Please provide as much detail as possible to help us serve you better
+                  </p>
                 </div>
 
                 {/* Button */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-red-200 hover:bg-red-300 py-4 px-6 font-semibold text-black transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                  onClick={handleSubmit}
+                  className="w-full bg-red-200 hover:bg-red-300 py-4 px-6 font-semibold text-black transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+                  aria-label={isSubmitting ? "Sending message" : "Send message"}
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="animate-spin h-5 w-5 border-2 border-black border-t-transparent" />
-                      Sending...
+                      <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />
+                      Sending Your Message...
                     </>
                   ) : (
                     <>
@@ -364,11 +451,253 @@ const Contact = () => {
                     </>
                   )}
                 </button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+
+        {/* Office Locations Section - COMPLETELY REDESIGNED */}
+        <section className="mt-24 mb-12" aria-labelledby="office-locations">
+          {/* Section Header with SEO content */}
+          <div className="text-center mb-16">
+            <h2 id="office-locations" className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Visit Our Office Locations
+            </h2>
+            <div className="w-20 h-1 bg-red-600 mx-auto mb-6"></div>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Experience our laser technology solutions firsthand at our state-of-the-art facilities across India. Walk-ins welcome during business hours.
+            </p>
+          </div>
+
+          {/* Head Office - Ultra Premium Design */}
+          <div className="mb-20">
+            <div className="bg-white shadow-2xl overflow-hidden border-t-4 border-red-600">
+              {/* Top Label */}
+              <div className="bg-gradient-to-r from-red-600 to-red-700 px-8 py-3">
+                <div className="flex items-center justify-between max-w-7xl mx-auto">
+                  <div className="flex items-center gap-3">
+                    <Building2 className="h-5 w-5 text-white" />
+                    <span className="text-white font-bold text-sm tracking-widest">HEADQUARTERS - MUMBAI</span>
+                  </div>
+                  <span className="text-white/90 text-sm">Main Office</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                {/* Left Section - Office Info */}
+                <div className="p-8 md:p-12 bg-gradient-to-br from-gray-50 to-white">
+                  <div className="mb-8">
+                    <h3 className="text-3xl md:text-4xl font-medium text-gray-900 mb-4">
+                      Laser Technologies Pvt Ltd
+                    </h3>
+                    <p className="text-gray-700 leading-relaxed mb-6">
+                      Our headquarters in Mumbai serves as the nerve center of our operations, housing our research & development team, customer support center, and administrative offices. Visit us to explore our complete range of laser technology solutions.
+                    </p>
+                  </div>
+
+                  {/* Contact Grid */}
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4 p-4 bg-white border-l-4 border-red-200 shadow-sm">
+                      <div className="p-3 bg-red-200">
+                        <Phone className="h-5 w-5 text-black" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-gray-500 mb-1 uppercase tracking-wider">Direct Line</p>
+                        <a href="tel:8657412551" className="text-lg font-medium text-gray-900 hover:text-red-600 transition-colors">
+                          8657412551
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 p-4 bg-white border-l-4 border-red-200 shadow-sm">
+                      <div className="p-3 bg-red-200">
+                        <Mail className="h-5 w-5 text-black" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-gray-500 mb-1 uppercase tracking-wider">Email Address</p>
+                        <a href="mailto:info@lasertechnologies.co.in" className="text-base font-medium text-gray-900 hover:text-red-600 transition-colors break-all">
+                          info@lasertechnologies.co.in
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 p-4 bg-white border-l-4 border-red-200 shadow-sm">
+                      <div className="p-3 bg-red-200">
+                        <MessageCircle className="h-5 w-5 text-black" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-gray-500 mb-1 uppercase tracking-wider">WhatsApp Support</p>
+                        <a href="https://wa.me/919004005151" target="_blank" rel="noopener noreferrer" className="text-lg font-medium text-gray-900 hover:text-green-600 transition-colors">
+                          9004005151
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 p-4 bg-white border-l-4 border-red-200 shadow-sm">
+                      <div className="p-3 bg-red-200">
+                        <Clock className="h-5 w-5 text-black" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-gray-500 mb-1 uppercase tracking-wider">Office Hours</p>
+                        <p className="text-sm font-medium text-gray-900">Monday - Friday: 9:00 AM - 6:00 PM</p>
+                        <p className="text-sm font-medium text-gray-900">Saturday: 9:00 AM - 1:00 PM</p>
+                        <p className="text-xs text-gray-600 mt-1">Sunday: Closed</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Section - Map */}
+                <div className="relative h-full min-h-[500px] lg:min-h-0">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60304.26776850268!2d72.8260275!3d19.0759899!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1234567890"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    title="Laser Technologies Head Office Location - Mumbai, Maharashtra"
+                    className="absolute inset-0"
+                  />
+                  <div className="absolute bottom-4 right-4 bg-white px-4 py-2 shadow-lg">
+                    <a
+                      href="https://share.google/yFq6bJI4coU6mEfHR"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-semibold text-red-600 hover:text-red-700 flex items-center gap-2"
+                    >
+                      Get Directions
+                      <ArrowRight className="h-4 w-4" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Experience Centres Section */}
+          <div className="mt-20">
+            <div className="text-center mb-12">
+              <h3 className="text-3xl md:text-4xl font-medium text-gray-900 mb-4">
+                Customer Experience Centres
+              </h3>
+              <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Visit our experience centres across India for live product demonstrations, technical consultations, and hands-on training sessions. Our experts are ready to guide you.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {experienceCentres.map((centre, index) => (
+                <article
+                  key={index}
+                  className="bg-white shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group border-b-4 border-transparent hover:border-red-600"
+                >
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="p-3 bg-gray-100 group-hover:bg-red-200 transition-colors duration-300">
+                        <MapPin className="h-6 w-6 text-gray-700 group-hover:text-black transition-colors" />
+                      </div>
+                      <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1">
+                        {centre.region}
+                      </span>
+                    </div>
+                    
+                    <h4 className="text-2xl font-medium text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
+                      {centre.city}
+                    </h4>
+                    <p className="text-gray-600 font-medium mb-4 text-sm">
+                      {centre.state}
+                    </p>
+                    
+                  </div>
+                </article>
+              ))}
+            </div>
+
+
+          </div>
+        </section>
+
+        {/* SEO-friendly FAQ/Info Section */}
+        <section className="mt-16 bg-white p-8 md:p-12 shadow-lg" aria-labelledby="additional-info">
+          <div className="max-w-4xl mx-auto">
+            <h3 id="additional-info" className="text-2xl font-bold text-gray-900 mb-6 text-center">
+              What to Expect When You Contact Us
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                  <span className="text-red-600 font-bold">1</span>
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">Quick Response Time</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Our team responds to all inquiries within 24 hours during business days. For urgent matters, call us directly or use WhatsApp.
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                  <span className="text-red-600 font-bold">2</span>
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">Expert Consultation</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Connect with our experienced professionals who understand your industry and can recommend the right solutions.
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                  <span className="text-red-600 font-bold">3</span>
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">Personalized Solutions</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    We take time to understand your specific requirements and provide customized recommendations that fit your budget.
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                  <span className="text-red-600 font-bold">4</span>
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">Ongoing Support</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Our relationship doesn't end after the sale. We provide continuous support and training for all our clients.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Schema.org structured data for SEO */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Laser Technologies Pvt Ltd",
+          "url": "https://lasertechnologies.co.in",
+          "logo": logo,
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91-8657412551",
+            "contactType": "customer service",
+            "areaServed": "IN",
+            "availableLanguage": ["en", "hi"]
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Mumbai",
+            "addressRegion": "Maharashtra",
+            "postalCode": "400001",
+            "addressCountry": "IN"
+          },
+          "email": "info@lasertechnologies.co.in"
+        })}
+      </script>
     </div>
   );
 };

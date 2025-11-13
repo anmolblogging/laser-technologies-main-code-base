@@ -466,7 +466,7 @@ export default function AboutUsPage() {
         <div className="relative bg-white p-2 shadow-2xl">
           <div className="relative overflow-hidden">
             <img
-              src="https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/rakesh-agarwal.jpg"
+              src="https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/rakesh-about.jpg"
               alt="Rakesh Agrawal - Founder and Managing Director"
               className="w-full h-[500px] md:h-[600px] lg:h-[700px] object-cover object-center"
               loading="lazy"

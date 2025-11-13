@@ -1,20 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { ArrowLeft, Calendar, Clock, Share2, Tag } from "lucide-react";
+import { ArrowLeft, Calendar, Share2, Tag } from "lucide-react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import Loading from "./Loading";
 
-interface ContentSection {
-  description: string;
-  image: string | null;
-}
-
 interface BlogPost {
   id: string;
   title: string;
-  summary: string;
   image: string;
-  content: Record<string, ContentSection>;
+  content: string; // now a single HTML block
   author: string;
   designation: string;
   authorImage: string;
@@ -31,7 +25,7 @@ const BRAND = {
   border: "rgba(107,15,15,0.15)",
 };
 
-const getCategoryPath = (category) => {
+const getCategoryPath = (category: string) => {
   if (category === "News & Media") return "/news";
   if (category === "CSR") return "/csr";
   if (category === "Articles") return "/articles";
@@ -57,22 +51,48 @@ const BlogTemplate: React.FC = () => {
         if (error) {
           setBlog(null);
         } else if (data) {
-          let content: Record<string, ContentSection>;
+          let contentHtml = "";
+
+          // If content is already a full HTML string (new way)
           if (typeof data.content === "string") {
-            try {
-              content = JSON.parse(data.content);
-            } catch {
-              content = {};
-            }
-          } else {
-            content = data.content;
+            contentHtml = data.content;
+          } else if (data.content && typeof data.content === "object") {
+            // Backward compatibility: convert old JSON structure into HTML
+            // data.content is assumed to be Record<string, { description: string; image?: string | null }>
+            const sections = data.content as Record<
+              string,
+              { description: string; image?: string | null }
+            >;
+
+            contentHtml = Object.entries(sections)
+              .map(([heading, section], index) => {
+                const safeHeading = heading || "";
+                const safeDescription = section?.description || "";
+                const imageHtml = section?.image
+                  ? `<div class="mt-6"><img src="${section.image}" alt="${safeHeading} illustration" style="max-width:100%;height:auto;" /></div>`
+                  : "";
+
+                return `
+                  <section style="margin-top:${index > 0 ? "3rem" : "0"};padding-top:${index > 0 ? "3rem" : "0"};border-top:${index > 0 ? `1px solid ${BRAND.border}` : "none"};">
+                    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+                      <div style="flex-shrink:0;width:6px;height:48px;background-color:${BRAND.primary};margin-top:0.15em;"></div>
+                      <h2 style="font-size:1.75rem;font-weight:500;color:#111827;margin:0;">${safeHeading}</h2>
+                    </div>
+                    <div style="padding-left:1.5rem;font-size:1.05rem;line-height:1.8;color:#374151;white-space:pre-line;">
+                      ${safeDescription}
+                    </div>
+                    ${imageHtml}
+                  </section>
+                `;
+              })
+              .join("");
           }
+
           setBlog({
             id: data.id,
             title: data.title,
-            summary: data.summary,
             image: data.image,
-            content: content,
+            content: contentHtml,
             author: data.author,
             designation: data.designation,
             authorImage: data.author_image,
@@ -175,15 +195,12 @@ const BlogTemplate: React.FC = () => {
             </div>
           </div>
 
-          {/* Banner/Card with Title, Summary, Author, Meta */}
+          {/* Banner/Card with Title, Author, Meta */}
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 -mt-20 sm:-mt-32 lg:-mt-40 z-20">
             <div className="bg-white shadow-xl p-6 sm:p-8 lg:p-12 backdrop-blur-sm border">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-medium text-gray-900 mb-4 sm:mb-6 leading-tight">
                 {blog.title}
               </h1>
-              <p className="text-base sm:text-lg lg:text-2xl text-gray-600 leading-relaxed max-w-4xl mb-8">
-                {blog.summary}
-              </p>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 border py-3 px-4">
                 <div className="flex items-center gap-4">
                   <div className="relative">
@@ -230,8 +247,7 @@ const BlogTemplate: React.FC = () => {
                       </time>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-gray-600">
-                  </div>
+                  <div className="flex items-center gap-2 text-gray-600"></div>
                   <button
                     onClick={handleShare}
                     className="flex items-center gap-2 px-6 py-3 bg-whiteBgButtonBg bg-opacity-40 text-[#060C2A] text-sm font-semibold rounded-lg transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5"
@@ -246,45 +262,15 @@ const BlogTemplate: React.FC = () => {
           </div>
         </div>
 
-        {/* Content Sections */}
+        {/* Content */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <article className="py-8 sm:py-12 lg:py-16">
             <div className="bg-white p-6 sm:p-10 lg:p-16 mb-12 border">
-              <div className="prose prose-lg max-w-none">
-                {Object.entries(blog.content).map(([heading, section], idx) => (
-                  <div
-                    key={heading}
-                    className={idx > 0 ? "mt-12 pt-12 border-t" : ""}
-                    style={{
-                      borderColor: idx > 0 ? BRAND.border : "transparent",
-                    }}
-                  >
-                    <div className="flex items-center gap-4 mb-6">
-                      <div
-                        className="flex-shrink-0 w-1 md:w-1.5 h-4 md:h-12 mt-[0.15em]"
-                        style={{ backgroundColor: BRAND.primary }}
-                      ></div>
-                      <h2 className="text-2xl sm:text-3xl lg:text-4xl pt-[-10px] font-medium text-gray-900 leading-tight">
-                        {heading}
-                      </h2>
-                    </div>
-
-                    <p className="text-gray-700 text-base sm:text-lg leading-relaxed pl-8">
-                      {section.description}
-                    </p>
-                    {section.image && (
-                      <div className="mt-6 pl-8">
-                        <img
-                          src={section.image}
-                          alt={`${heading} illustration`}
-                          className="md:w-50 md:h-100 w-full   md:max-w-2xl  shadow-md"
-                          loading="lazy"
-                        />
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+              <div
+                className="prose prose-lg max-w-none"
+                // ⚠️ HTML from Supabase goes here
+                dangerouslySetInnerHTML={{ __html: blog.content }}
+              />
             </div>
 
             <div className="bg-white shadow-md p-6 sm:p-8 mb-12 border">

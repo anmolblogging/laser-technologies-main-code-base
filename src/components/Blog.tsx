@@ -4,26 +4,19 @@ import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 import { supabase } from "../lib/supabase";
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 6;
 
 interface BlogPost {
   id: string;
   title: string | null;
-  summary: string | null;
   image: string | null;
-  content: Record<string, string> | null;
-  author: string | null;
-  designation: string | null;
-  author_image: string | null;
   category: string | null;
-  tags: string[] | null;
-  created_at: string | null;
-  updated_at: string | null;
 }
 
 const Blog = () => {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerFrame, setCardsPerFrame] = useState(
     typeof window !== "undefined"
@@ -38,27 +31,33 @@ const Blog = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from("blog_posts")
-        .select(
-          `id, title, summary, image, content, author, designation, author_image, category, tags, created_at, updated_at`
-        )
-        .order("created_at", { ascending: false })
-        .limit(loadedCount);
+  // Fetch blogs by pagination using .range()
+  const fetchBlogs = async () => {
+    setLoading(true);
+    const from = 0;
+    const to = loadedCount - 1; // range is inclusive
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select(`id, title, image, category`)
+      .order("created_at", { ascending: false })
+      .range(from, to);
 
-      if (error) {
-        console.error("Error fetching blogs:", error);
-      } else {
-        setBlogs((data as BlogPost[]) || []);
-      }
-      setLoading(false);
-    };
+    setLoading(false);
+    setIsLoadingMore(false);
+
+    if (error) {
+      console.error("Error fetching blogs:", error);
+    } else {
+      setBlogs(data || []);
+    }
+  };
+
+  // Fetch when loadedCount changes (pagination)
+  useEffect(() => {
     fetchBlogs();
   }, [loadedCount]);
 
+  // Update cards per frame on resize
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) setCardsPerFrame(3);
@@ -70,21 +69,31 @@ const Blog = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Slide navigation handlers
   const prevSlide = () => {
+    if (isLoadingMore) return;
     setCurrentIndex((prev) =>
       prev === 0 ? blogs.length - cardsPerFrame : prev - 1
     );
   };
 
   const nextSlide = () => {
-    if (currentIndex >= blogs.length - cardsPerFrame) {
-      setCurrentIndex(0);
-    } else {
-      setCurrentIndex((prev) => prev + 1);
-      if (currentIndex + cardsPerFrame >= loadedCount) {
+    if (isLoadingMore) return;
+
+    // Check if near end of loaded blogs to preload next page
+    if (currentIndex >= blogs.length - cardsPerFrame - 1) {
+      if (blogs.length >= loadedCount && !isLoadingMore) {
+        // Preload next batch
+        setIsLoadingMore(true);
         setLoadedCount((prev) => prev + PAGE_SIZE);
+      } else {
+        // No more blogs, loop slider to start
+        setCurrentIndex(0);
+        return;
       }
     }
+
+    setCurrentIndex((prev) => (prev + 1) % blogs.length);
   };
 
   const handleBlogClick = (blogId: string) => {
@@ -142,7 +151,7 @@ const Blog = () => {
               {blogs.map((blog) => (
                 <div
                   key={blog.id}
-                  className={`flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3 sm:px-4`}
+                  className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3 sm:px-4"
                 >
                   <article className="bg-white border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col group overflow-hidden">
                     <div
@@ -162,22 +171,21 @@ const Blog = () => {
 
                     <div className="p-5 sm:p-6 flex-1 flex flex-col">
                       <h3
-                        className="text-xl sm:text-2xl font-medium text-whiteBgText mb-1 transition-colors duration-200 cursor-pointer"
+                        className="text-xl sm:text-2xl font-medium text-whiteBgText mb-1 transition-colors duration-200 cursor-pointer line-clamp-3"
                         onClick={() => handleBlogClick(blog.id)}
+                        title={blog.title || "Untitled Blog"} // optional full title tooltip
                       >
                         {blog.title || "Untitled Blog"}
                       </h3>
                       {blog.category && (
-                        <p className="text-sm pt-2 text-whiteBgButtonBg opacity-70 mb-3 font-semibold font-primary">
+                        <p className="text-md py-2  text-whiteBgButtonBg opacity-70 mb-4 font-semibold font-primary">
                           {blog.category}
                         </p>
                       )}
-                      <p className="text-whiteBgText text-sm sm:text-base leading-relaxed flex-1 line-clamp-3">
-                        {blog.summary || "No description available."}
-                      </p>
+
                       <button
                         onClick={() => handleBlogClick(blog.id)}
-                        className="mt-5 w-full py-3 text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-primary transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg focus:ring-offset-2 flex items-center justify-center gap-2"
+                        className="mt-auto py-3 w-full text-[#060C2A] bg-opacity-20 bg-whiteBgButtonBg hover:bg-opacity-20 hover:bg-whiteBgButtonBg hover:text-[#060C2A] font-primary transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg focus:ring-offset-2 flex items-center justify-center gap-2"
                       >
                         Read More
                         <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />

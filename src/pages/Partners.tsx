@@ -64,7 +64,6 @@ const Partners = () => {
     {
       name: "SEI Laser",
       location: "Italy",
-      established: "N/A",
       description: "One of the most dynamic and innovative companies in the world of laser technology, Sei laser provides a complete range of laser systems to satisfy the needs of customers in a variety of markets, including dedicated machines for textiles, leather, digital converting and more.",
       specialization: "Textile & Leather Laser Systems",
       website: "https://www.seilaser.com",
@@ -78,7 +77,6 @@ const Partners = () => {
     {
       name: "Centricut",
       location: "USA",
-      established: "N/A",
       description: "With Centricut consumables for CO2 & fiber optic laser cutting system, you get the same quality as OEM parts, but at a lower cost. They offer more than 3000 part numbers - one of the largest inventories anywhere including OEM quality laser optics, nozzles, nozzle holders & accessories. All are precision manufactured and come with a seal of approval.",
       specialization: "Laser Consumables & Parts",
       website: "https://www.hypertherm.com/resources/training/",
@@ -92,7 +90,6 @@ const Partners = () => {
     {
       name: "GHBM",
       location: "China",
-      established: "N/A",
       description: "GHBM is a national high-tech enterprise dedicated to providing intelligent bending equipment for users around the world. It has always focused on manufacturing intelligent bending equipment. It has a professional and independent core R&D team for CNC Press Brake.",
       specialization: "Intelligent Bending Equipment",
       website: "http://www.fsghkj.com/en/",
@@ -113,6 +110,39 @@ const Partners = () => {
       image: "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/partners-logo/Rodomach%20logo.png",
       achievements: [
         { icon: Trophy, text: "Robotic Expert", color:"text-red-800"},
+        { icon: Target, text: "Custom Built", color: "text-red-800" },
+        { icon: TrendingUp, text: "Quality Driven", color: "text-red-800" }
+      ]
+    },
+    {
+      name: "BLMA Pipe Bending",
+      description: "Laser Technologies collaborates with BLMA Group, a world leader in tube and pipe bending technology. Known for precision, flexibility, and automation, BLMA’s solutions complement Laser Technologies’ metal fabrication lineup — ensuring seamless integration for high-performance bending operations.",
+      specialization: "Pipe Bending Technology",
+      website: "https://www.blmamachinery.com",
+      image: "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/partners-logo/Blma%20logo.png",
+      achievements: [
+        { icon: Target, text: "Custom Built", color: "text-red-800" },
+        { icon: TrendingUp, text: "Quality Driven", color: "text-red-800" }
+      ]
+    },
+    {
+      name: "PHOTONX – INDIA",
+      description: "For beginners in the laser industry, Laser Technologies introduces its own brand – PhotonX Laser. Offering cost-effective and efficient laser solutions for both non-metal and metal applications, PhotonX is designed to help businesses start their laser journey with confidence and reliability.",
+      specialization: "Laser Technology",
+      website: "https://www.photonx.in/",
+      image: "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/partners-logo/PHOTONX%20LOGO.png",
+      achievements: [
+        { icon: Target, text: "Custom Built", color: "text-red-800" },
+        { icon: TrendingUp, text: "Quality Driven", color: "text-red-800" }
+      ]
+    },
+    {
+      name: "Dardontech Panel Bender",
+      description: "Our partnership with Dardontech brings advanced panel bending solutions to India. Engineered for accuracy, speed, and consistency, Dardontech’s automated panel benders empower manufacturers to achieve superior forming results across a wide range of materials.",
+      specialization: "Panel Bending Technologr",
+      website: "https://www.dardontech.com/",
+      image: "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/partners-logo/Dardontech%20logo.png",
+      achievements: [
         { icon: Target, text: "Custom Built", color: "text-red-800" },
         { icon: TrendingUp, text: "Quality Driven", color: "text-red-800" }
       ]
@@ -197,11 +227,13 @@ const Partners = () => {
                         </h3>
                         
                         <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
+                          {partner.location && (
                           <span className="flex items-center gap-1.5">
                             <MapPin className="w-4 h-4" />
                             {partner.location}
                           </span>
-                          {partner.established !== "N/A" && (
+                          )}
+                          {partner.established  && (
                             <span className="flex items-center gap-1.5">
                               <Calendar className="w-4 h-4" />
                               Established {partner.established}
