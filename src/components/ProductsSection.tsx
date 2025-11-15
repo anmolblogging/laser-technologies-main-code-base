@@ -335,8 +335,8 @@ export default function Product(): JSX.Element {
           {/* SIDEBAR */}
           <aside className="bg-gradient-to-b from-zinc-900 to-black p-6 shadow-2xl border border-zinc-800 h-[600px] flex flex-col sticky top-24">
             <h4 className="text-xl font-medium mb-6 font-primary text-darkBgText text-opacity-80 flex items-center gap-3 pb-4 border-b border-zinc-800">
-              <div className="p-2 bg-red-950/50 border border-red-900/30">
-                <Grid className="w-5 h-5 text-red-500" />
+              <div className="p-2 bg-blue-950/50 border border-blue-900/30">
+                <Grid className="w-5 h-5 text-blue-500" />
               </div>
               <span>Sub Categories</span>
             </h4>
