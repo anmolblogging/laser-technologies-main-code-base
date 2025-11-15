@@ -93,7 +93,7 @@ const Footer = () => {
       { name: "CSR", href: "/csr" },
       { name: "News & Media", href: "/news" },
       { name: "Articles", href: "/articles" },
-      { name: "Knowledge", href: "/knowledge" },
+      { name: "Knowledge", href: "/laser-university" },
       { name: "Laser Gurukul", href: "/laserGurukul" },
     ],
   };
@@ -109,8 +109,8 @@ const Footer = () => {
   // ✅ Contact Info
   const contactInfo = {
     email: "info@lasertechnologies.in",
-    phone: "+91 22 6666 6666",
-    address: "Laser Technologies Pvt Ltd, Mumbai, Maharashtra, India",
+    phone: "+91 8657412551",
+    address: "Laser Technologies Pvt Ltd, Navi Mumbai, Maharashtra, India",
   };
 
   const year = new Date().getFullYear();

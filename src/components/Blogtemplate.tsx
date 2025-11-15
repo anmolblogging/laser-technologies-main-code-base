@@ -273,31 +273,6 @@ const BlogTemplate: React.FC = () => {
               />
             </div>
 
-            <div className="bg-white shadow-md p-6 sm:p-8 mb-12 border">
-              <div className="flex items-center gap-3 mb-5">
-                <div
-                  className="p-2 rounded-lg"
-                  style={{ backgroundColor: BRAND.light }}
-                >
-                  <Tag className="w-5 h-5" style={{ color: BRAND.primary }} />
-                </div>
-                <span className="text-lg font-medium text-black">Tags</span>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                {blog.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-5 py-2.5 text-sm font-semibold transition-all duration-300"
-                    style={{
-                      backgroundColor: BRAND.light,
-                      color: BRAND.primary,
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
           </article>
         </main>
       </main>

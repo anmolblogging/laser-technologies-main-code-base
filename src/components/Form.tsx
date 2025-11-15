@@ -296,7 +296,7 @@ const Form: React.FC<FormProps> = ({
       <div className="bg-white w-full max-w-xl shadow-2xl rounded-md" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between p-6 border-b">
           <h2 className="text-xl font-semibold text-gray-900">{formConfig.title}</h2>
-          <button type="button" onClick={onClose} className="text-gray-400 hover:text-gray-700 p-1">
+          <button type="button" onClick={onClose} className="text-white hover:text-gray-700 p-1">
             <X className="w-5 h-5" />
           </button>
         </div>

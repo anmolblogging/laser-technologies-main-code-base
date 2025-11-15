@@ -125,25 +125,6 @@ const Posts = () => {
     window.location.href = `/blog/${postId}`;
   };
 
-  const handleTagSelect = (tag) => {
-    setSelectedTag(selectedTag === tag ? null : tag);
-    // Scroll to top of results
-    setTimeout(() => {
-      const resultsSection = document.getElementById('results-section');
-      if (resultsSection) {
-        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
-  };
-
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const clearSearch = () => {
-    setSearchQuery("");
-    setSelectedTag(null);
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50">
@@ -170,61 +151,6 @@ const Posts = () => {
         {/* <div className="absolute bottom-0 left-0 right-0 h-12 sm:h-16 bg-gradient-to-t from-gray-50 to-transparent"></div> */}
       </section>
 
-      {/* Search and Filter Section */}
-      <section className="container mx-auto px-4 -mt-6 sm:-mt-8 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          {/* Search Bar */}
-          <div className="bg-white shadow-xl p-4 sm:p-6 mb-6 sm:mb-8">
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4 sm:h-5 sm:w-5" />
-                <input
-                  type="text"
-                  placeholder="Search by title, content, or author..."
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  className="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm sm:text-base border border-gray-200   focus:outline-none focus:ring-2 focus:ring-whiteBgButtonBg focus:border-transparent transition-all font-secondary"
-                />
-              </div>
-              {(searchQuery || selectedTag) && (
-                <button
-                  onClick={clearSearch}
-                  className="px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base bg-gray-100 text-whiteBgText hover:text-black   hover:bg-gray-200 transition-all font-primary font-semibold whitespace-nowrap"
-                >
-                  Clear All
-                </button>
-              )}
-            </div>
-
-            {/* Tags Filter */}
-            {allTags.length > 0 && (
-              <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-100">
-                <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                  <Tag className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-whiteBgButtonBg" />
-                  <span className="text-xs sm:text-sm font-semibold text-whiteBgText font-primary">
-                    Filter by Tags:
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  {allTags.map((tag) => (
-                    <button
-                      key={tag}
-                      onClick={() => handleTagSelect(tag)}
-                      className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm text-black font-medium transition-all font-secondary ${
-                        selectedTag === tag
-                          ? "bg-whiteBgButtonBg text-white hover:text-white shadow-lg scale-105"
-                          : "bg-gray-100 text-black  hover:bg-gray-200 hover:text-black active:scale-95"
-                      }`}
-                    >
-                      {tag}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
 
       {/* Posts Grid */}
       <section id="results-section" className="container mx-auto px-4 py-8 sm:py-12">

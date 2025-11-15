@@ -97,7 +97,7 @@ const Contact = () => {
       title: "Call Us",
       details: ["8657412551"],
       link: "tel:8657412551",
-      description: "Mon-Fri 9 AM - 6 PM, Sat 9 AM - 1 PM",
+      description: "Mon-Sat 9 AM - 7 PM",
     },
     {
       icon: Mail,
@@ -107,25 +107,16 @@ const Contact = () => {
       description: "We'll respond within 24 hours",
     },
     {
-      icon: MapPin,
-      title: "Visit Us",
-      details: [
-        "Laser Technologies Pvt Ltd",
-        "Mumbai, Maharashtra 400001",
-        "India",
-      ],
-      link: null,
-      description: "Our headquarters location",
+      icon: MessageCircle,
+      title: "WhatsApp",
+      details: ["9004005151"],
+      link: "https://wa.me/919004005151",
+      description: "Chat with us on WhatsApp",
     },
     {
       icon: Clock,
       title: "Working Hours",
-      details: [
-        "Monday - Friday: 9:00 AM - 6:00 PM",
-        "Saturday: 9:00 AM - 1:00 PM",
-      ],
-      link: null,
-      description: "Sunday closed",
+      details: ["Mon - Sat : 9:00 AM - 7:00 PM", "Sunday: Closed "],
     },
   ];
 
@@ -154,7 +145,7 @@ const Contact = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Hero Section with SEO-optimized content */}
       <header
-        className="relative mt-16 md:mt-20 bg-black overflow-hidden"
+        className="relative my-16 md:mt-20 bg-black overflow-hidden"
         style={{
           backgroundImage: `url(${logo})`,
           backgroundSize: "cover",
@@ -170,12 +161,13 @@ const Contact = () => {
               Get In Touch With Us
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-              We're here to help and answer any question you might have. We look forward to hearing from you.
+              We're here to help and answer any question you might have. We look
+              forward to hearing from you.
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-4">
               <a
                 href="tel:8657412551"
-                className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 font-semibold hover:bg-gray-100 transition-colors"
+                className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 font-medium hover:bg-gray-100 transition-colors"
                 aria-label="Call us at 8657412551"
               >
                 <Phone className="h-5 w-5" />
@@ -185,7 +177,7 @@ const Contact = () => {
                 href="https://wa.me/919004005151"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-green-500 text-white px-6 py-3 font-semibold hover:bg-green-600 transition-colors"
+                className="inline-flex items-center gap-2 bg-green-500 text-white px-6 py-3 font-medium hover:bg-green-600 hover:text-black transition-colors"
                 aria-label="Chat with us on WhatsApp"
               >
                 <MessageCircle className="h-5 w-5" />
@@ -200,11 +192,20 @@ const Contact = () => {
       <main className="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Contact Information */}
-          <aside className="lg:col-span-1 space-y-6" aria-label="Contact information">
+          <aside
+            className="lg:col-span-1 space-y-6"
+            aria-label="Contact information"
+          >
             <div className="bg-white p-8 text-black shadow-xl">
-              <h2 className="text-2xl font-bold mb-3">Let's Connect</h2>
+              <h2 className="text-2xl font-medium mb-3">
+                {" "}
+                Laser Technologies Pvt Ltd
+              </h2>
               <p className="text-black/80 text-sm leading-relaxed mb-6">
-                Have questions about our laser technology solutions? Our team is ready to help you find the perfect solution for your business needs.
+                Our headquarters in Mumbai serves as the nerve center of our
+                operations, housing our research & development team, customer
+                support center, and administrative offices. Visit us to explore
+                our complete range of laser technology solutions.
               </p>
               <div className="h-px bg-white/20 mb-6"></div>
               <div className="space-y-4">
@@ -234,7 +235,7 @@ const Contact = () => {
                           </p>
                         ))}
                         {info.description && (
-                          <p className="text-xs text-white/60 mt-1 italic">
+                          <p className="text-xs text-black/60 mt-1 italic">
                             {info.description}
                           </p>
                         )}
@@ -244,36 +245,6 @@ const Contact = () => {
                 ))}
               </div>
             </div>
-
-            {/* WhatsApp CTA Card */}
-            {/* <div className="bg-gradient-to-br from-green-500 to-green-600 p-6 text-white shadow-xl">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 bg-white">
-                  <MessageCircle className="h-6 w-6 text-green-600" />
-                </div>
-                <h3 className="text-xl font-bold">Quick Chat on WhatsApp</h3>
-              </div>
-              <p className="text-white/90 text-sm mb-4 leading-relaxed">
-                Get instant responses to your queries. Our team is available on WhatsApp for faster communication.
-              </p>
-              <a
-                href="https://wa.me/919004005151"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-white text-green-600 px-5 py-2.5 font-semibold hover:bg-gray-100 transition-colors text-sm"
-                aria-label="Start WhatsApp conversation at 9004005151"
-              >
-                Chat Now
-                <ArrowRight className="h-4 w-4" />
-              </a> */}
-            {/* </div> */}
-
-            {/* Trust Badge */}
-            {/* <div className="bg-white p-6 shadow-md border-l-4 border-red-200">
-              <p className="text-sm text-gray-600 leading-relaxed italic">
-                "Your privacy matters to us. All information shared through this form is confidential and used solely to serve you better."
-              </p>
-            </div> */}
           </aside>
 
           {/* Contact Form */}
@@ -284,16 +255,26 @@ const Contact = () => {
                   Send Us A Message
                 </h2>
                 <p className="text-gray-600 leading-relaxed">
-                  Share your requirements with us and we'll get back to you with tailored solutions. Our experts typically respond within 24 hours.
+                  Share your requirements with us and we'll get back to you with
+                  tailored solutions. Our experts typically respond within 24
+                  hours.
                 </p>
               </div>
 
               {submitSuccess && (
-                <div className="mb-6 p-5 bg-green-50 border-l-4 border-green-500 flex items-start gap-3" role="alert">
+                <div
+                  className="mb-6 p-5 bg-green-50 border-l-4 border-green-500 flex items-start gap-3"
+                  role="alert"
+                >
                   <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-green-800 font-bold mb-1">Message Sent Successfully!</p>
-                    <p className="text-green-700 text-sm">Thank you for reaching out. Our team will contact you shortly.</p>
+                    <p className="text-green-800 font-bold mb-1">
+                      Message Sent Successfully!
+                    </p>
+                    <p className="text-green-700 text-sm">
+                      Thank you for reaching out. Our team will contact you
+                      shortly.
+                    </p>
                   </div>
                 </div>
               )}
@@ -302,7 +283,10 @@ const Contact = () => {
                 {/* Name + Email */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-semibold text-gray-700 mb-2"
+                    >
                       Full Name <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
@@ -322,7 +306,10 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-semibold text-gray-700 mb-2"
+                    >
                       Email Address <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
@@ -345,7 +332,10 @@ const Contact = () => {
                 {/* Phone + Company */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-semibold text-gray-700 mb-2"
+                    >
                       Phone Number
                     </label>
                     <div className="relative">
@@ -363,7 +353,10 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="company" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label
+                      htmlFor="company"
+                      className="block text-sm font-semibold text-gray-700 mb-2"
+                    >
                       Company / Organization
                     </label>
                     <div className="relative">
@@ -383,7 +376,10 @@ const Contact = () => {
 
                 {/* Subject */}
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label
+                    htmlFor="subject"
+                    className="block text-sm font-semibold text-gray-700 mb-2"
+                  >
                     How Can We Help You? <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
@@ -409,7 +405,10 @@ const Contact = () => {
 
                 {/* Message */}
                 <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-semibold text-gray-700 mb-2"
+                  >
                     Your Message <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
@@ -427,7 +426,8 @@ const Contact = () => {
                     />
                   </div>
                   <p className="text-xs text-gray-500 mt-2">
-                    Please provide as much detail as possible to help us serve you better
+                    Please provide as much detail as possible to help us serve
+                    you better
                   </p>
                 </div>
 
@@ -455,115 +455,40 @@ const Contact = () => {
             </div>
           </div>
         </div>
-
-        {/* Office Locations Section - COMPLETELY REDESIGNED */}
-        <section className="mt-24 mb-12" aria-labelledby="office-locations">
-          {/* Section Header with SEO content */}
-          <div className="text-center mb-16">
-            <h2 id="office-locations" className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Visit Our Office Locations
-            </h2>
-            <div className="w-20 h-1 bg-red-600 mx-auto mb-6"></div>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Experience our laser technology solutions firsthand at our state-of-the-art facilities across India. Walk-ins welcome during business hours.
-            </p>
-          </div>
-
-          {/* Head Office - Ultra Premium Design */}
+                  {/* map */}
+        <section className="mt-24 mb-12 md:py-20" aria-labelledby="office-locations">
           <div className="mb-20">
             <div className="bg-white shadow-2xl overflow-hidden border-t-4 border-red-600">
-              {/* Top Label */}
               <div className="bg-gradient-to-r from-red-600 to-red-700 px-8 py-3">
                 <div className="flex items-center justify-between max-w-7xl mx-auto">
                   <div className="flex items-center gap-3">
                     <Building2 className="h-5 w-5 text-white" />
-                    <span className="text-white font-bold text-sm tracking-widest">HEADQUARTERS - MUMBAI</span>
+                    <span className="text-white font-bold text-sm tracking-widest">
+                      HEADQUARTERS - MUMBAI
+                    </span>
                   </div>
                   <span className="text-white/90 text-sm">Main Office</span>
                 </div>
               </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                {/* Left Section - Office Info */}
-                <div className="p-8 md:p-12 bg-gradient-to-br from-gray-50 to-white">
-                  <div className="mb-8">
-                    <h3 className="text-3xl md:text-4xl font-medium text-gray-900 mb-4">
-                      Laser Technologies Pvt Ltd
-                    </h3>
-                    <p className="text-gray-700 leading-relaxed mb-6">
-                      Our headquarters in Mumbai serves as the nerve center of our operations, housing our research & development team, customer support center, and administrative offices. Visit us to explore our complete range of laser technology solutions.
-                    </p>
-                  </div>
-
-                  {/* Contact Grid */}
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4 p-4 bg-white border-l-4 border-red-200 shadow-sm">
-                      <div className="p-3 bg-red-200">
-                        <Phone className="h-5 w-5 text-black" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-gray-500 mb-1 uppercase tracking-wider">Direct Line</p>
-                        <a href="tel:8657412551" className="text-lg font-medium text-gray-900 hover:text-red-600 transition-colors">
-                          8657412551
-                        </a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-4 p-4 bg-white border-l-4 border-red-200 shadow-sm">
-                      <div className="p-3 bg-red-200">
-                        <Mail className="h-5 w-5 text-black" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-gray-500 mb-1 uppercase tracking-wider">Email Address</p>
-                        <a href="mailto:info@lasertechnologies.co.in" className="text-base font-medium text-gray-900 hover:text-red-600 transition-colors break-all">
-                          info@lasertechnologies.co.in
-                        </a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-4 p-4 bg-white border-l-4 border-red-200 shadow-sm">
-                      <div className="p-3 bg-red-200">
-                        <MessageCircle className="h-5 w-5 text-black" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-gray-500 mb-1 uppercase tracking-wider">WhatsApp Support</p>
-                        <a href="https://wa.me/919004005151" target="_blank" rel="noopener noreferrer" className="text-lg font-medium text-gray-900 hover:text-green-600 transition-colors">
-                          9004005151
-                        </a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-4 p-4 bg-white border-l-4 border-red-200 shadow-sm">
-                      <div className="p-3 bg-red-200">
-                        <Clock className="h-5 w-5 text-black" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-gray-500 mb-1 uppercase tracking-wider">Office Hours</p>
-                        <p className="text-sm font-medium text-gray-900">Monday - Friday: 9:00 AM - 6:00 PM</p>
-                        <p className="text-sm font-medium text-gray-900">Saturday: 9:00 AM - 1:00 PM</p>
-                        <p className="text-xs text-gray-600 mt-1">Sunday: Closed</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Section - Map */}
-                <div className="relative h-full min-h-[500px] lg:min-h-0">
+              <div className="">
+                <div className="relative p-8 h-[450px] lg:h-[600px]">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60304.26776850268!2d72.8260275!3d19.0759899!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1234567890"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8451.217590537355!2d73.0014473561612!3d19.14341475728725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7bfeb4288ae8d%3A0x8b330290504e58fa!2sLaser%20Technologies%20Pvt%20Ltd!5e1!3m2!1sen!2sin!4v1763127444152!5m2!1sen!2sin"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
+                    allowFullScreen
                     loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
                     title="Laser Technologies Head Office Location - Mumbai, Maharashtra"
-                    className="absolute inset-0"
+                    className="absolute inset-0 w-full h-full"
                   />
-                  <div className="absolute bottom-4 right-4 bg-white px-4 py-2 shadow-lg">
+                  <div className="absolute bottom-4 right-4 bg-black px-4 py-2 shadow-lg rounded z-10">
                     <a
-                      href="https://share.google/yFq6bJI4coU6mEfHR"
+                      href="https://maps.app.goo.gl/CEWi9LmpXHbZ28EM8"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-semibold text-red-600 hover:text-red-700 flex items-center gap-2"
+                      className="text-sm font-semibold text-white hover:text-red-200 flex items-center gap-2"
                     >
                       Get Directions
                       <ArrowRight className="h-4 w-4" />
@@ -575,13 +500,15 @@ const Contact = () => {
           </div>
 
           {/* Experience Centres Section */}
-          <div className="mt-20">
+          <div className="mt-20 md:pt-20">
             <div className="text-center mb-12">
               <h3 className="text-3xl md:text-4xl font-medium text-gray-900 mb-4">
                 Customer Experience Centres
               </h3>
               <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                Visit our experience centres across India for live product demonstrations, technical consultations, and hands-on training sessions. Our experts are ready to guide you.
+                Visit our experience centres across India for live product
+                demonstrations, technical consultations, and hands-on training
+                sessions. Our experts are ready to guide you.
               </p>
             </div>
 
@@ -600,27 +527,29 @@ const Contact = () => {
                         {centre.region}
                       </span>
                     </div>
-                    
+
                     <h4 className="text-2xl font-medium text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
                       {centre.city}
                     </h4>
                     <p className="text-gray-600 font-medium mb-4 text-sm">
                       {centre.state}
                     </p>
-                    
                   </div>
                 </article>
               ))}
             </div>
-
-
           </div>
         </section>
 
-        {/* SEO-friendly FAQ/Info Section */}
-        <section className="mt-16 bg-white p-8 md:p-12 shadow-lg" aria-labelledby="additional-info">
+        <section
+          className="mt-16 bg-white p-8 md:p-12 shadow-lg"
+          aria-labelledby="additional-info"
+        >
           <div className="max-w-4xl mx-auto">
-            <h3 id="additional-info" className="text-2xl font-bold text-gray-900 mb-6 text-center">
+            <h3
+              id="additional-info"
+              className="text-2xl font-bold text-gray-900 mb-6 text-center"
+            >
               What to Expect When You Contact Us
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -629,9 +558,13 @@ const Contact = () => {
                   <span className="text-red-600 font-bold">1</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-2">Quick Response Time</h4>
+                  <h4 className="font-bold text-gray-900 mb-2">
+                    Quick Response Time
+                  </h4>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Our team responds to all inquiries within 24 hours during business days. For urgent matters, call us directly or use WhatsApp.
+                    Our team responds to all inquiries within 24 hours during
+                    business days. For urgent matters, call us directly or use
+                    WhatsApp.
                   </p>
                 </div>
               </div>
@@ -640,9 +573,12 @@ const Contact = () => {
                   <span className="text-red-600 font-bold">2</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-2">Expert Consultation</h4>
+                  <h4 className="font-bold text-gray-900 mb-2">
+                    Expert Consultation
+                  </h4>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Connect with our experienced professionals who understand your industry and can recommend the right solutions.
+                    Connect with our experienced professionals who understand
+                    your industry and can recommend the right solutions.
                   </p>
                 </div>
               </div>
@@ -651,9 +587,12 @@ const Contact = () => {
                   <span className="text-red-600 font-bold">3</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-2">Personalized Solutions</h4>
+                  <h4 className="font-bold text-gray-900 mb-2">
+                    Personalized Solutions
+                  </h4>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    We take time to understand your specific requirements and provide customized recommendations that fit your budget.
+                    We take time to understand your specific requirements and
+                    provide customized recommendations that fit your budget.
                   </p>
                 </div>
               </div>
@@ -662,9 +601,12 @@ const Contact = () => {
                   <span className="text-red-600 font-bold">4</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 mb-2">Ongoing Support</h4>
+                  <h4 className="font-bold text-gray-900 mb-2">
+                    Ongoing Support
+                  </h4>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Our relationship doesn't end after the sale. We provide continuous support and training for all our clients.
+                    Our relationship doesn't end after the sale. We provide
+                    continuous support and training for all our clients.
                   </p>
                 </div>
               </div>
@@ -678,24 +620,24 @@ const Contact = () => {
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          "name": "Laser Technologies Pvt Ltd",
-          "url": "https://lasertechnologies.co.in",
-          "logo": logo,
-          "contactPoint": {
+          name: "Laser Technologies Pvt Ltd",
+          url: "https://lasertechnologies.co.in",
+          logo: logo,
+          contactPoint: {
             "@type": "ContactPoint",
-            "telephone": "+91-8657412551",
-            "contactType": "customer service",
-            "areaServed": "IN",
-            "availableLanguage": ["en", "hi"]
+            telephone: "+91-8657412551",
+            contactType: "customer service",
+            areaServed: "IN",
+            availableLanguage: ["en", "hi"],
           },
-          "address": {
+          address: {
             "@type": "PostalAddress",
-            "addressLocality": "Mumbai",
-            "addressRegion": "Maharashtra",
-            "postalCode": "400001",
-            "addressCountry": "IN"
+            addressLocality: "Mumbai",
+            addressRegion: "Maharashtra",
+            postalCode: "400001",
+            addressCountry: "IN",
           },
-          "email": "info@lasertechnologies.co.in"
+          email: "info@lasertechnologies.co.in",
         })}
       </script>
     </div>
