@@ -214,10 +214,10 @@ export default function Product(): JSX.Element {
       >
         {/* HEADER */}
         <div className="text-center mb-12 lg:mb-16" id="#products">
-          <div className="inline-flex bg-whiteBgButtonBg bg-opacity-20 text-whiteBgButtonBg items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-950/50 to-black/50 border border-red-900/30 rounded-full mb-4 backdrop-blur-sm">
+          {/* <div className="inline-flex bg-whiteBgButtonBg bg-opacity-20 text-whiteBgButtonBg items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-950/50 to-black/50 border border-red-900/30 rounded-full mb-4 backdrop-blur-sm">
             <Sparkles className="w-4 h-4 " />
             <span className="font-normal">Premium Collection</span>
-          </div>
+          </div> */}
 
           <h2 className="text-4xl lg:text-6xl font-normal font-primary text-darkBgText mb-5 tracking-tight">
             Industrial Equipment Catalog
@@ -240,9 +240,9 @@ export default function Product(): JSX.Element {
                 setSub(c.subs[0]);
                 setCurrentPage(1);
               }}
-              className={`px-8 py-3.5 font-medium  transition-all duration-300 border ${
+              className={`px-8 py-3.5 font-medium  transition-all duration-300 border border-white/20 ${
                 c.id === categoryId
-                  ? "bg-whiteBgButtonBg hover:bg-whiteBgButtonBg hover:bg-opacity-20 bg-opacity-20 text-darkBgText border-red-800 shadow-lg shadow-red-950/50"
+                 ? "bg-blue-900 hover:bg-blue-20 text-darkBgText  shadow-lg hover:bg-blue-800"
                   : "bg-black/40 text-darkBgText text-opacity-80 hover:text-darkBgText hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
               }`}
             >
@@ -257,10 +257,10 @@ export default function Product(): JSX.Element {
           <div className="relative">
             <button
               onClick={() => setMobileCatOpen(!mobileCatOpen)}
-              className="w-full px-5 py-4 bg-whiteBgButtonBg bg-opacity-40 bg-black/40 border border-zinc-800 text-darkBgText font-semibold flex justify-between items-center hover:border-zinc-700 transition-all backdrop-blur-sm"
+              className="w-full px-5 py-4 bg-blue-900 bg-opacity-80 hover:bg-blue-900 bg-black/40 border border-zinc-800 text-darkBgText font-semibold flex justify-between items-center hover:border-zinc-700 transition-all backdrop-blur-sm"
             >
               <span className="flex items-center gap-2">
-                <Grid className="w-5 h-5 text-whiteBgButtonBg" />
+                <Grid className="w-5 h-5 text-blue-400" />
                 {category.name}
               </span>
               <ChevronDown
@@ -276,7 +276,7 @@ export default function Product(): JSX.Element {
                   <button
                     key={c.id}
                     onClick={() => {
-                      userTriggeredScroll.current = true; // ✅
+                      userTriggeredScroll.current = true; 
                       setCategoryId(c.id);
                       setSub(c.subs[0]);
                       setMobileCatOpen(false);
@@ -284,8 +284,8 @@ export default function Product(): JSX.Element {
                     }}
                     className={`w-full text-left px-5 py-4 transition-all border-b border-zinc-800 last:border-b-0 ${
                       c.id === categoryId
-                        ? "bg-whiteBgButtonBg bg-opacity-30 text-darkBgText font-semibold"
-                        : "hover:bg-zinc-800/50 text-darkBgText text-opacity-80"
+                      ? "bg-blue-900 hover:bg-blue-20 text-darkBgText  shadow-lg hover:bg-blue-800"
+                  : "bg-black/40 text-darkBgText text-opacity-80 hover:text-darkBgText hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
                     }`}
                   >
                     {c.name}
@@ -299,7 +299,7 @@ export default function Product(): JSX.Element {
           <div className="relative">
             <button
               onClick={() => setMobileSubOpen(!mobileSubOpen)}
-              className="w-full px-5 py-4 bg-black/40 border border-zinc-800 text-white font-semibold flex justify-between items-center hover:border-zinc-700 transition-all backdrop-blur-sm"
+              className="w-full px-5 py-4 bg-black/40 border hover:bg-blue-900 border-zinc-800 text-white font-semibold flex justify-between items-center hover:border-zinc-700 transition-all backdrop-blur-sm"
             >
               <span>{sub}</span>
               <ChevronDown
@@ -320,7 +320,7 @@ export default function Product(): JSX.Element {
                       setMobileSubOpen(false);
                       setCurrentPage(1);
                     }}
-                    className="w-full text-left px-5 py-4 transition-all border-b border-zinc-800 last:border-b-0 bg-whiteBgButtonBg bg-opacity-30 text-darkBgText font-semibold"
+                    className="w-full text-left px-5 py-4 transition-all border-b border-zinc-800 last:border-b-0 bg-blue-900 bg-opacity-30 text-darkBgText font-semibold"
                   >
                     {s}
                   </button>
@@ -352,8 +352,8 @@ export default function Product(): JSX.Element {
                   }}
                   className={`group w-full text-left px-4 py-3.5 font-semibold transition-all duration-200 flex items-center justify-between ${
                     s === sub
-                      ? "bg-whiteBgButtonBg hover:bg-whiteBgButtonBg hover:bg-opacity-40 text-opacity-60 bg-opacity-40 text-darkBgTextHover shadow-lg"
-                      : "text-darkBgTextHover text-opacity-80 bg-whiteBgButtonBg hover:bg-whiteBgButtonBg bg-opacity-40 hover:text-darkBgTextHover hover:bg-opacity-40"
+                      ? "bg-blue-900 hover:bg-blue-20 text-darkBgText  shadow-lg hover:bg-blue-800"
+                  : "bg-black/40 text-darkBgText text-opacity-80 hover:text-darkBgText hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
                   }`}
                 >
                   <span>{s}</span>
@@ -417,7 +417,7 @@ export default function Product(): JSX.Element {
                     <div className="flex w-full gap-3 mt-2 font-secondary">
                       <button
                         onClick={() => navigate(`/product/${p.id}`)}
-                        className="flex-1 px-6 py-3.5 text-opacity-90 hover:border-red-900 font-semibold transition-all duration-300 border border-red-900 flex items-center justify-center gap-2 shadow-sm hover:shadow-md bg-whiteBgButtonBg hover:bg-whiteBgButtonBg bg-opacity-40 hover:bg-opacity-40 text-darkBgTextHover"
+                        className="flex-1 px-6 py-3.5 text-opacity-90  font-semibold transition-all duration-300 border border-white/40 flex items-center justify-center gap-2 shadow-sm hover:shadow-md bg-blue-900 hover:bg-blue-800  text-darkBgTextHover"
                       >
                         <span>View</span>
                         <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -433,7 +433,7 @@ export default function Product(): JSX.Element {
                           });
                           setShowEnquiryForm(true);
                         }}
-                        className="flex-1 px-6 py-3.5 text-opacity-90 hover:border-red-900 font-semibold transition-all duration-300 border border-red-900 flex items-center justify-center gap-2 shadow-sm hover:shadow-md bg-whiteBgButtonBg hover:bg-whiteBgButtonBg bg-opacity-40 hover:bg-opacity-40 text-darkBgTextHover"
+                        className="flex-1 px-6 py-3.5 text-opacity-90  font-semibold transition-all duration-300 border border-white/40 flex items-center justify-center gap-2 shadow-sm hover:shadow-md bg-blue-900 hover:bg-blue-800  text-darkBgTextHover"
                       >
                         <Phone className="w-4 h-4 transition-transform group-hover:scale-110" />
                         <span>Enquire</span>
@@ -527,7 +527,8 @@ export default function Product(): JSX.Element {
                 <div className="flex justify-center gap-4">
                   <button
                     onClick={() => navigate(`/product/${p.id}`)}
-                    className="flex-1 max-w-[180px] px-5 py-3 bg-gradient-to-r from-red-900 to-red-950 text-white font-medium hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 flex items-center justify-center gap-2"
+
+                    className="flex-1 max-w-[180px] px-5 py-3 bg-blue-900 text-white font-medium hover:bg-blue-800  transition-all duration-300 border border-white/40 flex items-center justify-center gap-2"
                   >
                     <span>View</span>
                     <ArrowRight className="w-4 h-4" />
@@ -542,7 +543,7 @@ export default function Product(): JSX.Element {
                       });
                       setShowEnquiryForm(true);
                     }}
-                    className="flex-1 max-w-[180px] px-5 py-3 bg-gradient-to-r from-red-900 to-red-950 text-white font-medium hover:from-red-800 hover:to-red-900 transition-all duration-300 border border-red-900 flex items-center justify-center gap-2"
+                    className="flex-1 max-w-[180px] px-5 py-3 bg-blue-900 text-white font-medium hover:bg-blue-800  transition-all duration-300 border border-white/40 flex items-center justify-center gap-2"
                   >
                     <span>Enquire</span>
                     <Phone className="w-4 h-4" />
