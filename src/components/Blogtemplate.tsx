@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { ArrowLeft, Calendar, Share2, Tag } from "lucide-react";
+import { ArrowLeft, Calendar, Share2, X } from "lucide-react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import Loading from "./Loading";
@@ -37,6 +37,7 @@ const BlogTemplate: React.FC = () => {
   const navigate = useNavigate();
   const [blog, setBlog] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -53,12 +54,9 @@ const BlogTemplate: React.FC = () => {
         } else if (data) {
           let contentHtml = "";
 
-          // If content is already a full HTML string (new way)
           if (typeof data.content === "string") {
             contentHtml = data.content;
           } else if (data.content && typeof data.content === "object") {
-            // Backward compatibility: convert old JSON structure into HTML
-            // data.content is assumed to be Record<string, { description: string; image?: string | null }>
             const sections = data.content as Record<
               string,
               { description: string; image?: string | null }
@@ -73,9 +71,15 @@ const BlogTemplate: React.FC = () => {
                   : "";
 
                 return `
-                  <section style="margin-top:${index > 0 ? "3rem" : "0"};padding-top:${index > 0 ? "3rem" : "0"};border-top:${index > 0 ? `1px solid ${BRAND.border}` : "none"};">
+                  <section style="margin-top:${
+                    index > 0 ? "3rem" : "0"
+                  };padding-top:${index > 0 ? "3rem" : "0"};border-top:${
+                  index > 0 ? `1px solid ${BRAND.border}` : "none"
+                };">
                     <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
-                      <div style="flex-shrink:0;width:6px;height:48px;background-color:${BRAND.primary};margin-top:0.15em;"></div>
+                      <div style="flex-shrink:0;width:6px;height:48px;background-color:${
+                        BRAND.primary
+                      };margin-top:0.15em;"></div>
                       <h2 style="font-size:1.75rem;font-weight:500;color:#111827;margin:0;">${safeHeading}</h2>
                     </div>
                     <div style="padding-left:1.5rem;font-size:1.05rem;line-height:1.8;color:#374151;white-space:pre-line;">
@@ -108,6 +112,25 @@ const BlogTemplate: React.FC = () => {
       fetchBlog();
     }
   }, [id]);
+
+  // Close dialog on Escape key press
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isDialogOpen) {
+        setIsDialogOpen(false);
+      }
+    };
+    
+    if (isDialogOpen) {
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
+    }
+    
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
+    };
+  }, [isDialogOpen]);
 
   const handleShare = useCallback(async () => {
     if (navigator.share && blog) {
@@ -168,7 +191,7 @@ const BlogTemplate: React.FC = () => {
           <div className="w-full pb-2 mx-auto px-4 sm:px-6 lg:px-12 ">
             <button
               onClick={goBack}
-              className="inline-flex items-left text-sm font-semibold  bg-transparent hover:bg-transparent hover:text-black text-black "
+              className="inline-flex items-left text-sm font-semibold bg-transparent hover:bg-transparent hover:text-black text-black"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Articles</span>
@@ -177,23 +200,78 @@ const BlogTemplate: React.FC = () => {
         </header>
 
         <div className="relative w-full">
-          <div className="relative object-center overflow-hidden">
-            <div className="absolute inset-0"></div>
+          <div 
+            className="relative w-full h-[40vh] sm:h-[50vh] lg:h-[65vh] overflow-hidden cursor-pointer group"
+            onClick={() => setIsDialogOpen(true)}
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10 group-hover:from-black/50 group-hover:via-black/10 transition-all duration-300" />
             <img
               src={blog.image}
               alt={blog.title}
-              className=" w-full object-cover object-center"
+              className="w-full h-full object-cover object-top transform group-hover:scale-105 transition-transform duration-500"
               loading="eager"
             />
-            <div className="absolute top-6 left-6 sm:left-12 z-20">
+            {/* Click to expand hint */}
+            <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+              <div className="bg-black/60 backdrop-blur-sm text-white px-6 py-3 rounded-full text-sm font-medium">
+                Click to expand
+              </div>
+            </div>
+            <div className="absolute top-6 left-6 sm:left-12 z-30">
               <button
-                onClick={() => navigate(getCategoryPath(blog.category))}
-                className="inline-block px-4 py-2 text-md font-medium font-secondary text-white backdrop-blur-sm shadow-lg bg-whiteBgButtonBg hover:bg-whiteBgButtonBg  hover:bg-opacity-40 bg-opacity-40 cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(getCategoryPath(blog.category));
+                }}
+                className="inline-block px-4 py-2 text-md font-medium font-secondary text-white backdrop-blur-sm shadow-lg bg-whiteBgButtonBg hover:bg-whiteBgButtonBg hover:bg-opacity-40 bg-opacity-40 cursor-pointer"
               >
                 {blog.category}
               </button>
             </div>
           </div>
+
+          {/* Image Dialog Modal */}
+          {isDialogOpen && (
+            <div
+              className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-[100] p-4 animate-fadeIn"
+              onClick={() => setIsDialogOpen(false)}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="image-dialog-title"
+            >
+              <div
+                className="relative w-full h-full flex items-center justify-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Close button */}
+                <button
+                  onClick={() => setIsDialogOpen(false)}
+                  className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 text-white rounded-full transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white"
+                  aria-label="Close image dialog"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+
+                {/* Image container */}
+                <div className="relative max-w-[95vw] max-h-[95vh] flex items-center justify-center">
+                  <img
+                    src={blog.image}
+                    alt={blog.title}
+                    id="image-dialog-title"
+                    className="max-w-full max-h-[95vh] w-auto h-auto object-contain rounded-lg shadow-2xl"
+                    loading="eager"
+                  />
+                </div>
+
+                {/* Image title overlay */}
+                <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md text-white px-6 py-4 rounded-lg max-w-3xl mx-auto">
+                  <p className="text-sm sm:text-base font-medium line-clamp-2">
+                    {blog.title}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Banner/Card with Title, Author, Meta */}
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 -mt-20 sm:-mt-32 lg:-mt-40 z-20">
@@ -213,7 +291,7 @@ const BlogTemplate: React.FC = () => {
                     <div
                       className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full border-4 border-white shadow-md"
                       style={{ backgroundColor: BRAND.primary }}
-                    ></div>
+                    />
                   </div>
                   <div>
                     <p className="text-xl font-medium text-gray-900">
@@ -247,7 +325,6 @@ const BlogTemplate: React.FC = () => {
                       </time>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-gray-600"></div>
                   <button
                     onClick={handleShare}
                     className="flex items-center gap-2 px-6 py-3 bg-whiteBgButtonBg bg-opacity-40 text-[#060C2A] text-sm font-semibold rounded-lg transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5"
@@ -265,17 +342,28 @@ const BlogTemplate: React.FC = () => {
         {/* Content */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <article className="py-8 sm:py-12 lg:py-16">
-            <div className="bg-white p-6 sm:p-10 lg:p-16 mb-12 border">
-              <div
-                className="prose prose-lg max-w-none"
-                // ⚠️ HTML from Supabase goes here
-                dangerouslySetInnerHTML={{ __html: blog.content }}
-              />
-            </div>
-
+            <div
+              className="bg-white p-6 sm:p-10 lg:p-16 mb-12 border prose prose-lg max-w-none"
+              dangerouslySetInnerHTML={{ __html: blog.content }}
+            />
           </article>
         </main>
       </main>
+
+      <style>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        
+        .animate-fadeIn {
+          animation: fadeIn 0.2s ease-out;
+        }
+      `}</style>
     </div>
   );
 };

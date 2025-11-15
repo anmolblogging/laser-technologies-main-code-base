@@ -24,7 +24,7 @@ interface Event {
 }
 
 const eventColors = [
-  "from-blue-900 to-blue-900",
+  "from-red-500 to-red-700",
 ];
 
 export default function CalendarSection() {
