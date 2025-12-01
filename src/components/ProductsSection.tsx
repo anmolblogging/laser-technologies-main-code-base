@@ -3,12 +3,10 @@ import { useEffect, useMemo, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 import Form from "./Form";
-import logo from "../assets/background.jpg";
 import {
   Grid,
   Image,
   ChevronDown,
-  Sparkles,
   ShoppingBag,
   ArrowRight,
   Phone,
@@ -24,7 +22,110 @@ type ProductType = {
   Thumbnail_url?: string[] | null;
 };
 
+/* ----------------------------------------------
+   🔵 PREFERRED ORDER DEFINITIONS
+------------------------------------------------*/
+const CATEGORY_ORDER = [
+  "Laser Cutting",
+  "Laser Welding",
+  "Laser Engraving & Marking",
+  "CNC Bending",
+  "Tube Bending",
+  "Sheet Punching",
+];
 
+const LASER_CUTTING_SUB_ORDER = [
+  "Sheet Cutting Machine",
+  "Fully Automatic Sheet Cutting Machine",
+  "Electrical Steel / Electrolamination Sheet Cutting Machines",
+  "Tube Cutting Machine or Pipe Cutting Machine",
+  "Sheet and Tube Cutting Machine",
+];
+
+const LASER_MARKING_PRODUCT_ORDER = [
+  "Fiber Laser Marking Machine",
+  "UV Laser Marking Machine",
+  "CO₂ Laser Marking Machine",
+  "CO₂ + Fiber Laser Engraving Machine",
+  "CO₂ Laser Engraving Machine",
+];
+
+const BENDING_PRODUCT_ORDER = [
+  "Smart Bend",
+  "Power Bend",
+  "Pump-Controlled CNC Sheet Bending Machine",
+  "CNC Sheet Bending Machine",
+  "NC Sheet Bending Machine",
+  "Pipe and Tube Bending Machine",
+  "CNC V-Grooving Machine",
+  "Panel Bender",
+];
+
+const LASER_WELDING_PRODUCT_ORDER = [
+  "Handheld Laser Welding Machine",
+  "Air-Cooled Handheld Laser Welding Machine",
+  "Robotic Laser Welding Machine",
+  "Open Laser Welding Machine",
+  "Closed Laser Welding Machine",
+  "Pillow Plate Laser Welding Machine",
+];
+
+/* ----------------------------------------------
+   🔵 NORMALIZATION LAYER (massively important)
+   This ensures inconsistent Supabase texts still sort correctly.
+------------------------------------------------*/
+function normalizeProductName(name: string): string {
+  const n = name.toLowerCase().trim();
+
+  if (n.includes("uv") && n.includes("mark")) return "UV Laser Marking Machine";
+  if (n.includes("fiber") && n.includes("mark")) return "Fiber Laser Marking Machine";
+  if ((n.includes("co₂") || n.includes("co2")) && n.includes("mark"))
+    return "CO₂ Laser Marking Machine";
+
+  if ((n.includes("co₂") || n.includes("co2")) && n.includes("engraving"))
+    return "CO₂ Laser Engraving Machine";
+
+  if (
+    (n.includes("co₂") || n.includes("co2")) &&
+    n.includes("fiber") &&
+    n.includes("engraving")
+  )
+    return "CO₂ + Fiber Laser Engraving Machine";
+
+  return name; // fallback without touching UI
+}
+
+/* ----------------------------------------------
+   🔵 UNIVERSAL SORTING HELPER
+   Case-insensitive + trim-safe + fallback alphabetical
+------------------------------------------------*/
+function sortWithPreferred<T>(
+  items: T[],
+  getKey: (item: T) => string,
+  preferredOrder: string[]
+): T[] {
+  const norm = (s: string) => s.toLowerCase().trim();
+
+  const getIndex = (value: string) => {
+    const normalizedValue = norm(value);
+    const idx = preferredOrder.findIndex((p) => norm(p) === normalizedValue);
+    return idx === -1 ? Number.MAX_SAFE_INTEGER : idx;
+  };
+
+  return [...items].sort((a, b) => {
+    const aKey = getKey(a);
+    const bKey = getKey(b);
+    const ai = getIndex(aKey);
+    const bi = getIndex(bKey);
+
+    if (ai === bi) return aKey.localeCompare(bKey);
+    return ai - bi;
+  });
+}
+
+/* ----------------------------------------------
+   🔵 SUPABASE FETCH
+------------------------------------------------*/
 const fetchProducts = async (): Promise<ProductType[]> => {
   const { data, error } = await supabase
     .from("products")
@@ -34,7 +135,6 @@ const fetchProducts = async (): Promise<ProductType[]> => {
     .order("Segment", { ascending: true })
     .order("SubCategory", { ascending: false });
 
-
   if (error) {
     console.error("Error fetching products:", error);
     return [];
@@ -42,43 +142,88 @@ const fetchProducts = async (): Promise<ProductType[]> => {
   return data || [];
 };
 
+/* ----------------------------------------------
+   🔵 CATEGORY GROUPING + SORTING ENGINE
+------------------------------------------------*/
 const getCategoryList = (products: ProductType[]) => {
-  const grouped: Record<
-    string,
-    {
-      subs: Set<string>;
-      products: {
-        id: string;
-        name: string;
-        subcategory: string;
-        description: string;
-        image: string | null;
-      }[];
-    }
-  > = {};
+  const grouped: any = {};
 
+  // group by segment
   products.forEach((product) => {
     const segment = product.Segment;
-    const subCategory = product.SubCategory;
+    const sub = product.SubCategory;
 
     if (!grouped[segment]) grouped[segment] = { subs: new Set(), products: [] };
-    grouped[segment].subs.add(subCategory);
+
+    grouped[segment].subs.add(sub);
+
     grouped[segment].products.push({
       id: product.id,
       name: product.ProductName,
-      subcategory: subCategory,
-      description: product.ShortDescription || "No description available",
+      normalizedName: normalizeProductName(product.ProductName),
+      subcategory: sub,
+      description: product.ShortDescription || "",
       image: product.Thumbnail_url?.[0] || null,
     });
   });
 
-  return Object.entries(grouped).map(([segment, { subs, products }]) => ({
-    id: segment,
-    name: segment,
-    subs: Array.from(subs),
-    products,
-  }));
+  let result = Object.entries(grouped).map(([segment, { subs, products }]) => {
+    const segmentNorm = segment.toLowerCase().trim();
+
+    let subArray = Array.from(subs);
+
+    // Subcategory sorting: only Laser Cutting has custom order
+    if (segmentNorm === "laser cutting") {
+      subArray = sortWithPreferred(
+        subArray,
+        (s) => s,
+        LASER_CUTTING_SUB_ORDER
+      );
+    } else {
+      subArray = subArray.sort((a, b) => a.localeCompare(b));
+    }
+
+    let sortedProducts = [...products];
+
+    // Product ordering
+    if (segmentNorm === "laser engraving & marking") {
+      sortedProducts = sortWithPreferred(
+        sortedProducts,
+        (p) => p.normalizedName,
+        LASER_MARKING_PRODUCT_ORDER
+      );
+    }
+
+    if (segmentNorm === "cnc bending" || segmentNorm === "tube bending") {
+      sortedProducts = sortWithPreferred(
+        sortedProducts,
+        (p) => p.normalizedName,
+        BENDING_PRODUCT_ORDER
+      );
+    }
+
+    if (segmentNorm === "laser welding") {
+      sortedProducts = sortWithPreferred(
+        sortedProducts,
+        (p) => p.normalizedName,
+        LASER_WELDING_PRODUCT_ORDER
+      );
+    }
+
+    return {
+      id: segment,
+      name: segment,
+      subs: subArray,
+      products: sortedProducts,
+    };
+  });
+
+  // category sorting
+  result = sortWithPreferred(result, (c) => c.name, CATEGORY_ORDER);
+
+  return result;
 };
+
 
 export default function Product(): JSX.Element {
   const [showEnquiryForm, setShowEnquiryForm] = useState(false);
@@ -119,28 +264,28 @@ export default function Product(): JSX.Element {
   const CATEGORIES = useMemo(() => getCategoryList(products), [products]);
 
   useEffect(() => {
-  if (!loading && CATEGORIES.length > 0) {
-    // Try to find 'laser cutting' category
-    const defaultCat = CATEGORIES.find(
-      c => c.name.toLowerCase() === "laser cutting"
-    );
-    // If 'laser cutting' found, try to select 'sheet cutting Machine' sub
-    let defaultSub = "";
-    if (defaultCat) {
-      defaultSub =
-        defaultCat.subs.find(
-          s => s.toLowerCase() === "sheet cutting machine"
-        ) || defaultCat.subs[0];
-      setCategoryId(defaultCat.id);
-      setSub(defaultSub);
-    } else {
-      // fallback to first
-      setCategoryId(CATEGORIES[0].id);
-      setSub(CATEGORIES[0].subs[0]);
+    if (!loading && CATEGORIES.length > 0) {
+      // Try to find 'laser cutting' category
+      const defaultCat = CATEGORIES.find(
+        (c) => c.name.toLowerCase() === "laser cutting"
+      );
+      // If 'laser cutting' found, try to select 'sheet cutting Machine' sub
+      let defaultSub = "";
+      if (defaultCat) {
+        defaultSub =
+          defaultCat.subs.find(
+            (s) => s.toLowerCase() === "sheet cutting machine"
+          ) || defaultCat.subs[0];
+        setCategoryId(defaultCat.id);
+        setSub(defaultSub);
+      } else {
+        // fallback to first
+        setCategoryId(CATEGORIES[0].id);
+        setSub(CATEGORIES[0].subs[0]);
+      }
+      setCurrentPage(1);
     }
-    setCurrentPage(1);
-  }
-}, [loading, CATEGORIES]);
+  }, [loading, CATEGORIES]);
 
   const category = useMemo(
     () => CATEGORIES.find((c) => c.id === categoryId) || CATEGORIES[0],
@@ -242,7 +387,7 @@ export default function Product(): JSX.Element {
               }}
               className={`px-8 py-3.5 font-medium  transition-all duration-300 border border-white/20 ${
                 c.id === categoryId
-                 ? "bg-blue-900 hover:bg-blue-20 text-darkBgText  shadow-lg hover:bg-blue-800"
+                  ? "bg-blue-900 hover:bg-blue-20 text-darkBgText  shadow-lg hover:bg-blue-800"
                   : "bg-black/40 text-darkBgText text-opacity-80 hover:text-darkBgText hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
               }`}
             >
@@ -276,7 +421,7 @@ export default function Product(): JSX.Element {
                   <button
                     key={c.id}
                     onClick={() => {
-                      userTriggeredScroll.current = true; 
+                      userTriggeredScroll.current = true;
                       setCategoryId(c.id);
                       setSub(c.subs[0]);
                       setMobileCatOpen(false);
@@ -284,8 +429,8 @@ export default function Product(): JSX.Element {
                     }}
                     className={`w-full text-left px-5 py-4 transition-all border-b border-zinc-800 last:border-b-0 ${
                       c.id === categoryId
-                      ? "bg-blue-900 hover:bg-blue-20 text-darkBgText  shadow-lg hover:bg-blue-800"
-                  : "bg-black/40 text-darkBgText text-opacity-80 hover:text-darkBgText hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
+                        ? "bg-blue-900 hover:bg-blue-20 text-darkBgText  shadow-lg hover:bg-blue-800"
+                        : "bg-black/40 text-darkBgText text-opacity-80 hover:text-darkBgText hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
                     }`}
                   >
                     {c.name}
@@ -353,7 +498,7 @@ export default function Product(): JSX.Element {
                   className={`group w-full text-left px-4 py-3.5 font-semibold transition-all duration-200 flex items-center justify-between ${
                     s === sub
                       ? "bg-blue-900 hover:bg-blue-20 text-darkBgText  shadow-lg hover:bg-blue-800"
-                  : "bg-black/40 text-darkBgText text-opacity-80 hover:text-darkBgText hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
+                      : "bg-black/40 text-darkBgText text-opacity-80 hover:text-darkBgText hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
                   }`}
                 >
                   <span>{s}</span>
@@ -527,7 +672,6 @@ export default function Product(): JSX.Element {
                 <div className="flex justify-center gap-4">
                   <button
                     onClick={() => navigate(`/product/${p.id}`)}
-
                     className="flex-1 max-w-[180px] px-5 py-3 bg-blue-900 text-white font-medium hover:bg-blue-800  transition-all duration-300 border border-white/40 flex items-center justify-center gap-2"
                   >
                     <span>View</span>
@@ -554,7 +698,6 @@ export default function Product(): JSX.Element {
           ))}
         </div>
       </div>
-
       {/* Enquiry form modal */}
       {showEnquiryForm && (
         <Form
