@@ -249,15 +249,7 @@ const Footer = () => {
               <p className="font-medium text-gray-300 ">
                 © {year} LaserTechnologies Pvt Ltd
               </p>
-              <span className="text-gray-700">|</span>
-              <a href="https://kolacommunications.com/" target="_blank" rel="noopener noreferrer">
-              <p className="text-md text-gray-400 pr-1">
-                Developed by 
-                <span className="text-red-100 px-2 font-medium">
-                  Kola Communications
-                </span>
-              </p>
-              </a>
+              
             </div>
 
             {/* Right Section - Social Links */}
