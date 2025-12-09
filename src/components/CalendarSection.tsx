@@ -21,17 +21,18 @@ interface Event {
   day: string;
   month: string;
   year: string;
+  extra_info?: String;
 }
 
-const eventColors = [
-  "from-red-500 to-red-700",
-];
+const eventColors = ["from-red-500 to-red-700"];
 
 export default function CalendarSection() {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const [showEventForm, setShowEventForm] = useState(false);
-  const [eventInitialData, setEventInitialData] = useState<Record<string,string>>({});
+  const [eventInitialData, setEventInitialData] = useState<
+    Record<string, string>
+  >({});
 
   const [events, setEvents] = useState<Event[]>([]);
   const [page, setPage] = useState(0);
@@ -55,7 +56,7 @@ export default function CalendarSection() {
       const { data, error } = await supabase
         .from("calendar")
         .select(
-          "event_name, event_location, event_time, form_link, start_date, end_date"
+          "event_name, event_location, event_time, form_link, start_date, end_date , extra_info"
         )
         .order("start_date", { ascending: true });
 
@@ -67,7 +68,9 @@ export default function CalendarSection() {
       const formatted = (data || [])
         .map((e) => {
           const start = new Date(e.start_date);
-          const end = e.end_date ? new Date(e.end_date) : new Date(e.start_date);
+          const end = e.end_date
+            ? new Date(e.end_date)
+            : new Date(e.start_date);
 
           return {
             start_date: e.start_date,
@@ -76,6 +79,7 @@ export default function CalendarSection() {
             location: e.event_location,
             time: e.event_time,
             form_link: e.form_link,
+            extra_info: e.extra_info,
             date: start.getDate().toString().padStart(2, "0"),
             day: start.toLocaleString("en-US", { weekday: "short" }),
             month: start.toLocaleString("en-US", { month: "short" }),
@@ -122,7 +126,6 @@ export default function CalendarSection() {
   return (
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Heading */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-opacity-15 bg-whiteBgTextHover text-whiteBgTextHover font-secondary px-4 py-2 rounded-full text-sm font-semibold mb-4">
@@ -135,13 +138,13 @@ export default function CalendarSection() {
           </h2>
 
           <p className="text-lg font-secondary text-opacity-80 text-whiteBgText max-w-2xl mx-auto">
-            Join us at these exclusive events and explore cutting-edge laser innovations.
+            Join us at these exclusive events and explore cutting-edge laser
+            innovations.
           </p>
         </div>
 
         {/* Slider Section */}
         <div className="relative w-full">
-
           {/* Desktop Arrow Buttons (absolute sides, hidden on mobile) */}
           <button
             onClick={prevPage}
@@ -150,9 +153,7 @@ export default function CalendarSection() {
               bg-white hover:bg-white border border-gray-200 shadow-lg 
               p-3 z-30 transition-all
               ${
-                page === 0
-                  ? "opacity-30 cursor-not-allowed"
-                  : "hover:scale-110"
+                page === 0 ? "opacity-30 cursor-not-allowed" : "hover:scale-110"
               }`}
             style={{ marginLeft: "-55px" }}
             aria-label="Previous page"
@@ -195,10 +196,7 @@ export default function CalendarSection() {
                   }}
                 >
                   {events
-                    .slice(
-                      p * itemsPerPage,
-                      p * itemsPerPage + itemsPerPage
-                    )
+                    .slice(p * itemsPerPage, p * itemsPerPage + itemsPerPage)
                     .map((event, idx) => (
                       <div
                         key={idx}
@@ -212,7 +210,9 @@ export default function CalendarSection() {
                           } p-6 text-white h-[160px]`}
                         >
                           <div className="text-center">
-                            <div className="text-5xl font-bold">{event.date}</div>
+                            <div className="text-5xl font-bold">
+                              {event.date}
+                            </div>
                             <div className="text-md">{event.day}</div>
                             <div className="uppercase text-sm opacity-75">
                               {event.month}
@@ -231,11 +231,14 @@ export default function CalendarSection() {
                               <MapPin className="w-4 h-4 text-gray-400 mt-0.5" />
                               <span>{event.location}</span>
                             </div>
-
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
-                              <Clock className="w-4 h-4 text-gray-400" />
-                              <span>{event.time}</span>
-                            </div>
+                            {event.time ? (
+                              <div className="flex items-center gap-2 text-sm text-gray-600">
+                                <Clock className="w-4 h-4 text-gray-400" />
+                                <span>{event.time}</span>
+                              </div>
+                            ) : (
+                              <></>
+                            )}
 
                             <div className="flex items-center gap-2 text-sm text-gray-700 font-medium">
                               <Calendar className="w-4 h-4 text-gray-500" />
@@ -250,7 +253,13 @@ export default function CalendarSection() {
                               )}
                             </div>
                           </div>
-
+                              {
+                                event.extra_info && (
+                                  <div className="mt-4 text-sm text-gray-600">
+                                    {event.extra_info}
+                                  </div>
+                                )
+                              }
                           {/* Learn More Button */}
                           <button
                             onClick={() => {
@@ -262,7 +271,7 @@ export default function CalendarSection() {
                                 event_name: event.title,
                                 event_location: event.location,
                                 event_date: formatFullDate(event.start_date),
-                                event_time: event.time || '',
+                                event_time: event.time || "",
                               });
                               setShowEventForm(true);
                             }}
@@ -287,7 +296,9 @@ export default function CalendarSection() {
               disabled={page === 0}
               className={`rounded-full bg-white hover:bg-white border border-gray-200 shadow-lg p-3
                 transition-all ${
-                  page === 0 ? "opacity-30 cursor-not-allowed" : "hover:scale-110"
+                  page === 0
+                    ? "opacity-30 cursor-not-allowed"
+                    : "hover:scale-110"
                 }`}
               aria-label="Previous page"
             >
@@ -298,7 +309,9 @@ export default function CalendarSection() {
               disabled={page === totalPages - 1}
               className={`rounded-full bg-white hover:bg-white border border-gray-200 shadow-lg p-3
                 transition-all ${
-                  page === totalPages - 1 ? "opacity-30 cursor-not-allowed" : "hover:scale-110"
+                  page === totalPages - 1
+                    ? "opacity-30 cursor-not-allowed"
+                    : "hover:scale-110"
                 }`}
               aria-label="Next page"
             >
