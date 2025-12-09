@@ -38,7 +38,7 @@ const Header = () => {
     { type: "link", name: "Home", href: "/" },
     { type: "dropdown", name: "Product", key: "products" },
     { type: "dropdown", name: "About", key: "about" },
-    { type: "link", name: "CSR", href: "/csr" },
+    // { type: "link", name: "CSR", href: "/csr" },
     { type: "link", name: "Contact", href: "/contact" },
     { type: "dropdown", name: "Knowledge", key: "Knowledge" },
   ];
@@ -51,6 +51,7 @@ const Header = () => {
 
   const aboutItems = [
     { name: "About Company", href: "/about/company" },
+    { name: "Our Leadership", href: "/about/leadership" },
     { name: "Milestone", href: "/about/milestone" },
     { name: "Awards & Accolades", href: "/awards" },
     { name: "Careers", href: "/careers" },

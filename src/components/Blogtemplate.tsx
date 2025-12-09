@@ -27,7 +27,7 @@ const BRAND = {
 
 const getCategoryPath = (category: string) => {
   if (category === "News & Media") return "/news";
-  if (category === "CSR") return "/csr";
+  if (category === "CSR") return "/about/leadership";
   if (category === "Articles") return "/articles";
   return "/";
 };
