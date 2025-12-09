@@ -19,11 +19,12 @@ import { supabase } from "../lib/supabase";
 const CATEGORY_ORDER = [
   "Laser Cutting",
   "Laser Welding",
-  "Sheet Punching",
-  "CNC Sheet Bending",
-  "Pipe & Tube Bending",
   "Laser Marking & Engraving",
+  "CNC Sheet Bending",
+  "Pipe and Tube Bending",
+  "Sheet Punching",
 ];
+
 
 /* -------------------------------------------------------
    LASER CUTTING SUBCATEGORY ORDER
