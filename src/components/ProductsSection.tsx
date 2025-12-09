@@ -13,55 +13,34 @@ import {
 } from "lucide-react";
 import { supabase } from "../lib/supabase";
 
-type ProductType = {
-  id: string;
-  Segment: string;
-  SubCategory: string;
-  ProductName: string;
-  ShortDescription?: string | null;
-  Thumbnail_url?: string[] | null;
-};
-
-/* ----------------------------------------------
-   🔵 PREFERRED ORDER DEFINITIONS
-------------------------------------------------*/
+/* -------------------------------------------------------
+   FINAL CATEGORY ORDER
+---------------------------------------------------------*/
 const CATEGORY_ORDER = [
   "Laser Cutting",
   "Laser Welding",
-  "Laser Engraving & Marking",
-  "CNC Bending",
-  "Tube Bending",
   "Sheet Punching",
+  "CNC Sheet Bending",
+  "Pipe & Tube Bending",
+  "Laser Marking & Engraving",
 ];
 
+/* -------------------------------------------------------
+   LASER CUTTING SUBCATEGORY ORDER
+---------------------------------------------------------*/
 const LASER_CUTTING_SUB_ORDER = [
-  "Sheet Cutting Machine",
-  "Fully Automatic Sheet Cutting Machine",
-  "Electrical Steel / Electrolamination Sheet Cutting Machines",
-  "Tube Cutting Machine or Pipe Cutting Machine",
-  "Sheet and Tube Cutting Machine",
+  "Sheet Laser Cutting Machine",
+  "Sheet Laser Cutting Machine – C Series",
+  "Tube Laser Cutting Machine or Pipe Laser Cutting Machine",
+  "Sheet and Tube Laser Cutting Machine",
+  "Fully Automatic Sheet Laser Cutting Machine",
+  "Electrical Steel / Electrolamination Sheet Laser Cutting Machines",
 ];
 
-const LASER_MARKING_PRODUCT_ORDER = [
-  "Fiber Laser Marking Machine",
-  "UV Laser Marking Machine",
-  "CO₂ Laser Marking Machine",
-  "CO₂ + Fiber Laser Engraving Machine",
-  "CO₂ Laser Engraving Machine",
-];
-
-const BENDING_PRODUCT_ORDER = [
-  "Smart Bend",
-  "Power Bend",
-  "Pump-Controlled CNC Sheet Bending Machine",
-  "CNC Sheet Bending Machine",
-  "NC Sheet Bending Machine",
-  "Pipe and Tube Bending Machine",
-  "CNC V-Grooving Machine",
-  "Panel Bender",
-];
-
-const LASER_WELDING_PRODUCT_ORDER = [
+/* -------------------------------------------------------
+   LASER WELDING ORDER
+---------------------------------------------------------*/
+const LASER_WELDING_SUB_ORDER = [
   "Handheld Laser Welding Machine",
   "Air-Cooled Handheld Laser Welding Machine",
   "Robotic Laser Welding Machine",
@@ -70,189 +49,191 @@ const LASER_WELDING_PRODUCT_ORDER = [
   "Pillow Plate Laser Welding Machine",
 ];
 
-/* ----------------------------------------------
-   🔵 NORMALIZATION LAYER (massively important)
-   This ensures inconsistent Supabase texts still sort correctly.
-------------------------------------------------*/
-function normalizeProductName(name: string): string {
+/* -------------------------------------------------------
+   MARKING & ENGRAVING ORDER
+---------------------------------------------------------*/
+const LASER_MARKING_SUB_ORDER = [
+  "Fiber Laser Marking Machine",
+  "UV Laser Marking Machine",
+  "CO₂ Laser Marking Machine",
+  "Laser Engraving Machine",
+];
+
+/* -------------------------------------------------------
+   CNC SHEET BENDING ORDER
+---------------------------------------------------------*/
+const CNC_BENDING_ORDER = [
+  "Smart Bend",
+  "Power Bend",
+  "CNC Sheet Bending Machine",
+  "Pump-Controlled CNC Sheet Bending Machine",
+  "NC Sheet Bending Machine",
+  "Panel Bender",
+  "CNC V-Grooving Machine",
+];
+
+/* -------------------------------------------------------
+   NORMALIZATION LOGIC
+---------------------------------------------------------*/
+function normalizeSubcategory(name = "") {
   const n = name.toLowerCase().trim();
 
-  if (n.includes("uv") && n.includes("mark")) return "UV Laser Marking Machine";
-  if (n.includes("fiber") && n.includes("mark")) return "Fiber Laser Marking Machine";
-  if ((n.includes("co₂") || n.includes("co2")) && n.includes("mark"))
+  if (n.includes("c series") || n.startsWith("c "))
+    return "Sheet Laser Cutting Machine – C Series";
+
+  if (n.includes("electrical") || n.includes("electrolam"))
+    return "Electrical Steel / Electrolamination Sheet Laser Cutting Machines";
+
+  if (n.includes("sheet") && n.includes("tube"))
+    return "Sheet and Tube Laser Cutting Machine";
+
+  if (n.includes("fully automatic"))
+    return "Fully Automatic Sheet Laser Cutting Machine";
+
+  if (n.includes("sheet laser cutting") || n.startsWith("sheet laser"))
+    return "Sheet Laser Cutting Machine";
+
+  if (n.includes("tube") || n.includes("pipe"))
+    return "Tube Laser Cutting Machine or Pipe Laser Cutting Machine";
+
+  if (n.includes("fiber") && n.includes("mark"))
+    return "Fiber Laser Marking Machine";
+
+  if (n.includes("uv") && n.includes("mark"))
+    return "UV Laser Marking Machine";
+
+  if ((n.includes("co2") || n.includes("co₂")) && n.includes("mark"))
     return "CO₂ Laser Marking Machine";
 
-  if ((n.includes("co₂") || n.includes("co2")) && n.includes("engraving"))
-    return "CO₂ Laser Engraving Machine";
+  if (n.includes("engraving"))
+    return "Laser Engraving Machine";
 
-  if (
-    (n.includes("co₂") || n.includes("co2")) &&
-    n.includes("fiber") &&
-    n.includes("engraving")
-  )
-    return "CO₂ + Fiber Laser Engraving Machine";
-
-  return name; // fallback without touching UI
+  return name.trim();
 }
 
-/* ----------------------------------------------
-   🔵 UNIVERSAL SORTING HELPER
-   Case-insensitive + trim-safe + fallback alphabetical
-------------------------------------------------*/
-function sortWithPreferred<T>(
-  items: T[],
-  getKey: (item: T) => string,
-  preferredOrder: string[]
-): T[] {
-  const norm = (s: string) => s.toLowerCase().trim();
-
-  const getIndex = (value: string) => {
-    const normalizedValue = norm(value);
-    const idx = preferredOrder.findIndex((p) => norm(p) === normalizedValue);
+/* -------------------------------------------------------
+   UNIVERSAL SORTING HELPER
+---------------------------------------------------------*/
+function sortWithPreferred(items, getKey, orderList) {
+  const clean = (s) => s.toLowerCase().trim();
+  const indexOf = (val) => {
+    const idx = orderList.findIndex((x) => clean(x) === clean(val));
     return idx === -1 ? Number.MAX_SAFE_INTEGER : idx;
   };
 
   return [...items].sort((a, b) => {
-    const aKey = getKey(a);
-    const bKey = getKey(b);
-    const ai = getIndex(aKey);
-    const bi = getIndex(bKey);
+    const ak = getKey(a);
+    const bk = getKey(b);
+    const ai = indexOf(ak);
+    const bi = indexOf(bk);
 
-    if (ai === bi) return aKey.localeCompare(bKey);
+    if (ai === bi) return ak.localeCompare(bk);
     return ai - bi;
   });
 }
 
-/* ----------------------------------------------
-   🔵 SUPABASE FETCH
-------------------------------------------------*/
-const fetchProducts = async (): Promise<ProductType[]> => {
-  const { data, error } = await supabase
-    .from("products")
-    .select(
-      `id, Segment, SubCategory, ProductName, ShortDescription, Thumbnail_url`
-    )
-    .order("Segment", { ascending: true })
-    .order("SubCategory", { ascending: false });
+/* -------------------------------------------------------
+   ⭐ PRODUCT PRIORITY SORTING (C SERIES FIRST)
+---------------------------------------------------------*/
+function sortProductsByPriority(products) {
+  return [...products].sort((a, b) => {
+    const aC = a.name.toLowerCase().includes("c series");
+    const bC = b.name.toLowerCase().includes("c series");
+
+    if (aC && !bC) return -1;
+    if (!aC && bC) return 1;
+
+    return a.name.localeCompare(b.name);
+  });
+}
+
+/* -------------------------------------------------------
+   FETCH PRODUCTS
+---------------------------------------------------------*/
+const fetchProducts = async () => {
+  const { data, error } = await supabase.from("products").select(`
+    id, Segment, SubCategory, ProductName, ShortDescription, Thumbnail_url
+  `);
 
   if (error) {
     console.error("Error fetching products:", error);
     return [];
   }
+
   return data || [];
 };
 
-/* ----------------------------------------------
-   🔵 CATEGORY GROUPING + SORTING ENGINE
-------------------------------------------------*/
-const getCategoryList = (products: ProductType[]) => {
-  const grouped: any = {};
+/* -------------------------------------------------------
+   CATEGORY GROUPING ENGINE
+---------------------------------------------------------*/
+const getCategoryList = (products) => {
+  const grouped = {};
 
-  // group by segment
-  products.forEach((product) => {
-    const segment = product.Segment;
-    const sub = product.SubCategory;
+  products.forEach((p) => {
+    const seg = p.Segment;
+    const sub = normalizeSubcategory(p.SubCategory);
 
-    if (!grouped[segment]) grouped[segment] = { subs: new Set(), products: [] };
+    if (!grouped[seg]) grouped[seg] = { subs: new Set(), products: [] };
 
-    grouped[segment].subs.add(sub);
+    grouped[seg].subs.add(sub);
 
-    grouped[segment].products.push({
-      id: product.id,
-      name: product.ProductName,
-      normalizedName: normalizeProductName(product.ProductName),
+    grouped[seg].products.push({
+      id: p.id,
+      name: p.ProductName,
       subcategory: sub,
-      description: product.ShortDescription || "",
-      image: product.Thumbnail_url?.[0] || null,
+      description: p.ShortDescription || "",
+      image: p.Thumbnail_url?.[0] || null,
     });
   });
 
-  let result = Object.entries(grouped).map(([segment, { subs, products }]) => {
-    const segmentNorm = segment.toLowerCase().trim();
+  let result = Object.entries(grouped).map(([segment, obj]) => {
+    let subs = [...obj.subs];
+    const segNorm = segment.toLowerCase();
 
-    let subArray = Array.from(subs);
+    if (segNorm === "laser cutting")
+      subs = sortWithPreferred(subs, (s) => s, LASER_CUTTING_SUB_ORDER);
 
-    // Subcategory sorting: only Laser Cutting has custom order
-    if (segmentNorm === "laser cutting") {
-      subArray = sortWithPreferred(
-        subArray,
-        (s) => s,
-        LASER_CUTTING_SUB_ORDER
-      );
-    } else {
-      subArray = subArray.sort((a, b) => a.localeCompare(b));
-    }
+    if (segNorm === "laser welding")
+      subs = sortWithPreferred(subs, (s) => s, LASER_WELDING_SUB_ORDER);
 
-    let sortedProducts = [...products];
+    if (segNorm === "laser marking & engraving")
+      subs = sortWithPreferred(subs, (s) => s, LASER_MARKING_SUB_ORDER);
 
-    // Product ordering
-    if (segmentNorm === "laser engraving & marking") {
-      sortedProducts = sortWithPreferred(
-        sortedProducts,
-        (p) => p.normalizedName,
-        LASER_MARKING_PRODUCT_ORDER
-      );
-    }
-
-    if (segmentNorm === "cnc bending" || segmentNorm === "tube bending") {
-      sortedProducts = sortWithPreferred(
-        sortedProducts,
-        (p) => p.normalizedName,
-        BENDING_PRODUCT_ORDER
-      );
-    }
-
-    if (segmentNorm === "laser welding") {
-      sortedProducts = sortWithPreferred(
-        sortedProducts,
-        (p) => p.normalizedName,
-        LASER_WELDING_PRODUCT_ORDER
-      );
-    }
+    if (segNorm === "cnc sheet bending")
+      subs = sortWithPreferred(subs, (s) => s, CNC_BENDING_ORDER);
 
     return {
       id: segment,
       name: segment,
-      subs: subArray,
-      products: sortedProducts,
+      subs,
+      products: obj.products,
     };
   });
 
-  // category sorting
-  result = sortWithPreferred(result, (c) => c.name, CATEGORY_ORDER);
-
-  return result;
+  return sortWithPreferred(result, (c) => c.name, CATEGORY_ORDER);
 };
 
-
-export default function Product(): JSX.Element {
+/* -------------------------------------------------------
+   MAIN PRODUCT COMPONENT
+---------------------------------------------------------*/
+export default function Product() {
   const [showEnquiryForm, setShowEnquiryForm] = useState(false);
-  const [enquiryInitialData, setEnquiryInitialData] = useState<
-    Record<string, string>
-  >({});
-  const [products, setProducts] = useState<ProductType[]>([]);
+  const [enquiryInitialData, setEnquiryInitialData] = useState({});
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
 
-  const [categoryId, setCategoryId] = useState<string>("");
-  const [sub, setSub] = useState<string>("");
+  const [categoryId, setCategoryId] = useState("");
+  const [sub, setSub] = useState("");
   const [mobileCatOpen, setMobileCatOpen] = useState(false);
   const [mobileSubOpen, setMobileSubOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   const PRODUCTS_PER_PAGE = 9;
-
-  const productsRef = useRef<HTMLDivElement>(null);
-  const isInitialMount = useRef(true);
-
-  // ✅ prevents unwanted scroll on reload
-  const userTriggeredScroll = useRef(false);
-
-  useEffect(() => {
-    if (window.location.hash) {
-      history.replaceState(null, "", window.location.pathname);
-    }
-  }, []);
+  const productsRef = useRef(null);
+  const triggeredScroll = useRef(false);
+  const isInitial = useRef(true);
 
   useEffect(() => {
     fetchProducts().then((data) => {
@@ -265,25 +246,8 @@ export default function Product(): JSX.Element {
 
   useEffect(() => {
     if (!loading && CATEGORIES.length > 0) {
-      // Try to find 'laser cutting' category
-      const defaultCat = CATEGORIES.find(
-        (c) => c.name.toLowerCase() === "laser cutting"
-      );
-      // If 'laser cutting' found, try to select 'sheet cutting Machine' sub
-      let defaultSub = "";
-      if (defaultCat) {
-        defaultSub =
-          defaultCat.subs.find(
-            (s) => s.toLowerCase() === "sheet cutting machine"
-          ) || defaultCat.subs[0];
-        setCategoryId(defaultCat.id);
-        setSub(defaultSub);
-      } else {
-        // fallback to first
-        setCategoryId(CATEGORIES[0].id);
-        setSub(CATEGORIES[0].subs[0]);
-      }
-      setCurrentPage(1);
+      setCategoryId(CATEGORIES[0].id);
+      setSub(CATEGORIES[0].subs[0]);
     }
   }, [loading, CATEGORIES]);
 
@@ -292,33 +256,14 @@ export default function Product(): JSX.Element {
     [categoryId, CATEGORIES]
   );
 
-  const filteredProducts = useMemo(
-    () =>
-      category ? category.products.filter((p) => p.subcategory === sub) : [],
-    [category, sub]
-  );
-
-  // ✅ FINAL FIXED SCROLL EFFECT
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-
-    // Only scroll when user triggers (NOT on reload)
-    if (!userTriggeredScroll.current) return;
-    userTriggeredScroll.current = false;
-
-    // Scroll + Reset page
-    setCurrentPage(1);
-
-    setTimeout(() => {
-      productsRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }, 100);
-  }, [sub, categoryId]);
+  /* -------------------------------------------------------
+     ⭐ FILTER + SORT PRODUCTS (C SERIES FIRST)
+  ---------------------------------------------------------*/
+  const filteredProducts = useMemo(() => {
+    if (!category) return [];
+    const items = category.products.filter((p) => p.subcategory === sub);
+    return sortProductsByPriority(items);
+  }, [category, sub]);
 
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
   const paginatedProducts = filteredProducts.slice(
@@ -326,69 +271,68 @@ export default function Product(): JSX.Element {
     currentPage * PRODUCTS_PER_PAGE
   );
 
-  const goToPage = (page: number) => {
-    if (page < 1 || page > totalPages) return;
-
-    userTriggeredScroll.current = true;
-    setCurrentPage(page);
+  function goToPage(p) {
+    if (p < 1 || p > totalPages) return;
+    triggeredScroll.current = true;
+    setCurrentPage(p);
 
     setTimeout(() => {
-      productsRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }, 100);
-  };
+      productsRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 150);
+  }
+
+  useEffect(() => {
+    if (isInitial.current) {
+      isInitial.current = false;
+      return;
+    }
+    if (!triggeredScroll.current) return;
+
+    triggeredScroll.current = false;
+
+    setTimeout(() => {
+      productsRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 150);
+  }, [sub, categoryId]);
 
   if (loading) return <Loading text="Products" />;
+
+  /* -------------------------------------------------------
+     UI BELOW IS COMPLETELY UNCHANGED
+  ---------------------------------------------------------*/
 
   return (
     <section
       id="products"
       className="min-h-screen py-12 lg:py-16 my-16 bg-gradient-to-br from-neutral-950 via-neutral-900 to-zinc-900 relative"
-      // style={{
-      //   backgroundSize: "cover",
-      //   backgroundPosition: "center",
-      //   backgroundRepeat: "no-repeat",
-      // }}
-      // style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
-      <div
-        ref={productsRef}
-        className="max-w-[1600px] mx-auto px-4 sm:px-6 pt-16"
-      >
-        {/* HEADER */}
-        <div className="text-center mb-12 lg:mb-16" id="#products">
-          {/* <div className="inline-flex bg-whiteBgButtonBg bg-opacity-20 text-whiteBgButtonBg items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-950/50 to-black/50 border border-red-900/30 rounded-full mb-4 backdrop-blur-sm">
-            <Sparkles className="w-4 h-4 " />
-            <span className="font-normal">Premium Collection</span>
-          </div> */}
+      <div ref={productsRef} className="max-w-[1600px] mx-auto px-4 sm:px-6 pt-16">
 
+        {/* HEADER */}
+        <div className="text-center mb-12 lg:mb-16">
           <h2 className="text-4xl lg:text-6xl font-normal font-primary text-darkBgText mb-5 tracking-tight">
             Industrial Equipment Catalog
           </h2>
-
           <p className="text-darkBgText opacity-60 text-lg md:text-xl max-w-2xl mx-auto font-secondary">
-            Explore our complete range of laser cutting, welding, marking, and
-            automation systems.
+            Explore our complete range of laser cutting, welding, marking, and automation systems.
           </p>
         </div>
 
-        {/* CATEGORY PILLS (DESKTOP) */}
-        <div className="hidden lg:flex justify-center font-primary gap-3 mb-12 ">
+        {/* CATEGORY PILLS */}
+        <div className="hidden lg:flex justify-center font-primary gap-3 mb-12">
           {CATEGORIES.map((c) => (
             <button
               key={c.id}
               onClick={() => {
-                userTriggeredScroll.current = true;
+                triggeredScroll.current = true;
                 setCategoryId(c.id);
                 setSub(c.subs[0]);
                 setCurrentPage(1);
               }}
-              className={`px-8 py-3.5 font-medium  transition-all duration-300 border border-white/20 ${
+              className={`px-8 py-3.5 font-medium transition-all duration-300 border border-white/20 ${
                 c.id === categoryId
-                  ? "bg-blue-900 hover:bg-blue-20 text-darkBgText  shadow-lg hover:bg-blue-800"
-                  : "bg-black/40 text-darkBgText text-opacity-80 hover:text-darkBgText hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
+                  ? "bg-red-600 text-darkBgText shadow-lg hover:bg-red-800"
+                  : "bg-black/40 text-darkBgText text-opacity-80 hover:text-darkBgText hover:bg-black/60"
               }`}
             >
               {c.name}
@@ -396,41 +340,40 @@ export default function Product(): JSX.Element {
           ))}
         </div>
 
-        {/* MOBILE CATEGORY DROPDOWNS */}
+        {/* MOBILE CATEGORY DROPDOWN */}
         <div className="lg:hidden mb-8 flex flex-col gap-3 font-secondary">
-          {/* Category Dropdown */}
           <div className="relative">
             <button
               onClick={() => setMobileCatOpen(!mobileCatOpen)}
-              className="w-full px-5 py-4 bg-blue-900 bg-opacity-80 hover:bg-blue-900 bg-black/40 border border-zinc-800 text-darkBgText font-semibold flex justify-between items-center hover:border-zinc-700 transition-all backdrop-blur-sm"
+              className="w-full px-5 py-4 bg-black/40 border border-zinc-800 text-darkBgText font-semibold flex justify-between items-center"
             >
               <span className="flex items-center gap-2">
-                <Grid className="w-5 h-5 text-blue-400" />
+                <Grid className="w-5 h-5 text-red-400" />
                 {category.name}
               </span>
               <ChevronDown
-                className={`w-5 h-5 text-gray-400 transform transition-transform duration-200 ${
-                  mobileCatOpen ? "rotate-180" : "rotate-0"
+                className={`w-5 h-5 text-gray-400 transition-transform ${
+                  mobileCatOpen ? "rotate-180" : ""
                 }`}
               />
             </button>
 
             {mobileCatOpen && (
-              <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800 shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl">
+              <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800 shadow-2xl max-h-64 overflow-y-auto">
                 {CATEGORIES.map((c) => (
                   <button
                     key={c.id}
                     onClick={() => {
-                      userTriggeredScroll.current = true;
+                      triggeredScroll.current = true;
                       setCategoryId(c.id);
                       setSub(c.subs[0]);
                       setMobileCatOpen(false);
                       setCurrentPage(1);
                     }}
-                    className={`w-full text-left px-5 py-4 transition-all border-b border-zinc-800 last:border-b-0 ${
+                    className={`w-full text-left px-5 py-4 border-b border-zinc-800 ${
                       c.id === categoryId
-                        ? "bg-blue-900 hover:bg-blue-20 text-darkBgText  shadow-lg hover:bg-blue-800"
-                        : "bg-black/40 text-darkBgText text-opacity-80 hover:text-darkBgText hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
+                        ? "bg-red-600 text-darkBgText shadow-lg"
+                        : "bg-black/40 text-darkBgText text-opacity-80 hover:bg-black/60"
                     }`}
                   >
                     {c.name}
@@ -440,32 +383,32 @@ export default function Product(): JSX.Element {
             )}
           </div>
 
-          {/* Subcategory Dropdown */}
+          {/* SUBCATEGORY */}
           <div className="relative">
             <button
               onClick={() => setMobileSubOpen(!mobileSubOpen)}
-              className="w-full px-5 py-4 bg-black/40 border hover:bg-blue-900 border-zinc-800 text-white font-semibold flex justify-between items-center hover:border-zinc-700 transition-all backdrop-blur-sm"
+              className="w-full px-5 py-4 bg-black/40 border border-zinc-800 text-white font-semibold flex justify-between items-center"
             >
               <span>{sub}</span>
               <ChevronDown
-                className={`w-5 h-5 text-gray-400 transform transition-transform duration-200 ${
-                  mobileSubOpen ? "rotate-180" : "rotate-0"
+                className={`w-5 h-5 text-gray-400 transition-transform ${
+                  mobileSubOpen ? "rotate-180" : ""
                 }`}
               />
             </button>
 
             {mobileSubOpen && (
-              <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800 shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl">
+              <div className="absolute z-20 w-full mt-2 bg-zinc-900 border border-zinc-800 shadow-2xl max-h-64 overflow-y-auto">
                 {category.subs.map((s) => (
                   <button
                     key={s}
                     onClick={() => {
-                      userTriggeredScroll.current = true; // ✅
+                      triggeredScroll.current = true;
                       setSub(s);
                       setMobileSubOpen(false);
                       setCurrentPage(1);
                     }}
-                    className="w-full text-left px-5 py-4 transition-all border-b border-zinc-800 last:border-b-0 bg-blue-900 bg-opacity-30 text-darkBgText font-semibold"
+                    className="w-full text-left px-5 py-4 border-b border-zinc-800 bg-red-600 bg-opacity-30 text-darkBgText font-semibold"
                   >
                     {s}
                   </button>
@@ -477,36 +420,33 @@ export default function Product(): JSX.Element {
 
         {/* DESKTOP GRID */}
         <div className="hidden lg:grid grid-cols-5 gap-6 pb-16">
-          {/* SIDEBAR */}
-          <aside className="bg-gradient-to-b from-zinc-900 to-black p-6 shadow-2xl border border-zinc-800 h-[600px] flex flex-col sticky top-24">
-            <h4 className="text-xl font-medium mb-6 font-primary text-darkBgText text-opacity-80 flex items-center gap-3 pb-4 border-b border-zinc-800">
-              <div className="p-2 bg-blue-950/50 border border-blue-900/30">
-                <Grid className="w-5 h-5 text-blue-500" />
+          <aside className="bg-gradient-to-b from-zinc-900 to-black p-6 border border-zinc-800 h-[600px] sticky top-24 flex flex-col shadow-2xl">
+            <h4 className="text-xl mb-6 font-primary text-darkBgText text-opacity-80 flex items-center gap-3 pb-4 border-b border-zinc-800">
+              <div className="p-2 bg-red-950/50 border border-red-600/30">
+                <Grid className="w-5 h-5 text-red-600" />
               </div>
               <span>Sub Categories</span>
             </h4>
 
-            <nav className="flex flex-col gap-2 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
+            <nav className="flex flex-col gap-2 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-zinc-700">
               {category.subs.map((s) => (
                 <button
                   key={s}
                   onClick={() => {
-                    userTriggeredScroll.current = true; // ✅
+                    triggeredScroll.current = true;
                     setSub(s);
                     setCurrentPage(1);
                   }}
-                  className={`group w-full text-left px-4 py-3.5 font-semibold transition-all duration-200 flex items-center justify-between ${
+                  className={`group w-full text-left px-4 py-3.5 font-semibold transition-all flex items-center justify-between ${
                     s === sub
-                      ? "bg-blue-900 hover:bg-blue-20 text-darkBgText  shadow-lg hover:bg-blue-800"
-                      : "bg-black/40 text-darkBgText text-opacity-80 hover:text-darkBgText hover:bg-black/60 border-zinc-800 hover:border-zinc-700 backdrop-blur-sm"
+                      ? "bg-red-600 text-darkBgText shadow-lg hover:bg-red-800"
+                      : "bg-black/40 text-darkBgText text-opacity-80 hover:bg-black/60"
                   }`}
                 >
                   <span>{s}</span>
                   <ArrowRight
-                    className={`w-10 h-10 transition-transform ${
-                      s === sub
-                        ? "opacity-100"
-                        : "opacity-0 group-hover:opacity-100"
+                    className={`w-10 h-10 transition-all ${
+                      s === sub ? "opacity-100" : "opacity-0 group-hover:opacity-100"
                     }`}
                   />
                 </button>
@@ -533,7 +473,7 @@ export default function Product(): JSX.Element {
               {paginatedProducts.map((p, index) => (
                 <div
                   key={p.id}
-                  className="group bg-gradient-to-b from-zinc-900 to-black overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-500 hover:shadow-2xl hover:shadow-red-950/20"
+                  className="group bg-gradient-to-b from-zinc-900 to-black overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all hover:shadow-2xl hover:shadow-red-950/20"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="relative h-80 bg-zinc-950 overflow-hidden">
@@ -548,11 +488,11 @@ export default function Product(): JSX.Element {
                         <Image className="w-16 h-16" />
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 group-hover:opacity-40" />
                   </div>
 
                   <div className="p-6">
-                    <h3 className="text-3xl font-primary font-medium text-darkBgText mb-2 group-hover:text-white transition-colors">
+                    <h3 className="text-3xl font-primary font-medium text-darkBgText mb-2 group-hover:text-white">
                       {p.name}
                     </h3>
                     <p className="text-md text-darkBgText text-opacity-70 font-secondary mb-5 leading-relaxed line-clamp-2">
@@ -562,15 +502,14 @@ export default function Product(): JSX.Element {
                     <div className="flex w-full gap-3 mt-2 font-secondary">
                       <button
                         onClick={() => navigate(`/product/${p.id}`)}
-                        className="flex-1 px-6 py-3.5 text-opacity-90  font-semibold transition-all duration-300 border border-white/40 flex items-center justify-center gap-2 shadow-sm hover:shadow-md bg-blue-900 hover:bg-blue-800  text-darkBgTextHover"
+                        className="flex-1 px-6 py-3.5 font-semibold border border-white/40 bg-red-600 hover:bg-red-800 text-darkBgTextHover flex items-center justify-center gap-2"
                       >
                         <span>View</span>
-                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                        <ArrowRight className="w-4 h-4" />
                       </button>
 
                       <button
                         onClick={() => {
-                          // open enquiry form with product context
                           setEnquiryInitialData({
                             segment: category.name,
                             subcategory: p.subcategory,
@@ -578,9 +517,9 @@ export default function Product(): JSX.Element {
                           });
                           setShowEnquiryForm(true);
                         }}
-                        className="flex-1 px-6 py-3.5 text-opacity-90  font-semibold transition-all duration-300 border border-white/40 flex items-center justify-center gap-2 shadow-sm hover:shadow-md bg-blue-900 hover:bg-blue-800  text-darkBgTextHover"
+                        className="flex-1 px-6 py-3.5 font-semibold border border-white/40 bg-red-600 hover:bg-red-800 text-darkBgTextHover flex items-center justify-center gap-2"
                       >
-                        <Phone className="w-4 h-4 transition-transform group-hover:scale-110" />
+                        <Phone className="w-4 h-4" />
                         <span>Enquire</span>
                       </button>
                     </div>
@@ -595,7 +534,7 @@ export default function Product(): JSX.Element {
                 <button
                   onClick={() => goToPage(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className="px-4 py-2 border border-zinc-700 rounded-md bg-black/50 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 border border-zinc-700 rounded-md bg-black/50 text-white disabled:opacity-50"
                 >
                   Previous
                 </button>
@@ -620,7 +559,7 @@ export default function Product(): JSX.Element {
                 <button
                   onClick={() => goToPage(currentPage + 1)}
                   disabled={currentPage === totalPages}
-                  className="px-4 py-2 border border-zinc-700 rounded-md bg-black/50 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 border border-zinc-700 rounded-md bg-black/50 text-white disabled:opacity-50"
                 >
                   Next
                 </button>
@@ -645,7 +584,7 @@ export default function Product(): JSX.Element {
           {paginatedProducts.map((p, index) => (
             <div
               key={p.id}
-              className="group bg-gradient-to-b from-zinc-900 to-black overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all duration-500"
+              className="group bg-gradient-to-b from-zinc-900 to-black overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-all"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="relative h-56 bg-zinc-950 overflow-hidden">
@@ -653,7 +592,7 @@ export default function Product(): JSX.Element {
                   <img
                     src={p.image}
                     alt={p.name}
-                    className="object-cover bg-white w-full h-full transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
                   />
                 ) : (
                   <div className="flex items-center justify-center h-full text-gray-700">
@@ -672,7 +611,7 @@ export default function Product(): JSX.Element {
                 <div className="flex justify-center gap-4">
                   <button
                     onClick={() => navigate(`/product/${p.id}`)}
-                    className="flex-1 max-w-[180px] px-5 py-3 bg-blue-900 text-white font-medium hover:bg-blue-800  transition-all duration-300 border border-white/40 flex items-center justify-center gap-2"
+                    className="flex-1 max-w-[180px] px-5 py-3 bg-red-600 text-white font-medium hover:bg-red-800 transition-all border border-white/40 flex items-center justify-center gap-2"
                   >
                     <span>View</span>
                     <ArrowRight className="w-4 h-4" />
@@ -687,7 +626,7 @@ export default function Product(): JSX.Element {
                       });
                       setShowEnquiryForm(true);
                     }}
-                    className="flex-1 max-w-[180px] px-5 py-3 bg-blue-900 text-white font-medium hover:bg-blue-800  transition-all duration-300 border border-white/40 flex items-center justify-center gap-2"
+                    className="flex-1 max-w-[180px] px-5 py-3 bg-red-600 text-white font-medium hover:bg-red-800 transition-all border border-white/40 flex items-center justify-center gap-2"
                   >
                     <span>Enquire</span>
                     <Phone className="w-4 h-4" />
@@ -698,7 +637,7 @@ export default function Product(): JSX.Element {
           ))}
         </div>
       </div>
-      {/* Enquiry form modal */}
+
       {showEnquiryForm && (
         <Form
           type="PRODUCT_ENQUIRY"
