@@ -16,6 +16,123 @@ const COLORS = {
   border: "rgba(6,12,42,0.1)",
 };
 
+/* -------------------------------------------------------
+   CATEGORY ORDER (same as Product page)
+---------------------------------------------------------*/
+const CATEGORY_ORDER = [
+  "Laser Cutting",
+  "Laser Welding",
+  "Laser Marking & Engraving",
+  "CNC Sheet Bending",
+  "Pipe and Tube Bending",
+  "Sheet Punching",
+];
+
+/* -------------------------------------------------------
+   SUBCATEGORY ORDER (same as Product page)
+---------------------------------------------------------*/
+const LASER_CUTTING_SUB_ORDER = [
+  "Sheet Laser Cutting Machine",
+  "Sheet Laser Cutting Machine – C Series",
+  "Tube Laser Cutting Machine or Pipe Laser Cutting Machine",
+  "Sheet and Tube Laser Cutting Machine",
+  "Fully Automatic Sheet Laser Cutting Machine",
+  "Electrical Steel / Electrolamination Sheet Laser Cutting Machines",
+];
+
+const LASER_WELDING_SUB_ORDER = [
+  "Handheld Laser Welding Machine",
+  "Air-Cooled Handheld Laser Welding Machine",
+  "Robotic Laser Welding Machine",
+  "Open Laser Welding Machine",
+  "Closed Laser Welding Machine",
+  "Pillow Plate Laser Welding Machine",
+];
+
+const LASER_MARKING_SUB_ORDER = [
+  "Fiber Laser Marking Machine",
+  "UV Laser Marking Machine",
+  "CO₂ Laser Marking Machine",
+  "Laser Engraving Machine",
+];
+
+const CNC_BENDING_ORDER = [
+  "Smart Bend",
+  "Power Bend",
+  "CNC Sheet Bending Machine",
+  "Pump-Controlled CNC Sheet Bending Machine",
+  "NC Sheet Bending Machine",
+  "Panel Bender",
+  "CNC V-Grooving Machine",
+];
+
+const SUB_ORDER_MAP: Record<string, string[]> = {
+  "Laser Cutting": LASER_CUTTING_SUB_ORDER,
+  "Laser Welding": LASER_WELDING_SUB_ORDER,
+  "Laser Marking & Engraving": LASER_MARKING_SUB_ORDER,
+  "CNC Sheet Bending": CNC_BENDING_ORDER,
+};
+
+/* -------------------------------------------------------
+   NORMALIZATION (same as Product page)
+---------------------------------------------------------*/
+function normalizeSubcategory(name = "") {
+  const n = name.toLowerCase().trim();
+
+  if (n.includes("c series") || n.startsWith("c "))
+    return "Sheet Laser Cutting Machine – C Series";
+
+  if (n.includes("electrical") || n.includes("electrolam"))
+    return "Electrical Steel / Electrolamination Sheet Laser Cutting Machines";
+
+  if (n.includes("sheet") && n.includes("tube"))
+    return "Sheet and Tube Laser Cutting Machine";
+
+  if (n.includes("fully automatic"))
+    return "Fully Automatic Sheet Laser Cutting Machine";
+
+  if (n.includes("sheet laser cutting") || n.startsWith("sheet laser"))
+    return "Sheet Laser Cutting Machine";
+
+  if (n.includes("tube") || n.includes("pipe"))
+    return "Tube Laser Cutting Machine or Pipe Laser Cutting Machine";
+
+  if (n.includes("fiber") && n.includes("mark"))
+    return "Fiber Laser Marking Machine";
+
+  if (n.includes("uv") && n.includes("mark"))
+    return "UV Laser Marking Machine";
+
+  if ((n.includes("co2") || n.includes("co₂")) && n.includes("mark"))
+    return "CO₂ Laser Marking Machine";
+
+  if (n.includes("engraving"))
+    return "Laser Engraving Machine";
+
+  return name.trim();
+}
+
+/* -------------------------------------------------------
+   UNIVERSAL SORTING HELPER (same behaviour as Product page)
+---------------------------------------------------------*/
+function sortWithPreferred(list: string[], preferredOrder: string[]) {
+  const clean = (s: string) => s.toLowerCase().trim();
+
+  return [...list].sort((a, b) => {
+    const ai = preferredOrder.findIndex((x) => clean(x) === clean(a));
+    const bi = preferredOrder.findIndex((x) => clean(x) === clean(b));
+
+    const aIdx = ai === -1 ? Number.MAX_SAFE_INTEGER : ai;
+    const bIdx = bi === -1 ? Number.MAX_SAFE_INTEGER : bi;
+
+    if (aIdx === bIdx) return a.localeCompare(b);
+    return aIdx - bIdx;
+  });
+}
+
+/* -------------------------------------------------------
+   HEADER COMPONENT
+---------------------------------------------------------*/
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProductsOpen, setIsProductsOpen] = useState(false);
@@ -59,27 +176,47 @@ const Header = () => {
     { name: "Our Partners", href: "/partners" },
   ];
 
+  /* -------------------------------------------------------
+     FETCH PRODUCTS – ONLY LOGIC CHANGED, NOT UI
+     Builds productData with SAME order as Product page
+  ---------------------------------------------------------*/
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const { data, error } = await supabase
           .from("products")
-          .select("Segment, SubCategory")
-          .order("Segment", { ascending: true })
-          .order("SubCategory", { ascending: true });
+          .select("Segment, SubCategory");
 
         if (error) throw error;
-        const organized: Record<string, Set<string>> = {};
-        data.forEach((product: any) => {
-          if (!organized[product.Segment]) {
-            organized[product.Segment] = new Set();
+
+        // group by Segment with normalized subcategories
+        const grouped: Record<string, Set<string>> = {};
+
+        (data || []).forEach((product: any) => {
+          const seg = product.Segment;
+          const sub = normalizeSubcategory(product.SubCategory);
+
+          if (!grouped[seg]) {
+            grouped[seg] = new Set();
           }
-          organized[product.Segment].add(product.SubCategory);
+          grouped[seg].add(sub);
         });
+
+        // 1) sort segments by CATEGORY_ORDER
+        const segments = Object.keys(grouped);
+        const orderedSegments = sortWithPreferred(segments, CATEGORY_ORDER);
+
+        // 2) for each segment, sort subs with specific sub-order list
         const final: Record<string, string[]> = {};
-        Object.keys(organized).forEach((segment) => {
-          final[segment] = Array.from(organized[segment]);
+        orderedSegments.forEach((segment) => {
+          const subsArray = Array.from(grouped[segment] || []);
+          const preferredSubs = SUB_ORDER_MAP[segment] || [];
+          final[segment] =
+            preferredSubs.length > 0
+              ? sortWithPreferred(subsArray, preferredSubs)
+              : subsArray.sort((a, b) => a.localeCompare(b));
         });
+
         setProductData(final);
         setLoading(false);
       } catch (error) {
@@ -90,6 +227,9 @@ const Header = () => {
     fetchProducts();
   }, []);
 
+  /* -------------------------------------------------------
+     DESKTOP NAV – EXACTLY AS YOUR ORIGINAL JSX
+  ---------------------------------------------------------*/
   const renderDesktopNav = () => {
     return navigationStructure.map((item) => {
       if (item.type === "link") {
@@ -117,8 +257,8 @@ const Header = () => {
             ref={containerRef}
             onMouseEnter={() => setIsProductsOpen(true)}
             onMouseLeave={(e) => {
-              const related = e.relatedTarget || (e.nativeEvent && e.nativeEvent.relatedTarget);
-              if (related && containerRef.current && containerRef.current.contains(related)) return;
+              const related = e.relatedTarget || (e.nativeEvent && (e.nativeEvent as any).relatedTarget);
+              if (related && containerRef.current && containerRef.current.contains(related as Node)) return;
               setIsProductsOpen(false);
               setHoveredSegment(null);
             }}
@@ -181,12 +321,12 @@ const Header = () => {
                         className="block px-4 py-2.5 text-sm transition-all duration-150 font-medium"
                         style={{ color: COLORS.whiteBgText }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = "rgba(243, 21, 36, 0.05)";
-                          e.currentTarget.style.color = COLORS.whiteBgTextHover;
+                          (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "rgba(243, 21, 36, 0.05)";
+                          (e.currentTarget as HTMLAnchorElement).style.color = COLORS.whiteBgTextHover;
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = COLORS.whiteBgText;
+                          (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "transparent";
+                          (e.currentTarget as HTMLAnchorElement).style.color = COLORS.whiteBgText;
                         }}
                       >
                         {subCategory}
@@ -237,12 +377,12 @@ const Header = () => {
                     className="block px-4 py-2.5 text-sm transition-all duration-200 font-medium"
                     style={{ color: COLORS.whiteBgText }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.color = COLORS.whiteBgTextHover;
-                      e.currentTarget.style.backgroundColor = "rgba(243, 21, 36, 0.05)";
+                      (e.currentTarget as HTMLAnchorElement).style.color = COLORS.whiteBgTextHover;
+                      (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "rgba(243, 21, 36, 0.05)";
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.color = COLORS.whiteBgText;
-                      e.currentTarget.style.backgroundColor = "transparent";
+                      (e.currentTarget as HTMLAnchorElement).style.color = COLORS.whiteBgText;
+                      (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "transparent";
                     }}
                   >
                     {aboutItem.name}
@@ -262,8 +402,8 @@ const Header = () => {
             ref={moreContainerRef}
             onMouseEnter={() => setIsMoreOpen(true)}
             onMouseLeave={(e) => {
-              const related = e.relatedTarget || (e.nativeEvent && e.nativeEvent.relatedTarget);
-              if (related && moreContainerRef.current && moreContainerRef.current.contains(related)) return;
+              const related = e.relatedTarget || (e.nativeEvent && (e.nativeEvent as any).relatedTarget);
+              if (related && moreContainerRef.current && moreContainerRef.current.contains(related as Node)) return;
               setIsMoreOpen(false);
             }}
           >
@@ -296,12 +436,12 @@ const Header = () => {
                     className="block px-4 py-2.5 text-sm transition-all duration-200 font-medium"
                     style={{ color: COLORS.whiteBgText }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.color = COLORS.whiteBgTextHover;
-                      e.currentTarget.style.backgroundColor = "rgba(243, 21, 36, 0.05)";
+                      (e.currentTarget as HTMLAnchorElement).style.color = COLORS.whiteBgTextHover;
+                      (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "rgba(243, 21, 36, 0.05)";
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.color = COLORS.whiteBgText;
-                      e.currentTarget.style.backgroundColor = "transparent";
+                      (e.currentTarget as HTMLAnchorElement).style.color = COLORS.whiteBgText;
+                      (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "transparent";
                     }}
                   >
                     {moreItem.name}
@@ -317,6 +457,9 @@ const Header = () => {
     });
   };
 
+  /* -------------------------------------------------------
+     MOBILE NAV – EXACTLY AS YOUR ORIGINAL JSX
+  ---------------------------------------------------------*/
   const renderMobileNav = () => {
     return navigationStructure.map((item) => {
       if (item.type === "link") {
@@ -519,7 +662,7 @@ const Header = () => {
             {isMenuOpen ? (
               <X className="h-6 w-6 text-white" />
             ) : (
-              <Menu className="h-6 w-6 text-white" />
+              <Menu className="h-6 w-6 text:white" />
             )}
           </button>
         </div>
@@ -534,12 +677,12 @@ const Header = () => {
               className=" mt-4 mx-4 px-4 py-3 rounded text-center bg-red-600 text-white hover:text-white font-semibold flex items-center justify-center gap-2"
               onClick={() => setIsMenuOpen(false)}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = COLORS.whiteBgTextHover;
+                (e.currentTarget as HTMLElement).style.backgroundColor = COLORS.whiteBgTextHover;
                 const icon = e.currentTarget.querySelector('svg') as HTMLElement;
                 if (icon) icon.style.transform = "rotate(360deg)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = COLORS.whiteBgButtonBg;
+                (e.currentTarget as HTMLElement).style.backgroundColor = COLORS.whiteBgButtonBg;
                 const icon = e.currentTarget.querySelector('svg') as HTMLElement;
                 if (icon) icon.style.transform = "rotate(0deg)";
               }}
