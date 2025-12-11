@@ -1,165 +1,112 @@
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg';
 
-const AdvertisingBrandingIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Advertising%20&%20Branding.png'
-const AutomotiveLaserIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Automotive%20Laser%20Applications.png'
-const ChemicalIndustryIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Chemical%20Industry%20Solutions.png' ;
-const EducationSolutionsIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Education%20Solutions.png'
-const EntertainmentEventsIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Entertainment%20&%20Events.png'
-const EVChargingIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/EV%20Charging%20Solutions.png'
-const HighRiseBuildingIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/High-rise%20Building%20Technologies.png'
-const HospitalityInnovationsIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Hospitality%20Innovations.png'
-const IndustrialManufacturingIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Industrial%20Manufacturing.png'
-const LaboratoryResearchIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Laboratory%20Research.png'
-const MarineOffshoreIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Marine%20&%20Offshore%20Applications.png' ;
-const SmartCityIcon = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons/Smart%20City%20Infrastructure.png'
+// React Icons
+import {
+  FaCarSide,
+  FaFighterJet,
+  FaIndustry,
+  FaBolt,
+  FaSnowflake,
+  FaCouch,
+  FaBuilding,
+  FaTrain,
+  FaOilCan,
+  FaStethoscope,
+  FaTractor,
+  FaUtensils,
+  FaBullhorn,
+  FaBicycle,
+  FaShip,
+  FaCogs,
+  FaMountain,
+  FaHamburger,
+  FaMicrochip,
+} from "react-icons/fa";
 
-const AdvertisingBrandingBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Advertising%20&%20Branding.webp'
-const AutomotiveLaserBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Automotive%20Laser%20Applications.jpeg'
-const ChemicalIndustryBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Chemical%20Industry%20Solutions.webp'
-const EducationSolutionsBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Education%20Solutions.avif'
-const EntertainmentEventsBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Entertainment%20&%20Events.jpeg'
-const EVChargingBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/EV%20Charging%20Solutions.jpeg'
-const HighRiseBuildingBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/High-rise%20Building%20Technologies.jpg'
-const HospitalityInnovationsBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Hospitality%20Innovations.jpeg'
-const IndustrialManufacturingBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Industrial%20Manufacturing.jpg'
-const LaboratoryResearchBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Laboratory%20Research.jpg'
-const MarineOffshoreBg = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Marine%20&%20Offshore%20Applications.jpg'
-const SmartCityBg  = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/icons-bg-image/Smart%20City%20Infrastructure.jpg'
+// MAIN BG
+const logo =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg";
+
+// BACKGROUND IMAGES (Hover-only)
+const automotiveAndAutoComponents =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Body%20parts.jpg";
+
+const aerospaceAndDefense =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Aircraft%20components.jpg";
+
+const fabricationAndSheetMetalIndustries =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Contract%20manufacturers.jpg";
+
+const electricalAndElectronics =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Enclosures.jpg";
+
+const hvacAndRefrigeration =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Cooling_heating%20units.jpg";
+
+const furnitureAndInteriorSolutions =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Metal%20furnishings.jpg";
+
+const metalBuildingInfrastructureAndConstruction =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Metal%20doors,%20railings,%20facades.jpg";
+
+const railwaysAndMetro =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Seating%20structures.jpg";
+
+const oilGasEnergyPower =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Pressure%20vessels.jpg";
+
+const medicalAndHealthcareEquipment =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Hospital%20furniture.jpg";
+
+const agricultureEquipmentAndMachinery =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Implements.jpg";
+
+const kitchenEquipmentAndHomeAppliances =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Chimneys,%20cooktops.jpg";
+
+const signageAndAdvertising =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/LED%20signboards.jpg";
+
+const bicycleTwoWheelerAndEMobility =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Tubes%20&%20chassis%20parts.jpg";
+
+const marineAndShipbuilding =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Engine%20room%20components.jpg";
+
+const textileMachineryAndIndustrialEquipment =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Automation%20equipment%20parts.jpg";
+
+const miningAndHeavyEarthmovingEquipment =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Buckets,%20blades.jpg";
+
+const foodProcessingEquipment =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Conveyor%20systems.jpg";
+
+const defenceElectronicsAndInstrumentation =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/industry-solutions/new-icons-updated-11/12/205/Weapon%20system%20components.jpg";
+
+// INDUSTRY DATA (ICONS = React Icons, BG = Hover image)
 const industries = [
-  {
-    title: "Advertising & Branding",
-    icon: (
-      <img
-        src={AdvertisingBrandingIcon}
-        alt="Advertising & Branding"
-        className="w-16 h-16"
-      />
-    ),
-    bgImage: AdvertisingBrandingBg,
-  },
-  {
-    title: "Automotive Laser Applications",
-    icon: (
-      <img
-        src={AutomotiveLaserIcon}
-        alt="Automotive Laser Applications"
-        className="w-16 h-16"
-      />
-    ),
-    bgImage: AutomotiveLaserBg,
-  },
-  {
-    title: "Chemical Industry Solutions",
-    icon: (
-      <img
-        src={ChemicalIndustryIcon}
-        alt="Chemical Industry Solutions"
-        className="w-16 h-16"
-      />
-    ),
-    bgImage: ChemicalIndustryBg,
-  },
-  {
-    title: "Education Solutions",
-    icon: (
-      <img
-        src={EducationSolutionsIcon}
-        alt="Education Solutions"
-        className="w-16 h-16"
-      />
-    ),
-    bgImage: EducationSolutionsBg,
-  },
-  {
-    title: "Entertainment & Events",
-    icon: (
-      <img
-        src={EntertainmentEventsIcon}
-        alt="Entertainment & Events"
-        className="w-16 h-16"
-      />
-    ),
-    bgImage: EntertainmentEventsBg,
-  },
-  {
-    title: "EV Charging Solutions",
-    icon: (
-      <img
-        src={EVChargingIcon}
-        alt="EV Charging Solutions"
-        className="w-16 h-16"
-      />
-    ),
-    bgImage: EVChargingBg,
-  },
-  {
-    title: "High-rise Building Technologies",
-    icon: (
-      <img
-        src={HighRiseBuildingIcon}
-        alt="High-rise Building Technologies"
-        className="w-16 h-16"
-      />
-    ),
-    bgImage: HighRiseBuildingBg,
-  },
-  {
-    title: "Hospitality Innovations",
-    icon: (
-      <img
-        src={HospitalityInnovationsIcon}
-        alt="Hospitality Innovations"
-        className="w-16 h-16"
-      />
-    ),
-    bgImage: HospitalityInnovationsBg,
-  },
-  {
-    title: "Industrial Manufacturing",
-    icon: (
-      <img
-        src={IndustrialManufacturingIcon}
-        alt="Industrial Manufacturing"
-        className="w-16 h-16"
-      />
-    ),
-    bgImage: IndustrialManufacturingBg,
-  },
-  {
-    title: "Laboratory Research",
-    icon: (
-      <img
-        src={LaboratoryResearchIcon}
-        alt="Laboratory Research"
-        className="w-16 h-16"
-      />
-    ),
-    bgImage: LaboratoryResearchBg,
-  },
-  {
-    title: "Marine & Offshore Applications",
-    icon: (
-      <img
-        src={MarineOffshoreIcon}
-        alt="Marine & Offshore Applications"
-        className="w-16 h-16"
-      />
-    ),
-    bgImage: MarineOffshoreBg,
-  },
-  {
-    title: "Smart City Infrastructure",
-    icon: (
-      <img
-        src={SmartCityIcon}
-        alt="Smart City Infrastructure"
-        className="w-16 h-16"
-      />
-    ),
-    bgImage: SmartCityBg,
-  },
+  { title: "Automotive & Auto Components", icon: <FaCarSide />, bgImage: automotiveAndAutoComponents },
+  { title: "Aerospace & Defense", icon: <FaFighterJet />, bgImage: aerospaceAndDefense },
+  { title: "Fabrication & Sheet Metal", icon: <FaIndustry />, bgImage: fabricationAndSheetMetalIndustries },
+  { title: "Electrical & Electronics", icon: <FaBolt />, bgImage: electricalAndElectronics },
+  { title: "HVAC & Refrigeration", icon: <FaSnowflake />, bgImage: hvacAndRefrigeration },
+  { title: "Furniture & Interior Solutions", icon: <FaCouch />, bgImage: furnitureAndInteriorSolutions },
+  { title: "Metal Building & Construction", icon: <FaBuilding />, bgImage: metalBuildingInfrastructureAndConstruction },
+  { title: "Railways & Metro", icon: <FaTrain />, bgImage: railwaysAndMetro },
+  { title: "Oil / Gas / Power / Energy", icon: <FaOilCan />, bgImage: oilGasEnergyPower },
+  { title: "Medical & Healthcare", icon: <FaStethoscope />, bgImage: medicalAndHealthcareEquipment },
+  { title: "Agriculture Machinery", icon: <FaTractor />, bgImage: agricultureEquipmentAndMachinery },
+  { title: "Kitchen & Home Appliances", icon: <FaUtensils />, bgImage: kitchenEquipmentAndHomeAppliances },
+  { title: "Signage & Advertising", icon: <FaBullhorn />, bgImage: signageAndAdvertising },
+  { title: "Two-Wheeler & E-Mobility", icon: <FaBicycle />, bgImage: bicycleTwoWheelerAndEMobility },
+  { title: "Marine & Shipbuilding", icon: <FaShip />, bgImage: marineAndShipbuilding },
+  { title: "Textile Machinery", icon: <FaCogs />, bgImage: textileMachineryAndIndustrialEquipment },
+  { title: "Mining & Heavy Earthmoving", icon: <FaMountain />, bgImage: miningAndHeavyEarthmovingEquipment },
+  { title: "Food Processing Equipment", icon: <FaHamburger />, bgImage: foodProcessingEquipment },
+  { title: "Defence Electronics", icon: <FaMicrochip />, bgImage: defenceElectronicsAndInstrumentation },
 ];
 
 export default function IndustryCarousel() {
@@ -168,11 +115,7 @@ export default function IndustryCarousel() {
 
   useEffect(() => {
     const updateItemsPerView = () => {
-      if (window.innerWidth >= 1024) {
-        setItemsPerView(3);
-      } else {
-        setItemsPerView(1);
-      }
+      setItemsPerView(window.innerWidth >= 1024 ? 3 : 1);
     };
     updateItemsPerView();
     window.addEventListener("resize", updateItemsPerView);
@@ -182,93 +125,96 @@ export default function IndustryCarousel() {
   const maxIndex = Math.max(0, industries.length - itemsPerView);
   const cardWidthPercent = 100 / itemsPerView;
 
-  // Auto slide
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
     }, 3500);
-    return () => clearInterval(intervalId);
+    return () => clearInterval(interval);
   }, [maxIndex]);
 
-  const nextSlide = () =>
-    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-  const prevSlide = () =>
-    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+  const nextSlide = () => setCurrentIndex((p) => (p >= maxIndex ? 0 : p + 1));
+  const prevSlide = () => setCurrentIndex((p) => (p <= 0 ? maxIndex : p - 1));
 
   return (
-    <section className="py-12 lg:py-16 my-16   relative overflow-hidden" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <section
+      className="py-12 lg:py-16 my-16 relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${logo})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4">
+        {/* Heading */}
         <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-primary font-medium pt-10 text-darkBgText mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-primary font-medium pt-10 text-white">
             Industry Solutions
           </h2>
-          <p className="text-base sm:text-lg text-darkBgText text-opacity-50 max-w-3xl mx-auto font-secondary">
-            Tailor-made solutions for different industries and application
-            scenarios
+          <p className="text-lg text-white/50 max-w-3xl mx-auto">
+            Tailor-made solutions for different industries and application scenarios
           </p>
         </div>
 
+        {/* Carousel */}
         <div className="overflow-hidden mb-8">
           <div
-            className={`flex will-change-transform gap-0 lg:gap-6`} // gap 0 on mobile, gap 6 (1.5rem) on desktop and above
+            className="flex gap-0 lg:gap-6"
             style={{
               transform: `translateX(-${currentIndex * cardWidthPercent}%)`,
-              transition: "transform 700ms cubic-bezier(0.25, 0.1, 0.25, 1)",
+              transition: "transform 700ms cubic-bezier(0.25,0.1,0.25,1)",
             }}
           >
-            {industries.map((industry, idx) => (
+            {industries.map((industry, index) => (
               <div
-                key={idx}
-                className="group relative flex-shrink-0 cursor-pointer border border-whiteBgButtonBg overflow-hidden"
+                key={index}
+                className="group relative flex-shrink-0 border border-white/20 cursor-pointer overflow-hidden"
                 style={{
-                  width: `calc(${cardWidthPercent}% - ${
-                    itemsPerView > 1 ? 6 : 0
-                  }px)`,
+                  width: `calc(${cardWidthPercent}% - ${itemsPerView > 1 ? 6 : 0}px)`,
                   height: "18rem",
                 }}
               >
-                {/* Background image overlay */}
+                {/* Hover Background */}
                 <div
                   className="absolute inset-0 bg-cover bg-center opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{ backgroundImage: `url(${industry.bgImage})` }}
                 />
-                <div className="absolute inset-0 bg-whiteBgButtonBg bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-[#ff1a1a] bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
 
                 {/* Content */}
-                <div className="relative z-10 h-full flex flex-col items-center justify-center p-6 text-center transition-colors duration-500 group-hover:text-whiteBgTextHover">
-                  <div className="transition-transform duration-500 transform group-hover:scale-110">
-                    <div className="mb-6 flex justify-center">
-                      {industry.icon}
-                    </div>
-                    <h4 className="text-lg sm:text-xl text-darkBgText font-medium font-primary leading-tight">
-                      {industry.title}
-                    </h4>
+                <div className="relative z-10 h-full flex flex-col items-center justify-center text-center">
+                  <div className="text-white text-5xl mb-4 transition-transform duration-500 group-hover:scale-110">
+                    {industry.icon}
                   </div>
+                  <h4 className="text-xl font-medium text-white">
+                    {industry.title}
+                  </h4>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="flex items-center justify-center gap-4 sm:gap-6">
+        {/* Controls */}
+        <div className="flex justify-center items-center gap-4 sm:gap-6">
           <button
             onClick={prevSlide}
-            className="bg-whiteBgButtonBg text-whiteBgButtonText p-2 mb-10 sm:p-3 border border-whiteBgButtonBg shadow-sm rounded-full"
-            aria-label="Previous"
+            className="bg-white/20 text-white p-3 rounded-full border border-white/30 hover:bg-white/30 transition"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
 
-          <div className="hidden sm:flex items-center justify-center gap-1.5 sm:gap-2 mb-10">
-            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+          <div className="hidden sm:flex gap-2 mb-10">
+            {Array.from({ length: maxIndex + 1 }).map((_, i) => (
               <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                aria-label={`Go to slide ${index + 1}`}
-                className={`transition-all duration-300 rounded-full ${
-                  index === currentIndex
-                    ? "bg-whiteBgButtonBg w-8 h-1.5"
-                    : "bg-darkBgButtonBg w-6 h-1.5"
+                key={i}
+                onClick={() => setCurrentIndex(i)}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === currentIndex
+                    ? "bg-white w-8"
+                    : "bg-white/30 w-6"
                 }`}
               />
             ))}
@@ -276,8 +222,7 @@ export default function IndustryCarousel() {
 
           <button
             onClick={nextSlide}
-            className="bg-whiteBgButtonBg text-whiteBgButtonText p-2 sm:p-3 border mb-10 border-whiteBgButtonBg shadow-sm rounded-full"
-            aria-label="Next"
+            className="bg-white/20 text-white p-3 rounded-full border border-white/30 hover:bg-white/30 transition"
           >
             <ChevronRight className="w-6 h-6" />
           </button>
