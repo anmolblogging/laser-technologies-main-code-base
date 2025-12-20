@@ -28,7 +28,7 @@ const Footer = () => {
     setExpandedSegment((prev) => (prev === segment ? null : segment));
   };
 
-  // ✅ Fetch paginated product segments + subcategories
+
   useEffect(() => {
     const fetchPage = async () => {
       try {
@@ -95,6 +95,12 @@ const Footer = () => {
       { name: "Knowledge", href: "/laser-university" },
       { name: "Laser Gurukul", href: "/laserGurukul" },
     ],
+    services: [
+      { name: "Software", href: "/services/software" },
+      { name: "FAQs", href: "/services/faqs" },
+      { name: "Out of Warranty", href: "/services/out-of-warranty" },
+      { name: "Technical Training", href: "/services/technical-training" },
+    ],
   };
 
   // ✅ Social
@@ -120,7 +126,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
 
           {/* Company Info */}
-          <div className="lg:col-span-4 space-y-6">
+          <div className="lg:col-span-3 space-y-6">
             <div className="flex items-center gap-4 flex-wrap">
               <img src={Logo} alt="Laser Technologies Logo" className="h-12 object-contain" />
               <img src={GreatPlaceToWorkLogo} alt="Great Place to Work Certified" className="h-16 object-contain" />
@@ -161,7 +167,7 @@ const Footer = () => {
 
           {/* Company Links */}
           <div className="lg:col-span-2">
-            <h3 className="text-sm font-bold uppercase tracking-wider mb-4 text-white">Company</h3>
+            <h3 className="text-sm font-medium uppercase tracking-wider mb-4 text-white">Company</h3>
             <ul className="space-y-3">
               {pageLinks.company.map((l) => (
                 <li key={l.name}>
@@ -178,7 +184,7 @@ const Footer = () => {
 
           {/* Resources */}
           <div className="lg:col-span-2">
-            <h3 className="text-sm font-bold uppercase tracking-wider mb-4 text-white">Resources</h3>
+            <h3 className="text-sm font-medium uppercase tracking-wider mb-4 text-white">Resources</h3>
             <ul className="space-y-3">
               {pageLinks.resources.map((l) => (
                 <li key={l.name}>
@@ -192,10 +198,26 @@ const Footer = () => {
               ))}
             </ul>
           </div>
+          {/* Services */}
+          <div className="lg:col-span-2">
+            <h3 className="text-sm font-medium uppercase tracking-wider mb-4 text-white">Services</h3>
+            <ul className="space-y-3">
+              {pageLinks.services.map((l) => (
+                <li key={l.name}>
+                  <a 
+                    href={l.href} 
+                    className="text-sm text-gray-400 hover:text-white transition-colors duration-200 inline-block"
+                  >
+                    {l.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           {/* Products Accordion */}
-          <div className="lg:col-span-4">
-            <h3 className="text-sm font-bold uppercase tracking-wider mb-4 text-white">Products</h3>
+          <div className="lg:col-span-3">
+            <h3 className="text-sm font-medium uppercase tracking-wider mb-4 text-white">Products</h3>
 
             {loading && Object.keys(productData).length === 0 ? (
               <p className="text-sm text-gray-400">Loading products...</p>

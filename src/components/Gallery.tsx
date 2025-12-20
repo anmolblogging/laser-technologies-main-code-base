@@ -4,6 +4,7 @@ import { supabase } from "../lib/supabase";
 import Loading from "./Loading";
 import { useNavigate } from "react-router-dom";
 import AwardModal from "./AwardModal";
+import FALLBACK_VIDEOS from "./videoURL";
 
 type Video = { url: string; title: string };
 type ImageItem = {
@@ -74,28 +75,33 @@ const Gallery: React.FC = () => {
 
   useEffect(() => {
     const CHANNEL_ID = "UCvBgJrxw9lcHaw-q7jArtQg";
-    const fetchYouTubeRSS = async () => {
-      try {
-        const response = await fetch(
-          `https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`
-        );
-        const data = await response.json();
+    const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
+    const rss2jsonUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
 
-        if (data && data.items) {
-          const parsedVideos = data.items.map((v: any) => ({
-            title: v.title,
-            url: v.link,
+    const fetchLatestVideo = async () => {
+      try {
+        const res = await fetch(rss2jsonUrl);
+        if (!res.ok) throw new Error(`rss2json status ${res.status}`);
+        const json = await res.json();
+        if (json && Array.isArray(json.items) && json.items.length) {
+          const parsed = json.items.map((v: any) => ({
+            title: v.title ?? "",
+            url: v.link ?? "",
           }));
-          setVideosData(parsedVideos);
+          setVideosData(parsed.slice(0, 7));
+          return;
         }
+        // if no items, fall back
+        setVideosData(FALLBACK_VIDEOS);
       } catch (err) {
-        console.error("Error fetching YouTube feed:", err);
+        console.warn("rss2json failed, using fallback videos:", err);
+        setVideosData(FALLBACK_VIDEOS);
       } finally {
         setLoadingVideos(false);
       }
     };
 
-    fetchYouTubeRSS();
+    fetchLatestVideo();
   }, []);
 
   useEffect(() => {

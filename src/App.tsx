@@ -16,10 +16,15 @@ import Chatbot from "./components/Chatbot";
 import Contact from "./pages/Contact";
 import Partners from "./pages/Partners";
 import OurLeadership from "./pages/OurLeadership";
+import TechSupport from "./pages/TechSupport";
+import Software from "./pages/Software";
+import FAQ from "./pages/FAQ";
+import OutOfWarranty from "./pages/OutOfWarranty";
+import TechnicalTraining from "./pages/TechnicalTraining";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <Navbar />
 
       <Routes>
@@ -40,6 +45,11 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/partners" element={<Partners />} />
         <Route path="/about/leadership" element={<OurLeadership />} />
+        <Route path="/services/tech-support" element={<TechSupport />} />
+        <Route path="/services/software" element={<Software />} />
+        <Route path="/services/faqs" element={<FAQ />} />
+        <Route path="/services/out-of-warranty" element={<OutOfWarranty />} />
+        <Route path="/services/technical-training" element={<TechnicalTraining />} />
       </Routes>
       <Chatbot />
       <Footer />

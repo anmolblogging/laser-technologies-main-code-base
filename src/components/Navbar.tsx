@@ -138,10 +138,12 @@ const Header = () => {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
 
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null);
   const [mobileExpandedSegment, setMobileExpandedSegment] = useState<string | null>(null);
   const [mobileExpandedMore, setMobileExpandedMore] = useState(false);
+  const [mobileExpandedServices, setMobileExpandedServices] = useState(false);
   const [mobileExpandedAbout, setMobileExpandedAbout] = useState(false);
   const [mobileExpandedProducts, setMobileExpandedProducts] = useState(false);
 
@@ -155,9 +157,18 @@ const Header = () => {
     { type: "link", name: "Home", href: "/" },
     { type: "dropdown", name: "Product", key: "products" },
     { type: "dropdown", name: "About", key: "about" },
+    { type: "dropdown", name: "Services", key: "services" },
     // { type: "link", name: "CSR", href: "/csr" },
     { type: "link", name: "Contact", href: "/contact" },
     { type: "dropdown", name: "Knowledge", key: "Knowledge" },
+  ];
+  
+  const serviceItems = [
+    { name: "Tech Support", href: "/services/tech-support" },
+    { name: "Software", href: "/services/software" },
+    { name: "FAQs", href: "/services/faqs" },
+    { name: "Out of Warranty", href: "/services/out-of-warranty" },
+    { name: "Technical Training", href: "/services/technical-training" },
   ];
   
   const KnowledgeItems = [
@@ -394,6 +405,60 @@ const Header = () => {
         );
       }
 
+      if (item.type === "dropdown" && item.key === "services") {
+        return (
+          <div
+            key={item.name}
+            className="relative"
+            onMouseEnter={() => setIsServicesOpen(true)}
+            onMouseLeave={() => setIsServicesOpen(false)}
+          >
+            <button
+              className="px-4 py-2 bg-transparent hover:bg-transparent font-medium flex items-center gap-1 transition-all duration-200 relative group"
+              style={{ color: COLORS.whiteBgText }}
+            >
+              {item.name}
+              <ChevronDown
+                className={`h-4 w-4 transition-transform duration-200 ${isServicesOpen ? "rotate-180" : ""}`}
+              />
+              <span
+                className="absolute bottom-0 left-0 h-0.5 transition-all duration-300"
+                style={{
+                  width: isServicesOpen ? "100%" : "0",
+                  backgroundColor: COLORS.whiteBgTextHover,
+                }}
+              ></span>
+            </button>
+
+            {isServicesOpen && (
+              <div
+                className="absolute top-full left-0 p-2 bg-white shadow-xl py-2 min-w-[220px] z-40"
+                style={{ border: `1px solid ${COLORS.border}` }}
+              >
+                {serviceItems.map((serviceItem) => (
+                  <a
+                    key={serviceItem.name}
+                    href={serviceItem.href}
+                    className="block px-4 py-2.5 text-sm transition-all duration-200 font-medium"
+                    style={{ color: COLORS.whiteBgText }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLAnchorElement).style.color = COLORS.whiteBgTextHover;
+                      (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "rgba(243, 21, 36, 0.05)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLAnchorElement).style.color = COLORS.whiteBgText;
+                      (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "transparent";
+                    }}
+                  >
+                    {serviceItem.name}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      }
+
       if (item.type === "dropdown" && item.key === "Knowledge") {
         return (
           <div
@@ -573,6 +638,41 @@ const Header = () => {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {aboutItem.name}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      if (item.type === "dropdown" && item.key === "services") {
+        return (
+          <div key={item.name}>
+            <button
+              onClick={() => setMobileExpandedServices(!mobileExpandedServices)}
+              className="flex items-center justify-between bg-transparent w-full px-4 py-3 font-primary text-black font-medium"
+            >
+              <span>{item.name}</span>
+              <ChevronDown
+                className={`h-4 w-4 transition-transform ${mobileExpandedServices ? "rotate-180" : ""}`}
+              />
+            </button>
+
+            {mobileExpandedServices && (
+              <div
+                className="mx-4 mt-2 mb-3 rounded-lg overflow-hidden"
+                style={{ border: `1px solid ${COLORS.border}`, backgroundColor: 'rgba(6,12,42,0.02)' }}
+              >
+                {serviceItems.map((serviceItem, index) => (
+                  <a
+                    key={serviceItem.name}
+                    href={serviceItem.href}
+                    className="block px-6 py-2.5 text-sm font-medium hover:bg-white/80 transition-colors"
+                    style={{ color: COLORS.whiteBgText, borderBottom: index !== serviceItems.length - 1 ? `1px solid ${COLORS.border}` : 'none' }}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {serviceItem.name}
                   </a>
                 ))}
               </div>
