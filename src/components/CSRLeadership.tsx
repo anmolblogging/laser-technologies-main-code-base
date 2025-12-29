@@ -148,14 +148,6 @@ const Posts = () => {
         <div className="max-w-6xl mx-auto">
           {/* Results Count */}
           <div className="mb-6 sm:mb-8 px-2">
-            <p className="text-sm sm:text-base text-gray-600 font-secondary">
-              Showing <span className="font-bold text-whiteBgText">{displayedPosts.length}</span> of <span className="font-bold text-whiteBgText">{filteredPosts.length}</span> {filteredPosts.length === 1 ? 'post' : 'posts'}
-              {selectedTag && (
-                <span className="ml-1">
-                  with tag <span className="font-bold text-whiteBgButtonBg">#{selectedTag}</span>
-                </span>
-              )}
-            </p>
           </div>
 
           {loading ? (

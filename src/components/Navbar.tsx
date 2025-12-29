@@ -94,7 +94,8 @@ function normalizeSubcategory(name = "") {
   if (n.includes("sheet laser cutting") || n.startsWith("sheet laser"))
     return "Sheet Laser Cutting Machine";
 
-  if (n.includes("tube") || n.includes("pipe"))
+  // CHECK: Only normalize to "Cutting" if it actually involves cutting
+  if ((n.includes("tube") || n.includes("pipe")) && n.includes("cutting"))
     return "Tube Laser Cutting Machine or Pipe Laser Cutting Machine";
 
   if (n.includes("fiber") && n.includes("mark"))
@@ -180,11 +181,13 @@ const Header = () => {
   const aboutItems = [
     { name: "About Company", href: "/about/company" },
     { name: "Our Leadership", href: "/about/leadership" },
+    { name: "CSR", href: "/about/leadership#csr" },
     { name: "Milestone", href: "/about/milestone" },
     { name: "Awards & Accolades", href: "/awards" },
     { name: "Careers", href: "/careers" },
     { name: "News & Media", href: "/news" },
     { name: "Our Partners", href: "/partners" },
+    { name: "Customer Stories", href: "/customer-stories" },
   ];
 
   /* -------------------------------------------------------

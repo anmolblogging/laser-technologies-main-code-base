@@ -51,6 +51,20 @@ const BRAND = {
 
 export default function OurLeadership() {
   const [selectedLeader, setSelectedLeader] = React.useState<any>(null);
+
+  // Handle Hash Scroll
+  React.useEffect(() => {
+    if (window.location.hash) {
+      const id = window.location.hash.replace("#", "");
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, []);
+
   return (
     <div>
       <header
@@ -229,7 +243,9 @@ export default function OurLeadership() {
         </div>
       )}
 
-      <CSR />
+      <div id="csr">
+        <CSR />
+      </div>
     </div>
   );
 }

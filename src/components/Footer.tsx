@@ -15,14 +15,52 @@ import { supabase } from "../lib/supabase";
 const Logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/logo-footer.png';
 const GreatPlaceToWorkLogo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/gptw.png';
 
-const PAGE_LIMIT = 20;
+
+
+/* -------------------------------------------------------
+   NORMALIZATION LOGIC (Copied from ProductsSection/Navbar)
+---------------------------------------------------------*/
+function normalizeSubcategory(name = "") {
+  const n = name.toLowerCase().trim();
+
+  if (n.includes("c series") || n.startsWith("c "))
+    return "Sheet Laser Cutting Machine – C Series";
+
+  if (n.includes("electrical") || n.includes("electrolam"))
+    return "Electrical Steel / Electrolamination Sheet Laser Cutting Machines";
+
+  if (n.includes("sheet") && n.includes("tube"))
+    return "Sheet and Tube Laser Cutting Machine";
+
+  if (n.includes("fully automatic"))
+    return "Fully Automatic Sheet Laser Cutting Machine";
+
+  if (n.includes("sheet laser cutting") || n.startsWith("sheet laser"))
+    return "Sheet Laser Cutting Machine";
+
+  // CHECK: Only normalize to "Cutting" if it actually involves cutting
+  if ((n.includes("tube") || n.includes("pipe")) && n.includes("cutting"))
+    return "Tube Laser Cutting Machine or Pipe Laser Cutting Machine";
+
+  if (n.includes("fiber") && n.includes("mark"))
+    return "Fiber Laser Marking Machine";
+
+  if (n.includes("uv") && n.includes("mark"))
+    return "UV Laser Marking Machine";
+
+  if ((n.includes("co2") || n.includes("co₂")) && n.includes("mark"))
+    return "CO₂ Laser Marking Machine";
+
+  if (n.includes("engraving"))
+    return "Laser Engraving Machine";
+
+  return name.trim();
+}
 
 const Footer = () => {
   const [productData, setProductData] = useState<Record<string, string[]>>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [expandedSegment, setExpandedSegment] = useState<string | null>(null);
-  const [page, setPage] = useState<number>(0);
-  const [hasMore, setHasMore] = useState<boolean>(true);
 
   const toggleSegment = (segment: string) => {
     setExpandedSegment((prev) => (prev === segment ? null : segment));
@@ -30,53 +68,49 @@ const Footer = () => {
 
 
   useEffect(() => {
-    const fetchPage = async () => {
+    const fetchAllProducts = async () => {
       try {
-        const from = page * PAGE_LIMIT;
-        const to = from + PAGE_LIMIT - 1;
+        setLoading(true);
 
         const { data, error } = await supabase
           .from("products")
-          .select("Segment, SubCategory")
-          .range(from, to)
-          .order("Segment", { ascending: true })
-          .order("SubCategory", { ascending: true });
+          .select("Segment, SubCategory");
 
         if (error) throw error;
 
         if (!data || data.length === 0) {
-          setHasMore(false);
           return;
         }
 
-        setProductData((prev) => {
-          const updated = { ...prev };
-          data.forEach((item) => {
-            if (!updated[item.Segment]) updated[item.Segment] = [];
-            if (!updated[item.Segment].includes(item.SubCategory)) {
-              updated[item.Segment].push(item.SubCategory);
-            }
-          });
-          return updated;
+        const grouped: Record<string, string[]> = {};
+        
+        data.forEach((item) => {
+          const seg = item.Segment;
+          const sub = normalizeSubcategory(item.SubCategory);
+
+          if (!grouped[seg]) grouped[seg] = [];
+          
+          // Avoid duplicates
+          if (!grouped[seg].includes(sub)) {
+            grouped[seg].push(sub);
+          }
         });
+        
+        // Sort subcategories alphabetically
+        Object.keys(grouped).forEach(key => {
+            grouped[key].sort((a, b) => a.localeCompare(b));
+        });
+
+        setProductData(grouped);
       } catch (err) {
         console.error("Product fetch failed:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
-    if (hasMore) fetchPage();
-  }, [page]);
-
-  useEffect(() => {
-    if (!loading && hasMore) {
-      setPage((prev) => prev + 1);
-    }
-  }, [loading, hasMore]);
-
-  useEffect(() => {
-    if (page === 0) setLoading(false);
-    else setLoading(false);
-  }, [page]);
+    fetchAllProducts();
+  }, []);
 
   // ✅ Page Links
   const pageLinks = {
@@ -86,10 +120,11 @@ const Footer = () => {
       { name: "Milestone", href: "/about/milestone" },
       { name: "Careers", href: "/careers" },
       { name: "Awards", href: "/awards" },
+      { name: "Customer Stories", href: "/customer-stories" },
     ],
     resources: [
       { name: "Contact", href: "/contact" },
-      { name: "CSR", href: "/csr" },
+      { name: "CSR", href: "/about/leadership#csr" },
       { name: "News & Media", href: "/news" },
       { name: "Articles", href: "/articles" },
       { name: "Knowledge", href: "/laser-university" },
@@ -103,7 +138,7 @@ const Footer = () => {
     ],
   };
 
-  // ✅ Social
+  //  Social
   const socialLinks = [
     { Icon: Facebook, href: "https://www.facebook.com/LaserTechnologiesOfficial", label: "Facebook" },
     { Icon: Instagram, href: "https://www.instagram.com/lasertechnologiesofficial/", label: "Instagram" },
@@ -111,7 +146,7 @@ const Footer = () => {
     { Icon: Youtube, href: "https://www.youtube.com/@LaserTechnologiesOfficial", label: "YouTube" },
   ];
 
-  // ✅ Contact Info
+  // Contact Info
   const contactInfo = {
     email: "info@lasertechnologies.in",
     phone: "+91 8657412551",
@@ -127,9 +162,10 @@ const Footer = () => {
 
           {/* Company Info */}
           <div className="lg:col-span-3 space-y-6">
-            <div className="flex items-center gap-4 flex-wrap">
-              <img src={Logo} alt="Laser Technologies Logo" className="h-12 object-contain" />
-              <img src={GreatPlaceToWorkLogo} alt="Great Place to Work Certified" className="h-16 object-contain" />
+            <div className="flex flex-row items-center gap-4 sm:gap-6 flex-wrap sm:flex-nowrap">
+              <img src={Logo} alt="Laser Technologies Logo" className="h-8 sm:h-10 w-auto object-contain" />
+              <div className="h-8 sm:h-12 w-px bg-gray-800 block"></div>
+              <img src={GreatPlaceToWorkLogo} alt="Great Place to Work Certified" className="h-10 sm:h-14 w-auto object-contain" />
             </div>
 
             <div className="space-y-3">

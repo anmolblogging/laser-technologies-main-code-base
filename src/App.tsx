@@ -21,6 +21,8 @@ import Software from "./pages/Software";
 import FAQ from "./pages/FAQ";
 import OutOfWarranty from "./pages/OutOfWarranty";
 import TechnicalTraining from "./pages/TechnicalTraining";
+import CustomerStories from "./pages/CustomerStories";
+import CustomerStoriesTemplate from "./pages/CustomerStoriesTemplate";
 
 function App() {
   return (
@@ -50,6 +52,8 @@ function App() {
         <Route path="/services/faqs" element={<FAQ />} />
         <Route path="/services/out-of-warranty" element={<OutOfWarranty />} />
         <Route path="/services/technical-training" element={<TechnicalTraining />} />
+        <Route path="/customer-stories" element={<CustomerStories />} />
+        <Route path="/customer-stories/:slug" element={<CustomerStoriesTemplate />} />
       </Routes>
       <Chatbot />
       <Footer />

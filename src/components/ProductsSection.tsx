@@ -94,7 +94,8 @@ function normalizeSubcategory(name = "") {
   if (n.includes("sheet laser cutting") || n.startsWith("sheet laser"))
     return "Sheet Laser Cutting Machine";
 
-  if (n.includes("tube") || n.includes("pipe"))
+  // CHECK: Only normalize to "Cutting" if it actually involves cutting
+  if ((n.includes("tube") || n.includes("pipe")) && n.includes("cutting"))
     return "Tube Laser Cutting Machine or Pipe Laser Cutting Machine";
 
   if (n.includes("fiber") && n.includes("mark"))
@@ -115,10 +116,10 @@ function normalizeSubcategory(name = "") {
 /* -------------------------------------------------------
    UNIVERSAL SORTING HELPER
 ---------------------------------------------------------*/
-function sortWithPreferred(items, getKey, orderList) {
-  const clean = (s) => s.toLowerCase().trim();
-  const indexOf = (val) => {
-    const idx = orderList.findIndex((x) => clean(x) === clean(val));
+function sortWithPreferred(items:any[], getKey:any, orderList:any[]) {
+  const clean = (s:any) => s.toLowerCase().trim();
+  const indexOf = (val:any) => {
+    const idx = orderList.findIndex((x:any) => clean(x) === clean(val));
     return idx === -1 ? Number.MAX_SAFE_INTEGER : idx;
   };
 

@@ -24,7 +24,7 @@ const Posts = () => {
     if (path.includes("/news")) return "News & Media";
     if (path.includes("/csr")) return "CSR";
     if (path.includes("/articles")) return "Articles";
-    return "No Category";
+    return "All";
   };
 
   const currentCategory = getCurrentCategory();
@@ -158,12 +158,7 @@ const Posts = () => {
           {/* Results Count */}
           <div className="mb-6 sm:mb-8 px-2">
             <p className="text-sm sm:text-base text-gray-600 font-secondary">
-              Showing <span className="font-bold text-whiteBgText">{displayedPosts.length}</span> of <span className="font-bold text-whiteBgText">{filteredPosts.length}</span> {filteredPosts.length === 1 ? 'post' : 'posts'}
-              {selectedTag && (
-                <span className="ml-1">
-                  with tag <span className="font-bold text-whiteBgButtonBg">#{selectedTag}</span>
-                </span>
-              )}
+              {/* Showing <span className="font-bold text-whiteBgText">{displayedPosts.length}</span> of <span className="font-bold text-whiteBgText">{filteredPosts.length}</span> {filteredPosts.length === 1 ? 'post' : 'posts'} */}
             </p>
           </div>
 
@@ -275,18 +270,20 @@ const Posts = () => {
                   <button
                     onClick={handleLoadMore}
                     disabled={loadingMore}
-                    className="group relative px-8 sm:px-10 py-3 sm:py-4 bg-whiteBgButtonBg text-white rounded-xl sm:rounded-2xl hover:bg-whiteBgTextHover transition-all duration-300 font-primary font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                    className="group relative px-8 py-4 bg-black text-white text-sm font-bold uppercase tracking-widest hover:bg-black/90 transition-all rounded-none min-w-[200px] flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
                   >
                     {loadingMore ? (
-                      <Loading text='Posts'/>
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin text-white" />
+                        <span>Loading...</span>
+                      </>
                     ) : (
-                      <span className="flex items-center gap-2">
+                      <>
                         <span>Load More Posts</span>
-                        <span className="inline-block px-2 py-0.5 bg-white/20 rounded-full text-xs sm:text-sm font-semibold">
-                          +{Math.min(POSTS_PER_PAGE, filteredPosts.length - displayedPosts.length)}
-                        </span>
-                      </span>
+                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                      </>
                     )}
+                    <span className="absolute bottom-0 left-0 w-full h-1 bg-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                   </button>
                 </div>
               )}
@@ -294,10 +291,10 @@ const Posts = () => {
               {/* Pagination Info */}
               {!hasMore && filteredPosts.length > POSTS_PER_PAGE && (
                 <div className="text-center mt-8 sm:mt-12 pb-4">
-                  <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white rounded-xl sm:rounded-2xl shadow-md">
+                  <div className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-100 shadow-sm">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-xs sm:text-sm text-gray-600 font-secondary">
-                      You've reached the end • <span className="font-bold text-whiteBgText">{filteredPosts.length}</span> posts shown
+                    <span className="text-xs sm:text-sm text-gray-600 font-secondary uppercase tracking-wider">
+                      You've reached the end • <span className="font-bold text-black">{filteredPosts.length}</span> posts shown
                     </span>
                   </div>
                 </div>

@@ -26,6 +26,46 @@ const BRAND = {
   gradient: 'linear-gradient(135deg, #6b0f0f 0%, #4f0b0b 100%)',
 };
 
+/* -------------------------------------------------------
+   NORMALIZATION LOGIC (Copied from ProductsSection/Navbar)
+---------------------------------------------------------*/
+function normalizeSubcategory(name = "") {
+  const n = name.toLowerCase().trim();
+
+  if (n.includes("c series") || n.startsWith("c "))
+    return "Sheet Laser Cutting Machine – C Series";
+
+  if (n.includes("electrical") || n.includes("electrolam"))
+    return "Electrical Steel / Electrolamination Sheet Laser Cutting Machines";
+
+  if (n.includes("sheet") && n.includes("tube"))
+    return "Sheet and Tube Laser Cutting Machine";
+
+  if (n.includes("fully automatic"))
+    return "Fully Automatic Sheet Laser Cutting Machine";
+
+  if (n.includes("sheet laser cutting") || n.startsWith("sheet laser"))
+    return "Sheet Laser Cutting Machine";
+
+  // CHECK: Only normalize to "Cutting" if it actually involves cutting
+  if ((n.includes("tube") || n.includes("pipe")) && n.includes("cutting"))
+    return "Tube Laser Cutting Machine or Pipe Laser Cutting Machine";
+
+  if (n.includes("fiber") && n.includes("mark"))
+    return "Fiber Laser Marking Machine";
+
+  if (n.includes("uv") && n.includes("mark"))
+    return "UV Laser Marking Machine";
+
+  if ((n.includes("co2") || n.includes("co₂")) && n.includes("mark"))
+    return "CO₂ Laser Marking Machine";
+
+  if (n.includes("engraving"))
+    return "Laser Engraving Machine";
+
+  return name.trim();
+}
+
 const ProductListingPage: React.FC = () => {
   const { segment, subcategory } = useParams<{ segment?: string; subcategory?: string }>();
   const navigate = useNavigate();
@@ -45,26 +85,33 @@ const ProductListingPage: React.FC = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        // FETCH BY SEGMENT ONLY (Filtering SubCategory in JS because of Normalization)
         const { data: productsData, error: productsError } = await supabase
           .from('products')
           .select('*')
           .eq('Segment', decodedSegment)
-          .eq('SubCategory', decodedSubcategory)
           .order('ProductName', { ascending: true });
 
         if (productsError) throw productsError;
 
-        const { data: subcategoriesData, error: subcategoriesError } = await supabase
-          .from('products')
-          .select('SubCategory')
-          .eq('Segment', decodedSegment);
+        // Perform Client-Side Filtering & Grouping
+        const filteredProducts: Product[] = [];
+        const subMap = new Set<string>();
 
-        if (subcategoriesError) throw subcategoriesError;
+        (productsData || []).forEach((p) => {
+          const normSub = normalizeSubcategory(p.SubCategory);
+          subMap.add(normSub);
 
-        const uniqueSubcategories = [...new Set(subcategoriesData?.map(item => item.SubCategory) ?? [])];
+          if (normSub === decodedSubcategory) {
+            filteredProducts.push(p);
+          }
+        });
 
-        setProducts(productsData || []);
-        setAllSubcategories(uniqueSubcategories);
+        // Sort products? They are already sorted by name from DB, but we could resort if needed.
+        
+        setProducts(filteredProducts);
+        // Convert Set to Array and Sort
+        setAllSubcategories([...subMap].sort());
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -72,7 +119,7 @@ const ProductListingPage: React.FC = () => {
       }
     };
 
-    if (decodedSegment && decodedSubcategory) {
+    if (decodedSegment) {
       fetchData();
     }
   }, [decodedSegment, decodedSubcategory]);

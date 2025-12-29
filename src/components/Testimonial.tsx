@@ -1,50 +1,70 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, ArrowRight, Loader2 } from "lucide-react";
+import { supabase } from "../lib/supabase";
+import { Link } from "react-router-dom";
 
-interface Testimonial {
-  videoUrl: string;
-  header: string;
-  description: string;
+interface TestimonialStory {
+  id: string;
+  title: string;
+  summary: string;
+  video_url: string;
+  slug: string;
 }
 
-const testimonialsData: Testimonial[] = [
-  {
-    videoUrl: "https://www.youtube.com/embed/zBtSQtSgc6s",
-    header: "Success Story with the HSG G3015C Laser Cutting Machine",
-    description:
-      "Radhe Laser, a leading laser cutting service provider in Rajkot, upgraded to the HSG G3015C Laser Cutting Machine from Laser Technologies. With enhanced precision, speed, and efficiency, they now deliver top-quality metal-cutting solutions across various industries without compromise. This upgrade allowed them to expand capacity, serve more clients, and maintain superior quality standards at all times.",
-  },
-  {
-    videoUrl: "https://www.youtube.com/embed/kqtebpOcFpo",
-    header: "Mr Shripad Gaikwad's Journey with Laser Technologies",
-    description:
-      "Under CEO Shripad Gaikwad's leadership, Ashok Laser has thrived with Laser Technologies' custom solutions. Their precision laser cutting machines have enhanced efficiency and productivity, backed by exceptional service support that ensures seamless operations and drives substantial business growth in the competitive manufacturing industry.",
-  },
-  {
-    videoUrl: "https://www.youtube.com/embed/xTBliB06QG4",
-    header:
-      "Laser Fab Engineers' Journey to Excellence with HSG Fiber Laser Machines",
-    description:
-      "Hello, my name is Shaheer Umrao Balashankar. I am the owner of Laser Fab Engineers, a business I have managed for over 12 years in Rabale. At Laser Fab Engineers, we specialize in laser cutting, fabrication, bending, and laser welding, offering top-notch services for a range of industries. Upgrading to HSG Fiber Laser Machines allowed us to improve precision, speed, and cost-efficiency for our clients.",
-  },
-];
-
 export default function TestimonialSlider() {
+  const [stories, setStories] = useState<TestimonialStory[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("customer_stories")
+          .select("id, title, summary, video_url, slug")
+          .not("video_url", "is", null) // Filter where video_url is NOT null
+          .neq("video_url", "")       // Also ensure it's not empty string
+          .order("created_at", { ascending: true })
+          .limit(6); // Pagination limit as requested
+
+        if (error) throw error;
+        
+        if (data) {
+          setStories(data);
+        }
+      } catch (err) {
+        console.error("Error fetching testimonials:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTestimonials();
+  }, []);
 
   const prevSlide = () => {
     setCurrentIndex((prev) =>
-      prev === 0 ? testimonialsData.length - 1 : prev - 1
+      prev === 0 ? stories.length - 1 : prev - 1
     );
   };
 
   const nextSlide = () => {
     setCurrentIndex((prev) =>
-      prev === testimonialsData.length - 1 ? 0 : prev + 1
+      prev === stories.length - 1 ? 0 : prev + 1
     );
   };
 
   const goToSlide = (index: number) => setCurrentIndex(index);
+
+  if (loading) {
+     return (
+        <section className="py-20 bg-gray-50 flex justify-center">
+           <Loader2 className="w-8 h-8 animate-spin text-red-600" />
+        </section>
+     );
+  }
+
+  if (stories.length === 0) return null;
 
   return (
     <section className="py-16 lg:py-20 bg-gray-50">
@@ -87,8 +107,8 @@ export default function TestimonialSlider() {
               className="flex transition-transform duration-700 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
-              {testimonialsData.map((testimonial, idx) => (
-                <div key={idx} className="flex-shrink-0 w-full">
+              {stories.map((story) => (
+                <div key={story.id} className="flex-shrink-0 w-full">
                   <div className="shadow-sm overflow-hidden">
                     <div className="grid lg:grid-cols-2 gap-0">
                       {/* Video Section */}
@@ -96,8 +116,8 @@ export default function TestimonialSlider() {
                         <div className="relative pt-[56.25%] lg:pt-0 lg:h-full lg:min-h-[400px]">
                           <iframe
                             className="absolute inset-0 w-full h-full"
-                            src={testimonial.videoUrl}
-                            title={testimonial.header}
+                            src={story.video_url}
+                            title={story.title}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                           />
@@ -110,12 +130,20 @@ export default function TestimonialSlider() {
                           <div>
                             <div className="w-12 h-1 bg-whiteBgButtonBg mb-4"></div>
                             <h3 className="text-xl sm:text-2xl font-semibold text-whiteBgText leading-tight">
-                              {testimonial.header}
+                              {story.title}
                             </h3>
                           </div>
-                          <p className="text-whiteBgText leading-relaxed text-sm sm:text-base">
-                            {testimonial.description}
+                          <p className="text-whiteBgText leading-relaxed text-sm sm:text-base line-clamp-4">
+                            {story.summary}
                           </p>
+                          
+                          <Link 
+                            to={`/customer-stories/${story.slug}`}
+                            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-red-600 hover:text-red-700 transition-colors"
+                          >
+                            Read Full Story
+                            <ArrowRight className="w-4 h-4" />
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -146,7 +174,7 @@ export default function TestimonialSlider() {
 
         {/* Dots Indicator */}
         <div className="flex justify-center gap-2 mt-8 ">
-          {testimonialsData.map((_, idx) => (
+          {stories.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentIndex(idx)}
