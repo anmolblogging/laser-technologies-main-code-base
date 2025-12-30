@@ -1,17 +1,18 @@
 
+import { Suspense, lazy } from "react";
+
 import Hero from "../components/Hero";
 import AboutSection from "../components/NoticeSection";
 import CalendarSection from "../components/CalendarSection";
-
-import StatsCounter from "../components/StatsCounter";
-import VideoSection from "../components/VideoSection";
 import ProductsSection from "../components/ProductsSection";
 
-import Testimonial from "../components/Testimonial";
-import Blog from "../components/Blog";
-import Clients from "../components/Clients";
-import Gallery from "../components/Gallery";
-import IndustryCarousel2 from "../components/IndustryCarousel2";
+const StatsCounter = lazy(() => import("../components/StatsCounter"));
+const VideoSection = lazy(() => import("../components/VideoSection"));
+const Testimonial = lazy(() => import("../components/Testimonial"));
+const Blog = lazy(() => import("../components/Blog"));
+const Clients = lazy(() => import("../components/Clients"));
+const Gallery = lazy(() => import("../components/Gallery"));
+const IndustryCarousel2 = lazy(() => import("../components/IndustryCarousel2"));
 
 function Home() {
   return (
@@ -21,19 +22,20 @@ function Home() {
       <AboutSection />
       <ProductsSection />
       <CalendarSection />
-      <IndustryCarousel2 />
-      <StatsCounter />
-      <div className="hidden md:block">
-      <VideoSection />
-      </div>
-      <div className="sm:-pt-20 lg:mt-0">
-          <Blog />
-      </div>
       
-      <Testimonial />
-      <Clients />
-      <Gallery />
-
+      <Suspense fallback={<div className="h-96 bg-gray-50 mb-12" />}>
+        <IndustryCarousel2 />
+        <StatsCounter />
+        <div className="hidden md:block">
+          <VideoSection />
+        </div>
+        <div className="sm:-pt-20 lg:mt-0">
+            <Blog />
+        </div>
+        <Testimonial />
+        <Clients />
+        <Gallery />
+      </Suspense>
     </div>
   );
 }

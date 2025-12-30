@@ -174,9 +174,14 @@ export default function IndustryCarousel() {
                 }}
               >
                 {/* Hover Background */}
-                <div
-                  className="absolute inset-0 bg-cover bg-center opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ backgroundImage: `url(${industry.bgImage})` }}
+                <img
+                  src={industry.bgImage}
+                  alt={`${industry.title} background`}
+                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="300" 
                 />
 
                 {/* Overlay */}

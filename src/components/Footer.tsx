@@ -171,19 +171,19 @@ const Footer = () => {
             <div className="space-y-3">
               <a 
                 href={`mailto:${contactInfo.email}`} 
-                className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-200"
+                className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-200"
               >
                 <Mail className="h-5 w-5 flex-shrink-0" />
                 <span className="text-sm">{contactInfo.email}</span>
               </a>
               <a 
                 href={`tel:${contactInfo.phone}`} 
-                className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-200"
+                className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-200"
               >
                 <Phone className="h-5 w-5 flex-shrink-0" />
                 <span className="text-sm">{contactInfo.phone}</span>
               </a>
-              <div className="flex items-start gap-3 text-gray-400">
+              <div className="flex items-start gap-3 text-gray-300">
                 <MapPin className="h-5 w-5 flex-shrink-0 mt-0.5" />
                 <span className="text-sm">{contactInfo.address}</span>
               </div>

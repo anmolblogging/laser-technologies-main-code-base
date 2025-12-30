@@ -179,13 +179,17 @@ export default function TestimonialSlider() {
             <button
               key={idx}
               onClick={() => setCurrentIndex(idx)}
-              className={`transition-all duration-300 rounded-full ${
-                currentIndex === idx
-                  ? "w-8 h-2 bg-whiteBgButtonBg"
-                  : "w-2 h-2 bg-gray-300 hover:bg-darkBgTextHover"
-              }`}
+              className="p-2 focus:outline-none"
               aria-label={`Go to testimonial ${idx + 1}`}
-            />
+            >
+              <div
+                className={`transition-all duration-300 rounded-full ${
+                  currentIndex === idx
+                    ? "w-8 h-2 bg-whiteBgButtonBg"
+                    : "w-2 h-2 bg-gray-300 hover:bg-darkBgTextHover"
+                }`}
+              />
+            </button>
           ))}
         </div>
       </div>
