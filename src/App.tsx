@@ -1,60 +1,64 @@
+import { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Producttemplate from "./components/Producttemplate";
-import Blogtemplate from "./components/Blogtemplate";
-import KnowledgeBase from "./pages/Knowledge";
-import ProductListingPage from "./components/ProductListingPage";
-import AwardsPage from "./pages/Awards";
-import Careers from "./pages/Careers";
-import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import About from "./pages/About";
-import Posts from "./components/Posts";
-import Milestone from "./pages/Timeline";
-import LaserGurukul from "./pages/LaserGurukul";
 import Chatbot from "./components/Chatbot";
-import Contact from "./pages/Contact";
-import Partners from "./pages/Partners";
-import OurLeadership from "./pages/OurLeadership";
-import TechSupport from "./pages/TechSupport";
-import Software from "./pages/Software";
-import FAQ from "./pages/FAQ";
-import OutOfWarranty from "./pages/OutOfWarranty";
-import TechnicalTraining from "./pages/TechnicalTraining";
-import CustomerStories from "./pages/CustomerStories";
-import CustomerStoriesTemplate from "./pages/CustomerStoriesTemplate";
+import LoadingSpinner from "./components/LoadingSpinner";
+
+// Lazy load pages
+const Home = lazy(() => import("./pages/Home"));
+const Producttemplate = lazy(() => import("./components/Producttemplate"));
+const Blogtemplate = lazy(() => import("./components/Blogtemplate"));
+const KnowledgeBase = lazy(() => import("./pages/Knowledge"));
+const ProductListingPage = lazy(() => import("./components/ProductListingPage"));
+const AwardsPage = lazy(() => import("./pages/Awards"));
+const Careers = lazy(() => import("./pages/Careers"));
+const Posts = lazy(() => import("./components/Posts"));
+const About = lazy(() => import("./pages/About"));
+const Milestone = lazy(() => import("./pages/Timeline"));
+const LaserGurukul = lazy(() => import("./pages/LaserGurukul"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Partners = lazy(() => import("./pages/Partners"));
+const OurLeadership = lazy(() => import("./pages/OurLeadership"));
+const TechSupport = lazy(() => import("./pages/TechSupport"));
+const Software = lazy(() => import("./pages/Software"));
+const FAQ = lazy(() => import("./pages/FAQ"));
+const OutOfWarranty = lazy(() => import("./pages/OutOfWarranty"));
+const TechnicalTraining = lazy(() => import("./pages/TechnicalTraining"));
+const CustomerStories = lazy(() => import("./pages/CustomerStories"));
+const CustomerStoriesTemplate = lazy(() => import("./pages/CustomerStoriesTemplate"));
 
 function App() {
   return (
-    <BrowserRouter >
+    <BrowserRouter>
       <Navbar />
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/product/:id" element={<Producttemplate />} />
-        <Route path="/blog/:id" element={<Blogtemplate />} />
-        <Route path="/laser-university" element={<KnowledgeBase />} />
-        <Route path="/products/:segment/:subcategory" element={<ProductListingPage />}/>
-        <Route path="/awards" element={<AwardsPage />} />
-        <Route path="/careers" element={<Careers />} />
-        <Route path="/news" element={<Posts />} />
-        <Route path="/csr" element={<Posts />} />
-        <Route path="/articles" element={<Posts />} />
-        <Route path="/blog/:id" element={<Blogtemplate />} />
-        <Route path="/about/company" element={<About />} />
-        <Route path="/about/milestone" element={<Milestone />} />
-        <Route path="/laserGurukul" element={<LaserGurukul />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/partners" element={<Partners />} />
-        <Route path="/about/leadership" element={<OurLeadership />} />
-        <Route path="/services/tech-support" element={<TechSupport />} />
-        <Route path="/services/software" element={<Software />} />
-        <Route path="/services/faqs" element={<FAQ />} />
-        <Route path="/services/out-of-warranty" element={<OutOfWarranty />} />
-        <Route path="/services/technical-training" element={<TechnicalTraining />} />
-        <Route path="/customer-stories" element={<CustomerStories />} />
-        <Route path="/customer-stories/:slug" element={<CustomerStoriesTemplate />} />
-      </Routes>
+      <Suspense fallback={<LoadingSpinner />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/product/:id" element={<Producttemplate />} />
+          <Route path="/blog/:id" element={<Blogtemplate />} />
+          <Route path="/laser-university" element={<KnowledgeBase />} />
+          <Route path="/products/:segment/:subcategory" element={<ProductListingPage />} />
+          <Route path="/awards" element={<AwardsPage />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/news" element={<Posts />} />
+          <Route path="/csr" element={<Posts />} />
+          <Route path="/articles" element={<Posts />} />
+          <Route path="/about/company" element={<About />} />
+          <Route path="/about/milestone" element={<Milestone />} />
+          <Route path="/laserGurukul" element={<LaserGurukul />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/partners" element={<Partners />} />
+          <Route path="/about/leadership" element={<OurLeadership />} />
+          <Route path="/services/tech-support" element={<TechSupport />} />
+          <Route path="/services/software" element={<Software />} />
+          <Route path="/services/faqs" element={<FAQ />} />
+          <Route path="/services/out-of-warranty" element={<OutOfWarranty />} />
+          <Route path="/services/technical-training" element={<TechnicalTraining />} />
+          <Route path="/customer-stories" element={<CustomerStories />} />
+          <Route path="/customer-stories/:slug" element={<CustomerStoriesTemplate />} />
+        </Routes>
+      </Suspense>
       <Chatbot />
       <Footer />
     </BrowserRouter>
