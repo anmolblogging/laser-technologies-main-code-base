@@ -163,9 +163,9 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-3 space-y-6">
             <div className="flex flex-row items-center gap-4 sm:gap-6 flex-wrap sm:flex-nowrap">
-              <img src={Logo} alt="Laser Technologies Logo" className="h-8 sm:h-10 w-auto object-contain" />
+              <img src={Logo} alt="Laser Technologies Logo" width="150" height="40" className="h-8 sm:h-10 w-auto object-contain" />
               <div className="h-8 sm:h-12 w-px bg-gray-800 block"></div>
-              <img src={GreatPlaceToWorkLogo} alt="Great Place to Work Certified" className="h-10 sm:h-14 w-auto object-contain" />
+              <img src={GreatPlaceToWorkLogo} alt="Great Place to Work Certified" width="60" height="56" className="h-10 sm:h-14 w-auto object-contain" />
             </div>
 
             <div className="space-y-3">
@@ -264,6 +264,7 @@ const Footer = () => {
                     <button
                       onClick={() => toggleSegment(segment)}
                       className="w-full flex justify-between items-center px-4 py-3 bg-black hover:bg-gray-900 transition-colors duration-200"
+                      aria-expanded={expandedSegment === segment}
                     >
                       <span className="text-sm text-gray-300 font-semibold">{segment}</span>
                       <ChevronDown

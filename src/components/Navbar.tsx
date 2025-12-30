@@ -729,7 +729,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           <div className="flex items-center">
             <a href="/">
-              <img src={Logo} alt="Logo" className="h-12 w-auto" />
+              <img src={Logo} alt="Logo" width="180" height="48" className="h-12 w-auto" />
             </a>
           </div>
 
@@ -743,12 +743,12 @@ const Header = () => {
               style={{ backgroundColor: COLORS.whiteBgButtonBg }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLElement).style.backgroundColor = COLORS.whiteBgTextHover;
-                const icon = (e.currentTarget.querySelector('svg') as HTMLElement);
+                const icon = (e.currentTarget.querySelector('svg') as unknown as HTMLElement);
                 if (icon) icon.style.transform = "rotate(360deg)";
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLElement).style.backgroundColor = COLORS.whiteBgButtonBg;
-                const icon = (e.currentTarget.querySelector('svg') as HTMLElement);
+                const icon = (e.currentTarget.querySelector('svg') as unknown as HTMLElement);
                 if (icon) icon.style.transform = "rotate(0deg)";
               }}
             >
@@ -761,11 +761,12 @@ const Header = () => {
           <button
             className="lg:hidden p-2 transition-colors duration-200"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
             {isMenuOpen ? (
-              <X className="h-6 w-6 text-white" />
+              <X className="h-6 w-6 text-white" aria-label="Close menu" />
             ) : (
-              <Menu className="h-6 w-6 text:white" />
+              <Menu className="h-6 w-6 text:white" aria-label="Open menu" />
             )}
           </button>
         </div>
@@ -781,12 +782,12 @@ const Header = () => {
               onClick={() => setIsMenuOpen(false)}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLElement).style.backgroundColor = COLORS.whiteBgTextHover;
-                const icon = e.currentTarget.querySelector('svg') as HTMLElement;
+                const icon = e.currentTarget.querySelector('svg') as unknown as HTMLElement;
                 if (icon) icon.style.transform = "rotate(360deg)";
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLElement).style.backgroundColor = COLORS.whiteBgButtonBg;
-                const icon = e.currentTarget.querySelector('svg') as HTMLElement;
+                const icon = e.currentTarget.querySelector('svg') as unknown as HTMLElement;
                 if (icon) icon.style.transform = "rotate(0deg)";
               }}
             >

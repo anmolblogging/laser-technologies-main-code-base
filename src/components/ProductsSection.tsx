@@ -483,7 +483,11 @@ export default function Product() {
                       <img
                         src={p.image}
                         alt={p.name}
-                        className="object-fit w-full h-full transition-transform duration-700 group-hover:scale-105 bg-white"
+                        loading="lazy"
+                        decoding="async"
+                        width="400"
+                        height="320"
+                        className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105 bg-white"
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full text-gray-700">
@@ -594,6 +598,10 @@ export default function Product() {
                   <img
                     src={p.image}
                     alt={p.name}
+                    loading="lazy"
+                    decoding="async"
+                    width="400" // mobile height is h-56 (224px)
+                    height="224"
                     className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
                   />
                 ) : (

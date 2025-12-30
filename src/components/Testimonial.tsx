@@ -120,6 +120,7 @@ export default function TestimonialSlider() {
                             title={story.title}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
+                            loading="lazy"
                           />
                         </div>
                       </div>
