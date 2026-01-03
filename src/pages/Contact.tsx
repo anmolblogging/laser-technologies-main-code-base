@@ -95,8 +95,8 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Call Us",
-      details: ["8657412551"],
-      link: "tel:8657412551",
+      details: ["+91 91369 56932"],
+      link: "tel:+919136956932",
       description: "Mon-Sat 9 AM - 7 PM",
     },
     {
@@ -166,9 +166,9 @@ const Contact = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-4">
               <a
-                href="tel:8657412551"
+                href="tel:+919136956932"
                 className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 font-medium hover:bg-gray-100 transition-colors"
-                aria-label="Call us at 8657412551"
+                aria-label="Call us at +91 91369 56932"
               >
                 <Phone className="h-5 w-5" />
                 Call Now
@@ -625,7 +625,7 @@ const Contact = () => {
           logo: logo,
           contactPoint: {
             "@type": "ContactPoint",
-            telephone: "+91-8657412551",
+            telephone: "+91-91369 56932",
             contactType: "customer service",
             areaServed: "IN",
             availableLanguage: ["en", "hi"],
