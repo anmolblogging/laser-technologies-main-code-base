@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg' ;
+const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg';
 import {
   BookOpen,
   Scissors,
@@ -13,16 +13,15 @@ import {
   ChevronRight,
   CheckCircle,
   ArrowRight,
-
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Form, { FormField } from "../components/Form";
+import GururkulFormModal from "../components/GururkulFormModal";
 
 const LaserGurukul: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
   const [showRegForm, setShowRegForm] = useState(false);
-  const [regInitialData, setRegInitialData] = useState<Record<string,string>>({});
+  const [initialModule, setInitialModule] = useState("");
 
   const carouselImages = useMemo(
     () => [
@@ -35,7 +34,7 @@ const LaserGurukul: React.FC = () => {
         alt: "Professional laser technology training",
       },
       {
-        url: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/laser-gurukul/laser_gurukul_slider_3.jpg', 
+        url: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/laser-gurukul/laser_gurukul_slider_3.jpg',
         alt: "Career opportunities in laser technology",
       },
       {
@@ -117,7 +116,7 @@ const LaserGurukul: React.FC = () => {
         icon: Tag,
         title: "Laser Marking Module",
         image:
-        'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/laser-gurukul/laser_tech_laser_marking.jpg',
+          'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/laser-gurukul/laser_tech_laser_marking.jpg',
         duration: "8 Weeks",
         level: "Beginner to Intermediate",
         description:
@@ -132,7 +131,10 @@ const LaserGurukul: React.FC = () => {
     ],
     []
   );
+
   const navigate = useNavigate();
+
+  const moduleNames = useMemo(() => modules.map((m) => m.title), [modules]);
 
   const features = useMemo(
     () => [
@@ -164,19 +166,11 @@ const LaserGurukul: React.FC = () => {
     []
   );
 
-  const regFields: FormField[] = useMemo(() => [
-    { id: 'name', label: 'Name', type: 'text', required: true },
-    { id: 'company', label: 'Company Name', type: 'text', required: false },
-    { id: 'email', label: 'Email', type: 'email', required: true },
-    { id: 'phone', label: 'Phone', type: 'tel', required: true },
-    { id: 'module', label: 'Module', type: 'select', required: true, options: modules.map(m => m.title) },
-  ], [modules]);
-
   return (
     <div className="min-h-screen bg-white overflow-hidden">
       {/* Hero Header */}
-      <header className="relative mt-16 md:mt-20  overflow-hidden" 
-      style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      <header className="relative mt-16 md:mt-20  overflow-hidden"
+        style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
       >
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <div className="text-center space-y-6">
@@ -196,7 +190,6 @@ const LaserGurukul: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
-              
             </div>
           </div>
         </div>
@@ -223,7 +216,7 @@ const LaserGurukul: React.FC = () => {
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-whiteBgText mb-8 leading-tight">
               Nurturing Minds, Shaping Futures:
               <br />
-                <div className="pb-4"></div>
+              <div className="pb-4"></div>
               <span className="text-whiteBgButtonBg">Welcome to Gurukul!</span>
             </h2>
 
@@ -240,21 +233,20 @@ const LaserGurukul: React.FC = () => {
               levels of expertise.
             </p>
 
-            <button 
-           
-            onClick={() => {
-                  setRegInitialData({ module: '' })
-                  setShowRegForm(true)
-                }}
-            className="px-10 py-5 bg-whiteBgButtonBg text-whiteBgButtonText font-bold text-lg hover:bg-whiteBgTextHover transition-all duration-300 transform hover:scale-105">
+            <button
+              onClick={() => {
+                setInitialModule("");
+                setShowRegForm(true);
+              }}
+              className="px-10 py-5 bg-whiteBgButtonBg text-whiteBgButtonText font-bold text-lg hover:bg-whiteBgTextHover transition-all duration-300 transform hover:scale-105"
+            >
               REGISTER NOW
             </button>
           </div>
         </div>
       </section>
 
-     
-   {/* Why Choose Section */}
+      {/* Why Choose Section */}
       <section className="py-12 pb-32 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 md:mb-24">
@@ -302,7 +294,6 @@ const LaserGurukul: React.FC = () => {
         </div>
       </section>
 
-     
       <section className="pb-20 pt-10 md:pb-32 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 md:mb-24">
@@ -392,12 +383,13 @@ const LaserGurukul: React.FC = () => {
                     ))}
                   </ul>
 
-                  <button 
-                  onClick={() => {
-                    setRegInitialData({ module: module.title })
-                    setShowRegForm(true)
-                  }}
-                  className="mt-8 px-8 py-4 bg-whiteBgButtonBg text-white font-semibold hover:bg-whiteBgTextHover transition-all duration-300 inline-flex items-center gap-2 border-2 border-whiteBgButtonBg hover:border-whiteBgTextHover">
+                  <button
+                    onClick={() => {
+                      setInitialModule(module.title);
+                      setShowRegForm(true);
+                    }}
+                    className="mt-8 px-8 py-4 bg-whiteBgButtonBg text-white font-semibold hover:bg-whiteBgTextHover transition-all duration-300 inline-flex items-center gap-2 border-2 border-whiteBgButtonBg hover:border-whiteBgTextHover"
+                  >
                     <span>Enroll in This Module</span>
                     <ArrowRight size={20} />
                   </button>
@@ -407,7 +399,8 @@ const LaserGurukul: React.FC = () => {
           </div>
         </div>
       </section>
-        {/* Carousel Section - Moved to bottom before CTA */}
+
+      {/* Carousel Section */}
       <section
         className="relative h-[400px] md:h-[600px] bg-gray-50 overflow-hidden"
         aria-label="Training facility showcase"
@@ -465,15 +458,13 @@ const LaserGurukul: React.FC = () => {
           ))}
         </div>
       </section>
-     
+
       {/* Registration modal */}
       {showRegForm && (
-        <Form
-          type="REGISTRATION"
-          fields={regFields}
-          initialData={regInitialData}
+        <GururkulFormModal
+          modules={moduleNames}
+          initialModule={initialModule}
           onClose={() => setShowRegForm(false)}
-          onSuccess={() => setShowRegForm(false)}
         />
       )}
     </div>
