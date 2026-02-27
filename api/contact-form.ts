@@ -1,0 +1,305 @@
+import nodemailer from "nodemailer";
+import { VercelRequest, VercelResponse } from "@vercel/node";
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "POST")
+    return res.status(405).json({ message: "Method not allowed" });
+
+  try {
+    const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+
+    const { name, email, phone, company, subject, message } = body;
+
+    if (!name || !email || !subject || !message)
+      return res.status(400).json({ error: "Name, email, subject and message are required." });
+
+    const firstName   = name.split(" ")[0];
+    const year        = new Date().getFullYear();
+    const submittedAt = new Date().toLocaleString("en-IN", {
+      day: "2-digit", month: "short", year: "numeric",
+      hour: "2-digit", minute: "2-digit",
+    });
+
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    // ── shared card footer ────────────────────────────────────────────────────
+    const cardFooter = `
+      <tr>
+        <td style="padding:18px 40px;background:#fafafa;border-top:1px solid #f2f2f2;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td>
+                <p style="margin:0;font-size:10.5px;color:#bbb;font-weight:400;">
+                  lasertechnologies.co.in
+                </p>
+              </td>
+              <td style="text-align:right;">
+                <p style="margin:0;font-size:10.5px;color:#ccc;font-weight:400;">
+                  &copy; ${year} Laser Technologies Pvt Ltd
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>`;
+
+    // ── shared logo header ────────────────────────────────────────────────────
+    const logoHeader = (badge?: string) => `
+      <tr>
+        <td style="padding:26px 40px 22px;border-bottom:1px solid #f2f2f2;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="vertical-align:middle;">
+                <p style="margin:0;font-size:14px;font-weight:700;color:#0f0f0f;
+                           letter-spacing:4px;text-transform:uppercase;line-height:1;">
+                  LASER
+                </p>
+                <p style="margin:3px 0 0;font-size:9px;font-weight:500;color:#aaa;
+                           letter-spacing:2px;text-transform:uppercase;">
+                  Technologies
+                </p>
+              </td>
+              ${badge ? `<td style="text-align:right;vertical-align:middle;">
+                <span style="display:inline-block;background:#fff0f0;color:#e8111f;
+                             font-size:9px;font-weight:700;letter-spacing:1.5px;
+                             text-transform:uppercase;padding:6px 14px;border-radius:20px;">
+                  ${badge}
+                </span>
+              </td>` : ""}
+            </tr>
+          </table>
+        </td>
+      </tr>`;
+
+    // ── ADMIN email ───────────────────────────────────────────────────────────
+    const adminHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Contact Form — ${subject}</title>
+</head>
+<body style="margin:0;padding:0;background:#f5f5f7;font-family:Helvetica,Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0"
+  style="background:#f5f5f7;padding:52px 20px;">
+<tr><td align="center">
+
+<table width="620" cellpadding="0" cellspacing="0" border="0"
+  style="max-width:620px;width:100%;background:#fff;border-radius:12px;
+         overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+
+  <!-- Red stripe -->
+  <tr><td style="height:4px;background:#e8111f;font-size:0;">&nbsp;</td></tr>
+
+  ${logoHeader("New Message")}
+
+  <!-- Hero -->
+  <tr>
+    <td style="padding:34px 40px 26px;">
+      <p style="margin:0 0 6px;font-size:10px;font-weight:700;color:#e8111f;
+                 letter-spacing:2px;text-transform:uppercase;">
+        Contact Form Submission
+      </p>
+      <h1 style="margin:0 0 4px;font-size:24px;font-weight:700;color:#0f0f0f;
+                  letter-spacing:-0.3px;line-height:1.2;">
+        ${name}
+      </h1>
+      <p style="margin:0;font-size:13px;color:#aaa;font-weight:400;">
+        ${company ? `${company} &nbsp;·&nbsp; ` : ""}${submittedAt}
+      </p>
+    </td>
+  </tr>
+
+  <!-- Contact bar -->
+  <tr>
+    <td style="padding:0 40px 24px;">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"
+        style="background:#f9f9f9;border-radius:8px;overflow:hidden;">
+        <tr>
+          <td style="padding:15px 18px;border-right:1px solid #efefef;vertical-align:top;" width="34%">
+            <p style="margin:0 0 4px;font-size:9px;font-weight:700;color:#bbb;
+                       letter-spacing:1.5px;text-transform:uppercase;">Email</p>
+            <a href="mailto:${email}"
+              style="font-size:12.5px;color:#e8111f;text-decoration:none;
+                     font-weight:500;word-break:break-all;line-height:1.4;">${email}</a>
+          </td>
+          <td style="padding:15px 18px;border-right:1px solid #efefef;vertical-align:top;" width="33%">
+            <p style="margin:0 0 4px;font-size:9px;font-weight:700;color:#bbb;
+                       letter-spacing:1.5px;text-transform:uppercase;">Phone</p>
+            <p style="margin:0;font-size:12.5px;color:#1a1a1a;font-weight:500;line-height:1.4;">${phone || "—"}</p>
+          </td>
+          <td style="padding:15px 18px;vertical-align:top;" width="33%">
+            <p style="margin:0 0 4px;font-size:9px;font-weight:700;color:#bbb;
+                       letter-spacing:1.5px;text-transform:uppercase;">Company</p>
+            <p style="margin:0;font-size:12.5px;color:#1a1a1a;font-weight:500;line-height:1.4;">${company || "—"}</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- Subject card -->
+  <tr>
+    <td style="padding:0 40px 24px;">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"
+        style="background:#fff8f8;border-radius:8px;border:1px solid #fde8e8;overflow:hidden;">
+        <tr>
+          <td style="padding:16px 20px;">
+            <p style="margin:0 0 4px;font-size:9px;font-weight:700;color:#e8111f;
+                       letter-spacing:1.5px;text-transform:uppercase;">Subject</p>
+            <p style="margin:0;font-size:13px;color:#1a1a1a;font-weight:500;line-height:1.4;">${subject}</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- Message -->
+  <tr>
+    <td style="padding:0 40px 28px;">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"
+        style="background:#f9f9f9;border-radius:8px;overflow:hidden;">
+        <tr>
+          <td style="padding:16px 20px;">
+            <p style="margin:0 0 8px;font-size:9px;font-weight:700;color:#bbb;
+                       letter-spacing:1.5px;text-transform:uppercase;">Message</p>
+            <p style="margin:0;font-size:13px;color:#444;font-weight:400;
+                       line-height:1.7;white-space:pre-wrap;">${message}</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- Divider -->
+  <tr><td style="padding:0 40px;">
+    <div style="height:1px;background:#f2f2f2;"></div>
+  </td></tr>
+
+  <!-- CTA -->
+  <tr>
+    <td style="padding:26px 40px 34px;">
+      <a href="mailto:${email}?subject=Re%3A%20${encodeURIComponent(subject)}&body=Hi%20${encodeURIComponent(firstName)}%2C%0A%0AThank%20you%20for%20reaching%20out%20to%20Laser%20Technologies.%20"
+        style="display:inline-block;background:#e8111f;color:#fff;font-size:12px;
+               font-weight:700;text-decoration:none;padding:13px 30px;
+               border-radius:8px;letter-spacing:0.5px;">
+        Reply to ${firstName} &rarr;
+      </a>
+    </td>
+  </tr>
+
+  ${cardFooter}
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>`;
+
+    // ── AUTO-REPLY email ──────────────────────────────────────────────────────
+    const autoReplyHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Message Received — Laser Technologies</title>
+</head>
+<body style="margin:0;padding:0;background:#f5f5f7;font-family:Helvetica,Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0"
+  style="background:#f5f5f7;padding:52px 20px;">
+<tr><td align="center">
+
+<table width="560" cellpadding="0" cellspacing="0" border="0"
+  style="max-width:560px;width:100%;background:#fff;border-radius:12px;
+         overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+
+  <tr><td style="height:4px;background:#e8111f;font-size:0;">&nbsp;</td></tr>
+
+  <!-- Logo header -->
+  <tr>
+    <td style="padding:26px 40px 22px;border-bottom:1px solid #f2f2f2;">
+      <p style="margin:0;font-size:14px;font-weight:700;color:#0f0f0f;
+                 letter-spacing:4px;text-transform:uppercase;line-height:1;">
+        LASER
+      </p>
+      <p style="margin:3px 0 0;font-size:9px;font-weight:500;color:#aaa;
+                 letter-spacing:2px;text-transform:uppercase;">
+        Technologies
+      </p>
+    </td>
+  </tr>
+
+  <!-- Body -->
+  <tr>
+    <td style="padding:38px 40px 30px;">
+      <h2 style="margin:0 0 14px;font-size:24px;font-weight:700;color:#0f0f0f;
+                  letter-spacing:-0.3px;line-height:1.2;">
+        Message received, ${firstName}.
+      </h2>
+      <p style="margin:0 0 14px;font-size:15px;color:#444;line-height:1.85;font-weight:400;">
+        Thank you for reaching out to us regarding
+        <strong style="color:#0f0f0f;font-weight:600;">${subject}</strong>.
+        Our team will review your message and get back to you within 24 hours.
+      </p>
+      <p style="margin:0;font-size:14px;color:#aaa;line-height:1.8;font-weight:400;">
+        Need immediate help? Call us on
+        <a href="tel:+919136956932" style="color:#e8111f;text-decoration:none;font-weight:500;">
+          +91 91369 56932
+        </a>
+        or chat on
+        <a href="https://wa.me/919004005151" style="color:#e8111f;text-decoration:none;font-weight:500;">
+          WhatsApp
+        </a>
+        — we're available Mon–Sat, 9 AM–7 PM.
+      </p>
+    </td>
+  </tr>
+
+  ${cardFooter}
+
+</table>
+
+<p style="margin:20px 0 0;font-size:10.5px;color:#ccc;text-align:center;font-weight:400;">
+  Laser Technologies Private Limited
+</p>
+
+</td></tr>
+</table>
+</body>
+</html>`;
+
+    // ── Send both ─────────────────────────────────────────────────────────────
+    await transporter.sendMail({
+      from: `"Laser Technologies" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER,
+      replyTo: email,
+      subject: `[Contact] ${subject} — ${name}`,
+      html: adminHtml,
+    });
+
+    await transporter.sendMail({
+      from: `"Laser Technologies" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: `We received your message — Laser Technologies`,
+      html: autoReplyHtml,
+    });
+
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.error("Contact form error:", err);
+    return res.status(500).json({ error: "Failed to send email. Please try again." });
+  }
+}

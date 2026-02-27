@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Eye, Mail } from "lucide-react";
+import { ArrowLeft, Eye, Mail, X, User, Mail as MailIcon, Phone, Building2, CheckCircle, Loader2, Tag, Layers } from "lucide-react";
 
 import { supabase } from "../lib/supabase";
 import Loading from './Loading';
-import Form from './Form';
 
 const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg';
 
@@ -18,6 +17,27 @@ interface Product {
   Features?: string[];
 }
 
+interface EnquiryProduct {
+  name: string;
+  subcategory: string;
+  segment: string;
+}
+
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+}
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  phone?: string;
+}
+
+type SubmitStatus = "idle" | "loading" | "success" | "error";
+
 const BRAND = {
   primary: '#f31524',
   hover: '#f31524',
@@ -27,7 +47,7 @@ const BRAND = {
 };
 
 /* -------------------------------------------------------
-   NORMALIZATION LOGIC (Copied from ProductsSection/Navbar)
+   NORMALIZATION LOGIC
 ---------------------------------------------------------*/
 function normalizeSubcategory(name = "") {
   const n = name.toLowerCase().trim();
@@ -47,7 +67,6 @@ function normalizeSubcategory(name = "") {
   if (n.includes("sheet laser cutting") || n.startsWith("sheet laser"))
     return "Sheet Laser Cutting Machine";
 
-  // CHECK: Only normalize to "Cutting" if it actually involves cutting
   if ((n.includes("tube") || n.includes("pipe")) && n.includes("cutting"))
     return "Tube Laser Cutting Machine or Pipe Laser Cutting Machine";
 
@@ -66,14 +85,295 @@ function normalizeSubcategory(name = "") {
   return name.trim();
 }
 
+/* -------------------------------------------------------
+   PRODUCT ENQUIRY MODAL  (identical UI to CalendarSection)
+---------------------------------------------------------*/
+function ProductEnquiryModal({
+  product,
+  onClose,
+}: {
+  product: EnquiryProduct;
+  onClose: () => void;
+}) {
+  const [form, setForm] = useState<FormData>({
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+  });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [status, setStatus] = useState<SubmitStatus>("idle");
+
+  // Lock body scroll while modal is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  // Close on Escape
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  const validate = (): boolean => {
+    const newErrors: FormErrors = {};
+    if (!form.name.trim()) newErrors.name = "Name is required";
+    if (!form.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      newErrors.email = "Enter a valid email";
+    }
+    if (!form.phone.trim()) {
+      newErrors.phone = "Phone is required";
+    } else if (!/^\+?[\d\s\-()]{7,15}$/.test(form.phone)) {
+      newErrors.phone = "Enter a valid phone number";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    setStatus("loading");
+
+    try {
+      const res = await fetch("/api/product-enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          product_name: product.name,
+          product_subcategory: product.subcategory,
+          product_segment: product.segment,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed");
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  const handleChange = (field: keyof FormData) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setForm((prev) => ({ ...prev, [field]: e.target.value }));
+    if (errors[field as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const inputClass = (error?: string) =>
+    `w-full pl-10 pr-4 py-3 text-sm text-gray-800 bg-white border outline-none
+     transition-colors duration-150 placeholder:text-gray-400 font-primary
+     ${
+       error
+         ? "border-red-400 focus:border-red-600"
+         : "border-gray-200 focus:border-gray-800"
+     }`;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(2px)" }}
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <div
+        className="relative w-full max-w-lg bg-white overflow-hidden shadow-2xl"
+        style={{ maxHeight: "90vh", overflowY: "auto" }}
+      >
+        {/* Red top stripe */}
+        <div className="h-[3px] w-full bg-red-600" />
+
+        {/* Header */}
+        <div className="px-8 pt-7 pb-5 border-b border-gray-100">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-[10px] font-semibold text-red-600 tracking-[0.2em] uppercase mb-2 font-primary">
+                Product Enquiry
+              </p>
+              <h2 className="text-xl font-semibold text-gray-900 leading-snug font-primary">
+                {product.name}
+              </h2>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2.5">
+                <span className="flex items-center gap-1.5 text-xs text-gray-400 font-primary">
+                  <Layers className="w-3.5 h-3.5 flex-shrink-0" />
+                  {product.segment}
+                </span>
+                <span className="flex items-center gap-1.5 text-xs text-gray-400 font-primary">
+                  <Tag className="w-3.5 h-3.5 flex-shrink-0" />
+                  {product.subcategory}
+                </span>
+              </div>
+            </div>
+            <button
+              onClick={onClose}
+              className="flex-shrink-0 p-1.5 text-gray-400 hover:text-gray-700 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Success state */}
+        {status === "success" ? (
+          <div className="px-8 py-14 flex flex-col items-center text-center">
+            <div className="w-14 h-14 bg-red-50 flex items-center justify-center mb-5">
+              <CheckCircle className="w-7 h-7 text-red-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2 font-primary">
+              Enquiry Submitted!
+            </h3>
+            <p className="text-sm text-gray-500 max-w-xs leading-relaxed font-primary">
+              We've received your enquiry for{" "}
+              <span className="font-medium text-gray-700">{product.name}</span>.
+              Our team will get back to you shortly.
+            </p>
+            <button
+              onClick={onClose}
+              className="mt-8 px-8 py-3 bg-red-600 text-white text-sm font-semibold
+                         hover:bg-red-700 transition-colors font-primary"
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} noValidate className="px-8 py-7">
+            <div className="space-y-5">
+
+              {/* Name */}
+              <div>
+                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-[0.15em] mb-1.5 font-primary">
+                  Full Name <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
+                  <input
+                    type="text"
+                    placeholder="Your full name"
+                    value={form.name}
+                    onChange={handleChange("name")}
+                    className={inputClass(errors.name)}
+                  />
+                </div>
+                {errors.name && (
+                  <p className="mt-1.5 text-xs text-red-500 font-primary">{errors.name}</p>
+                )}
+              </div>
+
+              {/* Email */}
+              <div>
+                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-[0.15em] mb-1.5 font-primary">
+                  Email Address <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <MailIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
+                  <input
+                    type="email"
+                    placeholder="you@company.com"
+                    value={form.email}
+                    onChange={handleChange("email")}
+                    className={inputClass(errors.email)}
+                  />
+                </div>
+                {errors.email && (
+                  <p className="mt-1.5 text-xs text-red-500 font-primary">{errors.email}</p>
+                )}
+              </div>
+
+              {/* Phone */}
+              <div>
+                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-[0.15em] mb-1.5 font-primary">
+                  Phone Number <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
+                  <input
+                    type="tel"
+                    placeholder="+91 98765 43210"
+                    value={form.phone}
+                    onChange={handleChange("phone")}
+                    className={inputClass(errors.phone)}
+                  />
+                </div>
+                {errors.phone && (
+                  <p className="mt-1.5 text-xs text-red-500 font-primary">{errors.phone}</p>
+                )}
+              </div>
+
+              {/* Company */}
+              <div>
+                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-[0.15em] mb-1.5 font-primary">
+                  Company{" "}
+                  <span className="text-gray-300 font-normal normal-case tracking-normal">
+                    (optional)
+                  </span>
+                </label>
+                <div className="relative">
+                  <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
+                  <input
+                    type="text"
+                    placeholder="Your company name"
+                    value={form.company}
+                    onChange={handleChange("company")}
+                    className={inputClass()}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Error banner */}
+            {status === "error" && (
+              <div className="mt-5 px-4 py-3 bg-red-50 border border-red-200">
+                <p className="text-sm text-red-600 font-primary">
+                  Something went wrong. Please try again or contact us directly.
+                </p>
+              </div>
+            )}
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              className="mt-6 w-full py-3.5 bg-red-600 hover:bg-red-700 disabled:opacity-60
+                         text-white text-sm font-semibold transition-colors font-primary
+                         flex items-center justify-center gap-2"
+            >
+              {status === "loading" ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Submitting…
+                </>
+              ) : (
+                "Submit Enquiry"
+              )}
+            </button>
+
+            <p className="mt-4 text-center text-xs text-gray-400 font-primary">
+              Our team will reach out to you shortly.
+            </p>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------
+   MAIN PAGE COMPONENT
+---------------------------------------------------------*/
 const ProductListingPage: React.FC = () => {
   const { segment, subcategory } = useParams<{ segment?: string; subcategory?: string }>();
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [allSubcategories, setAllSubcategories] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [showEnquiryForm, setShowEnquiryForm] = useState(false);
-  const [enquiryInitialData, setEnquiryInitialData] = useState<Record<string,string>>({});
+  const [enquiryProduct, setEnquiryProduct] = useState<EnquiryProduct | null>(null);
 
   const navContainerRef = useRef<HTMLDivElement>(null);
   const activeButtonRef = useRef<HTMLButtonElement>(null);
@@ -85,7 +385,6 @@ const ProductListingPage: React.FC = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // FETCH BY SEGMENT ONLY (Filtering SubCategory in JS because of Normalization)
         const { data: productsData, error: productsError } = await supabase
           .from('products')
           .select('*')
@@ -94,7 +393,6 @@ const ProductListingPage: React.FC = () => {
 
         if (productsError) throw productsError;
 
-        // Perform Client-Side Filtering & Grouping
         const filteredProducts: Product[] = [];
         const subMap = new Set<string>();
 
@@ -107,10 +405,7 @@ const ProductListingPage: React.FC = () => {
           }
         });
 
-        // Sort products? They are already sorted by name from DB, but we could resort if needed.
-        
         setProducts(filteredProducts);
-        // Convert Set to Array and Sort
         setAllSubcategories([...subMap].sort());
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -124,12 +419,10 @@ const ProductListingPage: React.FC = () => {
     }
   }, [decodedSegment, decodedSubcategory]);
 
-  // page scroll
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [decodedSegment, decodedSubcategory]);
 
-  // Auto scroll active subcategory button into view on mobile nav
   useEffect(() => {
     if (activeButtonRef.current && navContainerRef.current) {
       activeButtonRef.current.scrollIntoView({
@@ -145,12 +438,11 @@ const ProductListingPage: React.FC = () => {
   };
 
   const handleEnquire = (product?: Product) => {
-    setEnquiryInitialData({
-      segment: decodedSegment,
+    setEnquiryProduct({
+      name: product?.ProductName ?? '',
       subcategory: decodedSubcategory,
-      product: product?.ProductName ?? '',
+      segment: decodedSegment,
     });
-    setShowEnquiryForm(true);
   };
 
   if (loading) {
@@ -159,7 +451,10 @@ const ProductListingPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50">
-      <header className="relative mt-16 md:mt-20 pb-4 bg-black" style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <header
+        className="relative mt-16 md:mt-20 pb-4 bg-black"
+        style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="pt-8 pb-4">
             <button
@@ -170,12 +465,12 @@ const ProductListingPage: React.FC = () => {
               <span className="font-medium text-sm tracking-wide">Back to Home</span>
             </button>
           </div>
-          <div className="text-center space-y-8 ">
+          <div className="text-center space-y-8">
             <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium text-white leading-tight tracking-tight">
               {decodedSegment}
             </h1>
             <div className="space-y-4">
-              <p className="text-xl md:text-2xl text-white/80 max-w-3xl py-4  mx-auto leading-relaxed font-light">
+              <p className="text-xl md:text-2xl text-white/80 max-w-3xl py-4 mx-auto leading-relaxed font-light">
                 Explore our curated collection of premium products
               </p>
             </div>
@@ -186,14 +481,6 @@ const ProductListingPage: React.FC = () => {
         </div>
         <div className="absolute bottom-0 pb-4 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent"></div>
       </header>
-
-      {showEnquiryForm && (
-        <Form
-          type="PRODUCT_ENQUIRY"
-          onClose={() => setShowEnquiryForm(false)}
-          initialData={enquiryInitialData}
-        />
-      )}
 
       {/* Subcategory Navigation */}
       {allSubcategories.length > 1 && (
@@ -271,7 +558,7 @@ const ProductListingPage: React.FC = () => {
       )}
 
       {/* Products Grid */}
-      <div className="container mx-auto px-4 py-12 md:py-16 ">
+      <div className="container mx-auto px-4 py-12 md:py-16">
         {products.length === 0 ? (
           <div className="text-center py-20">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 mb-6">
@@ -339,7 +626,7 @@ const ProductListingPage: React.FC = () => {
                         <ul className="text-xs space-y-1 list-inside list-disc pl-2 text-gray-600">
                           {product.Features.slice(0, 2).map((feature, idx) => (
                             <li key={idx} className="flex items-start">
-                              <svg className="w-3 h-3 mr-2 flex-shrink-0 " fill="currentColor" viewBox="0 0 20 20">
+                              <svg className="w-3 h-3 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                               </svg>
                               <span className="line-clamp-1">{feature}</span>
@@ -383,6 +670,14 @@ const ProductListingPage: React.FC = () => {
           </>
         )}
       </div>
+
+      {/* Product Enquiry Modal */}
+      {enquiryProduct && (
+        <ProductEnquiryModal
+          product={enquiryProduct}
+          onClose={() => setEnquiryProduct(null)}
+        />
+      )}
 
       <style>{`
         @keyframes fadeInUp {

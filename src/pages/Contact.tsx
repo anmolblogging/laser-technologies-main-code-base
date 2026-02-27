@@ -1,5 +1,4 @@
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
 import {
   Mail,
   Phone,
@@ -13,9 +12,6 @@ import {
   CheckCircle,
   MessageCircle,
   ArrowRight,
-  Users,
-  Award,
-  Headphones,
 } from "lucide-react";
 
 const logo =
@@ -33,10 +29,7 @@ const Contact = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-
-  const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-  const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_CONTACT_FORM;
-  const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+  const [submitError, setSubmitError] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -49,46 +42,40 @@ const Contact = () => {
     });
   };
 
-  // ✅ EMAILJS SUBMISSION
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(false);
 
     try {
-      await emailjs.send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone || "Not provided",
-          company: formData.company || "Not provided",
-          subject: formData.subject,
-          message: formData.message,
-        },
-        PUBLIC_KEY
-      );
+      const res = await fetch("/api/contact-form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) throw new Error("Failed");
 
       setSubmitSuccess(true);
+
+      // Reset form
+      setTimeout(() => {
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          subject: "",
+          message: "",
+        });
+        setSubmitSuccess(false);
+      }, 3000);
     } catch (error) {
-      console.error("EmailJS Error:", error);
-      alert("Something went wrong while sending your message.");
+      console.error("Contact form error:", error);
+      setSubmitError(true);
     }
 
     setIsSubmitting(false);
-
-    // Reset form
-    setTimeout(() => {
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        company: "",
-        subject: "",
-        message: "",
-      });
-      setSubmitSuccess(false);
-    }, 3000);
   };
 
   const contactInfo = [
@@ -279,7 +266,23 @@ const Contact = () => {
                 </div>
               )}
 
-              <div onSubmit={handleSubmit} className="space-y-6">
+              {submitError && (
+                <div
+                  className="mb-6 p-5 bg-red-50 border-l-4 border-red-500 flex items-start gap-3"
+                  role="alert"
+                >
+                  <div>
+                    <p className="text-red-800 font-bold mb-1">
+                      Something went wrong.
+                    </p>
+                    <p className="text-red-700 text-sm">
+                      Please try again or contact us directly.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <div className="space-y-6">
                 {/* Name + Email */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -455,7 +458,8 @@ const Contact = () => {
             </div>
           </div>
         </div>
-                  {/* map */}
+
+        {/* map */}
         <section className="mt-24 mb-12 md:py-20" aria-labelledby="office-locations">
           <div className="mb-20">
             <div className="bg-white shadow-2xl overflow-hidden border-t-4 border-red-600">

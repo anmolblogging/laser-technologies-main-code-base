@@ -13,7 +13,7 @@ const Clients = () => {
   const fetchClients = async () => {
     setLoading(true);
     const { data, error } = await supabase
-      .from('clients')
+      .from('clients_google')
       .select('id, name, image_url')
       .order('id', { ascending: true })
       .limit(PAGE_SIZE);
@@ -62,16 +62,7 @@ const Clients = () => {
       row2Element.addEventListener('mouseleave', () => handleMouseLeave(row2Ref));
     }
 
-    return () => {
-      if (row1Element) {
-        row1Element.removeEventListener('mouseenter', () => handleMouseEnter(row1Ref));
-        row1Element.removeEventListener('mouseleave', () => handleMouseLeave(row1Ref));
-      }
-      if (row2Element) {
-        row2Element.removeEventListener('mouseenter', () => handleMouseEnter(row2Ref));
-        row2Element.removeEventListener('mouseleave', () => handleMouseLeave(row2Ref));
-      }
-    };
+    
   }, []);
 
   if (loading) return <div>
@@ -107,10 +98,8 @@ const Clients = () => {
               {[...row1, ...row1, ...row1].map((client, idx) => (
                 <div
                   key={`row1-${idx}`}
-                  className="group flex-shrink-0 w-36 h-16 sm:w-44 sm:h-18 lg:w-52 lg:h-20 bg-white rounded-xl shadow-sm hover:shadow-xl flex items-center justify-center p-3 sm:p-4 transition-all duration-500 ease-out transform hover:scale-110 hover:-translate-y-1 border border-gray-100"
+                  className="group flex-shrink-0 w-36 h-16 sm:w-44 sm:h-18 lg:w-52 lg:h-20 bg-white shadow-sm hover:shadow-xl flex items-center justify-center p-3 sm:p-4 transition-all duration-500 ease-out transform hover:scale-110 hover:-translate-y-1 border border-gray-100"
                   style={{ transition: 'all 0.5s cubic-bezier(0.4,0,0.2,1)' }}
-                  onMouseEnter={e => (e.currentTarget.style.filter = 'grayscale(0%)')}
-                  onMouseLeave={e => (e.currentTarget.style.filter = 'grayscale(100%)')}
                 >
                   <img
                     src={client.image_url || ""}
@@ -134,10 +123,8 @@ const Clients = () => {
               {[...row2, ...row2, ...row2].map((client, idx) => (
                 <div
                   key={`row2-${idx}`}
-                  className="group flex-shrink-0 w-36 h-16 sm:w-44 sm:h-18 lg:w-52 lg:h-20 bg-white rounded-xl shadow-sm hover:shadow-xl flex items-center justify-center p-3 sm:p-4 transition-all duration-500 ease-out transform hover:scale-110 hover:-translate-y-1 border border-gray-100"
+                  className="group flex-shrink-0 w-36 h-16 sm:w-44 sm:h-18 lg:w-52 lg:h-20 bg-white  shadow-sm hover:shadow-xl flex items-center justify-center p-3 sm:p-4 transition-all duration-500 ease-out transform hover:scale-110 hover:-translate-y-1 border border-gray-100"
                   style={{ transition: 'all 0.5s cubic-bezier(0.4,0,0.2,1)' }}
-                  onMouseEnter={e => (e.currentTarget.style.filter = 'grayscale(0%)')}
-                  onMouseLeave={e => (e.currentTarget.style.filter = 'grayscale(100%)')}
                 >
                   <img
                     src={client.image_url || ""}
@@ -155,7 +142,7 @@ const Clients = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes marquee-left {
           0% { transform: translateX(0); }
           100% { transform: translateX(-33.333%); }

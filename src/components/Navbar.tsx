@@ -242,7 +242,7 @@ const Header = () => {
   }, []);
 
   /* -------------------------------------------------------
-     DESKTOP NAV – EXACTLY AS YOUR ORIGINAL JSX
+     DESKTOP NAV – EXACTLY AS YOUR ORIGINAL lasertechnologies.co.in
   ---------------------------------------------------------*/
   const renderDesktopNav = () => {
     return navigationStructure.map((item) => {
@@ -526,7 +526,7 @@ const Header = () => {
   };
 
   /* -------------------------------------------------------
-     MOBILE NAV – EXACTLY AS YOUR ORIGINAL JSX
+     MOBILE NAV – EXACTLY AS YOUR ORIGINAL lasertechnologies.co.in
   ---------------------------------------------------------*/
   const renderMobileNav = () => {
     return navigationStructure.map((item) => {

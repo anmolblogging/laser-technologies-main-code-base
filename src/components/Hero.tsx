@@ -18,10 +18,10 @@ const HeroBanner = () => {
             alt="Advanced laser manufacturing facility"
             className="w-full h-full object-cover"
             loading="eager"
-            fetchPriority="high"
             decoding="async"
             width="1920"
             height="1080"
+            {...{ fetchpriority: "high" }}
           />
           <div
             aria-hidden="true"
