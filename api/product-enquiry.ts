@@ -33,12 +33,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const firstName = name.split(" ")[0];
     const year = new Date().getFullYear();
     const submittedAt = new Date().toLocaleString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+        timeZone: "Asia/Kolkata",
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
 
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
