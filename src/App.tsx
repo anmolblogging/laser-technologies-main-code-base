@@ -1,9 +1,21 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy ,useEffect , useLocation} from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Chatbot from "./components/Chatbot";
 import LoadingSpinner from "./components/LoadingSpinner";
+
+import { pageview } from "./utils/gtag";
+
+function AnalyticsTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    pageview(location.pathname);
+  }, [location]);
+
+  return null;
+}
 
 // Lazy load pages
 const Home = lazy(() => import("./pages/Home"));
@@ -31,6 +43,7 @@ const CustomerStoriesTemplate = lazy(() => import("./pages/CustomerStoriesTempla
 function App() {
   return (
     <BrowserRouter>
+    <AnalyticsTracker />
       <Navbar />
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
