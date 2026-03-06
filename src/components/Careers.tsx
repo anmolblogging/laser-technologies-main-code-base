@@ -245,7 +245,7 @@ export default function Careers() {
               {/* TEXT */}
               <div className="flex-1 text-center md:text-left">
                 <h3 className="text-3xl mb-4 font-normal text-whiteBgButtonBg">
-                  Great Place to Work® Certified 2025
+                  Great Place to Work® Certified 2026
                 </h3>
                 <p className="text-lg text-gray-600 leading-relaxed font-light">
                   We're proud to be recognized as a Great Place to Work, a
