@@ -235,7 +235,7 @@ export default function Careers() {
               <div className="flex-shrink-0">
                 <div className=" flex items-center justify-center  overflow-hidden">
                   <img
-                    src="https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/gptw.png"
+                    src="https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/Grate%20place%20to%20work.png"
                     alt="Great Place To Work"
                     className="h-52"
                   />

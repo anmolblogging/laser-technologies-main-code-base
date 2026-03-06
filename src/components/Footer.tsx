@@ -15,7 +15,7 @@ import { supabase } from "../lib/supabase";
 const Logo =
   "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/logo-footer.png";
 const GreatPlaceToWorkLogo =
-  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/gptw.png";
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/Grate%20place%20to%20work.png";
 
 /* -------------------------------------------------------
    NORMALIZATION LOGIC (Copied from ProductsSection/Navbar)
