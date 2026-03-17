@@ -1,3 +1,31 @@
 User-agent: *
 Allow: /
-Sitemap: https://lasertechnologies.co.in/sitemap.xml
+
+# Block all old WordPress URL patterns
+Disallow: /index.php/
+Disallow: /wp-content/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-json/
+Disallow: /wp-login.php
+
+# Block broken WordPress search URL
+Disallow: /*{search_term_string}*
+Disallow: /?s=
+Disallow: /*?s=
+
+# Block old WordPress query string post IDs
+Disallow: /?p=
+Disallow: /*?p=
+
+# Block old discontinued product line paths
+Disallow: /products/akyapak-products/
+
+# Block anchor-only fragment URLs (not real pages)
+Disallow: /about/leadership#csr
+
+# Block old WordPress admin and login
+Disallow: /wp-login.php
+Disallow: /xmlrpc.php
+
+Sitemap: https://www.lasertechnologies.co.in/sitemap.xml

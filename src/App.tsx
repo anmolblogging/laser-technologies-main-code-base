@@ -39,6 +39,8 @@ const OutOfWarranty = lazy(() => import("./pages/OutOfWarranty"));
 const TechnicalTraining = lazy(() => import("./pages/TechnicalTraining"));
 const CustomerStories = lazy(() => import("./pages/CustomerStories"));
 const CustomerStoriesTemplate = lazy(() => import("./pages/CustomerStoriesTemplate"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+// const SlugResolver = lazy(() => import("./components/SlugResolver"));
 
 function App() {
   return (
@@ -70,6 +72,8 @@ function App() {
           <Route path="/services/technical-training" element={<TechnicalTraining />} />
           <Route path="/customer-stories" element={<CustomerStories />} />
           <Route path="/customer-stories/:slug" element={<CustomerStoriesTemplate />} />
+          {/* <Route path="/:slug" element={<SlugResolver />} />  */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
       <Chatbot />
