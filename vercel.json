@@ -1,17 +1,4 @@
 {
-  "redirects": [
-    {
-      "source": "/index.html",
-      "destination": "/",
-      "permanent": true
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/"
-    }
-  ],
   "routes": [
     {
       "src": "^/\\?p=.*$",
@@ -3712,6 +3699,15 @@
       "src": "/x500-III-pro-laser-cutter-machine",
       "status": 410,
       "dest": "/index.html"
+    },
+    {
+      "src": "/index.html",
+      "status": 308,
+      "headers": { "Location": "/" }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/"
     }
   ]
 }
