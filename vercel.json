@@ -6,5 +6,3712 @@
       "permanent": true
     }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ],
+  "routes": [
+    {
+      "src": "^/\\?p=.*$",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "^/.*\\?p=.*$",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/1325-2/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/air-cooled-handheld-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/alpha-laser-cladding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/alpha-laser-hardening",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/alpha-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/alpha-laser-welding/vl-50",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/applications/laser-for-leather",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/applications/laser-for-mdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/applications/laser-for-metal",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/applications/laser-for-paper",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/applications/laser-for-plastic",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/applications/laser-for-textile",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/applications/laser-for-wood",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/5-applications-of-laser-welding-in-industries",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/6-reasons-why-laser-technologies-are-environmentally-sustainable",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/a-complete-guide-on-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/advantages-of-metal-sheet-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/benefits-of-laser-welding-machines",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/best-laser-welding-machines",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/buy-a-fiber-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/comparison-between-fiber-lasers-and-co2-lasers",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/developing-a-community-with-lasers-growing-the-automotive-and-automobiles-in-a-sustainable-manner",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/different-types-of-fiber-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/everything-you-need-to-know-about-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/fiber-laser-cutting-cost-vs-value-for-assessing-roi",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/fiber-laser-cutting-industrial-applications",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/fiber-laser-cutting-innovations",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/fiber-laser-cutting-machine-myths-misconceptions",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/fiber-laser-cutting-machine-price-in-india",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/fiber-laser-welding-machine-the-ultimate-solution-for-precision-welds",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/future-of-laser-marking",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/guide-to-using-i-weld-product",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/handheld-laser-welding-sustainable-manufacturing-solution",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/handheld-laser-welding-vs-mig-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/history-of-laser-the-journey-of-twists-and-turn-to-innovation",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/how-r1-series-revolutionizes-tube-laser-cutting",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/how-to-buy-perfect-laser-engraving-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/how-to-find-perfecr-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/how-to-maintain-fiber-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/how-to-operate-fiber-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/how-uhp-laser-cutting-enhances-efficiency",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/i-weld",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/important-tips-remember-while-cutting-mild-steel-in-2022",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/laser-cutting-acrylic-complete-guide",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/laser-cutting-pros-cons-compared-to-other-cutting-technologies",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/laser-cutting-technology-with-acrylic-game-changer-in-acrylic-design",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/laser-engraving-machine-a-complete-handbook",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/laser-engraving-machine-vs-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/laser-engraving-techniques",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/laser-marking",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/laser-marking-material-selection-guide-with-imark",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/laser-technologies-success-story-with-naman-industries",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/laser-technology-blessing-for-most-of-industries",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/laser-technology-definition-applications-challenges",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/laser-welding-machine-safety-precaution",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/laser-welding-machines-a-complete-guide",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/power-bend-in-extreme-conditions",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/r2-series-tube-laser-cutting-machine-complete-guide",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/reasons-to-utilize-fiber-laser-for-marking",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/safe-and-unsafe-cutting-materials-for-laser-cutter-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/short-history-of-laser-technology",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/steps-while-buying-a-laser-engraving-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/tips-to-maintain-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/tips-to-maintain-your-laser-engraving-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/top-laser-cutting-machines",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/tube-laser-cutting-machines-features-and-benefits",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/types-of-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/ultimate-guide-to-fiber-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/articles/ultra-high-power-laser-cutting-in-sheet-metal-fabrication",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/automatic-laser-cutting-machine-alg-&-alf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/automatic-laser-cutting-machine-alg-and-alf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/automatic-loading-unloading-system-alg-alf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/automatic-pallet-racks-machine-arw-pt65",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/automatic-panel-bender-control-system",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/automatic-panel-bender-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/bevel-tube-laser-cutting-machine-tps",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/book-a-laser-demo",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/c180ll-desktop-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/closed-laser-welding-machine-alw",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/closed-laser-welding-system-alw",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/closed-metal-laser-welding-machine-alv",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/cnc-bending-machine-smart-bend",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/cnc-controller-machine-pump-control-cnc-press-brake",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/cnc-fiber-laser-tube-cutting-machine-r3",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/cnc-press-brake-machine-power-bend",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/cnc-v-grooving-machine-gmbh",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/co2-laser-engraving-machine-mecury-iii",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/co2-laser-system-plotter-sei-x-type",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/co2-marking-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/co2-mg380-hybrid-laser-engraving-cutting-system",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/cobo-weld",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/compact-laser-welding-system-alv",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/compact-single-sheet-tube-laser-cutting-machine-gb",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/contact-us",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/customer-stories/ab-thomas-leather",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/customer-stories/ashok-laser-success-with-laser-technologies",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/customer-stories/customer-experiences-with-laser-technologies",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/customer-stories/dynamic-industries-journey-with-laser-technologies",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/customer-stories/laser-fab-engineers-services",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/customer-stories/laser-tech-success-partnership",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/customer-stories/laser-technologies-helped-naman-industries-surpass-clients-expectations",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/customer-stories/laser-technologies-role-in-rexpro-enterprises-success",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/customer-stories/praveen-weld",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/customer-stories/shree-ganesh-industries-jaipur",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/customer-stories/success-story-of-kp-mach-for-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/digital-chucks-tube-laser-cutting-machine-ts",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/double-bed-fiber-laser-cutting-machine-gx-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/double-exchange-laser-cutting-machine-gxe",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/double-exchange-platform-laser-cutting-machine-ga",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/double-exchange-platform-laser-cutting-machine-gx-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/economic-tube-laser-cutting-machine-r3plus-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/electro-lamination-metal-cutting-machine-effective-l",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/electro-lamination-metal-cutting-machine-effective-s",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/entry-level-laser-system-al-in",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/events/imtos-2025-laser-solutions",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/events/industrial-engineering-expo-2024-in-raipur",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/events/laser-technologies-at-blech-india",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/events/laser-technologies-at-indomach-expo-2025",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/events/laser-technologies-at-machauto-expo-2025",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/events/laser-technologies-at-mahatech-expo-2024",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/events/laser-technologies-at-nima-index-expo-2024",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/events/lasertechnologiescoin",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/faq-about-laser",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/fiber-laser-cutting-gh-series-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/fiber-laser-cutting-machine-effective-l",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/fiber-laser-cutting-machine-effective-s",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/fiber-laser-cutting-machine-gh-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/fiber-laser-engraving-machine-s290ls",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/fiber-laser-engraving-machine-s400",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/fiber-laser-machine-photon-x-imark",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/fiber-laser-marking-machine-i-mark",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/fiber-laser-metal-engraving-cutting-system-fmc-280",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/fiber-laser-metal-pipe-cutting-machine-r2",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/fiber-laser-tube-cutting-machine-r1",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/fiber-laser-welding-machine-c-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/flatbed-fiber-s290ls-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/flatbed-laser-plotter-system-sei-eureka",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/frame-welding-press-brake-machine-upstroke-nc",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/g3015l/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/gcc-engraving-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/gcc-laser-engraving-machine-spririt",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/guides/choosing-the-right-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/handheld-cost-effective-welding-system-smartweld",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/handheld-laser-welding-machine-alo",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/handheld-laser-welding-machine-smart-weld",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/handheld-laser-welding-machine-vl-50",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/handheld-laser-welding-system-alo-100-120",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/handheld-welding-laser-system-vl-50",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/hardeing-fiber-laser-welding-machine-al-rock-mobile",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/hardeing-laser-welding-machine-alflak-max",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/heavy-duty-tube-laser-cutting-machine-tl350",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/heavy-duty-tube-laser-cutting-machine-tx",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/heavy-duty-tube-laser-cutting-machine-tx-plus",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/high-end-double-head-vertical-cnc-v-grooving-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/high-end-laser-engraving-machine-flexi-blue",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/high-end-laser-engraving-machine-matrix-textile",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/high-power-fiber-laser-cutting-machine-gv-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/high-power-large-format-laser-cutting-machine-gfa",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/high-power-laser-cutting-machine-gt-pro",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/high-power-laser-cutting-machine-gx-pro",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/high-power-laser-engraving-machine-spirit-gls",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/hsg-fiber-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/hybrid-laser-engraving-m380",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/hydraulic-cnc-bending-machine-downstroke",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/imark-co2-laser-marking-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/imark-fiber-laser-marking-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/imark-uv-laser-marking-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/4-laser-headed-die-cutting-system-labelmaster",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/about-us",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/air-cooled-handheld-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/alpha-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/alpha-laser-welding/vl-50",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/applications/laser-for-leather",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/applications/laser-for-plastic",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/applications/laser-for-textile",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/articles",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/automatic-loading-unloading-system-alg-alf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/automatic-panel-bender-control-system",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/automatic-panel-bender-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/awards-and-accolades",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/bevel-tube-laser-cutting-machine-tps",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/book-a-laser-demo",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/c180ll-desktop-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/career",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/closed-laser-welding-machine-alw",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/closed-metal-laser-welding-machine-alv",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/cnc-bending-machine-smart-bend",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/cnc-controller-machine-pump-control-cnc-press-brake",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/cnc-press-brake-machine-power-bend",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/cnc-v-grooving-machine-gmbh",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/co2-laser-engraving-machine-mecury-iii",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/co2-laser-system-plotter-sei-x-type",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/co2-mg380-hybrid-laser-engraving-cutting-system",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/cobo-weld",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/contact-us",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/customer-stories",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/customer-stories/ab-thomas-leather",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/customer-stories/laser-technologies-role-in-rexpro-enterprises-success",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/customer-stories/shree-ganesh-industries-jaipur",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/digital-chucks-tube-laser-cutting-machine-ts",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/double-exchange-platform-laser-cutting-machine-ga",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/engraving/plotter-laser-system/m380-hybrid-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/fiber-laser-cutting-gh-series-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/fiber-laser-cutting-machine-effective-s",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/fiber-laser-engraving-machine-s290ls",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/fiber-laser-engraving-machine-s400",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/fiber-laser-machine-photon-x-imark",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/fiber-laser-metal-engraving-cutting-system-fmc-280",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/fiber-laser-tube-cutting-machine-r1",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/fiber-laser-welding-machine-c-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/flatbed-laser-plotter-system-sei-eureka",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/gcc-engraving-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/gcc-laser-engraving-machine-spririt",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/guides",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/guides/choosing-the-right-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/handheld-cost-effective-welding-system-smartweld",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/handheld-laser-welding-machine-alo",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/handheld-laser-welding-system-alo-100-120",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/handheld-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/heavy-duty-tube-laser-cutting-machine-tx-plus",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/high-end-double-head-vertical-cnc-v-grooving-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/high-end-laser-engraving-machine-matrix-textile",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/high-power-laser-cutting-machine-gt-pro",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/hsg-fiber-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/hybrid-laser-engraving-m380",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/hydraulic-cnc-bending-machine-downstroke",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/imark-co2-laser-marking-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/imark-uv-laser-marking-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/industrial-laser-welding-machine-al-tw",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/large-format-bevel-laser-cutting-machine-bevel-gfa",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-4.0",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-cutting-machines",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-cutting-system-al-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-cutting/best-software-for-laser-cutting-machine-operation",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-cutting/choose-right-laser-cutting-machine-for-business",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-cutting/fiber-co2-plasma-laser-cutting",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-cutting/fundamentals-of-laser-cutting",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-cutting/how-to-maintain-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-cutting/how-to-start-laser-cutting-business",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-cutting/laser-cutting-in-aerospace-and-medical-devices",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-cutting/laser-cutting-in-metal-fabrication-and-automotive-industry",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-cutting/laser-cutting-machine-cost-in-india",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-cutting/trends-in-laser-cutting-technologies",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-cutting/types-of-lasers-for-cutting",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-engraving-machine-e200-desktop-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-engraving-machine-flexi",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-engraving-machine-photonx-icut",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-engraving-machine-sei-nrgl",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-engraving-machine-venus-ii",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-engraving-machines",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-engraving-system-sei-mercury-fiber",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-faq",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-gurukul",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-marking",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-university",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-welding-machines",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-welding/ai-in-laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-welding/fundamentals-of-laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-welding/how-laser-welding-machines-work",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-welding/laser-vs-traditional-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-welding/laser-welding-maintenance",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-welding/laser-welding-materials",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-welding/laser-welding-parameters",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-welding/science-behind-laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/laser-welding/types-of-laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/life-at-laser-technologies",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/m380-hybrid-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/mercury-III-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/metal-laser-welding-machine-al-in",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/mobile-laser-system-alflak-max",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/modular-laser-engraving-system-paperone-5000",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/multi-functional-compact-laser-cutting-machine-al-cross",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/multi-functional-compact-laser-welding-machine-al-cross",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/news-&-updates",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/non-metal-laser-engraving-machine-spririt-ls",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/out-of-warranty",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/panel-bender",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/panel-bender-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/paper-cutting-machine-spirit-gls",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/partners",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/pillow-plate-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/power-bend-press-brake-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/press-brake-machines",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/privacy-policy",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/air-cooled-handheld-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/alpha-laser-cladding/al-rock-mobile",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/alpha-laser-hardening",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/alpha-laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/alpha-laser-welding/closed-system/vl-50",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/alpha-laser-welding/mobile-system/al-flak",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/electrolamination-effective-l",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving/galvanometric-laser-system/flexi",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving/galvanometric-laser-system/labelmaster",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving/galvanometric-laser-system/matrix-textile",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving/galvanometric-laser-system/paperone-5000",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving/plotter-laser-system/c180-II-desktop-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving/plotter-laser-system/photonx-icut",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving/plotter-laser-system/s290-ls-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving/plotter-laser-system/sei-eureka",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving/plotter-laser-system/spirit-gls-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving/plotter-laser-system/spirit-gls-hybrid-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving/plotter-laser-system/spirit-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving/plotter-laser-system/t500-laser-cutter",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/engraving/plotter-laser-system/x500-III-pro-laser-cutter",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/fiber-laser-cutting/electrolamination/effective-l",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/fiber-laser-cutting/sheet-metal/bevel-gfa-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/fiber-laser-cutting/sheet-metal/ga-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/fiber-laser-cutting/sheet-metal/gx-pro-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/fiber-laser-cutting/tube-metal/r1",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/fiber-laser-cutting/tube-metal/r2",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/fiber-laser-cutting/tube-metal/tm-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/fiber-laser-cutting/tube-metal/tps-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/fiber-laser-cutting/tube-metal/ts-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/fiber-laser-cutting/tube-metal/tx",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/fiber-laser-marking-machine-co2-laser",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/fiber-laser-marking-machine-photon-x-iMark",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/fiber-laser-marking-machine-uv-laser",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/galvanometric-laser-system-flexi-blue",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/galvanometric-laser-system-labelmaster",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/galvanometric-laser-system-matrix-textile",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/galvanometric-laser-system-paperone-5000",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/laser-automation-alg-and-alf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/mobile-laser-welding-machine-al-arm-450f",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/mobile-laser-welding-machine-al-cross",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/mobile-laser-welding-machine-al-tw",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/mobile-laser-welding-machine-alo-100-120",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/mobile-laser-welding-machine-alv",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/mobile-laser-welding-machine-panel-bender-automation",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/mobile-laser-welding-machine-smartweld",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/mobile-laser-welding-machine-vl-50",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/panel-bending/automatic-panel-bender",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/panel-bending/panel-bender-automation",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/photon-x-laser-marking/photon-x-imark",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/photon-x-laser-marking/uv-laser",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/plotter-laser-system-fmc-280-laser-cutter",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/plotter-laser-system-mercury-III-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/plotter-laser-system-mg380-hybrid-laser-cutter",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/plotter-laser-system-photonx-icut",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/plotter-laser-system-sei-mercury",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/plotter-laser-system-sei-mercury-fiber",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/plotter-laser-system-spirit-gls-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/plotter-laser-system-spirit-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/plotter-laser-system-t500-laser-cutter",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/plotter-laser-system-venus-II-desktop-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/plotter-laser-system-x500-III-pro-laser-cutter",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/press-brake",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/press-brake-machine-high-end-double-head-vertical-cnc-V-grooving-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/press-brake/down-stroke-cnc",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/press-brake/high-end-double-head-vertical-cnc-V-grooving-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/press-brake/high-end-double-head-vertical-cnc-v-grooving-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/press-brake/pump-control-cnc",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/press-break-machine-down-stroke-cnc-press-brake",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/rodomach-pillow-plate-laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/sheet-and-tube-laser-cutting-machine-gb-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/sheet-and-tube-laser-cutting-machine-ge-IV-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/sheet-and-tube-laser-cutting-machine-ghe-35hq-pro-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/sheet-laser-cutting-machine-c-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/sheet-laser-cutting-machine-gc-III-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/sheet-laser-cutting-machine-gh-pro-II-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/sheet-laser-cutting-machine-gt-pro-II-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/sheet-laser-cutting-machine-x-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/tube-laser-cutting-machine-r3II",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/tube-laser-cutting-machine-r5",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/tube-laser-cutting-machine-r5II",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/tube-laser-cutting-machine-tl300",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/tube-laser-cutting-machine-tm-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/tube-laser-cutting-machine-tm65",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/tube-laser-cutting-machine-tps-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/tube-laser-cutting-machine-ts-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/tube-laser-cutting-machine-ts65II",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/tube-laser-cutting-machine-tx",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/tube-laser-cutting-machine-tx-plus",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/product/tube-laser-cutting-machine-tx12036",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/angle-rolls/apk-small-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/beam-drill-lines/3-adm",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/beam-drill-lines/hbw",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/dishing-presses-flanging-machine/bmb",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/dishing-presses-flanging-machine/bmb-p",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/new-products/ahs-t-10500",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/plate-processor/adop",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/plate-processor/afd",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/plate-processor/aplg-3060-gantry",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/plate-processor/artos",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/plate-rolls/as-asm-asm-s",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/plate-rolls/hcb-mcb-ehcb",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/special-production-machines/lr-800",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/products/akyapak-products/welding-solutions/beam-rotators/hr",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/programmable-laser-cutting-machine-alflak",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/programmable-laser-welding-machine-alflak",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/sheet-metal-bending-machine-upstroke-nc",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/single-platform-laser-cutting-machine-c-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/smart-bend-cnc-press-brake-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/spirit-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/spirit-ls-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/tech-support",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/technical-training",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/terms-and-conditions",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/thick-plate-bending-press-brake-machine-downstroke-cnc",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/tiny-tube-laser-cutting-machine-r1",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/universal-tube-laser-cutting-machine-r2",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/video-guide",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/index.php/x500-III-pro-laser-cutter-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/industrial-laser-welding-machine-al-tw",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/large-bed-fiber-laser-cutting-machine-bevel-gfa-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/large-bed-fiber-laser-cutting-machine-gfa-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/large-format-bevel-laser-cutting-machine-bevel-gfa",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-3-dpss-marking-machine/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-4.0",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-cutting/best-software-for-laser-cutting-machine-operation",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-cutting/choose-right-laser-cutting-machine-for-business",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-cutting/fiber-co2-plasma-laser-cutting",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-cutting/fundamentals-of-laser-cutting",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-cutting/how-to-maintain-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-cutting/how-to-start-laser-cutting-business",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-cutting/laser-cutting-in-aerospace-and-medical-devices",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-cutting/laser-cutting-in-metal-fabrication-and-automotive-industry",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-cutting/laser-cutting-machine-cost-in-india",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-cutting/trends-in-laser-cutting-technologies",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-cutting/types-of-lasers-for-cutting",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-engraving",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-engraving-cutting-system-t500-laser-cutter",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-engraving-machine-e200-desktop-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-engraving-machine-flexi",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-engraving-machine-photonx-icut",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-engraving-machine-sei-mercury",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-engraving-machine-sei-nrgl",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-engraving-machine-venus-ii",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-engraving-machines",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-engraving-system-sei-mercury-fiber",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-faq",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-faq/are-laser-cutting-machines-dangerous-to-operate",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-faq/does-the-cutting-speed-affect-the-quality",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-faq/how-does-a-laser-cutting-machine-work",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-faq/how-does-a-laser-engraving-work",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-faq/how-does-a-laser-work",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-faq/how-hot-is-a-laser-beam",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-faq/what-is-a-laser-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-faq/what-is-laser",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-faq/what-is-laser-technology",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-faq/what-is-the-laser-power-i-will-need-for-my-applications",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-gurukul",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-marking",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-marking-machines",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding-machine-alm",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding-machines",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding-system-al-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding/ai-in-laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding/best-software-for-laser-welding-machine-operation",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding/choosing-the-right-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding/fundamentals-of-laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding/how-laser-welding-machines-work",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding/laser-vs-traditional-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding/laser-welding-maintenance",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding/laser-welding-materials",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding/laser-welding-parameters",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding/science-behind-laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding/top-laser-welding-machines",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/laser-welding/types-of-laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/life-at-laser-technologies",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/m380-hybrid-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/manual-welding-laser-al-arm-450f",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/mercury-III-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/metal-laser-welding-machine-al-in",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/mobile-laser-system-alflak-max",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/modular-laser-engraving-system-paperone-5000",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/multi-faceted-laser-welding-system-al-tw",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/multi-functional-compact-laser-welding-machine-al-cross",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-&-updates",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-celebrates-laser-gurukul-training-program",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-celebrates-womens-empowerment",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-collaborates-with-actioncoach-milind-bibikar",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-conducts-employee-blood-tests-to-promote-health-and-wellbeing",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-free-meals-varkaris-vitthal-vari-2025",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-honored-as-great-place-to-work",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-hosts-successful-open-house-event",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-introduces-home-grown-spare-parts-e-commerce",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-joins-hands-with-turkeys-akyapak",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-kickstarts-a-new-experience-center-of-cnc-laser-machine-at-pune",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-launches-a-laser-cleaning-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-launches-power-bend",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-launches-reten-x-nesting-software",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-partners-with-rodomach",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-provides-free-meals-to-varkaris",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-pvt-ltd-celebrates-13-years-of-innovation-and-commitment-to-sustainability",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/laser-technologies-pvt-ltd-has-been-honored-with-the-title-of-most-enterprising-business",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/ltpl-tree-plantation-event",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/pankti-agarwal-insights-on-sme-financing-modernization-ltpl",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/news-and-updates/when-laser-technologies-turned-breakdown-into-a-breakthrough",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/non-metal-laser-engraving-machine-spririt-ls",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/out-of-warranty",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/panel-bender",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/panel-bender-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/panel-bender-with-automation-system",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/panel-bending",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/paper-cutting-machine-spirit-gls",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/pdf/spare-parts/CAT_2021_Laser_Amada.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/pdf/spare-parts/CAT_2021_Laser_Bystronic.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/pdf/spare-parts/CAT_2021_Laser_HK_Laser_Systems.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/pdf/spare-parts/CAT_2021_Laser_LVD.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/pdf/spare-parts/CAT_2021_Laser_Mazak.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/pdf/spare-parts/CAT_2021_Laser_Mitsubishi.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/pdf/spare-parts/CAT_2021_Laser_Penta.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/pdf/spare-parts/CAT_2021_Laser_Precitec.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/pdf/spare-parts/CAT_2021_Laser_Prima_Industrie.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/pdf/spare-parts/CAT_2021_Laser_Salvagnini.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/pdf/spare-parts/CAT_2021_Laser_Tanaka.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/pdf/spare-parts/CAT_2021_Laser_Trumpf.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/pillow-plate-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/power-bend-press-brake-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/press-brake-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/press-brake-machines",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/air-cooled-handheld-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/alpha-laser-cladding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/alpha-laser-hardening/al-rock-mobile",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/alpha-laser-welding/closed-system/alo-100-120",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/alpha-laser-welding/closed-system/alv",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/alpha-laser-welding/closed-system/alw",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/alpha-laser-welding/closed-system/vl-50",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/alpha-laser-welding/mobile-system/al-cross",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/alpha-laser-welding/mobile-system/al-flak",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/alpha-laser-welding/mobile-system/al-flak-max",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/alpha-laser-welding/mobile-system/al-rock-mobile",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/alpha-laser-welding/mobile-system/alm",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/alpha-laser-welding/open-system/al-in",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/alpha-laser-welding/open-system/al-tw",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/galvanometric-laser-system/flexi",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/galvanometric-laser-system/flexi-blue",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/galvanometric-laser-system/labelmaster",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/galvanometric-laser-system/matrix-textile",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/galvanometric-laser-system/paperone-5000",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/c180-II-desktop-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/e200-desktop-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/fmc-280-laser-cutter",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/mercury-III-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/mg380-hybrid-laser-cutter",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/photonx-icut",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/s290-ls-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/s400-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/sei-eureka",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/sei-mercury",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/sei-mercury-fiber",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/sei-nrgl",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/sei-x-type",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/spirit-gls-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/spirit-gls-hybrid-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/spirit-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/t500-laser-cutter",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/venus-II-desktop-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/engraving/plotter-laser-system/x500-III-pro-laser-cutter",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/automation-equipment/alg-alf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/automation-equipment/gb-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/electrolamination/effective-s",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/sheet-metal/bevel-gfa-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/sheet-metal/c-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/sheet-metal/ga-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/sheet-metal/gf-a-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/sheet-metal/gt-pro-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/sheet-metal/gx-pro-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/sheet-metal/gx-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/sheet-tube/bevel-gxe-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/tube-metal/r1",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/tube-metal/r2",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/tube-metal/r3-r3plus-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/tube-metal/tl500-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/tube-metal/tm-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/tube-metal/tps-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/tube-metal/ts-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/tube-metal/tx",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-cutting/tube-metal/tx-plus",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-marking-machine-co2-laser",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-marking-machine-co2-laser/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-marking-machine-photon-x-iMark",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/fiber-laser-marking-machine-uv-laser",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/galvanometric-laser-system-flexi",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/galvanometric-laser-system-flexi-blue",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/galvanometric-laser-system-flexi-blue/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/handheld-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/handheld-welding/air-cooled-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/handheld-welding/smartweld",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/laser-automation-alg-and-alf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/laser-electrolamination-effective-s",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/mobile-laser-welding-machine-al-arm-450f",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/mobile-laser-welding-machine-al-cross",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/mobile-laser-welding-machine-al-flak-max",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/mobile-laser-welding-machine-al-in",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/mobile-laser-welding-machine-alm",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/mobile-laser-welding-machine-alo-100-120",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/mobile-laser-welding-machine-alv",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/mobile-laser-welding-machine-alw",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/mobile-laser-welding-machine-panel-bender-automation",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/mobile-laser-welding-machine-smartweld",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/mobile-laser-welding-machine-smartweld/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/panel-bending",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/panel-bending/automatic-panel-bender",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/panel-bending/panel-bender-automation",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/panel-bending/power-bend",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/photon-x-laser-marking/co2-laser",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/photon-x-laser-marking/photon-x-imark",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/photon-x-laser-marking/uv-laser",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/pillow-plate-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/pillow-plate-laser-welding-machine/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-c180-II-desktop-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-e200-desktop-laser-engraver/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-mg380-hybrid-laser-cutter",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-photonx-icut",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-s290-ls-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-sei-eureka",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-sei-mercury",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-sei-mercury-fiber/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-sei-nrgl",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-sei-x-type",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-spirit-gls-hybrid-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-spirit-ls-laser-engraver",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-spirit-ls-laser-engraver/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/plotter-laser-system-x500-III-pro-laser-cutter",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/press-brake",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/press-brake-machine-pump-control-cnc-press-brake",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/press-brake/down-stroke-cnc",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/press-brake/high-end-double-head-vertical-cnc-V-grooving-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/press-brake/high-end-double-head-vertical-cnc-v-grooving-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/press-brake/pump-control-cnc",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/press-brake/upstroke-nc",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/press-break-machine-down-stroke-cnc-press-brake",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/rodomach-pillow-plate-laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/sheet-and-tube-laser-cutting-machine-gb-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/sheet-and-tube-laser-cutting-machine-gte-pro-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/sheet-and-tube-laser-cutting-machine-gxe-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/sheet-laser-cutting-machine-ga-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/sheet-laser-cutting-machine-gf-a-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/sheet-laser-cutting-machine-gt-pro-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/tube-laser-cutting-machine-r3-and-r3plus-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/tube-laser-cutting-machine-r3-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/tube-laser-cutting-machine-tl350-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/tube-laser-cutting-machine-ts-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/tube-laser-cutting-machine-ts65II",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/tube-laser-cutting-machine-tx",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/tube-laser-cutting-machine-tx-plus",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/product/tube-laser-cutting-machine-tx-plus-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/angle-punching-lines/akd",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/angle-punching-lines/app",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/angle-rolls/apk-heavy-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/angle-rolls/apk-medium-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/angle-rolls/apk-small-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/band-saw-machines/ast-bandsaw",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/beam-drill-lines/3-adm",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/beam-drill-lines/3-adm-eco",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/beam-drill-lines/afd",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/beam-drill-lines/akd",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/beam-drill-lines/apd",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/beam-drill-lines/app",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/beam-drill-lines/bps-h-beam",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/beam-drill-lines/hbw",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/dishing-presses-flanging-machine/bmb",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/dishing-presses-flanging-machine/bmb-p",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/new-products/ahs-t-10500",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-processor/adop",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-processor/afd",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-processor/apd",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-processor/apl",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-processor/apl-t",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-processor/aplg-3060-gantry",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-processor/artos",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-rolls/ahk",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-rolls/ahs-4",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-rolls/ahv",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-rolls/as-asm-asm-s",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-rolls/cr",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-rolls/fit-up",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-rolls/hcb-mcb-ehcb",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-rolls/sar",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-straightening-machines/apsm",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/plate-straightening-machines/bps-h",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/special-production-machines/lr-800",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/tubes-and-pipe-",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/tubes-and-pipe-bending-machine/abm-38-cnc",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/tubes-and-pipe-bending-machine/abm-50-cnc",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/tubes-and-pipe-bending-machine/abm-76-cnc-1",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/tubes-and-pipe-bending-machine/abm-76-cnc-3",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/tubes-and-pipe-bending-machine/abm-76-nc",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/tubes-and-pipe-bending-machine/abm-e-25",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/welding-solutions/beam-rotators/hr",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/akyapak-products/welding-solutions/rotators/zr",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/programmable-laser-welding-machine-alflak",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/retenx-software",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/robotic-laser-welding-machine-alflak",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/robotic-laser-welding-machine-cobo-weld",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/rodomach-pillow-plate-laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/s400-flagship-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/sheet-metal-bending-machine-upstroke-nc",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/sheet-plus-tube-laser-cutting-machine-gb-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/single-bed-fiber-laser-cutting-machine-c-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/single-platform-laser-cutting-machine-c-series",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/smart-bend-cnc-press-brake-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/software",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/electrolamination",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/fiber-laser-marking-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/fiber-laser-marking-machine/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/galvanometric-laser-system",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/hand-held-laser-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/hand-held-laser-welding-machine/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/handheld-welding-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/laser-cladding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/laser-cladding/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/laser-hardening",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/laser-hardening/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/pillow-plate-laser-welding",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/press-brake-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/sheet-Metal-forming-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/sheet-Metal-forming-machine/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/sheet-and-tube-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/sheet-laser-metal-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/solutions/tube-metal-laser-cutting-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/spirit-gls-co2-fiber-hybrid-laser-engraver-system",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/spirit-gls-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/spirit-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/spirit-ls-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/tech-support",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/technical-training",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/terms-and-conditions",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/thick-plate-bending-press-brake-machine-downstroke-cnc",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/tiny-tube-laser-cutting-machine-r1",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/tiny-tube-laser-cutting-machine-tm",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/ts65/",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/ultra-heavy-tube-laser-cutting-machine-tl500",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/uv-fiber-laser-marking-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/venus-ii-desktop-laser-engraver-machine",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/versatile-laser-machine-alm",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/video-guide",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/wp-content/uploads/2019/05/Technical-Data-Sheet.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/wp-content/uploads/2019/05/catalog-1.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/wp-content/uploads/2019/05/mcatalog-1.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/wp-content/uploads/2019/05/pdf1.pdf",
+      "status": 410,
+      "dest": "/index.html"
+    },
+    {
+      "src": "/x500-III-pro-laser-cutter-machine",
+      "status": 410,
+      "dest": "/index.html"
+    }
+  ]
 }
