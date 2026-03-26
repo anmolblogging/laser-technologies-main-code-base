@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import { Search, Calendar, Clock, User, Tag, ChevronRight, Loader2 } from "lucide-react";
+import { Search, ChevronRight, Loader2 } from "lucide-react";
 import { supabase } from "../lib/supabase";
 const logo = 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/dark_BACKGROUND.jpg' ;
 import Loading from "./Loading";
+
+import { Helmet } from "react-helmet-async";
 
 const POSTS_PER_PAGE = 9;
 
@@ -121,13 +123,19 @@ const Posts = () => {
     });
   };
 
-  const handlePostClick = (postId) => {
+  const handlePostClick = (postId:any) => {
     window.location.href = `/blog/${postId}`;
   };
 
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50">
+      {currentCategory === "Articles" && (
+      <Helmet>
+        <link rel="canonical" href="https://www.lasertechnologies.co.in/articles/" />
+      </Helmet>
+    )}
+    
       {/* <Header /> */}
       
       {/* Hero Section */}
