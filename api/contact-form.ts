@@ -1,5 +1,8 @@
 import nodemailer from "nodemailer";
 import { VercelRequest, VercelResponse } from "@vercel/node";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(process.env.VITE_SUPABASE_URL!, process.env.VITE_SUPABASE_SERVICE_ROLE_KEY!);
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -17,6 +20,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (!name || !email || !subject || !message)
       return res.status(400).json({ error: "Name, email, subject and message are required." });
+
+    // Insert data into Supabase leads table
+    await supabase.from("leads").insert([
+      {
+        name,
+        email,
+        phone,
+        company,
+        subject,
+        message,
+        type: "contact",
+        website: "MAIN",
+      },
+    ]);
 
     const firstName   = name.split(" ")[0];
     const year        = new Date().getFullYear();

@@ -1,9 +1,11 @@
 import nodemailer from "nodemailer";
 import { VercelRequest, VercelResponse } from "@vercel/node";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(process.env.VITE_SUPABASE_URL!, process.env.VITE_SUPABASE_SERVICE_ROLE_KEY!);
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-
-      res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
@@ -11,7 +13,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
-  
+
   if (req.method !== "POST")
     return res.status(405).json({ message: "Method not allowed" });
 
@@ -22,16 +24,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!name || !email || !phone)
       return res.status(400).json({ error: "Name, email and phone are required." });
 
+    // Insert data into Supabase leads table
+    await supabase.from("leads").insert([
+      {
+        name,
+        email,
+        phone,
+        company,
+        product_name: product_name,
+        type: "brochure",
+        website: "MAIN",
+      },
+    ]);
+
     const firstName = name.split(" ")[0];
     const year = new Date().getFullYear();
     const submittedAt = new Date().toLocaleString("en-IN", {
-        timeZone: "Asia/Kolkata",
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      timeZone: "Asia/Kolkata",
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
 
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
