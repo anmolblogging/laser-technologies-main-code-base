@@ -2,7 +2,7 @@
 import React from "react";
 import { FaWhatsapp } from "react-icons/fa";
 
-const WHATSAPP_LINK = "https://wa.me/9004005151";
+const WHATSAPP_LINK = "https://wa.me/919004005151";
 
 const Chatbot: React.FC = () => (
   <a
