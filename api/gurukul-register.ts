@@ -285,7 +285,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       from: `"Laser Gurukul" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
       replyTo: email,
-      subject: `[Gurukul Registration] ${module} — ${name}`,
+      subject: `MAIN-WEBSITE [Gurukul Registration] ${module} — ${name}`,
       html: adminHtml,
     });
 

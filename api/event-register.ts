@@ -318,7 +318,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       from: `"Laser Technologies" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
       replyTo: email,
-      subject: `[Event Registration] ${event_name} — ${name}`,
+      subject: `MAIN-WEBSITE [Event Registration] ${event_name} — ${name}`,
       html: adminHtml,
     });
 
