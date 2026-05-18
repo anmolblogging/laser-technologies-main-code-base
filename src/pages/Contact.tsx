@@ -82,7 +82,7 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Call Us",
-      details: ["+91 91369 56932"],
+      details: ["+91 90040 05151"],
       link: "tel:+919136956932",
       description: "Mon-Sat 9 AM - 7 PM",
     },
@@ -155,7 +155,7 @@ const Contact = () => {
               <a
                 href="tel:+919136956932"
                 className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 font-medium hover:bg-gray-100 transition-colors"
-                aria-label="Call us at +91 91369 56932"
+                aria-label="Call us at +91 90040 05151"
               >
                 <Phone className="h-5 w-5" />
                 Call Now

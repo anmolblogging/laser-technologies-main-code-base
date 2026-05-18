@@ -600,12 +600,12 @@ const ProductListingPage: React.FC = () => {
                     animation: `fadeInUp 0.5s ease-out ${index * 0.1}s both`,
                   }}
                 >
-                  <div className="h-[250px] md:h-[300px] bg-gradient-to-br from-gray-100 to-gray-50 overflow-hidden flex-shrink-0">
+                  <div className="w-full aspect-square bg-gradient-to-br from-gray-100 to-gray-50 overflow-hidden flex-shrink-0">
                     {product.Thumbnail_url && product.Thumbnail_url[0] ? (
                       <img
                         src={product.Thumbnail_url[0]}
                         alt={product.ProductName}
-                        className="w-full h-full object-fit transition-transform duration-500 hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full">

@@ -493,7 +493,7 @@ function Producttemplate(): JSX.Element {
 
   const [previewIndex, setPreviewIndex] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalSource, setModalSource] = useState<"preview" | "gallery">("preview");
+  const [modalSource, setModalSource] = useState<"preview" | "gallery" | "samples">("preview");
   const [modalIndex, setModalIndex] = useState(0);
 
   const [activeSection, setActiveSection] = useState<string>("description");
@@ -657,19 +657,23 @@ function Producttemplate(): JSX.Element {
   }, [descriptionSections, technicalTable, product?.rawVideo, galleryImages.length]);
 
   const activeCount = useCallback(
-    (source: "preview" | "gallery") => source === "preview" ? previewImages.length : galleryImages.length,
-    [previewImages.length, galleryImages.length]
+    (source: "preview" | "gallery" | "samples") => {
+      if (source === "preview") return previewImages.length;
+      if (source === "gallery") return galleryImages.length;
+      return cuttingSamples.length;
+    },
+    [previewImages.length, galleryImages.length, cuttingSamples.length]
   );
 
   const prev = useCallback(() => {
     if (modalOpen) { const len = activeCount(modalSource); setModalIndex((s) => (len ? (s - 1 + len) % len : 0)); }
     else { const len = previewImages.length; setPreviewIndex((s) => (len ? (s - 1 + len) % len : 0)); }
-  }, [modalOpen, modalSource, previewImages.length, galleryImages.length, activeCount]);
+  }, [modalOpen, modalSource, previewImages.length, galleryImages.length, cuttingSamples.length, activeCount]);
 
   const next = useCallback(() => {
     if (modalOpen) { const len = activeCount(modalSource); setModalIndex((s) => (len ? (s + 1) % len : 0)); }
     else { const len = previewImages.length; setPreviewIndex((s) => (len ? (s + 1) % len : 0)); }
-  }, [modalOpen, modalSource, previewImages.length, galleryImages.length, activeCount]);
+  }, [modalOpen, modalSource, previewImages.length, galleryImages.length, cuttingSamples.length, activeCount]);
 
   const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
   const onTouchEnd = (e: React.TouchEvent) => {
@@ -873,10 +877,10 @@ function Producttemplate(): JSX.Element {
                     key={idx}
                     onClick={() => setPreviewIndex(idx)}
                     style={{ borderWidth: 2, borderColor: idx === previewIndex ? "#6b0f0f" : "#e5e7eb" }}
-                    className="flex-shrink-0 overflow-hidden transition-all bg-white w-20 h-16 md:w-[120px] md:h-[90px]"
+                    className="flex-shrink-0 overflow-hidden transition-all bg-white w-16 h-16 md:w-[100px] md:h-[100px]"
                     aria-label={`Preview ${idx + 1}`}
                   >
-                    <img src={img} alt="" className="w-full h-full object-fit" draggable={false} style={{ background: "white" }} />
+                    <img src={img} alt="" className="w-full h-full object-cover" draggable={false} style={{ background: "white" }} />
                   </button>
                 ))}
               </div>
@@ -1045,7 +1049,7 @@ function Producttemplate(): JSX.Element {
           {cuttingSamples.length > 0 && (
             <section ref={(el) => (sectionRefs.current["samples"] = el || null)} data-section="samples" id="samples" className="bg-white border border-gray-200 shadow-sm">
               <div className="p-8 border-b border-gray-100">
-                <h2 className="text-4xl font-medium text-gray-900 mb-2">Cutting Samples</h2>
+                <h2 className="text-4xl font-medium text-gray-900 mb-2">{product.subcategory} : Cutting Samples</h2>
                 <p className="text-gray-600">View our sample gallery</p>
               </div>
               <div className="p-8">

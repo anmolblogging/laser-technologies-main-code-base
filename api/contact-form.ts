@@ -278,7 +278,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       <p style="margin:0;font-size:14px;color:#aaa;line-height:1.8;font-weight:400;">
         Need immediate help? Call us on
         <a href="tel:+919136956932" style="color:#e8111f;text-decoration:none;font-weight:500;">
-          +91 91369 56932
+          +91 90040 05151
         </a>
         or chat on
         <a href="https://wa.me/919004005151" style="color:#e8111f;text-decoration:none;font-weight:500;">

@@ -162,7 +162,7 @@ const Footer = () => {
   // Contact Info
   const contactInfo = {
     email: "info@lasertechnologies.in",
-    phone: "+91 91369 56932",
+    phone: "+91 90040 05151",
     address:
       `Laser Technologies Pvt Ltd ,  PAP/, R/406, Rabale Midc Rd, near Dol Electric Company, MIDC Industrial Area, Rabale, Navi Mumbai, Maharashtra 400701, India`,
   };
@@ -307,9 +307,8 @@ const Footer = () => {
                         {segment}
                       </span>
                       <ChevronDown
-                        className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
-                          expandedSegment === segment ? "rotate-180" : ""
-                        }`}
+                        className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${expandedSegment === segment ? "rotate-180" : ""
+                          }`}
                       />
                     </button>
 

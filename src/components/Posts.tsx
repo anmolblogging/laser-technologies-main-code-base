@@ -8,13 +8,22 @@ import { Helmet } from "react-helmet-async";
 
 const POSTS_PER_PAGE = 9;
 
+interface BlogPost {
+  id: string | number;
+  title: string;
+  summary: string;
+  content?: string;
+  author?: string;
+  image?: string;
+  category: string;
+  tags?: string[];
+  created_at?: string;
+}
+
 const Posts = () => {
-  const [posts, setPosts] = useState([]);
-  const [filteredPosts, setFilteredPosts] = useState([]);
-  const [displayedPosts, setDisplayedPosts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedTag, setSelectedTag] = useState(null);
-  const [allTags, setAllTags] = useState([]);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
+  const [displayedPosts, setDisplayedPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -36,8 +45,9 @@ const Posts = () => {
   }, []);
 
   useEffect(() => {
-    filterPosts();
-  }, [posts, searchQuery, selectedTag]);
+    setFilteredPosts(posts);
+    setCurrentPage(1);
+  }, [posts]);
 
   useEffect(() => {
     updateDisplayedPosts();
@@ -59,43 +69,14 @@ const Posts = () => {
 
       if (error) throw error;
 
-      setPosts(data || []);
-      
-      // Extract unique tags
-      const tagsSet = new Set();
-      data?.forEach(post => {
-        post.tags?.forEach(tag => tagsSet.add(tag));
-      });
-      setAllTags(Array.from(tagsSet));
+      const blogPosts = (data || []) as BlogPost[];
+      setPosts(blogPosts);
       
       setLoading(false);
     } catch (error) {
       console.error("Error fetching posts:", error);
       setLoading(false);
     }
-  };
-
-  const filterPosts = () => {
-    let filtered = [...posts];
-
-    // Search filter
-    if (searchQuery) {
-      filtered = filtered.filter(post =>
-        post.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.summary?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.author?.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-
-    // Tag filter
-    if (selectedTag) {
-      filtered = filtered.filter(post =>
-        post.tags?.includes(selectedTag)
-      );
-    }
-
-    setFilteredPosts(filtered);
-    setCurrentPage(1); // Reset to first page when filters change
   };
 
   const updateDisplayedPosts = () => {
@@ -114,7 +95,7 @@ const Posts = () => {
     }, 500);
   };
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -123,7 +104,7 @@ const Posts = () => {
     });
   };
 
-  const handlePostClick = (postId:any) => {
+  const handlePostClick = (postId: string | number) => {
     window.location.href = `/blog/${postId}`;
   };
 
@@ -163,11 +144,11 @@ const Posts = () => {
       {/* Posts Grid */}
       <section id="results-section" className="container mx-auto px-4 py-8 sm:py-12">
         <div className="max-w-6xl mx-auto">
-          {/* Results Count */}
-          <div className="mb-6 sm:mb-8 px-2">
-            <p className="text-sm sm:text-base text-gray-600 font-secondary">
-              {/* Showing <span className="font-bold text-whiteBgText">{displayedPosts.length}</span> of <span className="font-bold text-whiteBgText">{filteredPosts.length}</span> {filteredPosts.length === 1 ? 'post' : 'posts'} */}
-            </p>
+          {/* Status Info */}
+          <div className="mb-8 px-2 border-b border-gray-100 pb-3">
+            <div className="text-sm text-gray-600 font-secondary">
+              Showing <span className="font-bold text-black">{displayedPosts.length}</span> of <span className="font-bold text-black">{filteredPosts.length}</span> {filteredPosts.length === 1 ? 'post' : 'posts'}
+            </div>
           </div>
 
           {loading ? (
@@ -191,14 +172,6 @@ const Posts = () => {
               </div>
               <h3 className="text-xl sm:text-2xl font-bold text-whiteBgText mb-2 font-primary">No posts found</h3>
               <p className="text-sm sm:text-base text-gray-600 font-secondary mb-4">Try adjusting your search or filter criteria</p>
-              {(searchQuery || selectedTag) && (
-                <button
-                  onClick={clearSearch}
-                  className="px-6 py-2.5 bg-whiteBgButtonBg text-white rounded-xl hover:bg-whiteBgTextHover transition-all font-primary font-semibold"
-                >
-                  Clear Filters
-                </button>
-              )}
             </div>
           ) : (
             <>
@@ -262,7 +235,13 @@ const Posts = () => {
                       {/* Meta Info */}
                       <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-gray-100">
                         <div className="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-xs text-gray-500 font-secondary">
-                            Read More
+                          <span>Read More</span>
+                          {post.created_at && (
+                            <>
+                              <span>•</span>
+                              <span>{formatDate(post.created_at)}</span>
+                            </>
+                          )}
                         </div>
                         <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-whiteBgButtonBg transform group-hover:translate-x-1 transition-transform" />
                       </div>
