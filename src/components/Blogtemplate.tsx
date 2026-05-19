@@ -3,6 +3,7 @@ import { ArrowLeft, Calendar, Share2, X } from "lucide-react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import Loading from "./Loading";
+import { Helmet } from "react-helmet-async";
 
 interface BlogPost {
   id: string;
@@ -16,6 +17,10 @@ interface BlogPost {
   category: string;
   tags: string[];
   shareCount?: number;
+  metaTitle?: string;
+  metaDescription?: string;
+  keyword?: string;
+  lsiKeywords?: string[];
 }
 
 const BRAND = {
@@ -104,6 +109,10 @@ const BlogTemplate: React.FC = () => {
             category: data.category,
             tags: data.tags || [],
             shareCount: 0,
+            metaTitle: data.meta_title || undefined,
+            metaDescription: data.meta_description || undefined,
+            keyword: data.keyword || undefined,
+            lsiKeywords: data.lsi_keywords || [],
           });
         }
         setLoading(false);
@@ -183,6 +192,44 @@ const BlogTemplate: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
+      <Helmet>
+        {blog.metaTitle ? (
+          <title>{blog.metaTitle}</title>
+        ) : (
+          <title>{blog.title} | Laser Technologies</title>
+        )}
+        {blog.metaDescription && (
+          <meta name="description" content={blog.metaDescription} />
+        )}
+        {(blog.keyword || (blog.lsiKeywords && blog.lsiKeywords.length > 0)) && (
+          <meta
+            name="keywords"
+            content={[
+              blog.keyword,
+              ...(blog.lsiKeywords || []),
+            ]
+              .filter(Boolean)
+              .join(", ")}
+          />
+        )}
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={blog.metaTitle || blog.title} />
+        {blog.metaDescription && (
+          <meta property="og:description" content={blog.metaDescription} />
+        )}
+        <meta property="og:image" content={blog.image} />
+        <meta property="og:url" content={window.location.href} />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={blog.metaTitle || blog.title} />
+        {blog.metaDescription && (
+          <meta name="twitter:description" content={blog.metaDescription} />
+        )}
+        <meta name="twitter:image" content={blog.image} />
+      </Helmet>
+      
       <main className="flex-grow">
         <header
           className="md:pt-4 top-0 mt-20 z-50 bg-white/80 backdrop-blur-md border-b"
@@ -342,10 +389,46 @@ const BlogTemplate: React.FC = () => {
         {/* Content */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <article className="py-8 sm:py-12 lg:py-16">
-            <div
-              className="bg-white p-6 sm:p-10 lg:p-16 mb-12 border prose prose-lg max-w-none"
-              dangerouslySetInnerHTML={{ __html: blog.content }}
-            />
+            <div className="bg-white p-6 sm:p-10 lg:p-16 mb-12 border">
+              <div
+                className="prose prose-lg max-w-none"
+                dangerouslySetInnerHTML={{ __html: blog.content }}
+              />
+              
+              {/* Keywords / LSI Keywords Display */}
+              {(blog.keyword || (blog.lsiKeywords && blog.lsiKeywords.length > 0)) && (
+                <div className="mt-8 pt-8 border-t border-gray-200">
+                  <div className="flex flex-wrap items-center gap-4">
+                    {blog.keyword && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                          Keyword:
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-red-50 text-red-600 text-xs font-bold rounded-lg border border-red-100">
+                          <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
+                          {blog.keyword}
+                        </span>
+                      </div>
+                    )}
+                    {blog.lsiKeywords && blog.lsiKeywords.length > 0 && (
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider md:ml-4">
+                          Tags:
+                        </span>
+                        {blog.lsiKeywords.map((lsi, index) => (
+                          <span
+                            key={index}
+                            className="px-3 py-1.5 bg-gray-50 text-gray-600 text-xs font-semibold rounded-lg border border-gray-150 transition-colors duration-200 hover:bg-gray-100"
+                          >
+                            {lsi}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
           </article>
         </main>
       </main>
