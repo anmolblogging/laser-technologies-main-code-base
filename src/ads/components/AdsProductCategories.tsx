@@ -322,7 +322,7 @@ export default function AdsProductCategories({ onOpenForm }: AdsProductCategorie
   const currentCatDetail = CATEGORIES.find(c => c.id === activeCategory) || CATEGORIES[0];
 
   return (
-    <section className="py-24 md:py-32 bg-gray-50/50">
+    <section className="py-24 md:pb-32 md:pt-24 bg-gray-50/50">
       <div className="container mx-auto px-6 max-w-7xl">
 
         {/* Section Header */}
@@ -402,7 +402,7 @@ export default function AdsProductCategories({ onOpenForm }: AdsProductCategorie
                 className={`px-6 py-4 font-primary font-medium transition-all duration-300 border flex items-center justify-center gap-3 ${
                   activeCategory === category.id
                     ? 'bg-[#f31524] text-white border-[#f31524] shadow-lg shadow-[#f31524]/10'
-                    : 'bg-white text-gray-700 border-gray-200 hover:border-[#f31524] hover:text-[#f31524]'
+                    : 'bg-white text-gray-700 border-gray-200 hover:border-[#f31524] hover:text-white'
                 }`}
               >
                 {category.icon}

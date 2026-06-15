@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Car, Layers, Cpu, Plane, Wind, Building2, Zap, Stethoscope } from "lucide-react";
+import {  Car, Layers, Cpu, Plane, Wind, Building2, Zap, Stethoscope } from "lucide-react";
 import { motion } from "motion/react";
 
 const DARK_BG =
@@ -66,6 +66,8 @@ const INDUSTRIES: IndustryItem[] = [
 export default function AdsIndustries() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(3);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   useEffect(() => {
     const updateItemsPerView = () => {
@@ -95,6 +97,52 @@ export default function AdsIndustries() {
   const nextSlide = () => setCurrentIndex((p) => (p >= maxIndex ? 0 : p + 1));
   const prevSlide = () => setCurrentIndex((p) => (p <= 0 ? maxIndex : p - 1));
 
+  // Swipe handlers
+  const minSwipeDistance = 50;
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    if (distance > minSwipeDistance) {
+      nextSlide();
+    } else if (distance < -minSwipeDistance) {
+      prevSlide();
+    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.clientX);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (touchStart !== null) {
+      setTouchEnd(e.clientX);
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (touchStart !== null && touchEnd !== null) {
+      const distance = touchStart - touchEnd;
+      if (distance > minSwipeDistance) {
+        nextSlide();
+      } else if (distance < -minSwipeDistance) {
+        prevSlide();
+      }
+    }
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
   return (
     <section
       className="py-24 md:py-32 relative overflow-hidden"
@@ -116,16 +164,25 @@ export default function AdsIndustries() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-5xl font-primary font-medium text-white leading-tight mb-4">
-            Built for Industries Where Precision is{" "}
-            <span className="text-[#f31524]">Non-Negotiable</span>
+            Industries{" "}
+            <span className="text-[#f31524]">Served</span>
           </h2>
           <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto font-light font-secondary leading-relaxed">
-            Tailor-made laser cutting solutions for demanding industrial manufacturing scenarios.
+            Built for Industries Where Precision is Non-Negotiable
           </p>
         </motion.div>
 
         {/* Carousel Window */}
-        <div className="overflow-hidden mb-12">
+        <div
+          className="overflow-hidden mb-0 cursor-grab active:cursor-grabbing select-none"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+        >
           <div
             className="flex transition-transform duration-700 ease-out"
             style={{
@@ -173,40 +230,6 @@ export default function AdsIndustries() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Carousel Controls */}
-        <div className="flex justify-center items-center gap-6">
-          <button
-            onClick={prevSlide}
-            className="bg-white/10 text-white p-3 rounded-full border border-white/20 hover:bg-white/20 transition-all active:scale-95 bg-transparent"
-            aria-label="Previous Industry Slide"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-
-          <div className="flex gap-2">
-            {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentIndex(i)}
-                className={`h-1.5 rounded-full transition-all duration-300 bg-transparent border-0 ${
-                  i === currentIndex
-                    ? "bg-[#f31524] w-8"
-                    : "bg-white/35 w-2"
-                }`}
-                aria-label={`Go to slide ${i + 1}`}
-              />
-            ))}
-          </div>
-
-          <button
-            onClick={nextSlide}
-            className="bg-white/10 text-white p-3 rounded-full border border-white/20 hover:bg-white/20 transition-all active:scale-95 bg-transparent"
-            aria-label="Next Industry Slide"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
         </div>
       </div>
     </section>

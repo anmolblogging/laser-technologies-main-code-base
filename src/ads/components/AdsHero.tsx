@@ -9,7 +9,7 @@ interface AdsHeroProps {
 
 export default function AdsHero({ onOpenForm }: AdsHeroProps) {
   return (
-    <section className="relative min-h-[90vh] md:min-h-screen flex items-center bg-gray-900 text-white overflow-hidden">
+    <section className="relative min-h-[55vh] md:min-h-[65vh] flex items-center bg-gray-900 text-white overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
@@ -20,7 +20,7 @@ export default function AdsHero({ onOpenForm }: AdsHeroProps) {
         <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-black/30 to-black/10" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10 pt-28 pb-36 md:pt-36 md:pb-48">
+      <div className="container mx-auto px-6 relative z-10 pt-8 pb-16 md:pt-12 md:pb-24">
         <div className="max-w-4xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-primary font-light leading-[1.15] tracking-tight">
             Laser Cutting Machines{" "}

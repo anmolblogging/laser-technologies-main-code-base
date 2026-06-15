@@ -22,17 +22,16 @@ export default function AdsWhyLT() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-5xl font-primary font-medium mb-6 text-gray-900 leading-tight">
+            {/* <h2 className="text-3xl md:text-5xl font-primary font-medium mb-6 text-gray-900 leading-tight">
               Upgrade the Way You <br />
               <span className="text-[#f31524]">Cut, Build, and Scale</span>
+            </h2> */}
+            <h2 className="text-3xl md:text-5xl font-primary font-medium mb-6 text-gray-900 leading-tight">
+              Why{" "}
+              <span className="text-[#f31524]">Laser Technologies</span>
             </h2>
             <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-              With 15+ years of manufacturing experience, 5,500+ machines deployed, and a pan-India
-              service network, Laser Technologies is India's most trusted CNC laser cutting machine
-              manufacturer. We back every machine with application support, operator training through
-              Laser Gurukul, and in-house RetenX nesting software built for optimal cutting
-              performance. From your first enquiry to years of after-sales support, we are with you
-              at every stage.
+              Upgrade the Way You Cut, Build, and Scale
             </p>
           </motion.div>
 
