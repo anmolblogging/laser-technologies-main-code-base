@@ -23,8 +23,10 @@ export default function AdsHero({ onOpenForm }: AdsHeroProps) {
       <div className="container mx-auto px-6 relative z-10 pt-8 pb-16 md:pt-12 md:pb-24">
         <div className="max-w-4xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-primary font-light leading-[1.15] tracking-tight">
-            Laser Cutting Machines{" "}
-            <span className="text-[#f31524] font-normal">|</span> Manufacturer in India
+            Laser Cutting Machine{" "}
+            <span className="text-[#f31524] font-normal">|</span>
+            <br />
+            Supplier in India
           </h1>
 
           <h2 className="mt-4 mb-6 text-xl md:text-2xl font-medium text-gray-200 font-primary">
@@ -33,7 +35,7 @@ export default function AdsHero({ onOpenForm }: AdsHeroProps) {
 
           <p className="text-base md:text-lg text-gray-350 mb-6 leading-relaxed font-light font-secondary">
             From flat sheet metal fabrication to tube profiling and fully automated production lines,
-            Laser Technologies manufactures India's most comprehensive range of CNC and metal laser
+            Laser Technologies supplies India's most comprehensive range of CNC and metal laser
             cutting machines. Built for the demands of industrial-scale manufacturing across
             automotive, aerospace, sheet metal, and heavy fabrication sectors.
           </p>
