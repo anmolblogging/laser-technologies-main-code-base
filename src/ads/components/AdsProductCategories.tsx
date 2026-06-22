@@ -10,6 +10,7 @@ interface Product {
   benefits: string[];
   imageLink?: string;
   modelsList: string[];
+  exploreUrl?: string;
 }
 
 interface Category {
@@ -95,6 +96,7 @@ const PRODUCTS: Record<string, Product[]> = {
       ],
       modelsList: ['C Series', 'GA Series'],
       imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/products/sheet_cutting/c%20series/C%20Series%207.jpg',
+      exploreUrl: 'https://www.lasertechnologies.co.in/products/Laser%20Cutting/Sheet%20Laser%20Cutting%20Machine',
     },
     {
       id: 'sheet-mid',
@@ -113,6 +115,7 @@ const PRODUCTS: Record<string, Product[]> = {
       ],
       modelsList: ['GX Series', 'GT Pro Series'],
       imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/products/sheet_cutting/gx%20series/GX%20Series%201.jpg',
+      exploreUrl: 'https://www.lasertechnologies.co.in/products/Laser%20Cutting/Sheet%20Laser%20Cutting%20Machine',
     },
     {
       id: 'sheet-high',
@@ -131,6 +134,7 @@ const PRODUCTS: Record<string, Product[]> = {
       ],
       modelsList: ['GX Pro Series', 'GFA Series', 'Bevel GFA Series'],
       imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/products/sheet_cutting/gh%20series/GH%20Series%201.jpg',
+      exploreUrl: 'https://www.lasertechnologies.co.in/products/Laser%20Cutting/Sheet%20Laser%20Cutting%20Machine',
     },
   ],
   'tube': [
@@ -151,6 +155,7 @@ const PRODUCTS: Record<string, Product[]> = {
       ],
       modelsList: ['R1 Series', 'R2 Series', 'R3 and R3 Plus Series', 'R5 and R5 II Series'],
       imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/products/sheet_cutting/r2/R2%201.jpg',
+      exploreUrl: 'https://www.lasertechnologies.co.in/products/Laser%20Cutting/Tube%20Laser%20Cutting%20Machine%20or%20Pipe%20Laser%20Cutting%20Machine',
     },
     {
       id: 'tube-heavy',
@@ -169,6 +174,7 @@ const PRODUCTS: Record<string, Product[]> = {
       ],
       modelsList: ['TX Series', 'TX Plus Series', 'TS Series'],
       imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/products/sheet_cutting/tx3r/TX3R%201.jpg',
+      exploreUrl: 'https://www.lasertechnologies.co.in/products/Laser%20Cutting/Tube%20Laser%20Cutting%20Machine%20or%20Pipe%20Laser%20Cutting%20Machine',
     },
     {
       id: 'tube-heavy-bevel',
@@ -187,6 +193,7 @@ const PRODUCTS: Record<string, Product[]> = {
       ],
       modelsList: ['TL350 Series', 'TL500 Series', 'TPS Series (Bevel Tube)'],
       imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/products/sheet_cutting/t2/T2%201.jpg',
+      exploreUrl: 'https://www.lasertechnologies.co.in/products/Laser%20Cutting/Tube%20Laser%20Cutting%20Machine%20or%20Pipe%20Laser%20Cutting%20Machine',
     },
   ],
   'sheet-tube': [
@@ -207,6 +214,7 @@ const PRODUCTS: Record<string, Product[]> = {
       ],
       modelsList: ['GB Series', 'GXE Series'],
       imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/products/sheet_cutting/gb/GB%201.jpg',
+      exploreUrl: 'https://www.lasertechnologies.co.in/products/Laser%20Cutting/Sheet%20and%20Tube%20Laser%20Cutting%20Machine',
     },
     {
       id: 'combo-heavy',
@@ -225,6 +233,7 @@ const PRODUCTS: Record<string, Product[]> = {
       ],
       modelsList: ['GTE Pro Series', 'GHE 35HQ Pro Series', 'GE IV Series'],
       imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/products/sheet_cutting/r3-r3plus/R3_R3%20PLUS%20Series%201.jpg',
+      exploreUrl: 'https://www.lasertechnologies.co.in/products/Laser%20Cutting/Tube%20Laser%20Cutting%20Machine%20or%20Pipe%20Laser%20Cutting%20Machine',
     },
   ],
   'automatic': [
@@ -245,6 +254,7 @@ const PRODUCTS: Record<string, Product[]> = {
       ],
       modelsList: ['ALG Series'],
       imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/products/sheet_cutting/ALG-loading-unloading/ALG%20(Loading%20and%20Unloading).jpg',
+      exploreUrl: 'https://www.lasertechnologies.co.in/products/Laser%20Cutting/Fully%20Automatic%20Sheet%20Laser%20Cutting%20Machine',
     },
     {
       id: 'auto-robotic',
@@ -263,6 +273,7 @@ const PRODUCTS: Record<string, Product[]> = {
       ],
       modelsList: ['ALF Series'],
       imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/products/sheet_cutting/ALG-loading-unloading/ALG%20(Loading%20and%20Unloading).jpg',
+      exploreUrl: 'https://www.lasertechnologies.co.in/products/Laser%20Cutting/Fully%20Automatic%20Sheet%20Laser%20Cutting%20Machine',
     },
   ],
   'electrolamination': [
@@ -283,6 +294,7 @@ const PRODUCTS: Record<string, Product[]> = {
       ],
       modelsList: ['Effective-S', 'Effective-L'],
       imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/products/sheet_cutting/c%20series/C%20Series%207.jpg',
+      exploreUrl: 'https://www.lasertechnologies.co.in/products/Laser%20Cutting/Electrical%20Steel%20%2F%20Electrolamination%20Sheet%20Laser%20Cutting%20Machines',
     },
   ],
 };
@@ -310,6 +322,10 @@ export default function AdsProductCategories({ onOpenForm }: AdsProductCategorie
 
   const handleGetQuote = (e: React.MouseEvent, product: Product) => {
     e.stopPropagation();
+    if (product.exploreUrl) {
+      window.open(product.exploreUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
     const cat = CATEGORIES.find(c => c.id === activeCategory);
     onOpenForm(product.name, cat?.name ?? 'General');
   };
@@ -574,7 +590,7 @@ export default function AdsProductCategories({ onOpenForm }: AdsProductCategorie
                           onClick={(e) => handleGetQuote(e, product)}
                           className="w-full px-4 py-2.5 bg-[#f31524] text-white font-medium hover:bg-[#d91220] transition-all text-xs md:text-sm flex items-center justify-center gap-2 group shadow-md hover:shadow-lg font-primary"
                         >
-                          Get Quote for {product.modelsList[0]}
+                          Explore More
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>
                       </div>
