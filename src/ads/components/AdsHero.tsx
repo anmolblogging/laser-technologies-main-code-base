@@ -1,5 +1,7 @@
 import { ArrowRight, Phone } from "lucide-react";
-import BANNER_IMAGE from "../7-min-1.jpg";
+
+const BANNER_IMAGE =
+  "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/GoogleAds/BannerGoogle.png";
 
 interface AdsHeroProps {
   onOpenForm: () => void;
