@@ -44,6 +44,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Ads pages (standalone, no main site navbar/footer)
 const LaserCuttingAdsPage = lazy(() => import("./ads/LaserCuttingAdsPage"));
+const BendingAdsPage = lazy(() => import("./bending-ads/BendingAdsPage"));
 
 /** Layout wrapper for main website routes — includes Navbar, Footer, and Chatbot */
 function MainLayout() {
@@ -67,6 +68,7 @@ function App() {
         <Routes>
           {/* ─── Ads routes (no main Navbar / Footer) ─── */}
           <Route path="/ads" element={<LaserCuttingAdsPage />} />
+          <Route path="/bending-ads" element={<BendingAdsPage />} />
 
           {/* ─── Main website routes (with Navbar + Footer) ─── */}
           <Route element={<MainLayout />}>

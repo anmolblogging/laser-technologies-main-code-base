@@ -138,8 +138,8 @@ const AdsForm: React.FC<AdsFormProps> = ({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
-          page: "ads-laser-cutting",
-          website: "ADS-LASER",
+          page: "ads-bending",
+          website: "ADS-BENDING",
           productName,
           categoryName,
           ...trackingParams,
@@ -154,7 +154,7 @@ const AdsForm: React.FC<AdsFormProps> = ({
       setTimeout(() => {
         onClose();
         // Navigate to a thank you or just close
-        navigate("/ads", { replace: true });
+        navigate("/bending-ads", { replace: true });
       }, 900);
     } catch {
       alert("Failed to send request. Please try again or call us at 9004005151.");
