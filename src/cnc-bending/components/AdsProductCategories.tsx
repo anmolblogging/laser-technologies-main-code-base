@@ -49,7 +49,7 @@ const CARDS: BendingCard[] = [
     materials: 'Mild steel, stainless steel, aluminium, round pipe, square tube, rectangular section',
     capacity: 'Precision small-diameter tube work to heavy structural pipe',
     bestFor: 'Structural frameworks, furniture manufacturing, automotive chassis and exhaust, handrails and railings, HVAC ducting lines, construction and piping systems',
-     ctaText: 'Explore More',
+    ctaText: 'Explore More',
     exploreUrl: 'http://localhost:5173/products/Pipe%20and%20Tube%20Bending/Pipe%20and%20Tube%20Bending%20Machine',
   },
   {
@@ -108,29 +108,27 @@ export default function AdsProductCategories({ onOpenForm }: AdsProductCategorie
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="h-[740px] perspective-1000 w-full"
+              className="h-[680px] perspective-1000 w-full"
               onClick={() => handleFlip(card.id)}
             >
               <div
-                className={`relative w-full h-[740px] transition-transform duration-700 transform-style-3d cursor-pointer ${
-                  flippedCard === card.id ? 'rotate-y-180' : ''
-                }`}
+                className={`relative w-full h-full transition-transform duration-700 transform-style-3d cursor-pointer ${flippedCard === card.id ? 'rotate-y-180' : ''
+                  }`}
               >
                 {/* FRONT */}
-                <div className="absolute w-full h-[680px] backface-hidden bg-white border border-gray-200 hover:border-[#f31524]/40 transition-all duration-500 shadow-sm hover:shadow-xl group overflow-hidden flex flex-col justify-between">
-                  <div className="flex flex-col">
+                <div className="absolute w-full h-full backface-hidden bg-white border border-gray-200 hover:border-[#f31524]/40 transition-all duration-500 shadow-sm hover:shadow-xl group overflow-hidden flex flex-col justify-between">
+                  <div className="flex flex-col flex-1 overflow-y-auto">
                     <div className="p-6 flex flex-col gap-4">
-                      {/* Title - Fixed height for vertical alignment symmetry */}
-                      <div className="h-16 flex items-start">
-                        <h3 className="text-2xl font-primary font-medium text-gray-900 leading-tight group-hover:text-[#f31524] transition-colors line-clamp-2">
+                      {/* Title */}
+                      <div className="flex items-start">
+                        <h3 className="text-2xl font-primary font-medium text-gray-900 leading-tight group-hover:text-[#f31524] transition-colors">
                           {card.name}
                         </h3>
                       </div>
-                      <div className="h-12 flex items-start">
-                        {/* Description - Fixed height and line clamp for vertical alignment symmetry */}
+                      <div className="flex items-start">
                         <p className="text-gray-500 text-sm leading-relaxed font-secondary">
-                        {card.description}
-                      </p>
+                          {card.description}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -144,58 +142,59 @@ export default function AdsProductCategories({ onOpenForm }: AdsProductCategorie
                 </div>
 
                 {/* BACK */}
-                <div className="absolute w-full h-[680px] backface-hidden rotate-y-180 bg-white border-2 border-[#f31524] shadow-xl overflow-hidden">
+                <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-white border-2 border-[#f31524] shadow-xl overflow-hidden">
                   <div className="h-full overflow-y-auto p-6 flex flex-col justify-between bg-gray-50/10">
-                    <div>
-                      <div className="mb-4 pb-3 border-b border-gray-100 h-16 flex items-start">
-                        <h3 className="text-lg md:text-xl font-primary font-medium text-gray-900 leading-tight line-clamp-2">
+                    <div className="flex flex-col gap-6">
+                      {/* Title */}
+                      <div className="pb-3 border-b border-gray-100">
+                        <h3 className="text-xl font-primary font-medium text-gray-900 leading-tight">
                           {card.name}
                         </h3>
                       </div>
 
-                      
-                      <div className="mb-4">
-                          <h4 className="text-xs font-semibold text-[#f31524] mb-2 uppercase tracking-wider flex items-center gap-2 font-primary">
-                           Machines Available
-                          </h4>
-                          <div className="flex flex-wrap gap-1.5 pl-0.5">
-                            {card.machinesAvailable.map((machine, idx) => (
-                              <span
-                                key={idx}
-                                className="inline-block bg-gray-100 text-gray-800 text-[10px] md:text-xs px-2.5 py-1 font-medium font-secondary border border-gray-200"
-                              >
-                                {machine}
-                              </span>
-                            ))}
-                          </div>
+                      {/* Machines Available */}
+                      <div>
+                        <h4 className="text-xs font-semibold text-[#f31524] mb-3 uppercase tracking-wider flex items-center gap-2 font-primary">
+                          Machines Available
+                        </h4>
+                        <div className="flex flex-col gap-2">
+                          {card.machinesAvailable.map((machine, idx) => (
+                            <div
+                              key={idx}
+                              className="bg-gray-50 text-gray-800 text-xs px-3 py-2 font-medium font-secondary border border-gray-200/60 rounded-sm"
+                            >
+                              {machine}
+                            </div>
+                          ))}
                         </div>
+                      </div>
 
-                     
-                    </div>  
-                     {/* Specs List - Equalized heights to make bullets symmetrical */}
-                      <div className="space-y-3 h-[180px] flex flex-col justify-start">
-                        <div className="flex items-start gap-2">
+                      {/* Specs List */}
+                      <div className="space-y-4">
+                        <div className="flex items-start gap-3">
                           <CheckCircle2 className="w-4 h-4 text-[#f31524] mt-0.5 flex-shrink-0" />
-                          <span className="text-gray-655 text-xs leading-relaxed font-secondary line-clamp-2">
-                            <strong>Materials:</strong> {card.materials}
+                          <span className="text-gray-700 text-xs md:text-sm leading-relaxed font-secondary">
+                            <strong className="text-gray-900 font-semibold">Materials:</strong> {card.materials}
                           </span>
                         </div>
                         {card.capacity && (
-                          <div className="flex items-start gap-2">
+                          <div className="flex items-start gap-3">
                             <CheckCircle2 className="w-4 h-4 text-[#f31524] mt-0.5 flex-shrink-0" />
-                            <span className="text-gray-655 text-xs leading-relaxed font-secondary line-clamp-2">
-                              <strong>Capacity:</strong> {card.capacity}
+                            <span className="text-gray-700 text-xs md:text-sm leading-relaxed font-secondary">
+                              <strong className="text-gray-900 font-semibold">Capacity:</strong> {card.capacity}
                             </span>
                           </div>
                         )}
-                        <div className="flex items-start gap-2">
+                        <div className="flex items-start gap-3">
                           <CheckCircle2 className="w-4 h-4 text-[#f31524] mt-0.5 flex-shrink-0" />
-                          <span className="text-gray-655 text-xs leading-relaxed font-secondary line-clamp-3">
-                            <strong>Best for:</strong> {card.bestFor}
+                          <span className="text-gray-700 text-xs md:text-sm leading-relaxed font-secondary">
+                            <strong className="text-gray-900 font-semibold">Best for:</strong> {card.bestFor}
                           </span>
                         </div>
                       </div>
-                    <div className="pt-4 border-t border-gray-150 mt-auto">
+                    </div>
+
+                    <div className="pt-4 border-t border-gray-150 mt-8">
                       <button
                         onClick={(e) => handleCtaClick(e, card)}
                         className="w-full px-4 py-3 bg-[#f31524] text-white font-medium hover:bg-[#d91220] transition-all text-xs md:text-sm flex items-center justify-center gap-2 group shadow-md hover:shadow-lg font-primary"
