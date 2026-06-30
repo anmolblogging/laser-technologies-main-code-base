@@ -14,7 +14,7 @@ export default function AdsNavbar() {
           <div className="flex items-center justify-between h-16 sm:h-18 lg:h-20 pt-[3px]">
 
             {/* ── Logo ── */}
-            <div className="flex-shrink-0">
+            <a href="/" className="flex-shrink-0 block">
               <img
                 src={LOGO_URL}
                 alt="Laser Technologies Logo"
@@ -31,7 +31,7 @@ export default function AdsNavbar() {
               >
                 LT
               </span>
-            </div>
+            </a>
 
             {/* ── Info pointers — desktop ── */}
             <div className="hidden md:flex items-center">

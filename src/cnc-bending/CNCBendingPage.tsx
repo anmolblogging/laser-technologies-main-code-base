@@ -14,7 +14,7 @@ import AdsFooter from "./components/AdsFooter";
 import AdsChatbot from "./components/AdsChatbot";
 import AdsForm from "./components/AdsForm";
 
-export default function BendingAdsPage() {
+export default function CNCBendingPage() {
   const [quoteForm, setQuoteForm] = useState<{
     open: boolean;
     productName?: string;

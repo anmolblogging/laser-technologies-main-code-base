@@ -13,7 +13,6 @@ interface BendingCard {
   bestFor: string;
   ctaText: string;
   exploreUrl: string;
-  imageLink: string;
 }
 
 interface AdsProductCategoriesProps {
@@ -35,9 +34,8 @@ const CARDS: BendingCard[] = [
     materials: 'Mild steel, stainless steel, aluminium, galvanised iron, copper, brass',
     capacity: 'Up to 800 tons bending force available across a wide range of bending lengths',
     bestFor: 'Sheet metal fabrication, electrical enclosures, automotive panels, furniture frames, HVAC components, structural and heavy-plate bending',
-    ctaText: 'Explore CNC Sheet Bending Machines',
-    exploreUrl: 'https://www.lasertechnologies.co.in/products/Bending/CNC%20Bending%20Machine',
-    imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/banner.png'
+    ctaText: 'Explore More',
+    exploreUrl: 'https://www.lasertechnologies.co.in/products/CNC%20Sheet%20Bending/CNC%20Sheet%20Bending%20Machine',
   },
   {
     id: 'tube',
@@ -51,9 +49,8 @@ const CARDS: BendingCard[] = [
     materials: 'Mild steel, stainless steel, aluminium, round pipe, square tube, rectangular section',
     capacity: 'Precision small-diameter tube work to heavy structural pipe',
     bestFor: 'Structural frameworks, furniture manufacturing, automotive chassis and exhaust, handrails and railings, HVAC ducting lines, construction and piping systems',
-    ctaText: 'Explore Pipe and Tube Bending Machines',
-    exploreUrl: 'https://www.lasertechnologies.co.in/products/Bending/CNC%20Bending%20Machine',
-    imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/banner.png'
+     ctaText: 'Explore More',
+    exploreUrl: 'http://localhost:5173/products/Pipe%20and%20Tube%20Bending/Pipe%20and%20Tube%20Bending%20Machine',
   },
   {
     id: 'panel-bender',
@@ -67,9 +64,8 @@ const CARDS: BendingCard[] = [
     materials: 'Mild steel, stainless steel, aluminium, galvanised sheet',
     capacity: 'Panel sizes up to 3,000mm x 1,500mm; bends sheet up to 3mm thick',
     bestFor: 'Appliance manufacturing, automotive panel fabrication, HVAC duct and component production, furniture, electrical enclosures, high-volume multi-bend parts',
-    ctaText: 'Explore Automatic Panel Bender',
-    exploreUrl: 'https://www.lasertechnologies.co.in/products/Bending/CNC%20Bending%20Machine',
-    imageLink: 'https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/banner.png'
+    ctaText: 'Explore More',
+    exploreUrl: 'https://www.lasertechnologies.co.in/products/CNC%20Sheet%20Bending/Panel%20Bender',
   }
 ];
 
@@ -121,17 +117,8 @@ export default function AdsProductCategories({ onOpenForm }: AdsProductCategorie
                 }`}
               >
                 {/* FRONT */}
-                <div className="absolute w-full h-[740px] backface-hidden bg-white border border-gray-200 hover:border-[#f31524]/40 transition-all duration-500 shadow-sm hover:shadow-xl group overflow-hidden flex flex-col justify-between">
+                <div className="absolute w-full h-[680px] backface-hidden bg-white border border-gray-200 hover:border-[#f31524]/40 transition-all duration-500 shadow-sm hover:shadow-xl group overflow-hidden flex flex-col justify-between">
                   <div className="flex flex-col">
-                    <div className="h-48 relative overflow-hidden bg-gray-100 flex-shrink-0 animate-pulse-slow">
-                      <img
-                        src={card.imageLink}
-                        alt={card.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </div>
-
                     <div className="p-6 flex flex-col gap-4">
                       {/* Title - Fixed height for vertical alignment symmetry */}
                       <div className="h-16 flex items-start">
@@ -139,15 +126,53 @@ export default function AdsProductCategories({ onOpenForm }: AdsProductCategorie
                           {card.name}
                         </h3>
                       </div>
-                      
-                      {/* Description - Fixed height and line clamp for vertical alignment symmetry */}
-                      <div className="h-[140px] overflow-hidden">
-                        <p className="text-gray-500 text-xs md:text-sm  font-black line-clamp-6">
-                          {card.description}
-                        </p>
+                      <div className="h-12 flex items-start">
+                        {/* Description - Fixed height and line clamp for vertical alignment symmetry */}
+                        <p className="text-gray-500 text-sm leading-relaxed font-secondary">
+                        {card.description}
+                      </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="px-6 py-4 border-t border-gray-100 flex-shrink-0 bg-gray-50/50 flex items-center justify-between">
+                    <span className="text-gray-400 text-xs font-medium font-secondary">Click to see available models</span>
+                    <div className="w-8 h-8 bg-[#f31524]/10 flex items-center justify-center group-hover:bg-[#f31524] transition-colors">
+                      <ArrowRight className="w-4 h-4 text-[#f31524] group-hover:text-white group-hover:translate-x-0.5 transition-all" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* BACK */}
+                <div className="absolute w-full h-[680px] backface-hidden rotate-y-180 bg-white border-2 border-[#f31524] shadow-xl overflow-hidden">
+                  <div className="h-full overflow-y-auto p-6 flex flex-col justify-between bg-gray-50/10">
+                    <div>
+                      <div className="mb-4 pb-3 border-b border-gray-100 h-16 flex items-start">
+                        <h3 className="text-lg md:text-xl font-primary font-medium text-gray-900 leading-tight line-clamp-2">
+                          {card.name}
+                        </h3>
                       </div>
 
-                      {/* Specs List - Equalized heights to make bullets symmetrical */}
+                      
+                      <div className="mb-4">
+                          <h4 className="text-xs font-semibold text-[#f31524] mb-2 uppercase tracking-wider flex items-center gap-2 font-primary">
+                           Machines Available
+                          </h4>
+                          <div className="flex flex-wrap gap-1.5 pl-0.5">
+                            {card.machinesAvailable.map((machine, idx) => (
+                              <span
+                                key={idx}
+                                className="inline-block bg-gray-100 text-gray-800 text-[10px] md:text-xs px-2.5 py-1 font-medium font-secondary border border-gray-200"
+                              >
+                                {machine}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                     
+                    </div>  
+                     {/* Specs List - Equalized heights to make bullets symmetrical */}
                       <div className="space-y-3 h-[180px] flex flex-col justify-start">
                         <div className="flex items-start gap-2">
                           <CheckCircle2 className="w-4 h-4 text-[#f31524] mt-0.5 flex-shrink-0" />
@@ -170,46 +195,6 @@ export default function AdsProductCategories({ onOpenForm }: AdsProductCategorie
                           </span>
                         </div>
                       </div>
-                    </div>
-                  </div>
-
-                  <div className="px-6 py-4 border-t border-gray-100 flex-shrink-0 bg-gray-50/50 flex items-center justify-between">
-                    <span className="text-gray-400 text-xs font-medium font-secondary">Click to see available models</span>
-                    <div className="w-8 h-8 bg-[#f31524]/10 flex items-center justify-center group-hover:bg-[#f31524] transition-colors">
-                      <ArrowRight className="w-4 h-4 text-[#f31524] group-hover:text-white group-hover:translate-x-0.5 transition-all" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* BACK */}
-                <div className="absolute w-full h-[740px] backface-hidden rotate-y-180 bg-white border-2 border-[#f31524] shadow-xl overflow-hidden">
-                  <div className="h-full overflow-y-auto p-6 flex flex-col justify-between bg-gray-50/10">
-                    <div>
-                      <div className="mb-4 pb-3 border-b border-gray-100 h-16 flex items-start">
-                        <h3 className="text-lg md:text-xl font-primary font-medium text-gray-900 leading-tight line-clamp-2">
-                          {card.name}
-                        </h3>
-                      </div>
-
-                      <div className="mb-6">
-                        <h4 className="text-xs font-semibold text-[#f31524] mb-3 uppercase tracking-wider font-primary">
-                          Machines Available
-                        </h4>
-                        <div className="flex flex-col gap-2 min-h-[140px]">
-                          {card.machinesAvailable.map((machine, idx) => (
-                            <div key={idx} className="flex items-center gap-3 bg-white p-3 border border-gray-100 shadow-sm rounded-sm">
-                              <span className="w-2 h-2 bg-[#f31524] rounded-full flex-shrink-0" />
-                              <span className="text-gray-800 text-xs font-medium font-secondary">{machine}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <p className="text-gray-500 text-xs leading-relaxed font-secondary mb-4">
-                        {card.description}
-                      </p>
-                    </div>
-
                     <div className="pt-4 border-t border-gray-150 mt-auto">
                       <button
                         onClick={(e) => handleCtaClick(e, card)}

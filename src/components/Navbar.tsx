@@ -163,7 +163,7 @@ const Header = () => {
     { type: "link", name: "Contact", href: "/contact" },
     { type: "dropdown", name: "Knowledge", key: "Knowledge" },
   ];
-  
+
   const serviceItems = [
     { name: "Tech Support", href: "/services/tech-support" },
     { name: "Software", href: "/services/software" },
@@ -171,7 +171,7 @@ const Header = () => {
     { name: "Out of Warranty", href: "/services/out-of-warranty" },
     { name: "Technical Training", href: "/services/technical-training" },
   ];
-  
+
   const KnowledgeItems = [
     { name: "Laser Gurukul", href: "/laserGurukul" },
     { name: "Laser University", href: "/laser-university" },
@@ -189,6 +189,16 @@ const Header = () => {
     { name: "Our Partners", href: "/partners" },
     { name: "Customer Stories", href: "/customer-stories" },
   ];
+
+  const getSegmentUrl = (segment: string) => {
+    if (segment === "Laser Cutting") return "/laser-cutting";
+    if (segment === "CNC Sheet Bending") return "/cnc-bending";
+    const subCategories = productData[segment];
+    if (subCategories && subCategories.length > 0) {
+      return `/products/${encodeURIComponent(segment)}/${encodeURIComponent(subCategories[0])}`;
+    }
+    return "#";
+  };
 
   /* -------------------------------------------------------
      FETCH PRODUCTS – ONLY LOGIC CHANGED, NOT UI
@@ -321,12 +331,14 @@ const Header = () => {
                     className="bg-white shadow-xl px-2 py-2 ml-2 min-w-[220px] max-h-[70vh] overflow-y-auto"
                     style={{ border: `1px solid ${COLORS.border}` }}
                   >
-                    <div
-                      className="px-4 py-2 text-xs font-medium uppercase tracking-wider mb-2"
-                      style={{ borderBottom: `1px solid ${COLORS.border}`, color: COLORS.whiteBgText }}
-                    >
-                      {hoveredSegment}
-                    </div>
+                    <a href={getSegmentUrl(hoveredSegment)}>
+                      <div
+                        className="px-4 py-2 text-xs font-medium uppercase tracking-wider mb-2"
+                        style={{ borderBottom: `1px solid ${COLORS.border}`, color: COLORS.whiteBgText }}
+                      >
+                        About {hoveredSegment}
+                      </div>
+                    </a>
 
                     {productData[hoveredSegment]?.map((subCategory) => (
                       <a
@@ -580,9 +592,8 @@ const Header = () => {
                       >
                         <span>{segment}</span>
                         <ChevronDown
-                          className={`h-3.5 w-3.5 transition-transform ${
-                            mobileExpandedSegment === segment ? "rotate-180" : ""
-                          }`}
+                          className={`h-3.5 w-3.5 transition-transform ${mobileExpandedSegment === segment ? "rotate-180" : ""
+                            }`}
                         />
                       </button>
 

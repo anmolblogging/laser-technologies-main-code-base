@@ -14,7 +14,7 @@ import AdsFooter from "./components/AdsFooter";
 import AdsChatbot from "./components/AdsChatbot";
 import AdsForm from "./components/AdsForm";
 
-export default function LaserCuttingAdsPage() {
+export default function LaserCuttingPage() {
   const [quoteForm, setQuoteForm] = useState<{
     open: boolean;
     productName?: string;

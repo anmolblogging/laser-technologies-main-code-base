@@ -1,5 +1,5 @@
-import { Suspense, lazy ,useEffect } from "react";
-import { BrowserRouter, Routes, Route ,useLocation, Outlet } from "react-router-dom";
+import { Suspense, lazy, useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation, Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Chatbot from "./components/Chatbot";
@@ -43,8 +43,8 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 // const SlugResolver = lazy(() => import("./components/SlugResolver"));
 
 // Ads pages (standalone, no main site navbar/footer)
-const LaserCuttingAdsPage = lazy(() => import("./ads/LaserCuttingAdsPage"));
-const BendingAdsPage = lazy(() => import("./bending-ads/BendingAdsPage"));
+const LaserCuttingPage = lazy(() => import("./laser-cutting/LaserCuttingPage"));
+const CncBending = lazy(() => import("./cnc-bending/CNCBendingPage"));
 
 /** Layout wrapper for main website routes — includes Navbar, Footer, and Chatbot */
 function MainLayout() {
@@ -63,12 +63,12 @@ function MainLayout() {
 function App() {
   return (
     <BrowserRouter>
-    <AnalyticsTracker />
+      <AnalyticsTracker />
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
-          {/* ─── Ads routes (no main Navbar / Footer) ─── */}
-          <Route path="/ads" element={<LaserCuttingAdsPage />} />
-          <Route path="/bending-ads" element={<BendingAdsPage />} />
+          {/* ─── Category routes (no main Navbar / Footer) ───  previously it was ads page*/}
+          <Route path="/laser-cutting" element={<LaserCuttingPage />} />
+          <Route path="/cnc-bending" element={<CncBending />} />
 
           {/* ─── Main website routes (with Navbar + Footer) ─── */}
           <Route element={<MainLayout />}>
