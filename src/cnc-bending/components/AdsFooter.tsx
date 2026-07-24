@@ -14,7 +14,7 @@ const GPTW_LOGO =
   "https://dihcmuqusfdckdcadswg.supabase.co/storage/v1/object/public/images/page/Grate%20place%20to%20work.png";
 
 const CONTACT_INFO = {
-  email: "info@lasertechnologies.in",
+  email: "info@lasertechnologies.co.in",
   phone: "+91 91369 56932",
   address:
     "Laser Technologies Pvt Ltd, PAP/, R/406, Rabale Midc Rd, near Dol Electric Company, MIDC Industrial Area, Rabale, Navi Mumbai, Maharashtra 400701, India",
