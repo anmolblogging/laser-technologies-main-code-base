@@ -161,7 +161,7 @@ const Footer = () => {
 
   // Contact Info
   const contactInfo = {
-    email: "info@lasertechnologies.in",
+    email: "info@lasertechnologies.co.in",
     phone: "+91 90040 05151",
     address:
       `Laser Technologies Pvt Ltd ,  PAP/, R/406, Rabale Midc Rd, near Dol Electric Company, MIDC Industrial Area, Rabale, Navi Mumbai, Maharashtra 400701, India`,
