@@ -21,7 +21,7 @@ const FAQ = () => {
       description: "Basic information about Laser Technologies and our offerings.",
       questions: [
         {
-          q: "What services and products does Laser Technologies Pvt. Ltd. offer?",
+          q: "What services and products does Laser Technologies Limited offer?",
           a: "Laser Technologies offers a comprehensive range of laser solutions, including Fiber Laser Cutting, Laser Welding, Marking, Engraving, and Press Brake Machines. We also provide high-quality laser consumables and spare parts to ensure continuous production.",
         },
         {

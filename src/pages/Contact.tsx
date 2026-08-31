@@ -186,7 +186,7 @@ const Contact = () => {
             <div className="bg-white p-8 text-black shadow-xl">
               <h2 className="text-2xl font-medium mb-3">
                 {" "}
-                Laser Technologies Pvt Ltd
+                Laser Technologies Limited
               </h2>
               <p className="text-black/80 text-sm leading-relaxed mb-6">
                 Our headquarters in Mumbai serves as the nerve center of our
@@ -624,7 +624,7 @@ const Contact = () => {
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: "Laser Technologies Pvt Ltd",
+          name: "Laser Technologies Limited",
           url: "https://lasertechnologies.co.in",
           logo: logo,
           contactPoint: {

@@ -91,7 +91,7 @@ const Software = () => {
               
               <div className="space-y-4 sm:space-y-6 text-base sm:text-lg text-gray-600 leading-relaxed font-primary">
                 <p>
-                  Laser Technologies Pvt Ltd is proud to introduce <strong>ReTenX</strong>, a state-of-the-art nesting software developed in strategic collaboration with <strong>AlmaCAM</strong>, the global gold standard in CAD/CAM solutions.
+                  Laser Technologies Limited is proud to introduce <strong>ReTenX</strong>, a state-of-the-art nesting software developed in strategic collaboration with <strong>AlmaCAM</strong>, the global gold standard in CAD/CAM solutions.
                 </p>
                 <p>
                   With <strong>45+ years of legacy</strong>, AlmaCAM's innovation is now accessible through a localized, high-performance interface. ReTenX is engineered to transform production workflows, optimizing every square millimeter of your material.

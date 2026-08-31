@@ -17,7 +17,7 @@ const CONTACT_INFO = {
   email: "info@lasertechnologies.co.in",
   phone: "+91 91369 56932",
   address:
-    "Laser Technologies Pvt Ltd, PAP/, R/406, Rabale Midc Rd, near Dol Electric Company, MIDC Industrial Area, Rabale, Navi Mumbai, Maharashtra 400701, India",
+    "Laser Technologies Limited, PAP/, R/406, Rabale Midc Rd, near Dol Electric Company, MIDC Industrial Area, Rabale, Navi Mumbai, Maharashtra 400701, India",
 };
 
 const SOCIAL_LINKS = [
@@ -80,7 +80,7 @@ export default function AdsFooter() {
                 height="100%"
                 style={{ border: "none" }}
                 loading="lazy"
-                title="Laser Technologies Pvt Ltd Office Location"
+                title="Laser Technologies Limited Office Location"
               />
             </div>
           </div>
@@ -158,7 +158,7 @@ export default function AdsFooter() {
               </div>
 
               <p className="text-xs text-gray-500">
-                © {year} Laser Technologies Pvt Ltd. All rights reserved.
+                © {year} Laser Technologies Limited. All rights reserved.
               </p>
             </div>
           </div>

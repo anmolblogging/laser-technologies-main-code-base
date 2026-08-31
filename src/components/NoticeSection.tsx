@@ -10,7 +10,7 @@ export default function AboutSection() {
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 bg-opacity-15 bg-whiteBgTextHover text-whiteBgTextHover px-4 py-2 rounded-full text-sm font-semibold font-secondary">
               <Sparkles className="w-4 h-4" />
-              About Laser Technologies Pvt. Ltd.
+              About Laser Technologies Limited
             </div>
 
             <h2 className="text-4xl md:text-5xl font-medium font-primary text-whiteBgText leading-tight">
@@ -18,7 +18,7 @@ export default function AboutSection() {
             </h2>
 
             <p className="text-lg text-whiteBgText font-secondary leading-relaxed">
-              Laser Technologies Pvt. Ltd. is a leader in advanced laser
+              Laser Technologies Limited is a leader in advanced laser
               cutting, welding, and marking systems built for unparalleled
               precision and performance. Our mission is to empower industries
               with intelligent, energy-efficient, and future-ready laser
