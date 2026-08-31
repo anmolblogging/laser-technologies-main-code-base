@@ -65,7 +65,7 @@ const TechSupport = () => {
               Tech Support
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
-              The LTPL team wants to make laser technology accessible across the nation. 
+              The Laser Technologies team wants to make laser technology accessible across the nation. 
               Our customer service executives are equipped to handle all queries including pre-sale 
               and after-sales service. From site inspection to personnel training, we take care of all.
             </p>

@@ -164,7 +164,7 @@ const Footer = () => {
     email: "info@lasertechnologies.co.in",
     phone: "+91 90040 05151",
     address:
-      `Laser Technologies Pvt Ltd ,  PAP/, R/406, Rabale Midc Rd, near Dol Electric Company, MIDC Industrial Area, Rabale, Navi Mumbai, Maharashtra 400701, India`,
+      `Laser Technologies Limited ,  PAP/, R/406, Rabale Midc Rd, near Dol Electric Company, MIDC Industrial Area, Rabale, Navi Mumbai, Maharashtra 400701, India`,
   };
 
   const year = new Date().getFullYear();
@@ -222,7 +222,7 @@ const Footer = () => {
                 height="100%"
                 style={{ border: 0 }}
                 loading="lazy"
-                title="Laser Technologies Pvt Ltd Office"
+                title="Laser Technologies Limited Office"
               />
             </div>
           </div>
@@ -347,7 +347,7 @@ const Footer = () => {
             {/* Left Section - Copyright & Developer */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
               <p className="font-medium text-gray-300 ">
-                © {year} LaserTechnologies Pvt Ltd
+                © {year} Laser Technologies Limited
               </p>
             </div>
 

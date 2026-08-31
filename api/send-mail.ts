@@ -69,7 +69,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               </td>
               <td style="text-align:right;">
                 <p style="margin:0;font-size:10.5px;color:#ccc;font-weight:400;">
-                  &copy; ${year} Laser Technologies Pvt Ltd
+                  &copy; ${year} Laser Technologies Limited
                 </p>
               </td>
             </tr>
@@ -294,7 +294,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 </table>
 
 <p style="margin:20px 0 0;font-size:10.5px;color:#ccc;text-align:center;font-weight:400;">
-  Laser Technologies Private Limited
+  Laser Technologies Limited
 </p>
 
 </td></tr>

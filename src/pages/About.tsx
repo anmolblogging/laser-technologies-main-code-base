@@ -133,7 +133,7 @@ export default function AboutUsPage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <p className="text-gray-700 leading-relaxed text-lg">
-                At Laser Technologies Pvt Ltd, we understand that every industry
+                At Laser Technologies Limited, we understand that every industry
                 has unique needs and challenges. That's why we offer a wide
                 range of laser solutions that cater to diverse industries,
                 including manufacturing, automotive, aerospace, and more.
@@ -392,7 +392,7 @@ export default function AboutUsPage() {
         {/* Biography Content */}
         <blockquote className="space-y-6">
           <p className="text-sm md:text-md lg:text-lg text-gray-800 leading-relaxed font-light">
-            "Dr. Rakesh Agrawal has traveled a long way—literally from a small town in Northern India to Mumbai, and metaphorically from humble beginnings to entrepreneurial excellence. With a Master’s degree in Electronics and 20 years of corporate experience, he founded Laser Technologies Pvt Ltd in 2011 with just two members. Under his vision, the company has grown to a ₹300 crore enterprise with 125 team members in under 14 years."
+            "Dr. Rakesh Agrawal has traveled a long way—literally from a small town in Northern India to Mumbai, and metaphorically from humble beginnings to entrepreneurial excellence. With a Master’s degree in Electronics and 20 years of corporate experience, he founded Laser Technologies in 2011 with just two members. Under his vision, the company has grown to a ₹300 crore enterprise with 125 team members in under 14 years."
           </p>
           <p className="text-base md:text-md text-gray-600 leading-relaxed border-l-4 border-red-400 pl-6">
             Today, Laser Technologies works with clients across India and partners with manufacturers from Europe, America, and Asia. Dr. Rakesh is a life member of prestigious organizations such as the Indian Welding Society (IWS), Indian Laser Association (ILA), Bombay Industries Association (BIA), Laser Industries Association of India (LIAI), and TTC MIDC Industries Association (TMIA). His international consultancy includes engagements with Ridgetop Research USA, Coleman Research Group USA, and Cognolink UK.
